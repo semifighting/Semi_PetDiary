@@ -59,7 +59,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 		return cdto;
 	}
-<<<<<<< HEAD
+	
 	@Override
 	public List<BusinessDto> hospitalList() {
 
@@ -89,8 +89,4 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		return dto;
 	}
 
-=======
-
-	
->>>>>>> 2fca2884c0c828504e62fb402322657862f7aa4b
 }
