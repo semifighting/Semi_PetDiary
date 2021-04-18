@@ -22,16 +22,34 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		return mdto;
 	}
 	
-
-	@Override
 	// 회원가입
-	public int MemberInsert(MemberDto Dto) {
+	@Override
+	public int MemberInsert(MemberDto dto) {
 		int res = 0;
 		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.insert(namespace+"MemberInsert", Dto);
+			res = session.insert(namespace+"MemberInsert", dto);
 		}
 		return res;
 	}
+
+	@Override
+	public MemberDto SignUpIdChk(String member_id) {
+		MemberDto dto = null;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			dto = session.selectOne(namespace+"SignUpIdChk", member_id);
+		}
+		return dto;
+	}
+
+	@Override
+	public MemberDto SighUpEmailChk(String member_email) {
+		MemberDto dto = null;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			dto = session.selectOne(namespace+"SignUpEmailChk", member_email);
+		}
+		return dto;
+	}
+	
 	
 	@Override
 	public List<CommunityDto> CommunityList() {

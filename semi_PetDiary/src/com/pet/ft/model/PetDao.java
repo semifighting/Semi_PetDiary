@@ -25,6 +25,11 @@ public interface PetDao {
 	public List<BusinessDto> hospitalList();
 	
 	public BusinessDto hospitalSelect(int business_num);
-
+	
+	// id 중복체크
+	MemberDto SignUpIdChk(String member_id);
+	
+	// email 중복체크
+	MemberDto SighUpEmailChk(String member_email);
 
 }

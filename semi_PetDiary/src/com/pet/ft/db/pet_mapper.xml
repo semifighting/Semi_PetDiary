@@ -8,9 +8,9 @@
   		SELECT * FROM MEMBER WHERE MEMBER_NO = #{member_no}
   	</select>
   	
-  	<insert id="MemberInsert" parameterType="int">
-  		INSERT IN TO MEMBER
-  		VALUES(MEMBER_SEQ.NEXTVAL, #{member_no}, #{member_name}, #{member_id}, #{member_pw}, #{member_email}, #{member_phone}, '회원', #{member_address})
+ 	 <insert id="MemberInsert" parameterType="MemberDto">
+  		INSERT INTO MEMBER
+  		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, #{member_pw}, #{member_email}, #{member_phone}, '회원', #{member_address})
   	</insert>
   	
   	<select id="CommunityList" resultType="CommunityDto">
@@ -34,6 +34,16 @@
   		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME 
    		FROM BUSINESS 
   		WHERE BUSINESS_NUM = #{business_num}
+  	</select>
+  	
+  	 <select id="SignUpIdChk" resultType="MemberDto" parameterType="String">
+  		SELECT MEMBER_ID FROM MEMBER
+  		WHERE MEMBER_ID = #{member_id}
+  	</select>
+  	
+  	<select id="SignUpEmailChk" resultType="MemberDto" parameterType="String">
+  		SELECT MEMBER_EMAIL FROM MEMBER
+  		WHERE MEMBER_EMAIL = #{member_email}
   	</select>
   
   </mapper>
