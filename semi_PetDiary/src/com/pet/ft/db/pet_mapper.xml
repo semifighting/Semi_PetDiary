@@ -25,7 +25,6 @@
   	<select id="CommunityOne" resultType="CommunityDto" parameterType="int">  	
   	  	SELECT * FROM COMMUNITY WHERE COMMUNITY_SEQ = #{community_seq}  	  	
   	</select>
-<<<<<<< HEAD
   	 <select id="selectList" resultType="businessDto">
    		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME 
   		 FROM BUSINESS 
@@ -36,7 +35,5 @@
    		FROM BUSINESS 
   		WHERE BUSINESS_NUM = #{business_num}
   	</select>
-=======
->>>>>>> 2fca2884c0c828504e62fb402322657862f7aa4b
   
   </mapper>
