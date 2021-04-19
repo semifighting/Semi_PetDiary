@@ -2,6 +2,7 @@ package com.pet.ft.model;
 
 import java.util.List;
 
+import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
 import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
@@ -20,6 +21,12 @@ public class PetBizImpl implements PetBiz {
 	public BusinessDto hospitalSelect(int business_num) {
 	
 		return dao.hospitalSelect(business_num);
+	}
+
+	@Override
+	public int hospitalBookInsert(BookDto dto) {
+		
+		return dao.hospitalBookInsert(dto);
 	}
 
 }

@@ -66,14 +66,16 @@
 					<li>
 						<dl>
 							<dt>상담일자</dt>
-							<dd><input type="text" name="book_date"/></dd>
+							<dd><input type="text" name="book_date"/>  yyyymmdd형식으로 입력해주세요.</dd>
 						</dl>
 			    	</li>
 					<li>
 						<dl>
 							<dt>상담유형</dt>
-							<dd><input type="radio" name="book_type" value="화상상담"/>화상상담</dd>
-							<dd><input type="radio" name="book_type" value="챗봇"/>챗봇</dd>
+							<dd>
+								<input type="radio" name="book_type" value="H"/>화상상담
+								<input type="radio" name="book_type" value="챗봇"/>챗봇
+							</dd>
 						</dl>
 					</li>
 					<li>
@@ -85,8 +87,7 @@
 						    </dd>
 						</dl>
 					</li>
-					<li></li>
-					<li></li>
+					
 				</ul>
 			</div>
 		</div>

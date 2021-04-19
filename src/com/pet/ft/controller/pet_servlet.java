@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
 import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.model.PetBiz;
@@ -77,6 +78,20 @@ public class pet_servlet extends HttpServlet {
 			request.setAttribute("dto", dto);
 			dispatch(request,response,"./hospital/hospital_select.jsp");
 			
+		}else if(command.equals("counselinsert")) {
+			String book_date = request.getParameter("book_date");
+			String book_type = request.getParameter("book_type");
+			
+			BookDto dto = new BookDto();
+			dto.setBook_date(book_date);
+			dto.setBook_type(book_type);
+			
+			int res = biz.hospitalBookInsert(dto);
+			if(res>0) {
+				jsResponse(response, "예약성공", "./hospital/hospital_main.jsp");
+			}else {
+				jsResponse(response, "예약실패", "./hospital/hospital_main.jsp");
+			}
 		}
 		
 	

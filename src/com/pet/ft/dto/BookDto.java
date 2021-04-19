@@ -4,20 +4,20 @@ import java.util.Date;
 
 public class BookDto {
 	private int book_num;
-	private Date book_date;
+	private String book_date;
 	private String book_time;
 	private String book_type;
 	private int business_num;
 	private int member_no;
 	private int book_price;
 	private String book_state;
-	private String bok_hostime;
+	private String book_hostime;
 	
 	public BookDto() {
 		
 	}
 
-	public BookDto(int book_num, Date book_date, String book_time, String book_type, int business_num, int member_no,
+	public BookDto(int book_num, String book_date, String book_time, String book_type, int business_num, int member_no,
 			int book_price, String book_state, String bok_hostime) {
 	
 		this.book_num = book_num;
@@ -28,7 +28,7 @@ public class BookDto {
 		this.member_no = member_no;
 		this.book_price = book_price;
 		this.book_state = book_state;
-		this.bok_hostime = bok_hostime;
+		this.book_hostime = bok_hostime;
 	}
 
 	public int getBook_num() {
@@ -39,11 +39,11 @@ public class BookDto {
 		this.book_num = book_num;
 	}
 
-	public Date getBook_date() {
+	public String getBook_date() {
 		return book_date;
 	}
 
-	public void setBook_date(Date book_date) {
+	public void setBook_date(String book_date) {
 		this.book_date = book_date;
 	}
 
@@ -95,12 +95,12 @@ public class BookDto {
 		this.book_state = book_state;
 	}
 
-	public String getBok_hostime() {
-		return bok_hostime;
+	public String getBook_hostime() {
+		return book_hostime;
 	}
 
-	public void setBok_hostime(String bok_hostime) {
-		this.bok_hostime = bok_hostime;
+	public void setBook_hostime(String book_hostime) {
+		this.book_hostime = book_hostime;
 	}
 	
 	

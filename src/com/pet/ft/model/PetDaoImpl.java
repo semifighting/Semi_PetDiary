@@ -1,5 +1,6 @@
 package com.pet.ft.model;
 
+import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +88,17 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			session.close();
 		}
 		return dto;
+	}
+
+
+	@Override
+	public int hospitalBookInsert(BookDto dto) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.insert(namespace+"BookCounselInsert", dto);
+		}
+		return res;
+		
 	}
 
 }
