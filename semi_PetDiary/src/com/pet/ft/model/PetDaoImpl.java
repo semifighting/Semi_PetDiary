@@ -59,13 +59,12 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 		return cdto;
 	}
-<<<<<<< HEAD
 	@Override
 	public List<BusinessDto> hospitalList() {
 
 		SqlSession session = getSqlSessionFactory().openSession();
 								//session.selectList는 sqlSeesion클래스의 메소드
-													//myboard-mapper가서 selectList는 id가 될 것
+								//myboard-mapper가서 selectList는 id가 될 것
 			List<BusinessDto> list = session.selectList(namespace+"selectList");
 			session.close();
 			
@@ -89,8 +88,4 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		return dto;
 	}
 
-=======
-
-	
->>>>>>> 2fca2884c0c828504e62fb402322657862f7aa4b
 }

@@ -21,16 +21,11 @@ public interface PetDao {
 	List<CommunityDto> CommunityList();
 
 	CommunityDto CommunityOne(int seq);
-<<<<<<< HEAD
 
-	MemberDto MemberOne(int member_no);
 	
 	public List<BusinessDto> hospitalList();
 	
 	public BusinessDto hospitalSelect(int business_num);
 
-=======
-	
->>>>>>> 2fca2884c0c828504e62fb402322657862f7aa4b
 
 }
