@@ -56,7 +56,7 @@
 
   <%@include file="../main/header.jsp"%>
   <form action="pet.do" method="post">
-		<input type="hidden" name="command" value="counselinsertres"/>
+		<input type="hidden" name="command" value="counselinsert"/>
 	<div class="hospital_container">
 		<h3 class="hospital_name">${dto.business_name}</h3>
 		<div class="detail_box">
@@ -65,21 +65,24 @@
 				<ul class="text_wrap">
 					<li>
 						<dl>
-							<dt>이름</dt>
-							<dd><input type="text" name="member_name"/></dd>
+							<dt>상담일자</dt>
+							<dd><input type="text" name="book_date"/></dd>
 						</dl>
 			    	</li>
-					<li>
-						<dl>
-							<dt>연락처</dt>
-							<dd><input type="text" name="member_phone"/></dd>
-						</dl>
-					</li>
 					<li>
 						<dl>
 							<dt>상담유형</dt>
 							<dd><input type="radio" name="book_type" value="화상상담"/>화상상담</dd>
 							<dd><input type="radio" name="book_type" value="챗봇"/>챗봇</dd>
+						</dl>
+					</li>
+					<li>
+						<dl>
+							<dt>예약신청</dt>
+							<dd>
+								<input type="button"  value="취소" onclick="pet.do?command=hospitalmain"/>
+								<input type="submit"  value="예약신청"/>
+						    </dd>
 						</dl>
 					</li>
 					<li></li>

@@ -25,12 +25,12 @@
   	<select id="CommunityOne" resultType="CommunityDto" parameterType="int">  	
   	  	SELECT * FROM COMMUNITY WHERE COMMUNITY_SEQ = #{community_seq}  	  	
   	</select>
-  	 <select id="selectList" resultType="businessDto">
+  	 <select id="hospitalList" resultType="businessDto">
    		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME 
   		 FROM BUSINESS 
   		 ORDER BY BUSINESS_NUM DESC
  	 </select>
- 	 <select id="selectOne" parameterType="int" resultType="businessDto">
+ 	 <select id="hospitalOne" parameterType="int" resultType="businessDto">
   		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME 
    		FROM BUSINESS 
   		WHERE BUSINESS_NUM = #{business_num}
