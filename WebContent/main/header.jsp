@@ -24,7 +24,7 @@
        	 		<li><a href="#">다이어리</a></li>
         		<li><a href="#">나와 닮은 동물 찾기</a></li>
        			<li><a href="pet.do?command=hospitalmain">병원상담</a></li>
-      			<li><a href="#">음식/카페</a></li>
+      			<li><a href="/semi_PetDiary/pet.do?command=foodlist">음식/카페</a></li>
        			<li><a href="/semi_PetDiary/pet.do?command=community">커뮤니티</a></li>
        		    <li>
           			 <form action="#" method="post">

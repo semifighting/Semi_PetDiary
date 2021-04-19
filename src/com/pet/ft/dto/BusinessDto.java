@@ -4,6 +4,9 @@ public class BusinessDto {
 
 	private int business_num;
 	private String business_name;
+	private String member_phone;
+	private String menu_name;
+	private String menu_price;
 	private String business_addr;
 	private String business_role;
 	private String business_time;
@@ -17,12 +20,15 @@ public class BusinessDto {
 		
 	}
 
-	public BusinessDto(int business_num, String business_name, String business_addr, String business_role,
-			String business_time, String business_park, String business_book, String business_etc, int business_no,
-			int member_no) {
-		
+	public BusinessDto(int business_num, String business_name, String member_phone, String menu_name, String menu_price,
+			String business_addr, String business_role, String business_time, String business_park,
+			String business_book, String business_etc, int business_no, int member_no) {
+		super();
 		this.business_num = business_num;
 		this.business_name = business_name;
+		this.member_phone = member_phone;
+		this.menu_name = menu_name;
+		this.menu_price = menu_price;
 		this.business_addr = business_addr;
 		this.business_role = business_role;
 		this.business_time = business_time;
@@ -47,6 +53,30 @@ public class BusinessDto {
 
 	public void setBusiness_name(String business_name) {
 		this.business_name = business_name;
+	}
+
+	public String getMember_phone() {
+		return member_phone;
+	}
+
+	public void setMember_phone(String member_phone) {
+		this.member_phone = member_phone;
+	}
+
+	public String getMenu_name() {
+		return menu_name;
+	}
+
+	public void setMenu_name(String menu_name) {
+		this.menu_name = menu_name;
+	}
+
+	public String getMenu_price() {
+		return menu_price;
+	}
+
+	public void setMenu_price(String menu_price) {
+		this.menu_price = menu_price;
 	}
 
 	public String getBusiness_addr() {
@@ -112,10 +142,6 @@ public class BusinessDto {
 	public void setMember_no(int member_no) {
 		this.member_no = member_no;
 	}
+
 	
-	
-	
-	
-	
-	
-}
+	}

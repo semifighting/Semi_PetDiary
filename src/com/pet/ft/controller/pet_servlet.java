@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.pet.ft.dto.BusinessDto;
 import com.pet.ft.dto.CommunityDto;
+import com.pet.ft.model.BusinessDao;
+import com.pet.ft.model.BusinessDaoImpl;
 import com.pet.ft.model.PetBiz;
 import com.pet.ft.model.PetBizImpl;
 import com.pet.ft.model.PetDao;
@@ -77,6 +79,19 @@ public class pet_servlet extends HttpServlet {
 			request.setAttribute("dto", dto);
 			dispatch(request,response,"./hospital/hospital_select.jsp");
 			
+		}
+		//식당,카페 리스트
+		BusinessDao bdao = new BusinessDaoImpl();
+		if(command.equals("foodlist")) {
+			List<BusinessDto> list = bdao.BusinessList();
+			request.setAttribute("list", list);
+			request.getRequestDispatcher("food/food_list.jsp").forward(request, response);
+			System.out.println("123");
+		}else if(command.equals("bookpage")) {
+			int seq = Integer.parseInt(request.getParameter("seq"));
+			BusinessDto bdto = bdao.BusinessOne(seq);
+			request.setAttribute("bdto", bdto);
+			request.getRequestDispatcher("food_book.jsp").forward(request, response);
 		}
 		
 	
