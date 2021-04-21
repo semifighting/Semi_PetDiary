@@ -1,17 +1,14 @@
-<%
-    request.setCharacterEncoding("UTF-8");
-    response.setCharacterEncoding("UTF-8");
-%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+
 <html>
 <head>
     <title>Title</title>
-    <link href="/semi_PetDiary/resources/css/main_view.css" rel="stylesheet" type="text/css" />
+    <link href="../resources/css/main_view.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<%@include file="/main/header.jsp"%>
+<%@include file="../main/header.jsp"%>
 <div id="welcome">
-    <img alt="동물" src="/semi_PetDiary/resources/image/4.jpg">
+    <img alt="동물" src="../resources/image/4.jpg">
     <div>
         우리의 동물들과 행복한 시간을 보내보세요<br>
         병원예약도 가능하고 지도를 통해 여행 계획을 세워보세요<br>
@@ -31,6 +28,6 @@
     </tr>
 </table>
 
-<%@include file="/main/footer.jsp"%>
+<%@include file="../main/footer.jsp"%>
 </body>
 </html>

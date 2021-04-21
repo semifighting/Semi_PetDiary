@@ -3,7 +3,7 @@
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
 %>
-<link href="/semi_PetDiary/resources/css/stylesheet.css" rel="stylesheet">
+<link href="../resources/css/stylesheet.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 
@@ -21,11 +21,11 @@
 		</div>
 		<ul class="header_menu">
     		
-       	 		<li><a href="#">다이어리</a></li>
+       	 		<li><a href="pet.do?command=diary">다이어리</a></li>
         		<li><a href="#">나와 닮은 동물 찾기</a></li>
-       			<li><a href="pet.do?command=hospitalmain">병원상담</a></li>
+       			<li><a href="#">병원상담</a></li>
       			<li><a href="#">음식/카페</a></li>
-       			<li><a href="/semi_PetDiary/pet.do?command=community">커뮤니티</a></li>
+       			<li><a href="#">커뮤니티</a></li>
        		    <li>
           			 <form action="#" method="post">
             	  		 <input type="text" id="searchBox">
@@ -37,7 +37,7 @@
    		
    		<ul class="header_login">
    			<li><a href="#">로그인</a></li>
-   			<li><a href="/semi_PetDiary/pet.do?command=signup">회원가입</a></li>
+   			<li><a href="#">회원가입</a></li>
    		</ul>
 		
 		<ul class="header_icons">
