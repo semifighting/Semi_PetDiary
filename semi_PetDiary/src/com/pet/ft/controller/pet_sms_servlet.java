@@ -33,11 +33,21 @@ public class pet_sms_servlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		
-		String phone= pet_util.FromMemberNoTogetPhone(Integer.parseInt(request.getParameter("member_seq")));
-		String Name= pet_util.FromMemberNoTogetPhone(Integer.parseInt(request.getParameter("member_seq")));
+		
+		
+		String book_date = null;
+		String book_time = null;
+		int business_num = 0;
+		String business_name = pet_util.FromBussinessNoTogetName(business_num);
+		
+		int member_no = 0;
+		String phone= pet_util.FromMemberNoTogetPhone(member_no);
+		String Name= pet_util.FromMemberNoTogetPhone(member_no);
+		String massage = Name+"님 이름으로 "+book_date+book_time+business_name+"에 예약되었습니다.";
+		
 		
 		String targetUrl = "https://api.solapi.com/messages/v4/send";
-		String parameters = " {\"message\":{\"to\":\""+phone+"\",\"from\":\"01077915161\",\"text\":\"내용\",\"type\":\"SMS\"}}";
+		String parameters = " {\"message\":{\"to\":\""+phone+"\",\"from\":\"01077915161\",\"text\":\""+massage+"\",\"type\":\"SMS\"}}";
 
 		URL url = new URL(targetUrl); //URL 생성
 		HttpURLConnection con = (HttpURLConnection)url.openConnection(); //URL에 연결 객체 생성
@@ -73,7 +83,7 @@ public class pet_sms_servlet extends HttpServlet {
 	    
 	    
 		String responseText = "<script>"
-				+ "alert('"+statusMessage+"되었습니다. 문자메시지를 확인해 주세요');"
+				+ "alert('예약문자가 "+statusMessage+"되었습니다.');"
 				+ "location.href='"+"url"+"';"
 				+ "</script>;";
 		response.getWriter().append(responseText);

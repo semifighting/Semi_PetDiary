@@ -21,12 +21,13 @@ public class pet_util {
 	}
 	public static String FromMemberNoTogetId(int member_no) {
 		return dao.MemberOne(member_no).getMember_id();
-	}
-	
-	
+	}	
 	public static int CommunityCommentCount(int seq) {
 		int res = dao.CommunityCommentCount(seq)-1;
 		return res;
+	}
+	public static String FromBussinessNoTogetName(int seq) {
+		return null;
 	}
 	
 }
