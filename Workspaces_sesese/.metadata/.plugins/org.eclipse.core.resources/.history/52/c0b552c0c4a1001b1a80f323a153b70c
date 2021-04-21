@@ -1,0 +1,51 @@
+package com.pet.ft.dto;
+
+public class CmnVO {
+	
+	private long rows = 2;
+	private long page = 1;
+	private long toalPage;
+	private long startPage = 1;
+	private long endPage;
+	private long pageScale = 3;
+	
+	public long getRows() {
+		return rows;
+	}
+	public void setRows(long rows) {
+		this.rows = rows;
+	}
+	public long getPage() {
+		return page;
+	}
+	public void setPage(long page) {
+		this.page = page;
+	}
+	public long getToalPage() {
+		return toalPage;
+	}
+	public void setToalPage(long toalPage) {
+		this.toalPage = toalPage;
+	}
+	public long getStartPage() {
+		return startPage;
+	}
+	public void setStartPage(long startPage) {
+		this.startPage = startPage;
+	}
+	public long getEndPage() {
+		return endPage;
+	}
+	public void setEndPage(long endPage) {
+		this.endPage = endPage;
+	}
+	public long getPageScale() {
+		return pageScale;
+	}
+	public void setPageScale(long pageScale) {
+		this.pageScale = pageScale;
+	}
+	
+	
+
+}
