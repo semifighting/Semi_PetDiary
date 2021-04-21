@@ -38,7 +38,9 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
 
       <ul class="header_login">
         <li><a href="#">로그인</a></li>
-        <li><a href="/semi_PetDiary/pet.do?command=login_signup">회원가입</a></li>
+        <li>
+          <a href="/semi_PetDiary/pet.do?command=login_signup">회원가입</a>
+        </li>
       </ul>
 
       <ul class="header_icons">

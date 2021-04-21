@@ -239,4 +239,7 @@ SELECT * FROM BOOK;
 >>>>>>> kjk
 =======
 
+<<<<<<< HEAD
 >>>>>>> ig
+=======
+>>>>>>> gwanwoo

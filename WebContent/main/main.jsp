@@ -1,12 +1,10 @@
-<%
-    request.setCharacterEncoding("UTF-8");
-    response.setCharacterEncoding("UTF-8");
-%>
+<<<<<<< HEAD
 <%@ page contentType="text/html;charset=UTF-8" %>
+
 <html>
 <head>
     <title>Title</title>
-    <link href="/semi_PetDiary/resources/css/main_view.css" rel="stylesheet" type="text/css" />
+    <link href="../resources/css/main_view.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <%@include file="/main/header.jsp"%>
@@ -30,7 +28,6 @@
         <td align="center"><input id="logbutton" type="button" value="로그인"></td>
     </tr>
 </table>
-
 <%@include file="/main/footer.jsp"%>
 </body>
 </html>
