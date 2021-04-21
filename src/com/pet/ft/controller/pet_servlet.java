@@ -1,6 +1,5 @@
 package com.pet.ft.controller;
 
-<<<<<<< HEAD
 import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,18 +21,12 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
-=======
-import java.io.IOException;
-import java.util.List;
-
->>>>>>> ig
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-<<<<<<< HEAD
 import javax.servlet.http.HttpSession;
 
 import com.pet.ft.dto.BookDto;
@@ -49,20 +42,12 @@ import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
 
 import net.sf.json.JSONObject;
-=======
-
-import com.pet.ft.dto.CommunityDto;
-import com.pet.ft.dto.MemberDto;
-import com.pet.ft.model.PetBiz;
-import com.pet.ft.model.PetBizImpl;
->>>>>>> ig
 
 @WebServlet("/pet_servlet")
 public class pet_servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-<<<<<<< HEAD
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		String command = request.getParameter("command");
@@ -240,15 +225,13 @@ public class pet_servlet extends HttpServlet {
 		}
 		
 		
-		
 		PetBiz biz = new PetBizImpl();
 		//병원상담
 		if(command.equals("hospitalmain")) {
 			
 			List<BusinessDto> list = biz.hospitalList();
 			request.setAttribute("list", list);
-		
-
+			
 			dispatch(request,response,"./hospital/hospital_main.jsp");
 		}else if(command.equals("hospitalselect")) {
 			int business_num = Integer.parseInt(request.getParameter("business_num"));
@@ -478,16 +461,17 @@ public class pet_servlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			System.out.println(book_time);
-			String book_type = request.getParameter("business_role"); //book_type, business_role 둘다 올수 있는 값이 h,s
-			BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null);
-			response.sendRedirect("./food/book_list.jsp");
-			int res = bdao.bookInsert(bokdto); 
-			if(res>0) {
-				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
-				jsResponse(response, "작성 성공", "./food/book_list.jsp");
-			}else{
-				jsResponse(response, "작성 실패", "./food/food_book.jsp");
-			}
+			int res= 0;
+//			String book_type = request.getParameter("business_role"); //book_type, business_role 둘다 올수 있는 값이 h,s
+//			BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null);
+//			response.sendRedirect("./food/book_list.jsp");
+//			int res = bdao.bookInsert(bokdto); 
+//			if(res>0) {
+//				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
+//				jsResponse(response, "작성 성공", "./food/book_list.jsp");
+//			}else{
+//				jsResponse(response, "작성 실패", "./food/food_book.jsp");
+//			}
 			
 		}
 		
@@ -531,25 +515,8 @@ public class pet_servlet extends HttpServlet {
 				jsResponse(response, "일정이 등록되지 않았습니다.", "history.back();");
 			}
 		}
-		
-		
-
 	
-=======
-		
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		
-		String command = request.getParameter("command");
-		PetBiz biz = new PetBizImpl();
-		
-		if("community".equals(command)) {
-			response.sendRedirect("community/community_main.jsp");
-			
-		}
-		if("community_insert".equals(command)) {
-			response.sendRedirect("community/community_insert.jsp");
-		}
+
 		
 		if("business".equals(command)) {
 			response.sendRedirect("business/business_main.jsp");
@@ -571,9 +538,9 @@ public class pet_servlet extends HttpServlet {
 			int res = biz.changeRole(dto);
 			
 			if(res > 0) {
-				jsResponse(response, role + " ������� ����", "/semi_PetDiary/pet.do?command=list");
+				jsResponse(response, role + " 등급으로 변경", "/semi_PetDiary/pet.do?command=list");
 			} else {
-				jsResponse(response, "���� ����", "/semi_PetDiary/pet.do?command=business");
+				jsResponse(response, "변경 실패", "/semi_PetDiary/pet.do?command=business");
 			}
 		} else if("report".equals(command)) {
 			
@@ -588,36 +555,19 @@ public class pet_servlet extends HttpServlet {
 			int res = biz.deleteCommnutiy(seq);
 			
 			if(res > 0) {
-				jsResponse(response, "���� ����", "/semi_PetDiary/pet.do?command=report");
+				jsResponse(response, "삭제 성공", "/semi_PetDiary/pet.do?command=report");
 			} else {
-				jsResponse(response, "�輼 ����", "/semi_PetDiary/pet.do?command=report");
+				jsResponse(response, "삭제 실패", "/semi_PetDiary/pet.do?command=report");
 			}
 			
 		}
 		
->>>>>>> ig
 	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-<<<<<<< HEAD
-
-
-	private void jsResponse(HttpServletResponse response, String msg, String url) throws IOException {
-		String responseText = "<script>"
-							+ "alert('"+msg+"');"
-							+ "location.href='"+url+"';"
-							+ "</script>;";
-		response.getWriter().append(responseText);
-	}	
-	
-	private void dispatch(HttpServletRequest request, HttpServletResponse response, String path) throws ServletException, IOException {
-		RequestDispatcher dispatch = request.getRequestDispatcher(path);
-		dispatch.forward(request, response);
-	}
-=======
 	
 	protected void dispatch(HttpServletRequest request, HttpServletResponse response, String path) throws ServletException, IOException{
 		RequestDispatcher dispatch = request.getRequestDispatcher(path);
@@ -632,5 +582,4 @@ public class pet_servlet extends HttpServlet {
 		response.getWriter().print(responseText);
 	}
 
->>>>>>> ig
 }

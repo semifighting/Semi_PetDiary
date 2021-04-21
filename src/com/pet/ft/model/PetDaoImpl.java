@@ -33,6 +33,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		return mdto;
 	}
 	
+	
 	@Override
 	public List<CommunityDto> CommunitySearchList(String filter, String community_search){
 		List<CommunityDto> list = new ArrayList<CommunityDto>();		
@@ -122,6 +123,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		try(SqlSession session = getSqlSessionFactory().openSession(true)){
 			list = session.selectList(namespace+"CommunityList");
 		}
+		return list;
 	}
 
 	@Override
@@ -216,8 +218,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	
 	//병원상담
 	@Override
-	public List<BusinessDto> hospitalList() {
-		
+	public List<BusinessDto> hospitalList() {		
 		
 	     SqlSession session = getSqlSessionFactory().openSession();
 								
@@ -226,20 +227,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			
 		return list;
 	}
-	
-	
-	// 내가 작성
-	
-	@Override
-	public int MemberInsert(MemberDto dto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.insert(namespace+"MemberInsert", dto);
-		}
-		return res;
-	}
-	
-	
 	
 	@Override
 	public BusinessDto hospitalSelect(int business_num) {

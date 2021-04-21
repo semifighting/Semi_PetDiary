@@ -115,10 +115,13 @@
   		 FROM BUSINESS 
   		 ORDER BY BUSINESS_NUM DESC
  	 </select>
+ 	 
  	 <select id="selectOne" parameterType="int" resultType="businessDto">
   		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME 
    		FROM BUSINESS 
   		WHERE BUSINESS_NUM = #{business_num}
+  	</select>	
+  	
   	<select id = "CalViewList" parameterType="Map" resultType="CalendarDto">
   		SELECT * FROM CALENDAR WHERE MEMBER_NO = #{member_no} AND SUBSTR(CALENDAR_STARTDATE, 1, 6) = #{calendar_startdate}
   	</select>
@@ -193,6 +196,24 @@
   		DELETE FROM COMMUNITY
   		WHERE COMMUNITY_SEQ = #{seq}
   	</delete>
+  	
+  	
+  	<!-- 병원상담 -->
+  	 <select id="hospitalList" resultType="businessDto" >
+  	 	SELECT * FROM BUSINESS WHERE BUSINESS_ROLE = 'H'
+ 	 </select>
+ 	 <select id="hospitalOne" parameterType="int" resultType="businessDto">
+  		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME 
+   		FROM BUSINESS 
+  		WHERE BUSINESS_NUM = #{business_num}
+  	</select>
+  	
+  	<insert id="BookCounselInsert" parameterType="BookDto">
+  		INSERT INTO BOOK
+  		VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',3, 1,
+  				#{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR},#{book_counsel})
+  	</insert>
+  	
   	
   	
   </mapper>
