@@ -1,7 +1,0 @@
-package com.pet.ft.model;
-
-import com.pet.ft.dto.CmnVO;
-
-public class MemberPagingVO extends CmnVO {
-
-}
