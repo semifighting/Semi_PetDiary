@@ -109,6 +109,7 @@ public class CommunityDto {
 	public void setCommunity_reportcontent(int community_reportcontent) {
 		this.community_reportcontent = community_reportcontent;
 	}
+
 	public int getCommunity_no() {
 		return community_no;
 	}

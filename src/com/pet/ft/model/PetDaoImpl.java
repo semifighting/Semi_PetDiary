@@ -1,29 +1,18 @@
 package com.pet.ft.model;
 
-import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.pet.ft.dto.CalendarDto;
 import com.pet.ft.dto.CommunityDto;
-
 import com.pet.ft.dto.MemberDto;
-
-
-
-
-
 
 public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
-
+	
 	@Override
 	public MemberDto MemberOne(int member_no) {
 		MemberDto mdto = null;
@@ -32,7 +21,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}		
 		return mdto;
 	}
-	
 	
 	@Override
 	public List<CommunityDto> CommunitySearchList(String filter, String community_search){
@@ -115,7 +103,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 		return res;
 	}
-		
 	
 	@Override
 	public List<CommunityDto> CommunityList() {
@@ -123,29 +110,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		try(SqlSession session = getSqlSessionFactory().openSession(true)){
 			list = session.selectList(namespace+"CommunityList");
 		}
-		return list;
-	}
-
-	@Override
-	public int totalMember() {
-		
-		int res = 0;
-		try (SqlSession session = getSqlSessionFactory().openSession(true)){
-			res  = session.selectOne(namespace + "totalMember");
-		}
-	
-		
-		return res;
-		
-	}
-
-	@Override
-	public List<MemberDto> memberList() {
-		
-		SqlSession session = getSqlSessionFactory().openSession();
-		List<MemberDto> list = session.selectList(namespace + "memberList");
-		session.close();
-		
 		return list;
 	}
 	
@@ -177,7 +141,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 		
 		return list;
-
 	}
 	
 	
@@ -187,47 +150,22 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		try(SqlSession session = getSqlSessionFactory().openSession(true)){
 			res = session.insert(namespace+"CommentInsert", cdto);
 		}
+		
 		return res;
 	}
-	public List<MemberDto> memberList(int offset, int noOfRecords) {
-		
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		
-		params.put("offset", offset);
-		params.put("noOfRecords", noOfRecords);
-		
-		SqlSession session = getSqlSessionFactory().openSession();
-		List<MemberDto> list = session.selectList(namespace + "memberListPaging", params);
-		session.close();
-		
-		return list;
-	}
+	
+	@Override
+	public List<BusinessDto> hospitalList() {
 
-	@Override
-	public int changeRole(MemberDto dto) {
-		
-		int res = 0;
-		
-		try (SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.update(namespace + "changeRole", dto);
-		}
-		
-		return res;
-	}
-	
-	
-	//병원상담
-	@Override
-	public List<BusinessDto> hospitalList() {		
-		
-	     SqlSession session = getSqlSessionFactory().openSession();
-								
-			List<BusinessDto> list = session.selectList(namespace+"hospitalList");
+		SqlSession session = getSqlSessionFactory().openSession();
+								//session.selectList는 sqlSeesion클래스의 메소드
+													//myboard-mapper가서 selectList는 id가 될 것
+			List<BusinessDto> list = session.selectList(namespace+"selectList");
 			session.close();
 			
 		return list;
 	}
-	
+
 	@Override
 	public BusinessDto hospitalSelect(int business_num) {
 		SqlSession session = null;
@@ -235,7 +173,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		
 		try {
 			session = getSqlSessionFactory().openSession();
-			dto = session.selectOne(namespace + "hospitalOne", business_num);
+			dto = session.selectOne(namespace + "selectOne", business_num);
 		} catch (Exception e) {
 			
 			e.printStackTrace();
@@ -244,96 +182,5 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 		return dto;
 	}
-	public MemberDto SignUpIdChk(String member_id) {
-		MemberDto dto = null;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			dto = session.selectOne(namespace+"SignUpIdChk", member_id);
-		}
-		return dto;
-	}
 
-	@Override
-	public MemberDto SighUpEmailChk(String member_email) {
-		MemberDto dto = null;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			dto = session.selectOne(namespace+"SignUpEmailChk", member_email);
-		}
-		return dto;
-	}
-
-
-	@Override
-	public int hospitalBookInsert(BookDto dto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.insert(namespace+"BookCounselInsert", dto);
-		}
-		return res;
-		
-	}
-	
-
-	public int CalendarInsert(CalendarDto CalDto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.insert(namespace+"CalendarInsert", CalDto);
-		}
-		return res;
-	}
-
-	@Override
-	public int totalReport() {
-		
-		int res = 0;
-		try (SqlSession session = getSqlSessionFactory().openSession(true)){
-			res  = session.selectOne(namespace + "totalReport");
-		}
-	
-		
-		return res;
-	}
-
-	@Override
-	public List<CommunityDto> reportList() {
-		SqlSession session = getSqlSessionFactory().openSession();
-		List<CommunityDto> list = session.selectList(namespace + "reportList");
-		session.close();
-		
-		return list;
-	}
-
-	@Override
-	public int deleteCommnutiy(int seq) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)) {
-			res = session.delete(namespace + "deleteCommunity" , seq);
-		}
-		return res;
-	}
-
-
-	@Override
-	public List<CalendarDto> CalViewList(int member_no, String yyyyMM) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<CalendarDto> list = new ArrayList<CalendarDto>();
-		map.put("member_no", member_no);
-		map.put("calendar_startdate", yyyyMM);
-		System.out.println(map);
-		
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			list = session.selectList(namespace+"CalViewList",map);
-		}
-		return list;
-	}
-
-	@Override
-	public boolean nextPage(String pageNumber) {
-		boolean res = false;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)) {
-			res = session.selectOne(namespace + "nextPage" , pageNumber);
-		}
-		return res;
-	}
-
-		
 }
