@@ -1,3 +1,5 @@
+<%@page import="com.pet.ft.dto.BusinessDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -34,6 +36,19 @@
 		font-size:21px;
 		font-style:strong;
 	}
+	.hospital_search .hospital_map{
+		margin: 10px 500px; 
+		padding: 2px;
+		font-size:16px;
+		width:300px;
+		height:40px;
+		background-color:salmon;
+		color:wheat;
+		cursor:pointer;
+		border-radius:12px;
+		
+	}
+	
 	.hospital_list{
 		background-color: #f9f9f9;
         width: 1260px;
@@ -71,7 +86,7 @@
   	      flex-direction: column;
   	     
 	}
-	.hospital_title {
+	.hospital_details .hospital_title {
   		font-size: 1.1rem;
   		font-weight: bold;
   		margin-bottom: 0.5rem;
@@ -86,7 +101,6 @@
 	    margin-bottom: 0.1rem;
  	    text-decoration: none;
  	    color:black;
-
 	}
 	
 </style>
@@ -100,7 +114,9 @@
 			<p>화상상담/챗봇 연결을 통해 반려견의 상태를 진단받을 수 있습니다.</p>
 		</div>	
 		<%--병원리스트 --%>	
-	
+		<div class="hospital_search">
+			<input class="hospital_map" type="button" value="지도에서 병원찾기" onclick="mapPop();"/>
+		</div>
 		<div class="hospital_list">
 			<section class="hospital_section">
 				<c:choose>
@@ -126,7 +142,13 @@
             </section>
 		</div>
 	</div>
+	<script type="text/javascript">
+		function mapPop(){
+			var popup = window.open('./hospital/map.jsp', '지도', 'width=700px,height=800px,scrollbars=yes');
+		}
+		
 	
+	</script>
 
 
 

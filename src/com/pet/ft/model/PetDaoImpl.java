@@ -9,7 +9,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.pet.ft.dto.CommunityDto;
+
 import com.pet.ft.dto.MemberDto;
+
 
 public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
@@ -64,15 +66,18 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	//병원상담
 	@Override
 	public List<BusinessDto> hospitalList() {
-
-		SqlSession session = getSqlSessionFactory().openSession();
+		
+		
+	     SqlSession session = getSqlSessionFactory().openSession();
 								
 			List<BusinessDto> list = session.selectList(namespace+"hospitalList");
 			session.close();
 			
 		return list;
 	}
-
+	
+	
+	
 	@Override
 	public BusinessDto hospitalSelect(int business_num) {
 		SqlSession session = null;
@@ -100,5 +105,11 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		return res;
 		
 	}
+
+
+	
+
+
+	
 
 }

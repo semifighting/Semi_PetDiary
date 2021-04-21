@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
+
 import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
 
@@ -28,5 +29,9 @@ public class PetBizImpl implements PetBiz {
 		
 		return dao.hospitalBookInsert(dto);
 	}
+
+	
+
+	
 
 }

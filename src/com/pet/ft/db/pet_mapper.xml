@@ -27,20 +27,19 @@
   	</select>
   	
   	<!-- 병원상담 -->
-  	 <select id="hospitalList" resultType="businessDto">
-   		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME 
-  		 FROM BUSINESS 
-  		 ORDER BY BUSINESS_NUM DESC
+  	 <select id="hospitalList" resultType="businessDto" >
+  	 	SELECT * FROM BUSINESS WHERE BUSINESS_ROLE = 'H'
  	 </select>
  	 <select id="hospitalOne" parameterType="int" resultType="businessDto">
   		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME 
    		FROM BUSINESS 
   		WHERE BUSINESS_NUM = #{business_num}
   	</select>
+  	
   	<insert id="BookCounselInsert" parameterType="BookDto">
   		INSERT INTO BOOK
-  		VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,#{book_type},3, 1,
-  				#{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR})
+  		VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',3, 1,
+  				#{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR},#{book_counsel})
   	</insert>
-  
+  	
   </mapper>

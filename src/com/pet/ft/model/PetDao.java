@@ -7,7 +7,9 @@ import com.pet.ft.dto.BusinessDto;
 
 
 import com.pet.ft.dto.CommunityDto;
+
 import com.pet.ft.dto.MemberDto;
+
 
 public interface PetDao {
 	String namespace = "com.pet.ft.mapper.";
@@ -22,12 +24,15 @@ public interface PetDao {
 
 	CommunityDto CommunityOne(int seq);
 
-	
+	//병원상담
 	public List<BusinessDto> hospitalList();
+	
+	
 	
 	public BusinessDto hospitalSelect(int business_num);
 
 	public int hospitalBookInsert(BookDto dto);
+	
 	
 
 }

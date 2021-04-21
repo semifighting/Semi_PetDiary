@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
 import com.pet.ft.dto.CommunityDto;
+
 import com.pet.ft.model.PetBiz;
 import com.pet.ft.model.PetBizImpl;
 import com.pet.ft.model.PetDao;
@@ -69,9 +70,12 @@ public class pet_servlet extends HttpServlet {
 		PetBiz biz = new PetBizImpl();
 		//병원상담
 		if(command.equals("hospitalmain")) {
+			
 			List<BusinessDto> list = biz.hospitalList();
 			request.setAttribute("list", list);
-			dispatch(request, response, "./hospital/hospital_main.jsp");
+		
+
+			dispatch(request,response,"./hospital/hospital_main.jsp");
 		}else if(command.equals("hospitalselect")) {
 			int business_num = Integer.parseInt(request.getParameter("business_num"));
 			BusinessDto dto = biz.hospitalSelect(business_num);
@@ -80,17 +84,17 @@ public class pet_servlet extends HttpServlet {
 			
 		}else if(command.equals("counselinsert")) {
 			String book_date = request.getParameter("book_date");
-			String book_type = request.getParameter("book_type");
+			String book_counsel = request.getParameter("book_counsel");
 			
 			BookDto dto = new BookDto();
 			dto.setBook_date(book_date);
-			dto.setBook_type(book_type);
+			dto.setBook_counsel(book_counsel);
 			
 			int res = biz.hospitalBookInsert(dto);
 			if(res>0) {
-				jsResponse(response, "예약성공", "./hospital/hospital_main.jsp");
+				jsResponse(response, "예약성공", "pet.do?command=hospitalmain");
 			}else {
-				jsResponse(response, "예약실패", "./hospital/hospital_main.jsp");
+				jsResponse(response, "예약실패", "./hospital/hospital_select.jsp");
 			}
 		}
 		

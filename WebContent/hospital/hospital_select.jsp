@@ -13,19 +13,22 @@
 
 <style type="text/css">
 	.hospital_container{
-		float: left; width:100%; background-color:#f8f7f2; min-height:500px; padding:50px 0;
+		 width:100%; background-color:#f8f7f2; min-height:500px; padding:50px 0;
 	}
 	.hospital_name{
-		width:100%; font-size:30px; color:black; font-weight:400; text-align:left;
+		width:100%; font-size:30px; color:black; font-weight:400; text-align:left; margin-left:120px;
 	}
 	.detail_box{
 		width:100%; margin:30px auto;
 	}
 	.detail_box_img{
-		float:left; width:53%;
+		float:left; width:53%; position:absolute; margin-left:120px; 
+	}
+	.detail_box_img .himg{
+		max-height:270px;min-height:270px; border-radius:20px;
 	}
 	.detail_box_text{
-		float:right; width:52%; border-top:3px solid #646361;
+		float:right; width:52%; border-top:3px solid #646361; position:relative;
 	}
 	.text_wrap{
 		width:100%; padding:0px 0;
@@ -60,7 +63,9 @@
 	<div class="hospital_container">
 		<h3 class="hospital_name">${dto.business_name}</h3>
 		<div class="detail_box">
-			<div class="detail_box_img"></div>
+			<div class="detail_box_img">
+				<img class="himg" src="./resources/image/dodam1.png">
+			</div>
 			<div class="detail_box_text">
 				<ul class="text_wrap">
 					<li>
@@ -73,8 +78,8 @@
 						<dl>
 							<dt>상담유형</dt>
 							<dd>
-								<input type="radio" name="book_type" value="H"/>화상상담
-								<input type="radio" name="book_type" value="챗봇"/>챗봇
+								<input type="radio" name="book_counsel" value="화상상담"/>화상상담
+								<input type="radio" name="book_counsel" value="챗봇"/>챗봇
 							</dd>
 						</dl>
 					</li>
