@@ -2,6 +2,7 @@ package com.pet.ft.model;
 
 import java.util.List;
 
+import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
 
 public interface BusinessDao {
@@ -9,7 +10,8 @@ public interface BusinessDao {
 	
 	List<BusinessDto> BusinessList();
 	
-	BusinessDto BusinessOne(int seq);
+	BusinessDto businessOne(int business_num);
 	
+	int bookInsert(BookDto bookDto);
 
 }

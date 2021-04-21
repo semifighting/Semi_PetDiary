@@ -1,5 +1,6 @@
 package com.pet.ft.model;
 
+import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
 import com.pet.ft.dto.CommunityDto;
 
@@ -22,12 +23,30 @@ public class BusinessDaoImpl extends SqlMapConfig implements BusinessDao {
 	}
 
 	@Override
-	public BusinessDto BusinessOne(int seq) {
+	public BusinessDto businessOne(int business_num) {
 		BusinessDto bdto = null;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			bdto = session.selectOne(namespace1+"BusinessOne", seq);
+		SqlSession session = null;
+		
+		try {
+			session = getSqlSessionFactory().openSession();
+			bdto = session.selectOne(namespace1+"BusinessOne", business_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
 		}
+		
 		return bdto;
+	
+	}
+
+	@Override
+	public int bookInsert(BookDto bookDto) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.insert(namespace1+"BookInsert", bookDto);
+		}
+		return res;
 	}
 
 }

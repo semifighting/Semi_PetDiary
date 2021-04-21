@@ -16,6 +16,8 @@ public class BusinessDto {
 	private int business_no;
 	private int member_no;
 	
+
+	
 	public BusinessDto() {
 		
 	}
@@ -38,6 +40,7 @@ public class BusinessDto {
 		this.business_no = business_no;
 		this.member_no = member_no;
 	}
+	
 
 	public int getBusiness_num() {
 		return business_num;

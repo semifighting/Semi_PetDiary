@@ -1,6 +1,10 @@
 package com.pet.ft.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -10,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
 import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.model.BusinessDao;
@@ -86,14 +91,32 @@ public class pet_servlet extends HttpServlet {
 			List<BusinessDto> list = bdao.BusinessList();
 			request.setAttribute("list", list);
 			request.getRequestDispatcher("food/food_list.jsp").forward(request, response);
-			System.out.println("123");
-		}else if(command.equals("bookpage")) {
-			int seq = Integer.parseInt(request.getParameter("seq"));
-			BusinessDto bdto = bdao.BusinessOne(seq);
-			request.setAttribute("bdto", bdto);
-			request.getRequestDispatcher("food_book.jsp").forward(request, response);
 		}
-		
+		if(command.equals("bookform")) {
+			int business_num = Integer.parseInt(request.getParameter("business_num"));
+			BusinessDto bdto = bdao.businessOne(business_num);
+			request.setAttribute("bdto", bdto);
+			System.out.println(bdto.getBusiness_name());
+			dispatch(request, response,"./food/food_book.jsp");
+			
+		}
+		if(command.equals("bookinsert")) {
+			DateFormat dateFormat = new SimpleDateFormat();
+			Date book_date = null;
+			try {
+				book_date = dateFormat.parse(request.getParameter("book_date"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			int book_store = Integer.parseInt(request.getParameter("business_num"));
+			String book_time = request.getParameter("book_time");
+			String book_type = request.getParameter("business_role"); //book_type, business_role 둘다 올수 있는 값이 h,s
+			BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null);
+			response.sendRedirect("./food/book_list.jsp");
+			int res = bdao.bookInsert(bokdto); 
+			
+		}
+	
 	
 	}
   

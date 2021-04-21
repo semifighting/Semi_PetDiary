@@ -10,4 +10,5 @@ public interface PetBiz {
 	
 	public BusinessDto hospitalSelect(int business_num);
 
+	public BusinessDto businessOne(int business_num);
 }
