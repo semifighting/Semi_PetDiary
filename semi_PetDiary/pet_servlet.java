@@ -1,7 +1,6 @@
 package com.pet.ft.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -33,13 +32,9 @@ public class pet_servlet extends HttpServlet {
 		if("community".equals(command)) {			
 			List<CommunityDto> list = dao.CommunityList();			
 			request.setAttribute("list", list);
-			List<Integer> commentcount = new ArrayList<Integer>();
-			for(CommunityDto cdto : list) {
-				commentcount.add(dao.CommunityCommentCount(cdto.getCommunity_no())-1);
-			}
-			request.setAttribute("commentcount", commentcount);
 			if(request.getParameter("paging")==null){
 				request.getRequestDispatcher(communityDirectory+"main.jsp?paging="+1).forward(request, response);
+
 			}else {
 				request.getRequestDispatcher(communityDirectory+"main.jsp?paging="+request.getParameter("paging")).forward(request, response);
 			}	
@@ -87,9 +82,9 @@ public class pet_servlet extends HttpServlet {
 		}
 		if("community_detail".equals(command)) {
 			int seq = Integer.parseInt(request.getParameter("seq"));
-			dao.CommunityViews(seq);
+			int community_no = Integer.parseInt(request.getParameter("community_no"));
 			CommunityDto cdto = dao.CommunityOne(seq);
-			List<CommunityDto> CommentList= dao.CommentList(cdto.getCommunity_no()); 
+			List<CommunityDto> CommentList= dao.CommentList(community_no); 
 			request.setAttribute("cdto", cdto);
 			request.setAttribute("commentList", CommentList);
 			request.getRequestDispatcher(communityDirectory+"detail.jsp").forward(request, response);
@@ -140,21 +135,6 @@ public class pet_servlet extends HttpServlet {
 				jsResponse(response, "수정 실패", "pet.do?command=community_detail&seq="+seq+"&community_no="+community_no);
 			}
 		}
-
-		if("community_comment_update".equals(command)) {
-			String content = request.getParameter("content");
-			int seq = Integer.parseInt(request.getParameter("seq"));
-			int community_no = Integer.parseInt(request.getParameter("community_no"));
-			CommunityDto CDto = new CommunityDto(seq, "댓글", content, null, "N", 0, community_no, 0, 1);
-			int res = dao.CommunityUpdate(CDto);
-			if(res>0) {
-				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
-				jsResponse(response, "수정 성공", "pet.do?command=community_detail&seq="+request.getParameter("community_seq")+"&community_no="+community_no);
-			}else{
-				jsResponse(response, "수정 실패", "pet.do?command=community_detail&seq="+request.getParameter("community_seq")+"&community_no="+community_no);
-			}
-		}
-		
 		if("community_update".equals(command)) {
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
@@ -170,7 +150,6 @@ public class pet_servlet extends HttpServlet {
 			}
 			
 		}
-		
 		if("community_delete".equals(command)) {
 			int seq = Integer.parseInt(request.getParameter("seq"));
 			int res = dao.CommunityDelete(seq);	
@@ -180,19 +159,6 @@ public class pet_servlet extends HttpServlet {
 				jsResponse(response, "삭제 성공", "pet.do?command=community");
 			}else{
 				jsResponse(response, "삭제 실패", "pet.do?command=community");
-			}
-			
-		}
-
-		if("community_comment_delete".equals(command)) {
-			int seq = Integer.parseInt(request.getParameter("seq"));
-			int community_seq = Integer.parseInt(request.getParameter("community_seq"));
-			int res = dao.CommunityDelete(seq);				
-			if(res>0) {
-				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
-				jsResponse(response, "삭제 성공", "pet.do?command=community_detail&seq="+community_seq);
-			}else{
-				jsResponse(response, "삭제 실패", "pet.do?command=community_detail&seq="+community_seq);
 			}
 			
 		}

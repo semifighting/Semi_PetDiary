@@ -27,5 +27,23 @@ public interface PetDao {
 	
 	public BusinessDto hospitalSelect(int business_num);
 
+	int CommentInsert(CommunityDto cdto);
+
+	List<CommunityDto> CommentList(int community_no);
+
+
+	List<CommunityDto> CommunitySearchList(String filter, String community_search);
+
+	int CommunityReport(int community_seq);
+
+	int CommunityUpdate(CommunityDto cdto);
+
+	int CommunityDelete(int seq);
+
+	int CommunityViews(int seq);
+
+	int CommunityCommentCount(int seq);
+
+	
 
 }

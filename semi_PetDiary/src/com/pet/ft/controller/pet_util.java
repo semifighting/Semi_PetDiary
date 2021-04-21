@@ -23,4 +23,10 @@ public class pet_util {
 		return dao.MemberOne(member_no).getMember_id();
 	}
 	
+	
+	public static int CommunityCommentCount(int seq) {
+		int res = dao.CommunityCommentCount(seq)-1;
+		return res;
+	}
+	
 }

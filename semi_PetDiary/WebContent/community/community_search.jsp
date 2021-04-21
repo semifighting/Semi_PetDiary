@@ -1,6 +1,6 @@
+<%@page import="com.pet.ft.controller.pet_util"%>
 <%@page import="java.util.List"%>
 <%@page import="com.pet.ft.dto.CommunityDto"%>
-<%@page import="com.pet.ft.controller.pet_util" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charser=UTF-8"); %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -31,9 +31,6 @@ text-align: center
 	font-size: 12pt;
 	text-decoration:none;
 }
-.community_icon{
-
-}
 
 </style>
 </head>
@@ -50,12 +47,12 @@ text-align: center
 			<form action="/semi_PetDiary/pet.do?" method="post">			
 				<input type="hidden" name="command" value="community_search">
 				<select name="filter">
-					<option value="title">제목</option>
-					<option value="writer">내용</option>
-					<option value="comment_content">댓글내용</option>
+					<option value="title"<%if("title".equals(request.getParameter("filter"))){%>selected<%}%>>제목</option>
+					<option value="writer"<%if("writer".equals(request.getParameter("filter"))){%>selected<%}%>>내용</option>
+					<option value="comment_content"<%if("comment_content".equals(request.getParameter("filter"))){%>selected<%}%>>댓글내용</option>
 				</select>			
-				<input type="text" name="search_content"/>
-				<input type="submit" value="검색">
+				<input type="text" name="search_content" value="<%=request.getParameter("search_content")%>"/>
+				<input type="submit" value="검 색">
 			</form>
 		</div>
 	</div>
@@ -80,7 +77,7 @@ text-align: center
 					<a href="#"> <img alt="" src=""> </a>
 				</div>
 				<div class="community_icon">
-				댓글 수 	<a class="" href="#"> <img alt="" src=""> </a><%=pet_util.CommunityCommentCount(list.get(i).getCommunity_no())%>
+					댓글 수 <a class="" href="#"> <img alt="" src=""> </a> <%=pet_util.CommunityCommentCount(list.get(i).getCommunity_no())%>
 					좋아요 수  <a class="" href="#"> <img alt="" src=""> </a><%=list.get(i).getCommunity_like() %>
 					조회 수  <a class="" href="#"> <img alt="" src=""> </a> <%=list.get(i).getCommunity_views() %>
 				</div>
@@ -90,7 +87,7 @@ text-align: center
 		}else{
 			for(int i = (paging-1)*12;i<list.size();i++){
 %>
-			<div class="commnunity_entity" onclick="location.href='/semi_PetDiary/pet.do?command=community_detail&seq=<%=list.get(i).getCommunity_seq()%>'">
+			<div class="commnunity_entity" onclick="location.href='/semi_PetDiary/pet.do?command=community_detail&seq=<%=list.get(i).getCommunity_seq()%>&community_no=<%=list.get(i).getCommunity_no()%>'">
 				<div class="commnuity_title">
 					<%=list.get(i).getCommunity_title() %>
 				</div>
@@ -100,7 +97,6 @@ text-align: center
 				<div class="commnuity_content">
 					<%=list.get(i).getCommunity_content() %>
 				</div>
-				
 				<div class="commnunity_picture">
 					<a href="#"> <img alt="" src=""> </a>
 				</div>
@@ -119,7 +115,7 @@ text-align: center
 			<%
 			for(int i =0; i<list.size()/12+1;i++){
 			%>
-				<span class="paging_number" onclick="location.href='/semi_PetDiary/pet.do?command=community&paging=<%=(i+1)%>'">  <%=i+1 %>  </span>
+				<span class="paging_number" onclick="location.href='/semi_PetDiary/pet.do?command=community_search&paging=<%=(i+1)%>&filter=<%=request.getParameter("filter")%>&search_content=<%=request.getParameter("search_content")%>'">  <%=i+1 %>  </span>
 			<%
 			}
 			%>

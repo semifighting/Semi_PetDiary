@@ -22,7 +22,78 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		return mdto;
 	}
 	
+	@Override
+	public List<CommunityDto> CommunitySearchList(String filter, String community_search){
+		List<CommunityDto> list = new ArrayList<CommunityDto>();		
+		switch (filter) {
+		case "title":
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				list = session.selectList(namespace+"CommunitySearchTitle", community_search);
+			}		
+			break;
 
+		case "content":
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				list = session.selectList(namespace+"CommunitySearchContent", community_search);
+			}		
+			
+			break;
+		case "comment_content" :
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			list = session.selectList(namespace+"CommunitySearchCommentContent", community_search);
+			}				
+		}
+		return list;
+	}
+	
+	@Override
+	public int CommunityReport(int seq) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.update(namespace+"CommunityReport", seq);
+		}		
+		return res;
+	}
+	
+	@Override
+	public int CommunityUpdate(CommunityDto cdto) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.update(namespace+"CommunityUpdate", cdto);
+		}		
+		return res;
+	}
+
+	@Override
+	public int CommunityDelete(int seq) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.delete(namespace+"CommunityDelete", seq);
+		}		
+		return res;
+	}
+
+
+	@Override
+	public int CommunityViews(int seq) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.update(namespace+"CommunityViews", seq);
+		}		
+		return res;
+	}
+	
+
+	@Override
+	public int CommunityCommentCount(int seq) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.selectOne(namespace+"CommunityCommentCount", seq);
+		}		
+		return res;
+	}
+	
+	
 	@Override
 	// 회원가입
 	public int MemberInsert(MemberDto Dto) {
@@ -59,12 +130,36 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 		return cdto;
 	}
+
+	@Override
+	public List<CommunityDto> CommentList(int community_no) {
+		List<CommunityDto> list = new ArrayList<CommunityDto>();
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			list = session.selectList(namespace+"CommentList", community_no);
+		}
+		for(CommunityDto dto : list) {
+		}
+		
+		return list;
+	}
+	
+	
+	@Override
+	public int CommentInsert(CommunityDto cdto) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.insert(namespace+"CommentInsert", cdto);
+		}
+		
+		return res;
+	}
+	
 	@Override
 	public List<BusinessDto> hospitalList() {
 
 		SqlSession session = getSqlSessionFactory().openSession();
 								//session.selectList는 sqlSeesion클래스의 메소드
-								//myboard-mapper가서 selectList는 id가 될 것
+													//myboard-mapper가서 selectList는 id가 될 것
 			List<BusinessDto> list = session.selectList(namespace+"selectList");
 			session.close();
 			
