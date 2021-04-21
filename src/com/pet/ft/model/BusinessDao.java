@@ -10,7 +10,7 @@ public interface BusinessDao {
 	
 	List<BusinessDto> BusinessList();
 	
-	BusinessDto businessOne(int business_num);
+	BusinessDto businessOne(int business_num);//mapper id = businessOne
 	
 	int bookInsert(BookDto bookDto);//bookInsert: mapper에서 쓰는 아이디
 

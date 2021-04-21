@@ -30,22 +30,20 @@ height: 50px;
 </head>
 <body>
 <%@include file="../main/header.jsp"%>
-<%BusinessDto bdto = new BusinessDto(); %>
+<%BusinessDto bdto = (BusinessDto)request.getAttribute("bdto"); %>
 
 	<form action="/semi_PetDiary/pet.do" method="post">
 	<input type="hidden" name="command" value="bookinsert"/>
 
-	<input type="hidden" name="role" value="<%=bdto.getBusiness_role() %>">
-	<input type="hidden" name="num" value="<%=bdto.getBusiness_num() %>">
-	<input type="hidden" name="member_no" value="<%=bdto.getMember_no() %>">
 		<div class="book">
-		<h3><%=bdto.getBusiness_name() %></h3><!-- 왜 데이터를 못받아온거지?왜 null이지... -->
+		<h3><%=bdto.getBusiness_name() %></h3>
+		<p><%=bdto.getBusiness_role() %></p>
 		<h3>예약페이지 입니다.</h3>
 			<div>
-				<div class="book_content"><span>예약일자</span><input type="text" name="book_date"></div>
+				<div class="book_content"><span>예약일자</span><input type="date" name="book_date"></div>
 			</div>		
 			<div>
-				<div class="book_content"><span>예약시간</span><input type="text" name="book_time"></div>
+				<div class="book_content"><span>예약시간</span><input type="time" name="book_time"></div>
 			</div>		
 			<div>
 				<input type="submit" value="예약확인">

@@ -46,9 +46,9 @@
    		FROM BUSINESS JOIN MEMBER USING(MEMBER_NO)
   		WHERE BUSINESS_NUM = #{business_num}
   	</select>
-  	 <!--  	<insert id="BookInsert" parameterType="BookDto">
+  	 <insert id="BookInsert" parameterType="BookDto">
   		INSERT INTO BOOK
-  		VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time}, #{book_type}, #{book_store}, #{member_no}, 0, 'N', NULL)  	
-  		</insert> --><!-- 해당 구문으로 인해 음식카페페이지 에러 발생. 확인중... -->
+  		VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time}, #{book_type}, #{book_store}, #{member_no}, 0, 'N', #{book_hostime,jdbcType=VARCHAR})  	
+  		</insert> 
   
   </mapper>
