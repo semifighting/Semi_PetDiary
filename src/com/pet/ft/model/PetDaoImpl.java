@@ -1,18 +1,21 @@
 package com.pet.ft.model;
 
-import com.pet.ft.dto.BusinessDto;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.pet.ft.dto.CalendarDto;
 import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
 
 public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
-	
+
 	@Override
 	public MemberDto MemberOne(int member_no) {
 		MemberDto mdto = null;
@@ -21,17 +24,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}		
 		return mdto;
 	}
-	
-
-	@Override
-	// 회원가입
-	public int MemberInsert(MemberDto Dto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.insert(namespace+"MemberInsert", Dto);
-		}
-		return res;
-	}
+		
 	
 	@Override
 	public List<CommunityDto> CommunityList() {
@@ -59,33 +52,63 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 		return cdto;
 	}
+	
+	
+	// 내가 작성
+	
 	@Override
-	public List<BusinessDto> hospitalList() {
-
-		SqlSession session = getSqlSessionFactory().openSession();
-								//session.selectList는 sqlSeesion클래스의 메소드
-													//myboard-mapper가서 selectList는 id가 될 것
-			List<BusinessDto> list = session.selectList(namespace+"selectList");
-			session.close();
-			
-		return list;
+	public int MemberInsert(MemberDto dto) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.insert(namespace+"MemberInsert", dto);
+		}
+		return res;
 	}
 
 	@Override
-	public BusinessDto hospitalSelect(int business_num) {
-		SqlSession session = null;
-		BusinessDto dto = null;
-		
-		try {
-			session = getSqlSessionFactory().openSession();
-			dto = session.selectOne(namespace + "selectOne", business_num);
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}finally {
-			session.close();
+	public MemberDto SignUpIdChk(String member_id) {
+		MemberDto dto = null;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			dto = session.selectOne(namespace+"SignUpIdChk", member_id);
 		}
 		return dto;
 	}
 
+	@Override
+	public MemberDto SighUpEmailChk(String member_email) {
+		MemberDto dto = null;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			dto = session.selectOne(namespace+"SignUpEmailChk", member_email);
+		}
+		return dto;
+	}
+
+
+	@Override
+	public int CalendarInsert(CalendarDto CalDto) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.insert(namespace+"CalendarInsert", CalDto);
+		}
+		return res;
+	}
+
+
+	@Override
+	public List<CalendarDto> CalViewList(int member_no, String yyyyMM) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<CalendarDto> list = new ArrayList<CalendarDto>();
+		map.put("member_no", member_no);
+		map.put("calendar_startdate", yyyyMM);
+		System.out.println(map);
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			list = session.selectList(namespace+"CalViewList",map);
+		}
+		return list;
+	}
+
+
+
+		
 }
