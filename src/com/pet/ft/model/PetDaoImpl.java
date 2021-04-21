@@ -3,11 +3,15 @@ package com.pet.ft.model;
 import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.pet.ft.dto.CalendarDto;
 import com.pet.ft.dto.CommunityDto;
 
 import com.pet.ft.dto.MemberDto;
@@ -15,7 +19,7 @@ import com.pet.ft.dto.MemberDto;
 
 public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
-	
+
 	@Override
 	public MemberDto MemberOne(int member_no) {
 		MemberDto mdto = null;
@@ -106,6 +110,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 		return res;
 	}
+		
 	
 	@Override
 	public List<CommunityDto> CommunityList() {
@@ -169,6 +174,17 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			session.close();
 			
 		return list;
+	
+	
+	// 내가 작성
+	
+	@Override
+	public int MemberInsert(MemberDto dto) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.insert(namespace+"MemberInsert", dto);
+		}
+		return res;
 	}
 	
 	
@@ -186,6 +202,19 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			e.printStackTrace();
 		}finally {
 			session.close();
+	public MemberDto SignUpIdChk(String member_id) {
+		MemberDto dto = null;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			dto = session.selectOne(namespace+"SignUpIdChk", member_id);
+		}
+		return dto;
+	}
+
+	@Override
+	public MemberDto SighUpEmailChk(String member_email) {
+		MemberDto dto = null;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			dto = session.selectOne(namespace+"SignUpEmailChk", member_email);
 		}
 		return dto;
 	}
@@ -207,4 +236,30 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
 	
 
+	public int CalendarInsert(CalendarDto CalDto) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.insert(namespace+"CalendarInsert", CalDto);
+		}
+		return res;
+	}
+
+
+	@Override
+	public List<CalendarDto> CalViewList(int member_no, String yyyyMM) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<CalendarDto> list = new ArrayList<CalendarDto>();
+		map.put("member_no", member_no);
+		map.put("calendar_startdate", yyyyMM);
+		System.out.println(map);
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			list = session.selectList(namespace+"CalViewList",map);
+		}
+		return list;
+	}
+
+
+
+		
 }

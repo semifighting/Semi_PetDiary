@@ -4,14 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.pet.ft.mapper">
   
+  
+  	<insert id="MemberInsert" parameterType="MemberDto">
+  		INSERT INTO MEMBER
+  		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, #{member_pw}, #{member_email}, #{member_phone}, '회원', #{member_address})
+  	</insert>
+  	
+  	<select id="SignUpIdChk" resultType="MemberDto" parameterType="String">
+  		SELECT MEMBER_ID FROM MEMBER
+  		WHERE MEMBER_ID = #{member_id}
+  	</select>
+  	
+  	<select id="SignUpEmailChk" resultType="MemberDto" parameterType="String">
+  		SELECT MEMBER_EMAIL FROM MEMBER
+  		WHERE MEMBER_EMAIL = #{member_email}
+  	</select>
+  	
   	<select id="MemberOne" resultType="MemberDto" parameterType="int">
   		SELECT * FROM MEMBER WHERE MEMBER_NO = #{member_no}
   	</select>
-  	
-  	<insert id="MemberInsert" parameterType="int">
-  		INSERT IN TO MEMBER
-  		VALUES(MEMBER_SEQ.NEXTVAL, #{member_no}, #{member_name}, #{member_id}, #{member_pw}, #{member_email}, #{member_phone}, '회원', #{member_address})
-  	</insert>
   	
   	<select id="CommunityList" resultType="CommunityDto">
   	SELECT * FROM COMMUNITY WHERE COMMUNITY_COMMENT = 0 AND COMMUNITY_REPORT='N' ORDER BY COMMUNITY_SEQ DESC
@@ -81,6 +92,14 @@
   		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME 
    		FROM BUSINESS 
   		WHERE BUSINESS_NUM = #{business_num}
+  	<select id = "CalViewList" parameterType="Map" resultType="CalendarDto">
+  		SELECT * FROM CALENDAR WHERE MEMBER_NO = #{member_no} AND SUBSTR(CALENDAR_STARTDATE, 1, 6) = #{calendar_startdate}
   	</select>
+  	
+  	<insert id ="CalendarInsert" parameterType="CalendarDto">
+  		INSERT INTO CALENDAR
+  		VALUES(CALENDAR_NO_SEQ.NEXTVAL, #{calendar_startdate}, #{calendar_enddate}, #{calendar_necessity}, #{calendar_item}, #{calendar_title}, #{calendar_content}, ${member_no})
+  	</insert> 
+  	
   
   </mapper>

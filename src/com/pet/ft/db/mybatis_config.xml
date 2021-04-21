@@ -3,12 +3,13 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<properties resource="com/pet/ft/db/db.properties"></properties>
+
   <typeAliases>
   		<typeAlias type="com.pet.ft.dto.CommunityDto" alias="CommunityDto"/>
   		<typeAlias type="com.pet.ft.dto.MemberDto" alias="MemberDto"/>  
   		<typeAlias type="com.pet.ft.dto.BusinessDto" alias="BusinessDto"/>		  		
   		<typeAlias type="com.pet.ft.dto.BookDto" alias="BookDto"/>		  		
+  		<typeAlias type="com.pet.ft.dto.CalendarDto" alias="CalendarDto"/>  	  		
   </typeAliases>
 
   <environments default="development">
