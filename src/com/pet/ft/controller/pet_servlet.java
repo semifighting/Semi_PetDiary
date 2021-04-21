@@ -1,5 +1,6 @@
 package com.pet.ft.controller;
 
+<<<<<<< HEAD
 import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,12 +22,18 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
+=======
+import java.io.IOException;
+import java.util.List;
+
+>>>>>>> ig
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+<<<<<<< HEAD
 import javax.servlet.http.HttpSession;
 
 import com.pet.ft.dto.BookDto;
@@ -42,12 +49,20 @@ import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
 
 import net.sf.json.JSONObject;
+=======
+
+import com.pet.ft.dto.CommunityDto;
+import com.pet.ft.dto.MemberDto;
+import com.pet.ft.model.PetBiz;
+import com.pet.ft.model.PetBizImpl;
+>>>>>>> ig
 
 @WebServlet("/pet_servlet")
 public class pet_servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+<<<<<<< HEAD
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		String command = request.getParameter("command");
@@ -520,12 +535,74 @@ public class pet_servlet extends HttpServlet {
 		
 
 	
+=======
+		
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		
+		String command = request.getParameter("command");
+		PetBiz biz = new PetBizImpl();
+		
+		if("community".equals(command)) {
+			response.sendRedirect("community/community_main.jsp");
+			
+		}
+		if("community_insert".equals(command)) {
+			response.sendRedirect("community/community_insert.jsp");
+		}
+		
+		if("business".equals(command)) {
+			response.sendRedirect("business/business_main.jsp");
+		} else if("list".equals(command)) {
+			
+			List<MemberDto> list = biz.memberList();
+			request.setAttribute("list", list);
+			dispatch(request, response, "business/memberlist_main.jsp");
+			
+		} else if("change".equals(command)) {
+			
+			int no = Integer.parseInt(request.getParameter("no"));
+			String role = request.getParameter("role");
+			
+			MemberDto dto = new MemberDto();
+			dto.setMember_no(no);
+			dto.setMember_role(role);
+			
+			int res = biz.changeRole(dto);
+			
+			if(res > 0) {
+				jsResponse(response, role + " 등급으로 변경", "/semi_PetDiary/pet.do?command=list");
+			} else {
+				jsResponse(response, "변경 실패", "/semi_PetDiary/pet.do?command=business");
+			}
+		} else if("report".equals(command)) {
+			
+			List<CommunityDto> list = biz.reportList();
+			request.setAttribute("list", list);
+			dispatch(request, response, "business/reportlist_main.jsp");
+			
+		} else if("delete".equals(command)) {
+			
+			int seq = Integer.parseInt(request.getParameter("seq"));
+			
+			int res = biz.deleteCommnutiy(seq);
+			
+			if(res > 0) {
+				jsResponse(response, "삭제 성공", "/semi_PetDiary/pet.do?command=report");
+			} else {
+				jsResponse(response, "삭세 실패", "/semi_PetDiary/pet.do?command=report");
+			}
+			
+		}
+		
+>>>>>>> ig
 	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
+<<<<<<< HEAD
 
 
 	private void jsResponse(HttpServletResponse response, String msg, String url) throws IOException {
@@ -540,4 +617,20 @@ public class pet_servlet extends HttpServlet {
 		RequestDispatcher dispatch = request.getRequestDispatcher(path);
 		dispatch.forward(request, response);
 	}
+=======
+	
+	protected void dispatch(HttpServletRequest request, HttpServletResponse response, String path) throws ServletException, IOException{
+		RequestDispatcher dispatch = request.getRequestDispatcher(path);
+		dispatch.forward(request, response);
+	}
+	
+	private void jsResponse(HttpServletResponse response, String msg, String url) throws IOException {
+		String responseText = "<script type='text/javascript'>"
+						    + "alert('" + msg + "');"
+						    + "location.href='" + url + "';"
+						    + "</script>";
+		response.getWriter().print(responseText);
+	}
+
+>>>>>>> ig
 }

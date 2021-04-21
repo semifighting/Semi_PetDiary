@@ -11,9 +11,16 @@
   	<servlet-class>com.pet.ft.controller.pet_servlet</servlet-class>
   </servlet>
   <servlet-mapping>
+<<<<<<< HEAD
 	  <servlet-name>pet</servlet-name>
 	  <url-pattern>/pet.do</url-pattern>
   </servlet-mapping>
   
   
+=======
+  <servlet-name>pet</servlet-name>
+  <url-pattern>/pet.do</url-pattern>
+  </servlet-mapping>
+  
+>>>>>>> ig
 </web-app>

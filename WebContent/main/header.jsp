@@ -23,8 +23,13 @@
     		
        	 		<li><a href="#">다이어리</a></li>
         		<li><a href="#">나와 닮은 동물 찾기</a></li>
+<<<<<<< HEAD
        			<li><a href="pet.do?command=hospitalmain">병원상담</a></li>
       			<li><a href="/semi_PetDiary/pet.do?command=foodlist">음식/카페</a></li>
+=======
+       			<li><a href="#">병원상담</a></li>
+      			<li><a href="#">음식/카페</a></li>
+>>>>>>> ig
        			<li><a href="/semi_PetDiary/pet.do?command=community">커뮤니티</a></li>
        		    <li>
           			 <form action="#" method="post">
@@ -37,14 +42,23 @@
    		
    		<ul class="header_login">
    			<li><a href="#">로그인</a></li>
+<<<<<<< HEAD
    			<li><a href="/semi_PetDiary/pet.do?command=signup">회원가입</a></li>
+=======
+   			<li><a href="#">회원가입</a></li>
+>>>>>>> ig
    		</ul>
 		
 		<ul class="header_icons">
 			
+<<<<<<< HEAD
 			<li><a href="#"><i class="fas fa-user-circle"></i></a></li>
 		
 			
+=======
+			<li><a href="/semi_PetDiary/pet.do?command=business"><i class="fas fa-user-circle"></i></a></li>
+		
+>>>>>>> ig
 		</ul>
 		
 		

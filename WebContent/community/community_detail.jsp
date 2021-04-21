@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 <%@page import="java.util.List"%>
 <%@page import="com.pet.ft.dto.CommunityDto"%>
 <%@page import="com.pet.ft.controller.pet_util" %>
+=======
+>>>>>>> ig
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charser=UTF-8"); %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -10,6 +13,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<<<<<<< HEAD
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 <%
@@ -28,6 +32,8 @@ List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("commentList"
 		})
 	})
 </script>
+=======
+>>>>>>> ig
 
 <link href="/semi_PetDiary/resources/css/stylesheet.css" rel="stylesheet">
 <style type="text/css">
@@ -50,6 +56,7 @@ List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("commentList"
     border : 1px solid black;
 }
 
+<<<<<<< HEAD
 #community_comment_List{
     margin: 0 auto;
     width: 800px;
@@ -57,6 +64,8 @@ List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("commentList"
 
 }
 
+=======
+>>>>>>> ig
 #comment_content_input{
 	resize: none;
 }
@@ -74,6 +83,7 @@ List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("commentList"
 <%@include file="/main/header.jsp"%>
 	<div id="community_detail_fullbox">
 		<div id ="community_detail_contentbox">
+<<<<<<< HEAD
 			<input type="button" value="신고" onclick="location.href='/semi_PetDiary/pet.do?command=community_report&seq=<%=cdto.getCommunity_seq()%>&no=<%=cdto.getCommunity_seq()%>'">
 			<input type="button" value="수정" onclick="location.href='/semi_PetDiary/pet.do?command=community_updateform&seq=<%=cdto.getCommunity_seq()%>'"> 
 			<input type="button" value="삭제" onclick="location.href='/semi_PetDiary/pet.do?command=community_delete&seq=<%=cdto.getCommunity_seq()%>'"> 
@@ -89,16 +99,36 @@ List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("commentList"
 			<div onclick="location.href='/semi_PetDiary/pet_sms_servlet'">
 				문자 테스트
 				
+=======
+			<div id="community_detail_title">
+				아무제목
+			</div>	
+			<div id="community_detail_writer">
+				아무 사람 / 아무 일자
+			</div>	
+			<div id="community_detail_content">
+				아무내용
+>>>>>>> ig
 			</div>
 		</div>
 		<div id="community_comment_box">
 			<div id="community_comment_input_box">
+<<<<<<< HEAD
 				<form  action="/semi_PetDiary/pet.do" method="post">
 					<input type='hidden' value="community_comment" name="command" >
 					<input type='hidden' value="<%=cdto.getCommunity_no() %>" name="community_no" >
 					<input type='hidden' value="<%=cdto.getCommunity_seq() %>" name="seq" >
 					<div class="comment_content_box">
 						<textarea id="comment_content_input" name="comment" rows="10" cols="100"></textarea>
+=======
+				<form  action="#">
+					<div class="comment_content_box">
+						<input type="text" name="comment_writer">
+						<input type="text" name="comment_password">
+					</div>
+					<div class="comment_content_box">
+						<textarea id="comment_content_input" name="comment_box" rows="10" cols="100"></textarea>
+>>>>>>> ig
 					</div>
 					<div class="comment_content_box">
 						<input type="submit" value="작성">						
@@ -106,6 +136,7 @@ List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("commentList"
 				</form>
 			</div>
 		</div>
+<<<<<<< HEAD
 		<div id="community_comment_List">
 		<%
 			for(CommunityDto commentdto : list){
@@ -122,6 +153,8 @@ List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("commentList"
 			%>					
 		</div>
 		
+=======
+>>>>>>> ig
 	</div>
 </body>
 </html>

@@ -17,6 +17,10 @@ import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
 
 
+
+
+
+
 public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
 
@@ -118,6 +122,28 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		try(SqlSession session = getSqlSessionFactory().openSession(true)){
 			list = session.selectList(namespace+"CommunityList");
 		}
+	}
+
+	@Override
+	public int totalMember() {
+		
+		int res = 0;
+		try (SqlSession session = getSqlSessionFactory().openSession(true)){
+			res  = session.selectOne(namespace + "totalMember");
+		}
+	
+		
+		return res;
+		
+	}
+
+	@Override
+	public List<MemberDto> memberList() {
+		
+		SqlSession session = getSqlSessionFactory().openSession();
+		List<MemberDto> list = session.selectList(namespace + "memberList");
+		session.close();
+		
 		return list;
 	}
 	
@@ -149,6 +175,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 		
 		return list;
+
 	}
 	
 	
@@ -157,6 +184,30 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		int res = 0;
 		try(SqlSession session = getSqlSessionFactory().openSession(true)){
 			res = session.insert(namespace+"CommentInsert", cdto);
+		}
+		return res;
+	}
+	public List<MemberDto> memberList(int offset, int noOfRecords) {
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		
+		params.put("offset", offset);
+		params.put("noOfRecords", noOfRecords);
+		
+		SqlSession session = getSqlSessionFactory().openSession();
+		List<MemberDto> list = session.selectList(namespace + "memberListPaging", params);
+		session.close();
+		
+		return list;
+	}
+
+	@Override
+	public int changeRole(MemberDto dto) {
+		
+		int res = 0;
+		
+		try (SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.update(namespace + "changeRole", dto);
 		}
 		
 		return res;
@@ -174,6 +225,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			session.close();
 			
 		return list;
+	}
 	
 	
 	// 내가 작성
@@ -202,6 +254,9 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			e.printStackTrace();
 		}finally {
 			session.close();
+		}
+		return dto;
+	}
 	public MemberDto SignUpIdChk(String member_id) {
 		MemberDto dto = null;
 		try(SqlSession session = getSqlSessionFactory().openSession(true)){
@@ -229,17 +284,42 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		return res;
 		
 	}
-
-
-	
-
-
 	
 
 	public int CalendarInsert(CalendarDto CalDto) {
 		int res = 0;
 		try(SqlSession session = getSqlSessionFactory().openSession(true)){
 			res = session.insert(namespace+"CalendarInsert", CalDto);
+		}
+		return res;
+	}
+
+	@Override
+	public int totalReport() {
+		
+		int res = 0;
+		try (SqlSession session = getSqlSessionFactory().openSession(true)){
+			res  = session.selectOne(namespace + "totalReport");
+		}
+	
+		
+		return res;
+	}
+
+	@Override
+	public List<CommunityDto> reportList() {
+		SqlSession session = getSqlSessionFactory().openSession();
+		List<CommunityDto> list = session.selectList(namespace + "reportList");
+		session.close();
+		
+		return list;
+	}
+
+	@Override
+	public int deleteCommnutiy(int seq) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)) {
+			res = session.delete(namespace + "deleteCommunity" , seq);
 		}
 		return res;
 	}
@@ -259,7 +339,14 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		return list;
 	}
 
-
+	@Override
+	public boolean nextPage(String pageNumber) {
+		boolean res = false;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)) {
+			res = session.selectOne(namespace + "nextPage" , pageNumber);
+		}
+		return res;
+	}
 
 		
 }

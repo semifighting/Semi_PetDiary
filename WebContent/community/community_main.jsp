@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 <%@page import="java.util.List"%>
 <%@page import="com.pet.ft.dto.CommunityDto"%>
 <%@page import="com.pet.ft.controller.pet_util" %>
+=======
+>>>>>>> ig
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charser=UTF-8"); %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -12,6 +15,7 @@
 <title>Insert title here</title>
 <link href="/semi_PetDiary/resources/css/stylesheet.css" rel="stylesheet">
 <style type="text/css">
+<<<<<<< HEAD
 
 .commnunity_entity{
 float : left;
@@ -35,10 +39,20 @@ text-align: center
 
 }
 
+=======
+#community_search{
+}
+.commnunity_entity{
+border : 1px solid black;
+width : 250px;
+height : 300px;
+}
+>>>>>>> ig
 </style>
 </head>
 <body>
 <%@include file="/main/header.jsp"%>
+<<<<<<< HEAD
 
 <%List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("list");
   int paging = Integer.parseInt(request.getParameter("paging"));
@@ -56,10 +70,20 @@ text-align: center
 				</select>			
 				<input type="text" name="search_content"/>
 				<input type="submit" value="검색">
+=======
+	<div>
+		<div id="community_search">
+			<button onclick="location.href='/semi_PetDiary/pet.do?command=community_insert'">글 작성</button>
+			<select></select>
+			<form action="#">
+				<input type="text" name="community_search"/>
+				<input type="submit" value="     ">
+>>>>>>> ig
 			</form>
 		</div>
 	</div>
 	<div id="community_table">
+<<<<<<< HEAD
 			
 		<div class="community_row">
 <%
@@ -101,10 +125,25 @@ text-align: center
 					<%=list.get(i).getCommunity_content() %>
 				</div>
 				
+=======
+		<div class="community_row">
+			<% %>
+			<div class="commnunity_entity">
+				<div class="commnuity_title">
+				아무말 대잔치 아무말
+				</div>
+				<div class="commnuity_regdate">
+				언제언제언제언제
+				</div>
+				<div class="commnuity_content">
+				아무말 대잔치 아무말 대잔치아무말 대잔치아무말 대잔치아무말 대잔치아무말 대잔치아무말 대잔치아무말 대잔치
+				</div>
+>>>>>>> ig
 				<div class="commnunity_picture">
 					<a href="#"> <img alt="" src=""> </a>
 				</div>
 				<div class="community_icon">
+<<<<<<< HEAD
 					댓글 수 <a class="" href="#"> <img alt="" src=""> </a> <%=pet_util.CommunityCommentCount(list.get(i).getCommunity_no())%>
 					좋아요 수  <a class="" href="#"> <img alt="" src=""> </a><%=list.get(i).getCommunity_like() %>
 					조회 수  <a class="" href="#"> <img alt="" src=""> </a> <%=list.get(i).getCommunity_views() %>
@@ -125,6 +164,14 @@ text-align: center
 			%>
 		</div>
 		
+=======
+					<a class="" href="#"> <img alt="" src=""> </a>
+					<a class="" href="#"> <img alt="" src=""> </a>
+					<a class="" href="#"> <img alt="" src=""> </a>
+				</div>
+			</div>
+		</div>
+>>>>>>> ig
 	</div>
 
 </body>

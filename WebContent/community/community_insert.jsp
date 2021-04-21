@@ -35,6 +35,7 @@
 
 <body>
 <%@include file="/main/header.jsp"%>
+<<<<<<< HEAD
 	<form action="/semi_PetDiary/pet.do" method="post" >
 	<input type="hidden" name="command" value="community_insert">
 		<div id="community_insert_fullbox">
@@ -44,6 +45,16 @@
 				</div>	
 				<div id="community_insert_content">
 					<textarea style="resize: none;" rows="30" cols="108" name="content"></textarea>
+=======
+	<form action="#" method="post" >
+		<div id="community_insert_fullbox">
+			<div id ="community_insert_contentbox">
+				<div id="community_insert_title">
+					<input style="width:780px;height:50px"type="text" name="title">
+				</div>	
+				<div id="community_insert_content">
+					<textarea style="resize: none;" rows="30" cols="108"></textarea>
+>>>>>>> ig
 				</div>
 				<div id="community_insert_button">
 					<input type="submit" value="작성">

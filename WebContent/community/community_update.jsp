@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 <%@page import="com.pet.ft.dto.CommunityDto"%>
+=======
+>>>>>>> ig
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charser=UTF-8"); %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -32,6 +35,7 @@
 }
 </style>
 </head>
+<<<<<<< HEAD
 <%CommunityDto cdto =(CommunityDto)request.getAttribute("cdto");%>
 
 <body>
@@ -47,6 +51,20 @@
 				</div>	
 				<div id="community_update_content">
 					<textarea style="resize: none;" rows="30" cols="108" name="content" ><%=cdto.getCommunity_content()%></textarea>
+=======
+
+
+<body>
+<%@include file="/main/header.jsp"%>
+	<form action="#" method="post" >
+		<div id="community_update_fullbox">
+			<div id ="community_update_contentbox">
+				<div id="community_update_title">
+					<input style="width:780px;height:50px"type="text" name="title">
+				</div>	
+				<div id="community_update_content">
+					<textarea style="resize: none;" rows="30" cols="108"></textarea>
+>>>>>>> ig
 				</div>
 				<div id="community_update_button">
 					<input type="submit" value="작성">
@@ -54,6 +72,12 @@
 				</div>
 			</div>
 		</div>
+<<<<<<< HEAD
 	</form>
+=======
+	
+	</form>
+
+>>>>>>> ig
 </body>
 </html>
