@@ -22,7 +22,7 @@
             <c:forEach items="${list }" var="dto">
                 <tr>
                     <th>여행 제목</th>
-                    <td><a href="pet.do?command=calendarDetail&calendar_no=${dto.calendar_no }">${dto.calendar_title }</a></td>
+                    <td><a href="pet.do?command=calendar_detail&calendar_no=${dto.calendar_no }">${dto.calendar_title }</a></td>
                 </tr>
                 <tr>
                 </tr>
@@ -30,7 +30,7 @@
         </c:otherwise>
     </c:choose>
 </table>
-<input type="button" value="글 작성" onclick="location.href='pet.do?command=tripInsertForm'">
+<input type="button" value="글 작성" onclick="location.href='pet.do?command=calendar_insert_form'">
 <%@include file="../main/footer.jsp"%>
 </body>
 </html>

@@ -20,6 +20,8 @@
         <result property="pet_birthday" column="PET_BIRTHDAY"/>
         <result property="pet_gender" column="PET_GENDER"/>
         <result property="member_no" column="MEMBER_NO"/>
+        <result property="pet_path" column="PET_PATH"/>
+        <result property="pet_vaccination" column="PET_VACCINATION"/>
     </resultMap>
 
     <resultMap id="pictureMap" type="pictureDto">
@@ -46,9 +48,14 @@
         FROM PET
         WHERE MEMBER_NO = ${member_no}
         ORDER BY PET_NO DESC
-
     </select>
 
+    <select id="selectPetOne" resultMap="petMap" parameterType="hashMap">
+        SELECT PET_NO, PET_SPECIES, PET_BREED, PET_NAME, PET_BIRTHDAY, PET_GENDER, MEMBER_NO, PET_PATH, PET_VACCINATION
+        FROM PET
+        WHERE MEMBER_NO = ${member_no}
+        AND PET_NO = ${pet_no}
+    </select>
     <select id="selectPictureList" resultMap="pictureMap" parameterType="int">
         SELECT PICTURE_NO, PICTURE_NAME, PICTURE_DIRECTORY, MEMBER_NO
         FROM PICTURE
@@ -74,6 +81,37 @@
         AND CALENDAR_NO = #{calendar_no}
     </select>
 
+    <select id="getCount" resultType="int" parameterType="int">
+        SELECT COUNT(*)
+        FROM PET
+        WHERE MEMBER_NO = #{member_no}
+    </select>
+
+    <select id="selectPetOnePaging" resultMap="petMap" parameterType="int">
+        SELECT R, PET_NO, PET_SPECIES, PET_BREED, PET_NAME, PET_BIRTHDAY, PET_GENDER, MEMBER_NO, PET_PATH, PET_VACCINATION
+        FROM (
+                 SELECT ROWNUM AS R, A.PET_NO, A.PET_SPECIES, A.PET_BREED, A.PET_NAME, A.PET_BIRTHDAY, A.PET_GENDER, A.MEMBER_NO, A.PET_PATH, A.PET_VACCINATION
+                 FROM (
+                          SELECT PET_NO,
+                                 PET_SPECIES,
+                                 PET_BREED,
+                                 PET_NAME,
+                                 PET_BIRTHDAY,
+                                 PET_GENDER,
+                                 MEMBER_NO,
+                                 PET_PATH,
+                                 PET_VACCINATION
+                          FROM PET
+                          WHERE MEMBER_NO = #{member_no}
+                      ) A
+             ) X
+        WHERE R = #{count}
+    </select>
+
+    <insert id="insertPet" parameterType="petDto">
+        INSERT INTO PET
+        VALUES (PET_NO_SEQ.NEXTVAL, #{pet_species}, #{pet_breed}, #{pet_name}, #{pet_birthday}, #{pet_gender}, #{member_no}, #{pet_path}, #{pet_vaccination})
+    </insert>
     <insert id="insertPicture" parameterType="pictureDto">
         INSERT INTO PICTURE
         VALUES (PICTURE_NO_SEQ.NEXTVAL, #{picture_name}, #{picture_directory}, #{member_no})
@@ -95,4 +133,23 @@
         WHERE MEMBER_NO = #{member_no}
           AND CALENDAR_NO = #{calendar_no}
     </delete>
+
+    <delete id="deletePet" parameterType="hashMap">
+        DELETE FROM PET
+        WHERE MEMBER_NO = #{member_no}
+          AND PET_NO = #{pet_no}
+    </delete>
+
+    <update id="updatePet" parameterType="petDto">
+        UPDATE PET
+        SET PET_PATH = #{pet_path}, PET_VACCINATION = #{pet_vaccination}
+        WHERE PET_NO = #{pet_no}
+    </update>
+
+    <update id="updateCalendar" parameterType="calendarDto">
+        UPDATE CALENDAR
+        SET CALENDAR_TITLE = #{calendar_title}, CALENDAR_STARTDATE = #{calendar_startdate}, CALENDAR_ENDDATE = #{calendar_enddate},
+            CALENDAR_NECESSITY = #{calendar_necessity}, CALENDAR_ITEM = #{calendar_item}, CALENDAR_CONTENT = #{calendar_content}
+        WHERE CALENDAR_NO = #{calendar_no}
+    </update>
 </mapper>

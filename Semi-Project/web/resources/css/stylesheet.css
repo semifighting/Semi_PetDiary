@@ -108,23 +108,6 @@ body{
 		display:block;
 	}
 }
-#myPet {
-	position: relative;
-	top: 5%;
-	width: 500px;
-	height: 500px;
-	border: 1px solid salmon;
-}
-
-
-#myPet div {
-	border: 1px solid red;
-}
-
-#myPetInfo {
-	float: right;
-}
-
 #selectPictureOne > img {
 	position: absolute;
 	border: 1px solid salmon;

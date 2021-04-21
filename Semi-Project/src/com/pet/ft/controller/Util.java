@@ -3,6 +3,7 @@ package com.pet.ft.controller;
 import java.io.File;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Util {
@@ -37,10 +38,5 @@ public class Util {
         } else {
             System.out.println("접자");
         }
-    }
-
-    public static String DateFort(Date date) {
-
-        return null;
     }
 }

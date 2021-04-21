@@ -6,7 +6,7 @@
     <link href="../resources/css/main_view.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%@include file="../main/header.jsp"%>
 <div id="welcome">
     <img alt="동물" src="../resources/image/4.jpg">
     <div>
@@ -28,6 +28,6 @@
     </tr>
 </table>
 
-<%@include file="footer.jsp"%>
+<%@include file="../main/footer.jsp"%>
 </body>
 </html>

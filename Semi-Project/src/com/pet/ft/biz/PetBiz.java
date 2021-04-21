@@ -8,10 +8,17 @@ import com.pet.ft.dto.pictureDto;
 
 import java.util.List;
 
-public interface PetBiz {
+public interface petBiz {
 
     //pet
     public List<petDto> selectPetList(int member_no);
+    public petDto selectPetOne(int member_no, int pet_no);
+    public int updatePet(petDto dto);
+    public int insertPet(petDto dto);
+    public int deletePet(int member_no, int pet_no);
+    public int getCount(int member_no);
+    public petDto selectPetOnePaging(int member_no, int count);
+
 
     //picture
     public List<pictureDto> selectPictureList(int member_no);
@@ -23,5 +30,6 @@ public interface PetBiz {
     public List<calendarDto> selectCalendarList(int member_no);
     public calendarDto selectCalendarOne(int member_no, int calendar_no);
     public int calendarInsert(calendarDto dto);
+    public int updateCalendar(calendarDto dto);
     public int deleteCalendar(int member_no, int calendar_no);
 }

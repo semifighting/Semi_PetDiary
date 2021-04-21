@@ -10,11 +10,13 @@ public class petDto {
     private String pet_birthday;
     private String pet_gender;
     private int member_no;
+    private String pet_path;
+    private String pet_vaccination;
 
     public petDto() {
     }
 
-    public petDto(int pet_no, String pet_species, String pet_breed, String pet_name, String pet_birthday, String pet_gender, int member_no) {
+    public petDto(int pet_no, String pet_species, String pet_breed, String pet_name, String pet_birthday, String pet_gender, int member_no, String pet_path, String pet_vaccination) {
         this.pet_no = pet_no;
         this.pet_species = pet_species;
         this.pet_breed = pet_breed;
@@ -22,6 +24,8 @@ public class petDto {
         this.pet_birthday = pet_birthday;
         this.pet_gender = pet_gender;
         this.member_no = member_no;
+        this.pet_path = pet_path;
+        this.pet_vaccination = pet_vaccination;
     }
 
     public int getPet_no() {
@@ -78,5 +82,21 @@ public class petDto {
 
     public void setMember_no(int member_no) {
         this.member_no = member_no;
+    }
+
+    public String getPet_path() {
+        return pet_path;
+    }
+
+    public void setPet_path(String pet_path) {
+        this.pet_path = pet_path;
+    }
+
+    public String getPet_vaccination() {
+        return pet_vaccination;
+    }
+
+    public void setPet_vaccination(String pet_vaccination) {
+        this.pet_vaccination = pet_vaccination;
     }
 }

@@ -23,6 +23,20 @@ $(function () {
         } else {
             $("#necessity").focus();
         }
-
     })
+});
+
+$(function () {
+    $(".iselectPic").on("click", function () {
+        var src = this.getAttribute("src");
+        alert(src);
+        location.href = "pet/pet_insert.jsp?src=../" + src;
+    });
+});
+
+$(function () {
+    $(".uselectPic").on("click", function () {
+        var src = this.getAttribute("src")
+        location.href = "pet/pet_insert.jsp?src=../" + src;
+    });
 });
