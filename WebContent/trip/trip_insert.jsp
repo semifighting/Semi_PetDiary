@@ -11,7 +11,7 @@
 </head>
 <body>
 <form action="../pet.do" method="post">
-    <input type="hidden" name="command" value="calendar_insert_res">
+    <input type="hidden" name="command" value="trip_insert_res">
     <input type="hidden" name="member_no" value="1">
     <table border="1">
         <tr>

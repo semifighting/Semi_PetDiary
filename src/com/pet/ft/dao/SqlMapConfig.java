@@ -11,7 +11,7 @@ public class SqlMapConfig {
     private SqlSessionFactory sqlSessionFactory;
 
     public SqlSessionFactory getSqlSessionFactory() {
-        String resources = "com/pet/ft/db/config.xml";
+        String resources = "com/pet/ft/db/mybatis_config.xml";
 
 
         try {

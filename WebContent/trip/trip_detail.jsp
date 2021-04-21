@@ -33,8 +33,8 @@
     </tr>
     <tr>
         <td colspan="2" align="right">
-            <input type="button" value="삭제" onclick="location.href='pet.do?command=calendar_delete&calendar_no=${dto.calendar_no }'">
-            <input type="button" value="수정" onclick="location.href='pet.do?command=calendar_update_form&calendar_no=${dto.calendar_no }'">
+            <input type="button" value="삭제" onclick="location.href='pet.do?command=trip_delete&calendar_no=${dto.calendar_no }'">
+            <input type="button" value="수정" onclick="location.href='pet.do?command=trip_update_form&calendar_no=${dto.calendar_no }'">
         </td>
     </tr>
 </table>

@@ -11,7 +11,7 @@
 </head>
 <body>
 <form action="../pet.do" method="post">
-    <input type="hidden" name="command" value="calendar_update_res">
+    <input type="hidden" name="command" value="trip_update_res">
     <input type="hidden" name="calendar_no" value="${dto.calendar_no }">
     <table border="1">
         <tr>

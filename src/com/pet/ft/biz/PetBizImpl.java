@@ -67,27 +67,27 @@ public class PetBizImpl implements PetBiz {
     }
 
     @Override
-    public List<CalendarDto> selectCalendarList(int member_no) {
-        return dao.selectCalendarList(member_no);
+    public List<CalendarDto> selectTripList(int member_no) {
+        return dao.selectTripList(member_no);
     }
 
     @Override
-    public CalendarDto selectCalendarOne(int member_no, int calendar_no) {
-        return dao.selectCalendarOne(member_no, calendar_no);
+    public CalendarDto selectTripOne(int member_no, int calendar_no) {
+        return dao.selectTripOne(member_no, calendar_no);
     }
 
     @Override
-    public int calendarInsert(CalendarDto dto) {
-        return dao.calendarInsert(dto);
+    public int insertTrip(CalendarDto dto) {
+        return dao.insertTrip(dto);
     }
 
     @Override
-    public int updateCalendar(CalendarDto dto) {
-        return dao.updateCalendar(dto);
+    public int updateTrip(CalendarDto dto) {
+        return dao.updateTrip(dto);
     }
 
     @Override
-    public int deleteCalendar(int member_no, int calendar_no) {
-        return dao.deleteCalendar(member_no, calendar_no);
+    public int deleteTrip(int member_no, int calendar_no) {
+        return dao.deleteTrip(member_no, calendar_no);
     }
 }
