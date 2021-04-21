@@ -204,7 +204,7 @@
           }
                        
             itemStr += '  <span class="tel">' + places.phone  + '</span>' ;
-                               
+           <%--상세보기 클릭 시, 관련 페이지로 넘어가도록 추가 --%>                    
             itemStr += '<br><a class="detailView" href=' + places.place_url;
             itemStr += ' target="_blank"> 상세보기 </a>' + '</div>'; 
           el.innerHTML = itemStr;
