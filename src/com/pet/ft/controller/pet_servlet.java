@@ -1,9 +1,14 @@
 package com.pet.ft.controller;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -26,6 +31,8 @@ import javax.servlet.http.HttpSession;
 
 import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
+import com.pet.ft.model.BusinessDao;
+import com.pet.ft.model.BusinessDaoImpl;
 import com.pet.ft.model.PetBiz;
 import com.pet.ft.model.PetBizImpl;
 import com.pet.ft.dto.CalendarDto;
@@ -248,7 +255,8 @@ public class pet_servlet extends HttpServlet {
 			}else {
 				jsResponse(response, "예약실패", "./hospital/hospital_select.jsp");
 		
-		
+			}
+		}
 		// 내가 작성
 		
 		// 회원가입 페이지로 이동
@@ -412,6 +420,61 @@ public class pet_servlet extends HttpServlet {
 		if("calendarlist".equals(command)) {
 			
 		}
+		//식당,카페 리스트
+		BusinessDao bdao = new BusinessDaoImpl();
+		if(command.equals("foodlist")) {
+			List<BusinessDto> list = bdao.BusinessList();
+			request.setAttribute("list", list);
+			request.getRequestDispatcher("food/food_list.jsp").forward(request, response);
+		}
+		if(command.equals("bookform")) {//-------------------------------------------------------
+			int business_num = Integer.parseInt(request.getParameter("business_num"));
+			System.out.println(business_num);
+			BusinessDto bdto = bdao.businessOne(business_num);
+			request.setAttribute("bdto", bdto);
+			System.out.println(bdto.getBusiness_name());
+			dispatch(request, response,"./food/food_book.jsp");
+			
+		}
+		if(command.equals("bookinsert")) {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//날짜입력 데이터 형식 지정 구문
+			Date book_date = null;
+			try {
+				book_date = dateFormat.parse(request.getParameter("book_date"));//이 구문 때문에 에러?
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+			int book_store = 2;
+			try {
+				book_store = Integer.parseInt(request.getParameter("business_num"));
+				log(command);
+			} catch (NumberFormatException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			System.out.println("book_store : "+book_store);//확인용코드, 나중에 지우기.
+			String book_time = null;
+			try {
+				book_time = request.getParameter("book_time").trim();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println(book_time);
+			String book_type = request.getParameter("business_role"); //book_type, business_role 둘다 올수 있는 값이 h,s
+			BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null);
+			response.sendRedirect("./food/book_list.jsp");
+			int res = bdao.bookInsert(bokdto); 
+			if(res>0) {
+				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
+				jsResponse(response, "작성 성공", "./food/book_list.jsp");
+			}else{
+				jsResponse(response, "작성 실패", "./food/food_book.jsp");
+			}
+			
+		}
 		
 		// 일정 등록
 		if("calendar_insert".equals(command)) {
@@ -455,6 +518,8 @@ public class pet_servlet extends HttpServlet {
 		}
 		
 		
+
+	
 	
 	}
 

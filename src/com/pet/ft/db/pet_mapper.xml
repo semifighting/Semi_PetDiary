@@ -101,5 +101,20 @@
   		VALUES(CALENDAR_NO_SEQ.NEXTVAL, #{calendar_startdate}, #{calendar_enddate}, #{calendar_necessity}, #{calendar_item}, #{calendar_title}, #{calendar_content}, ${member_no})
   	</insert> 
   	
+  	<select id="BusinessList" resultType="BusinessDto">
+	  	SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_ADDR,BUSINESS_ROLE, MEMBER_PHONE, BUSINESS_PARK
+		FROM BUSINESS JOIN MEMBER USING(MEMBER_NO)
+		WHERE BUSINESS_ROLE = 'S'
+		ORDER BY BUSINESS_NUM DESC
+  	</select>
+  	 <select id="BusinessOne" parameterType="int" resultType="businessDto">
+  		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME, BUSINESS_ROLE
+   		FROM BUSINESS JOIN MEMBER USING(MEMBER_NO)
+  		WHERE BUSINESS_NUM = #{business_num}
+  	</select>
+  	 <insert id="BookInsert" parameterType="BookDto">
+  		INSERT INTO BOOK
+  		VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time}, #{book_type}, #{book_store}, #{member_no}, 0, 'N', #{book_hostime,jdbcType=VARCHAR})  	
+  		</insert> 
   
   </mapper>

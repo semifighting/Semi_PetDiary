@@ -11,6 +11,7 @@ import com.pet.ft.model.PetDaoImpl;
 public class PetBizImpl implements PetBiz {
 	
 	private PetDao dao = new PetDaoImpl();
+	private BusinessDao bdao = new BusinessDaoImpl();
 	
 	@Override
 	public List<BusinessDto> hospitalList() {
@@ -33,5 +34,9 @@ public class PetBizImpl implements PetBiz {
 	
 
 	
+
+	public BusinessDto businessOne(int business_num) {
+		return bdao.businessOne(business_num);
+	}
 
 }

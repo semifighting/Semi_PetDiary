@@ -18,4 +18,5 @@ public interface PetBiz {
 	
 	
 
+	public BusinessDto businessOne(int business_num);
 }
