@@ -41,14 +41,14 @@
 		WHERE BUSINESS_ROLE = 'S'
 		ORDER BY BUSINESS_NUM DESC
   	</select>
-  	 	 <select id="BusinessOne" parameterType="int" resultType="businessDto">
+  	 <select id="BusinessOne" parameterType="int" resultType="businessDto">
   		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME, BUSINESS_ROLE
    		FROM BUSINESS JOIN MEMBER USING(MEMBER_NO)
   		WHERE BUSINESS_NUM = #{business_num}
   	</select>
-  	  	<insert id="BookInsert" parameterType="BookDto">
+  	 <!--  	<insert id="BookInsert" parameterType="BookDto">
   		INSERT INTO BOOK
   		VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time}, #{book_type}, #{book_store}, #{member_no}, 0, 'N', NULL)  	
-  	</insert>
+  		</insert> --><!-- 해당 구문으로 인해 음식카페페이지 에러 발생. 확인중... -->
   
   </mapper>

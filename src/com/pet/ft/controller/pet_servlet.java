@@ -100,23 +100,23 @@ public class pet_servlet extends HttpServlet {
 			dispatch(request, response,"./food/food_book.jsp");
 			
 		}
-		if(command.equals("bookinsert")) {
-			DateFormat dateFormat = new SimpleDateFormat();
-			Date book_date = null;
-			try {
-				book_date = dateFormat.parse(request.getParameter("book_date"));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			int book_store = Integer.parseInt(request.getParameter("business_num"));
-			String book_time = request.getParameter("book_time");
-			String book_type = request.getParameter("business_role"); //book_type, business_role 둘다 올수 있는 값이 h,s
-			BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null);
-			response.sendRedirect("./food/book_list.jsp");
-			int res = bdao.bookInsert(bokdto); 
-			
-		}
-	
+//		if(command.equals("bookinsert")) {
+//			DateFormat dateFormat = new SimpleDateFormat();
+//			Date book_date = null;
+//			try {
+//				book_date = dateFormat.parse(request.getParameter("book_date"));
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//			}
+//			int book_store = Integer.parseInt(request.getParameter("business_num"));
+//			String book_time = request.getParameter("book_time");
+//			String book_type = request.getParameter("business_role"); //book_type, business_role 둘다 올수 있는 값이 h,s
+//			BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null);
+//			response.sendRedirect("./food/book_list.jsp");
+//			int res = bdao.bookInsert(bokdto); 
+//			
+//		}
+//	
 	
 	}
   
