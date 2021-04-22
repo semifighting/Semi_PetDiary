@@ -471,6 +471,34 @@ public class pet_servlet extends HttpServlet {
 			}
 		}
 		
+		if("login_login".equals(command)) {
+			response.sendRedirect(loginDirectory+"login.jsp");
+		}
+		
+		if("login_loginForm".equals(command)) {
+		
+			String member_id = request.getParameter("member_id");
+			String member_pw = request.getParameter("member_pw");
+			
+			MemberDto dto = dao.Login(member_id, member_pw);
+			
+			if(dto != null) {
+				session.setAttribute("dto", dto);
+				session.setMaxInactiveInterval(3600);
+				
+				if (dto.getMember_role().equals("관리자")) {
+					// 관리자 페이지 이동
+				} else if (dto.getMember_role().equals("회원")) {
+					response.sendRedirect("main/main.jsp");
+				} else if (dto.getMember_role().equals("사업자")) {
+					// 사업자 페이지로 이동
+				}
+			} else {
+				jsResponse(response, "가입하지 않은 아이디거나, 잘못된 비밀번호입니다.", loginDirectory+"login.jsp");
+			}
+			
+		}
+		
 		
 		// 일정 리스트
 		if("calendarlist".equals(command)) {
@@ -944,6 +972,8 @@ public class pet_servlet extends HttpServlet {
 			}
 
 		}
+		
+		
         
        
 	}

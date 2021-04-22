@@ -19,6 +19,10 @@ import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
 
+import src.com.pet.ft.dao.Object;
+import src.com.pet.ft.dao.Override;
+import src.com.pet.ft.dao.String;
+
 
 
 
@@ -559,6 +563,19 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			return res;
 		}
 	    
+		@Override
+		public MemberDto Login(String member_id, String member_pw) {
+			MemberDto dto = null;
+			Map<String, Object> map = new HashMap<>();
+			map.put("member_id", member_id);
+			map.put("member_pw", member_pw);
+			
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				dto = session.selectOne(namespace+"Login", map);
+				
+			}
+			return dto;
+		}	
 
 		
 }

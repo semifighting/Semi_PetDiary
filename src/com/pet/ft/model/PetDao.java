@@ -49,7 +49,7 @@ public interface PetDao {
 	MemberDto MemberOne(int member_no);
 	
 	int MemberInsert(MemberDto dto);
-	
+	MemberDto Login(String member_id, String member_pw);
 	
 	// id 중복체크
 	public MemberDto SignUpIdChk(String member_id);

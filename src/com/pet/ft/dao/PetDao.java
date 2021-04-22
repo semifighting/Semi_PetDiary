@@ -13,11 +13,13 @@ public interface PetDao {
     // member
     public int MemberInsert(MemberDto dto);
     public MemberDto MemberOne(int member_no);
+    MemberDto Login(String member_id, String member_pw);
     
 	// 회원가입 중복체크
 	MemberDto SignUpIdChk(String member_id);
 	MemberDto SighUpEmailChk(String member_email);    
-    
+	MemberDto Login(String member_id, String member_pw);
+	
     // pet
     public List<PetDto> selectPetList(int member_no);
     public PetDto selectPetOne(int member_no, int pet_no);
@@ -48,6 +50,7 @@ public interface PetDao {
 	public CalendarDto CalendarOne(int calendar_no);
 	public int CalendarDelete(int calendar_no);
 	public int CalendarUpdate(CalendarDto dto);
+	
 	
 	
 

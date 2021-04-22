@@ -10,6 +10,8 @@ import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
 
+import src.com.pet.ft.biz.String;
+
 
 
 public interface PetBiz {
@@ -66,5 +68,8 @@ public interface PetBiz {
 	public CalendarDto CalendarOne(int calendar_no);
 	public int CalendarDelete(int calendar_no);
 	public int CalendarUpdate(CalendarDto dto);
+	
+	//member
+	public MemberDto Login(String member_id, String member_pw);
 	
 }

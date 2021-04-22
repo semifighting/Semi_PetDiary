@@ -89,6 +89,12 @@
   		SELECT * FROM MEMBER WHERE MEMBER_NO = #{member_no}
   	</select>
   	
+  	<select id = "Login" parameterType="Map" resultType="MemberDto">
+ 		SELECT MEMBER_NO, MEMBER_NAME, MEMBER_ID, MEMBER_PW, MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ROLE, MEMBER_ADDRESS
+ 		FROM MEMBER
+ 		WHERE MEMBER_ID = #{member_id} and MEMBER_PW = #{member_pw}
+  	</select>
+  	
   	<select id="CommunityList" resultType="CommunityDto">
   	SELECT * FROM COMMUNITY WHERE COMMUNITY_COMMENT = 0 AND COMMUNITY_REPORT='N' ORDER BY COMMUNITY_SEQ DESC
   	</select>  	

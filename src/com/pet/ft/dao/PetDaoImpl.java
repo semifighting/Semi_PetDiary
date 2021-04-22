@@ -295,6 +295,19 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		return res;
 	}
     
+	@Override
+	public MemberDto Login(String member_id, String member_pw) {
+		MemberDto dto = null;
+		Map<String, Object> map = new HashMap<>();
+		map.put("member_id", member_id);
+		map.put("member_pw", member_pw);
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			dto = session.selectOne(namespace+"Login", map);
+			
+		}
+		return dto;
+	}	
     
     
     

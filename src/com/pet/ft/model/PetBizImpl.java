@@ -8,6 +8,8 @@ import com.pet.ft.dto.CalendarDto;
 import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
 
+import src.com.pet.ft.biz.Override;
+import src.com.pet.ft.biz.String;
 
 import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
@@ -77,6 +79,11 @@ public class PetBizImpl implements PetBiz {
 	@Override
 	public List<MemberDto> memberList(int offset, int noOfRecords) {
 		return dao.memberList(offset, noOfRecords);
+	}
+	
+	@Override
+	public MemberDto Login(String member_id, String member_pw) {
+		return dao.Login(member_id, member_pw);
 	}
 
    @Override
@@ -194,6 +201,8 @@ public class PetBizImpl implements PetBiz {
 		// TODO Auto-generated method stub
 		return dao.CalendarUpdate(dto);
 	}
+	
+	
 
 	
 }

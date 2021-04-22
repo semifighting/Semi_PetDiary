@@ -2,6 +2,7 @@ package com.pet.ft.biz;
 import com.pet.ft.dao.PetDao;
 import com.pet.ft.dao.PetDaoImpl;
 import com.pet.ft.dto.CalendarDto;
+import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
 
@@ -125,5 +126,10 @@ public class PetBizImpl implements PetBiz {
 	public int CalendarUpdate(CalendarDto dto) {
 		// TODO Auto-generated method stub
 		return dao.CalendarUpdate(dto);
+	}
+	
+	@Override
+	public MemberDto Login(String member_id, String member_pw) {
+		return dao.Login(member_id, member_pw);
 	}
 }
