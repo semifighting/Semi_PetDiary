@@ -135,9 +135,8 @@ public class BookDto {
 	}
 
 
-
 	public void setBook_counsel(String book_counsel) {
 		this.book_counsel = book_counsel;
 	}
 
-
+}
