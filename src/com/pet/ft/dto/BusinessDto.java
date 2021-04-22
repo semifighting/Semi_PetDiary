@@ -1,7 +1,6 @@
 package com.pet.ft.dto;
 
 public class BusinessDto {
-
 	private int business_num;
 	private String business_name;
 	private String member_phone;

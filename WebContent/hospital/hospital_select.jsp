@@ -13,19 +13,22 @@
 
 <style type="text/css">
 	.hospital_container{
-		float: left; width:100%; background-color:#f8f7f2; min-height:500px; padding:50px 0;
+		 width:100%; background-color:#f8f7f2; min-height:500px; padding:50px 0;
 	}
 	.hospital_name{
-		width:100%; font-size:30px; color:black; font-weight:400; text-align:left;
+		width:100%; font-size:30px; color:black; font-weight:400; text-align:left; margin-left:120px;
 	}
 	.detail_box{
 		width:100%; margin:30px auto;
 	}
 	.detail_box_img{
-		float:left; width:53%;
+		float:left; width:53%; position:absolute; margin-left:120px; 
+	}
+	.detail_box_img .himg{
+		max-height:270px;min-height:270px; border-radius:20px;
 	}
 	.detail_box_text{
-		float:right; width:52%; border-top:3px solid #646361;
+		float:right; width:52%; border-top:3px solid #646361; position:relative;
 	}
 	.text_wrap{
 		width:100%; padding:0px 0;
@@ -56,34 +59,40 @@
 
   <%@include file="../main/header.jsp"%>
   <form action="pet.do" method="post">
-		<input type="hidden" name="command" value="counselinsertres"/>
+		<input type="hidden" name="command" value="counselinsert"/>
 	<div class="hospital_container">
 		<h3 class="hospital_name">${dto.business_name}</h3>
 		<div class="detail_box">
-			<div class="detail_box_img"></div>
+			<div class="detail_box_img">
+				<img class="himg" src="./resources/image/dodam1.png">
+			</div>
 			<div class="detail_box_text">
 				<ul class="text_wrap">
 					<li>
 						<dl>
-							<dt>이름</dt>
-							<dd><input type="text" name="member_name"/></dd>
+							<dt>상담일자</dt>
+							<dd><input type="text" name="book_date"/>  yyyymmdd형식으로 입력해주세요.</dd>
 						</dl>
 			    	</li>
 					<li>
 						<dl>
-							<dt>연락처</dt>
-							<dd><input type="text" name="member_phone"/></dd>
+							<dt>상담유형</dt>
+							<dd>
+								<input type="radio" name="book_counsel" value="화상상담"/>화상상담
+								<input type="radio" name="book_counsel" value="챗봇"/>챗봇
+							</dd>
 						</dl>
 					</li>
 					<li>
 						<dl>
-							<dt>상담유형</dt>
-							<dd><input type="radio" name="book_type" value="화상상담"/>화상상담</dd>
-							<dd><input type="radio" name="book_type" value="챗봇"/>챗봇</dd>
+							<dt>예약신청</dt>
+							<dd>
+								<input type="button"  value="취소" onclick="pet.do?command=hospitalmain"/>
+								<input type="submit"  value="예약신청"/>
+						    </dd>
 						</dl>
 					</li>
-					<li></li>
-					<li></li>
+					
 				</ul>
 			</div>
 		</div>
