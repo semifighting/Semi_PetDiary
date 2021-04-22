@@ -7,7 +7,7 @@
 %>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="../resources/javascript/script.js"></script>
+<script src="/semi_PetDiary/resources/javascript/script.js"></script>
 <html>
 <head>
     <title>Title</title>
@@ -15,7 +15,7 @@
 <body>
 <c:choose>
     <c:when test="${empty list }">
-        <a href="../picture/picture_main.jsp">사진 등록하러 가기</a>
+        <a href="/semi_PetDiary/picture/picture_main.jsp">사진 등록하러 가기</a>
     </c:when>
     <c:otherwise>
         <c:forEach items="${list }" var="dto">

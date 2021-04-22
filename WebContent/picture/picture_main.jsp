@@ -10,9 +10,9 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="../resources/css/stylesheet.css">
+    <link rel="stylesheet" href="/semi_PetDiary/resources/css/stylesheet.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../resources/javascript/script.js">
+    <script src="/semi_PetDiary/resources/javascript/script.js">
 
     </script>
 </head>
@@ -22,8 +22,8 @@
     List<PictureDto> list = biz.selectPictureList(1);
 
 %>
-<%@include file="../main/header.jsp"%>
-    <form action="../pet.do" method="post">
+<%@include file="/main/header.jsp"%>
+    <form action="/semi_PetDiary/pet.do" method="post">
         <input type="hidden" name="command" value="picture_delete">
         <div id="selectPictureList">
         <%
@@ -39,10 +39,10 @@
     <div id="bigPic">
     </div>
 
-    <form id="imageUpload" method="post" action="../pet.do?command=picture_upload" enctype="multipart/form-data">
+    <form id="imageUpload" method="post" action="/semi_PetDiary/pet.do?command=picture_upload" enctype="multipart/form-data">
         <input type="file" name="img" accept="image/*" multiple>
         <input type="submit" value="업로드하기">
     </form>
-<%@include file="../main/footer.jsp"%>
+<%@include file="/main/footer.jsp"%>
 </body>
 </html>

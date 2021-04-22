@@ -13,7 +13,7 @@
     <title>Title</title>
 </head>
 <body>
-<%@include file="../main/header.jsp"%>
+<%@include file="/main/header.jsp"%>
 <input type="button" value="추가" onclick="window.open('pet/pet_insert.jsp','insert', 'left=50, top=50, width=700, height=700')">
             <c:choose>
                 <c:when test="${empty petlist }">
@@ -44,12 +44,12 @@
                                     예방 접종 예정일 ${petdto.pet_vaccination }
                                 </p>
                             </div>
-                            <input type="button" value="삭제" onclick="location.href='pet.do?command=pet_delete&pet_no=${dto.pet_no }'">
-                            <input type="button" value="수정" onclick="window.open('pet.do?command=pet_update_form&pet_no=${dto.pet_no }', 'update', 'left=50, top=50, width=700, height=700')">
+                            <input type="button" value="삭제" onclick="location.href='pet.do?command=pet_delete&pet_no=${petdto.pet_no }'">
+                            <input type="button" value="수정" onclick="window.open('pet.do?command=pet_update_form&pet_no=${petdto.pet_no }', 'update', 'left=50, top=50, width=700, height=700')">
                         </div>
                     </c:forEach>
                 </c:otherwise>
             </c:choose>
-<%@include file="../main/footer.jsp"%>
+<%@include file="/main/footer.jsp"%>
 </body>
 </html>

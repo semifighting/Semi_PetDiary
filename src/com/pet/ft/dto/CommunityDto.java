@@ -10,18 +10,20 @@ public class CommunityDto {
 	private Date community_regdate;
 	private String community_report;
 	private int community_reportcount;
-	private int community_reportcontent;
+	private String community_reportcontent;
 	private int community_no;
 	private int comment_no;
 	private int community_like;
 	private int community_views;	
 	private int member_no;
+	private MemberDto memberVO;
 	
 	public CommunityDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
+
 	public CommunityDto(int community_seq, String community_title, String community_content, Date community_regdate,
 			String community_report, int community_reportcount, int community_no, int comment_no, int member_no) {
 		super();
@@ -37,7 +39,7 @@ public class CommunityDto {
 	}
 
 	public CommunityDto(int community_seq, String community_title, String community_content, Date community_regdate,
-			String community_report, int community_reportcount, int community_reportcontent, int community_no,
+			String community_report, int community_reportcount, String community_reportcontent, int community_no,
 			int comment_no, int community_like, int community_views, int member_no) {
 		super();
 		this.community_seq = community_seq;
@@ -102,11 +104,11 @@ public class CommunityDto {
 		this.community_reportcount = community_reportcount;
 	}
 
-	public int getCommunity_reportcontent() {
+	public String getCommunity_reportcontent() {
 		return community_reportcontent;
 	}
 
-	public void setCommunity_reportcontent(int community_reportcontent) {
+	public void setCommunity_reportcontent(String community_reportcontent) {
 		this.community_reportcontent = community_reportcontent;
 	}
 
@@ -150,5 +152,12 @@ public class CommunityDto {
 		this.member_no = member_no;
 	}
 	
-	
+
+	public MemberDto getMemberVO() {
+		return memberVO;
+	}
+
+	public void setMemberVO(MemberDto memberVO) {
+		this.memberVO = memberVO;
+	}
 }

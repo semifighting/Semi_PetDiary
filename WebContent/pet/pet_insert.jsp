@@ -4,7 +4,7 @@
     response.setCharacterEncoding("UTF-8");
 %>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="../resources/javascript/script.js"></script>
+<script src="/semi_PetDiary/resources/javascript/script.js"></script>
 <html>
 <head>
     <title>Title</title>
@@ -13,7 +13,7 @@
 <%
     String src = request.getParameter("src");
 %>
-<form method="post" action="../pet.do">
+<form method="post" action="/semi_PetDiary/pet.do">
     <input type="hidden" name="command" value="pet_insert">
 <table border="1">
     <col width="100"/>
@@ -22,7 +22,7 @@
     <col width="100">
     <tr>
         <td colspan="2">
-            <input type="button" name="picture" value="사진 선택하기" onclick="location.href='../pet.do?command=picture_insert_select'">
+            <input type="button" name="picture" value="사진 선택하기" onclick="location.href='/semi_PetDiary/pet.do?command=picture_insert_select'">
             <img id="selectedPic" src="<%=src%>" alt="선택된 사진" width="500" height="500">
             <input type="hidden" name="path" value="<%=src%>">
         </td>

@@ -25,12 +25,12 @@ public interface PetDao {
     public int deletePicture(int member_no, int picture_no);
 
     //calendar
-    public List<CalendarDto> selectCalendarList(int member_no);
-    public CalendarDto selectCalendarOne(int member_no, int calendar_no);
+    public List<CalendarDto> selectTripList(int member_no);
+    public CalendarDto selectTripOne(int member_no, int calendar_no);
 
-    public int updateCalendar(CalendarDto dto);
-    public int calendarInsert(CalendarDto dto);
-    public int deleteCalendar(int member_no, int calendar_no);
+    public int updateTrip(CalendarDto dto);
+    public int insertTrip(CalendarDto dto);
+    public int deleteTrip(int member_no, int calendar_no);
 
 
 }

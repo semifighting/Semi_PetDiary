@@ -137,56 +137,56 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
     }
 
     @Override
-    public List<CalendarDto> selectCalendarList(int member_no) {
+    public List<CalendarDto> selectTripList(int member_no) {
 
         SqlSession session = getSqlSessionFactory().openSession();
-        List<CalendarDto> list = session.selectList(namespace + "selectCalendarList", member_no);
+        List<CalendarDto> list = session.selectList(namespace + "selectTripList", member_no);
         session.close();
 
         return list;
     }
 
     @Override
-    public CalendarDto selectCalendarOne(int member_no, int calendar_no) {
+    public CalendarDto selectTripOne(int member_no, int calendar_no) {
 
         SqlSession session = getSqlSessionFactory().openSession();
         Map<String, Integer> map = new HashMap<String, Integer>();
         map.put("member_no", member_no);
         map.put("calendar_no", calendar_no);
-        CalendarDto dto = session.selectOne(namespace + "selectCalendarOne", map);
+        CalendarDto dto = session.selectOne(namespace + "selectTripOne", map);
 
         return dto;
     }
 
     @Override
-    public int calendarInsert(CalendarDto dto) {
+    public int insertTrip(CalendarDto dto) {
 
         int res = 0;
         try (SqlSession session = getSqlSessionFactory().openSession(true)){
-            res = session.insert(namespace + "insertCalendar", dto);
+            res = session.insert(namespace + "insertTrip", dto);
         }
         return res;
     }
 
     @Override
-    public int updateCalendar(CalendarDto dto) {
+    public int updateTrip(CalendarDto dto) {
 
         int res = 0;
         try (SqlSession session = getSqlSessionFactory().openSession(true)){
-            res = session.update(namespace + "updateCalendar", dto);
+            res = session.update(namespace + "updateTrip", dto);
         }
         return res;
     }
 
     @Override
-    public int deleteCalendar(int member_no, int calendar_no) {
+    public int deleteTrip(int member_no, int calendar_no) {
         int res = 0;
         Map<String, Integer> map = new HashMap<String, Integer>();
         map.put("member_no", member_no);
         map.put("calendar_no", calendar_no);
 
         try (SqlSession session = getSqlSessionFactory().openSession(true)) {
-            res = session.delete(namespace + "deleteCalendar", map);
+            res = session.delete(namespace + "deleteTrip", map);
         }
         return res;
     }

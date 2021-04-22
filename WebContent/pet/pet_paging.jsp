@@ -11,7 +11,7 @@
 <head>
     <title>Title</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../resources/javascript/paging.js"></script>
+    <script src="/semi_PetDiary/resources/javascript/paging.js"></script>
 </head>
 <body>
 <%

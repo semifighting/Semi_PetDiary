@@ -17,7 +17,7 @@
         src = dto.getPet_path();
     }
 %>
-<form method="post" action="../pet.do">
+<form method="post" action="/semi_PetDiary/pet.do">
     <input type="hidden" name="command" value="pet_update_res">
     <input type="hidden" name="pet_no" value="<%=dto.getPet_no()%>">
     <table border="1">
@@ -27,7 +27,7 @@
         <col width="100">
         <tr>
             <td colspan="2">
-                <input type="button" name="picture" value="사진 선택하기" onclick="location.href='pet.do?command=picture_update_select'">
+                <input type="button" name="picture" value="사진 선택하기" onclick="location.href='/semi_PetDiary/pet.do?command=picture_update_select'">
                 <img id="selectedPic" src="<%=src%>" alt="선택된 사진" width="500" height="500">
                 <input type="hidden" name="path" value="<%=src%>">
             </td>
