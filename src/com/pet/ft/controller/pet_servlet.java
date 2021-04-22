@@ -491,6 +491,7 @@ public class pet_servlet extends HttpServlet {
 			
 		}
 		if(command.equals("bookinsert")) {
+<<<<<<< HEAD
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//날짜입력 데이터 형식 지정 구문
 			Date book_date = null;
 			try {
@@ -520,6 +521,22 @@ public class pet_servlet extends HttpServlet {
 			//BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null);
 			BookDto bokdto = new BookDto( );
 			response.sendRedirect("./food/book_list.jsp");
+=======
+			String book_date = request.getParameter("book_date").replaceAll("-", "");//예약날짜.
+			System.out.println("1. book_date : "+book_date);		//출력구문 1. 예약날짜
+			String book_time = request.getParameter("book_time");//.replaceAll(":", "");
+			System.out.println("2. book_time : "+book_time);
+
+			int book_store = Integer.parseInt(request.getParameter("book_store"));
+			//book_store: 예약업체 번호 / business_num: 회사번호
+			System.out.println("3. book_store : "+book_store);//출력구문 2. 예약업체 번호.
+
+			String book_type = request.getParameter("book_type"); //book_type, business_role 둘다 올수 있는 값이 h,s
+			System.out.println(book_type);
+
+
+			BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null, null);
+>>>>>>> kjk
 			int res = bdao.bookInsert(bokdto); 
 			if(res>0) {
 				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
@@ -809,6 +826,13 @@ public class pet_servlet extends HttpServlet {
             out.print(jsonArray);
             out.flush();
         }
+<<<<<<< HEAD
+=======
+        if (command.equals("weather_main")) {
+			response.sendRedirect("weather/weatherView.html");
+		}
+        
+>>>>>>> kjk
 		
 
 	
