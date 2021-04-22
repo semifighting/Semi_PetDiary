@@ -114,8 +114,17 @@ public class BookDto {
 		this.book_counsel = book_counsel;
 	}
 	
-	
-	
+
+	public String getBook_counsel() {
+		return book_counsel;
+	}
+
+
+
+	public void setBook_counsel(String book_counsel) {
+		this.book_counsel = book_counsel;
+	}
+
 	
 
 }
