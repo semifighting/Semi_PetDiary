@@ -26,6 +26,16 @@ public class pet_util {
 	}
 	public static String FromMemberNoTogetId(int member_no) {
 		return dao.MemberOne(member_no).getMember_id();
+<<<<<<< HEAD
+=======
+	}	
+	public static int CommunityCommentCount(int seq) {
+		int res = dao.CommunityCommentCount(seq)-1;
+		return res;
+	}
+	public static String FromBussinessNoTogetName(int seq) {
+		return null;
+>>>>>>> cf2a11737c593a3ed4ac7c9697b7ec278a3f855f
 	}
 	
 

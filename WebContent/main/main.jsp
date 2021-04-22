@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 <%
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
 %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+=======
+<%@ page contentType="text/html;charset=UTF-8" %>
+
+>>>>>>> cf2a11737c593a3ed4ac7c9697b7ec278a3f855f
 <html>
 <head>
     <title>Title</title>
@@ -30,7 +35,10 @@
         <td align="center"><input id="logbutton" type="button" value="로그인"></td>
     </tr>
 </table>
+<<<<<<< HEAD
 
+=======
+>>>>>>> cf2a11737c593a3ed4ac7c9697b7ec278a3f855f
 <%@include file="/main/footer.jsp"%>
 </body>
 </html>

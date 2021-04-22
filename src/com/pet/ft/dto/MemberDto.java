@@ -1,7 +1,10 @@
 package com.pet.ft.dto;
 
 public class MemberDto {
+<<<<<<< HEAD
 
+=======
+>>>>>>> cf2a11737c593a3ed4ac7c9697b7ec278a3f855f
 	private int member_no;
 	private String member_name;
 	private String member_id;

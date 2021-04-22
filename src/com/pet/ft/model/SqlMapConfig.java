@@ -1,20 +1,28 @@
 package com.pet.ft.model;
 
 import java.io.IOException;
+<<<<<<< HEAD
 
 
 
 import java.io.Reader;
 
 
+=======
+import java.io.Reader;
+
+>>>>>>> cf2a11737c593a3ed4ac7c9697b7ec278a3f855f
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class SqlMapConfig {
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> cf2a11737c593a3ed4ac7c9697b7ec278a3f855f
 	private SqlSessionFactory sqlSessionFactory;
 	
 	public SqlSessionFactory getSqlSessionFactory() {
@@ -29,5 +37,9 @@ public class SqlMapConfig {
 		
 		return sqlSessionFactory;
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> cf2a11737c593a3ed4ac7c9697b7ec278a3f855f
 }

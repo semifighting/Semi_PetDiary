@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<%@page import="com.pet.ft.dto.CommunityDto"%>
+>>>>>>> cf2a11737c593a3ed4ac7c9697b7ec278a3f855f
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charser=UTF-8"); %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -31,6 +35,7 @@
 }
 </style>
 </head>
+<<<<<<< HEAD
 
 
 <body>
@@ -43,6 +48,23 @@
 				</div>	
 				<div id="community_update_content">
 					<textarea style="resize: none;" rows="30" cols="108"></textarea>
+=======
+<%CommunityDto cdto =(CommunityDto)request.getAttribute("cdto");%>
+
+<body>
+<%@include file="/main/header.jsp"%>
+	<form action="/semi_PetDiary/pet.do" method="get" >
+		<input type="hidden" name="command" value="community_update">
+		<input type="hidden" name="community_no" value="<%=cdto.getCommunity_no()%>">
+		<input type="hidden" name="seq" value="<%=cdto.getCommunity_seq()%>">
+		<div id="community_update_fullbox">
+			<div id ="community_update_contentbox">
+				<div id="community_update_title">
+					<input style="width:780px;height:50px"type="text" name="title" value="<%=cdto.getCommunity_title()%>">
+				</div>	
+				<div id="community_update_content">
+					<textarea style="resize: none;" rows="30" cols="108" name="content" ><%=cdto.getCommunity_content()%></textarea>
+>>>>>>> cf2a11737c593a3ed4ac7c9697b7ec278a3f855f
 				</div>
 				<div id="community_update_button">
 					<input type="submit" value="작성">
@@ -50,8 +72,12 @@
 				</div>
 			</div>
 		</div>
+<<<<<<< HEAD
 	
 	</form>
 
+=======
+	</form>
+>>>>>>> cf2a11737c593a3ed4ac7c9697b7ec278a3f855f
 </body>
 </html>
