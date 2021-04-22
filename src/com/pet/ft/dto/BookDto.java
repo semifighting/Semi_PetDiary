@@ -3,7 +3,7 @@ package com.pet.ft.dto;
 import java.util.Date;
 public class BookDto {
 	private int book_num;
-	private Date book_date;
+	private String book_date;
 	private String book_time;
 	private String book_type;
 	private int book_store;
@@ -11,6 +11,7 @@ public class BookDto {
 	private int book_price;
 	private String book_state;
 	private String book_hostime;
+	private String book_counsel;
 	
 	
 	public BookDto() {
@@ -18,8 +19,8 @@ public class BookDto {
 	}
 
 
-	public BookDto(int book_num, Date book_date, String book_time, String book_type, int book_store, int member_no,
-			int book_price, String book_state, String book_hostime) {
+	public BookDto(int book_num, String book_date, String book_time, String book_type, int book_store, int member_no,
+			int book_price, String book_state, String book_hostime, String book_counsel) {
 		super();
 		this.book_num = book_num;
 		this.book_date = book_date;
@@ -30,6 +31,7 @@ public class BookDto {
 		this.book_price = book_price;
 		this.book_state = book_state;
 		this.book_hostime = book_hostime;
+		this.book_counsel = book_counsel;
 	}
 
 
@@ -43,12 +45,12 @@ public class BookDto {
 	}
 
 
-	public Date getBook_date() {
+	public String getBook_date() {
 		return book_date;
 	}
 
 
-	public void setBook_date(Date book_date) {
+	public void setBook_date(String book_date) {
 		this.book_date = book_date;
 	}
 
@@ -121,6 +123,17 @@ public class BookDto {
 	public void setBook_hostime(String book_hostime) {
 		this.book_hostime = book_hostime;
 	}
+
+
+	public String getBook_counsel() {
+		return book_counsel;
+	}
+
+
+	public void setBook_counsel(String book_counsel) {
+		this.book_counsel = book_counsel;
+	}
+
 
 
 }
