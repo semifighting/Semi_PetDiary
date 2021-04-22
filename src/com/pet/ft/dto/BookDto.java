@@ -23,6 +23,7 @@ public class BookDto {
 <<<<<<< HEAD
 	public BookDto(int book_num, String book_date, String book_time, String book_type, int business_num, int member_no,
 			int book_price, String book_state, String book_hostime, String book_counsel) {
+<<<<<<< HEAD
 	
 =======
 
@@ -31,6 +32,9 @@ public class BookDto {
 			int book_price, String book_state, String book_hostime, String book_counsel) {
 		super();
 >>>>>>> kjk
+=======
+		super();
+>>>>>>> jihyeon
 		this.book_num = book_num;
 		this.book_date = book_date;
 		this.book_time = book_time;
@@ -44,162 +48,249 @@ public class BookDto {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public int getBook_num() {
 		return book_num;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public void setBook_num(int book_num) {
 		this.book_num = book_num;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public String getBook_date() {
 		return book_date;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public void setBook_date(String book_date) {
 		this.book_date = book_date;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public String getBook_time() {
 		return book_time;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public void setBook_time(String book_time) {
 		this.book_time = book_time;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public String getBook_type() {
 		return book_type;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public void setBook_type(String book_type) {
 		this.book_type = book_type;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public int getBusiness_num() {
 		return business_num;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public void setBusiness_num(int business_num) {
 		this.business_num = business_num;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public int getMember_no() {
 		return member_no;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public void setMember_no(int member_no) {
 		this.member_no = member_no;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public int getBook_price() {
 		return book_price;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public void setBook_price(int book_price) {
 		this.book_price = book_price;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public String getBook_state() {
 		return book_state;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public void setBook_state(String book_state) {
 		this.book_state = book_state;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public String getBook_hostime() {
 		return book_hostime;
 	}
+	
 
 <<<<<<< HEAD
 	public void setBook_hostime(String book_hostime) {
 		this.book_hostime = book_hostime;
 	}
+<<<<<<< HEAD
 =======
 
 
@@ -210,11 +301,16 @@ public class BookDto {
 
 
 >>>>>>> kjk
+=======
+
+
+>>>>>>> jihyeon
 	public String getBook_counsel() {
 		return book_counsel;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	public void setBook_counsel(String book_counsel) {
 		this.book_counsel = book_counsel;
 	}
@@ -229,5 +325,11 @@ public class BookDto {
 		this.book_counsel = book_counsel;
 	}
 >>>>>>> kjk
+=======
+	
+	public void setBook_counsel(String book_counsel) {
+		this.book_counsel = book_counsel;
+	}
+>>>>>>> jihyeon
 
 }

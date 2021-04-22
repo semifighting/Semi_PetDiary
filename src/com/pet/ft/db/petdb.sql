@@ -53,6 +53,8 @@ INSERT INTO CALENDAR
 VALUES (CALENDAR_NO_SEQ.NEXTVAL , TO_DATE('2021-04-16 15:30:00', 'yyyy-MM-dd HH24:MI:SS'), TO_DATE('2021-04-20 10:00:00', 'yyyy-MM-dd HH24:MI:SS'),
 	'필수품', '화장/세면도구', '일정 제목', '일정 내용', 1);
 
+SELECT * FROM CALENDAR
+WHERE MEMBER_NO = 47;
 	
 ----------------business table
 DROP SEQUENCE BUSINESS_NUM;

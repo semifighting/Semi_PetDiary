@@ -63,6 +63,9 @@ public class pet_servlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		String command = request.getParameter("command");
 		System.out.println(command);
+		
+		HttpSession session = request.getSession();
+		
 		PetDao dao = new PetDaoImpl();
 		String communityDirectory = "community/community_";
 		String CalendarDirectory = "calendar/calendar_";
@@ -378,7 +381,7 @@ public class pet_servlet extends HttpServlet {
 			String AuthenticationKey = temp.toString(); // 인증번호 인증을 위한 키 등록
 					
 					
-			Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+			Session mailSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(from,"testpet03");
 					}
@@ -390,7 +393,7 @@ public class pet_servlet extends HttpServlet {
 				addr.setPersonal(fromName, "UTF-8");
 				addr.setAddress(from);
 								
-				Message msg = new MimeMessage(session);
+				Message msg = new MimeMessage(mailSession);
 				msg.setFrom(addr);
 						
 				msg.setSubject(MimeUtility.encodeText("[펫 다이어리] 회원가입 이메일 인증번호", "UTF-8","B"));
@@ -490,6 +493,7 @@ public class pet_servlet extends HttpServlet {
 			dispatch(request, response,"./food/food_book.jsp");
 			
 		}
+<<<<<<< HEAD
 		if(command.equals("bookinsert")) {
 <<<<<<< HEAD
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//날짜입력 데이터 형식 지정 구문
@@ -546,6 +550,8 @@ public class pet_servlet extends HttpServlet {
 			}
 			
 		}
+=======
+>>>>>>> jihyeon
 		
 		// 일정 등록
 		if("calendar_insert".equals(command)) {
@@ -827,6 +833,7 @@ public class pet_servlet extends HttpServlet {
             out.flush();
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         if (command.equals("weather_main")) {
 			response.sendRedirect("weather/weatherView.html");
@@ -834,7 +841,200 @@ public class pet_servlet extends HttpServlet {
         
 >>>>>>> kjk
 		
+=======
+>>>>>>> jihyeon
 
+        if (command.equals("weather_main")) {
+			response.sendRedirect("weather/weatherView.html");
+		}
+        
+        
+        
+        // 캘린더 내 clud
+        
+        if (command.equals("calendar_calMain")) {
+        	int member_no = (int) session.getAttribute("member_no");
+        	dispatch(request, response, CalendarDirectory + "");
+        }
+    
+     	if("calendar_calInsert".equals(command)) {
+     		String year = request.getParameter("year");
+     		String month = request.getParameter("month");
+     		String date = request.getParameter("date");
+     		
+   			request.setAttribute("year", year);
+     		request.setAttribute("month", month);
+     		request.setAttribute("date", date);
+     		dispatch(request, response, CalendarDirectory + "insert.jsp");
+     		
+     	}
+     	
+        // 일정 등록
+     	if("calendar_calInsertForm".equals(command)) {
+     		pet_util util = new pet_util();
+     		String calendar_title = request.getParameter("calendar_title");
+     		String s_year = request.getParameter("s_year");
+     		String s_month = request.getParameter("s_month");
+     		String s_date = request.getParameter("s_date");
+     		String s_hour = request.getParameter("s_hour");
+   			String s_min = request.getParameter("s_min");
+   			String e_year = request.getParameter("e_year");
+   			String e_month = request.getParameter("e_month");
+   			String e_date = request.getParameter("e_date");
+     		String e_hour = request.getParameter("e_hour");
+   			String e_min = request.getParameter("e_min");
+     		String calendar_necessity = request.getParameter("calendar_necessity");
+     		String calendar_item = request.getParameter("calendar_item");
+     		String calendar_content = request.getParameter("calendar_content");
+     		int member_no = (int) session.getAttribute("member_no");
+     			
+     		String calendar_startdate = s_year + util.isTwo(s_month) + util.isTwo(s_date) + util.isTwo(s_hour) + util.isTwo(s_min);
+     		String calendar_enddate = e_year + util.isTwo(e_month) + util.isTwo(e_date) + util.isTwo(e_hour) + util.isTwo(e_min);
+     			
+     		CalendarDto CalDto = new CalendarDto();
+     		CalDto.setCalendar_title(calendar_title);
+     		CalDto.setCalendar_startdate(calendar_startdate);
+     		CalDto.setCalendar_enddate(calendar_enddate);
+     		CalDto.setCalendar_necessity(calendar_necessity);
+     		CalDto.setCalendar_item(calendar_item);
+     		CalDto.setCalendar_content(calendar_content);
+     		CalDto.setMember_no(member_no);
+     		int res = dao.CalendarInsert(CalDto);
+     		
+     			
+     		if (res > 0) {
+     			jsResponse(response, "일정이 등록되었습니다.", CalendarDirectory + "main.jsp");
+     		} else {
+     			jsResponse(response, "일정이 등록되지 않았습니다.", CalendarDirectory + "main.jsp");
+     			}
+     	}
+     		
+     	if ("calendar_calList".equals(command)) {
+     		pet_util util = new pet_util();
+     		String year = request.getParameter("year");
+     		String month = request.getParameter("month");
+     		String date = request.getParameter("date");
+   			String yyyyMMdd = year + util.isTwo(month) + util.isTwo(date);
+   			int member_no = (int) session.getAttribute("member_no");
+    			
+   			List<CalendarDto> list = biz.CalendarList(member_no, yyyyMMdd);
+     			
+   			request.setAttribute("year", year);
+     		request.setAttribute("month", month);
+     		request.setAttribute("date", date);
+     		request.setAttribute("list", list);
+     		dispatch(request, response, CalendarDirectory + "list.jsp");
+     	}
+     		
+     	if("calendar_calDetail".equals(command)) {
+     		String year = request.getParameter("year");
+     		String month = request.getParameter("month");
+     		String date = request.getParameter("date");
+     		int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
+     			
+     		CalendarDto dto = biz.CalendarOne(calendar_no);
+     			
+     		request.setAttribute("year", year);
+     		request.setAttribute("month", month);
+     		request.setAttribute("date", date);
+     		request.setAttribute("dto", dto);
+     		dispatch(request, response, CalendarDirectory + "detail.jsp");
+     		}
+     		
+     	if("calendar_calDelete".equals(command)) {
+     		String year = request.getParameter("year");
+     		String month = request.getParameter("month");
+     		String date = request.getParameter("date");
+     		int member_no = (int) session.getAttribute("member_no");
+     		int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
+     		
+     		int res = biz.CalendarDelete(calendar_no);
+     		if (res > 0) {
+     			jsResponse(response, "삭제가 완료되었습니다.", "/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
+     		} else {
+     			jsResponse(response, "오류가 발생했습니다.", "/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
+     		}
+     	}
+     		
+   		if("calendar_calUpdate".equals(command)) {
+   			String year = request.getParameter("year");
+     		String month = request.getParameter("month");
+     		String date = request.getParameter("date");
+     		int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
+     			
+     			
+     		CalendarDto dto = biz.CalendarOne(calendar_no);
+     		request.setAttribute("year", year);
+     		request.setAttribute("month", month);
+     		request.setAttribute("date", date);
+     		request.setAttribute("dto", dto);
+     		dispatch(request, response, CalendarDirectory + "update.jsp");
+     	}
+     		
+     	if("calendar_calUpdateform".equals(command)) {
+     		String year = request.getParameter("year");
+     		String month = request.getParameter("month");
+     		String date = request.getParameter("date");
+     			
+     		int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
+     		String calendar_title = request.getParameter("calendar_title");
+     		String calendar_necessity = request.getParameter("calendar_necessity");
+     		String calendar_item = request.getParameter("calendar_item");
+     		String calendar_content = request.getParameter("calendar_content");
+     		int member_no = (int) session.getAttribute("member_no");
+     			
+     		CalendarDto dto = new CalendarDto();
+     		dto.setCalendar_no(calendar_no);
+     		dto.setCalendar_title(calendar_title);
+     		dto.setCalendar_necessity(calendar_necessity);
+     		dto.setCalendar_item(calendar_item);
+     		dto.setCalendar_content(calendar_content);
+     			
+     		int res = biz.CalendarUpdate(dto);
+     			
+     		if (res > 0) {
+     			jsResponse(response, "수정이 완료되었습니다.", "/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
+     		} else {
+     			jsResponse(response, "오류가 발생했습니다.", "/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
+     		}
+
+     	}
+     	
+    	if("login_login".equals(command)) {
+			response.sendRedirect(loginDirectory+"login.jsp");
+		}	
+     	
+    	if("login_loginForm".equals(command)) {
+    	
+    		String member_id = request.getParameter("member_id");
+    		String member_pw = request.getParameter("member_pw");
+    			
+    		MemberDto dto = biz.Login(member_id, member_pw);
+    			
+    		if(dto != null) {
+    			session.setAttribute("dto", dto);
+    			session.setAttribute("member_no", dto.getMember_no());
+    			session.setMaxInactiveInterval(3600);
+    				
+    			if (dto.getMember_role().equals("ADMIN")) {
+    				// 관리자 페이지 이동
+    			} else if (dto.getMember_role().equals("USER")) {
+    				response.sendRedirect("main/main.jsp");
+    			} else if (dto.getMember_role().equals("EMPLOYEE")) {
+    				// 사업자 페이지로 이동
+    			}
+    		} else {
+    			jsResponse(response, "가입하지 않은 아이디거나, 잘못된 비밀번호입니다.", loginDirectory+"login.jsp");
+    		}
+    			
+    	}  
+    		
+    	// 로그아웃 추가해야 함
+    	if("login_logout".equals(command)) {
+    		session.invalidate();
+    		response.sendRedirect("main/main.jsp");
+   		}
+      
 	
 	
 	}
