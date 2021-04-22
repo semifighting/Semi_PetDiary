@@ -794,6 +794,10 @@ public class pet_servlet extends HttpServlet {
             out.print(jsonArray);
             out.flush();
         }
+        if (command.equals("weather_main")) {
+			response.sendRedirect("weather/weatherView.html");
+		}
+        
 		
 
 	

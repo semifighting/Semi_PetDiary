@@ -7,7 +7,7 @@ public class BookDto {
 	private String book_date;
 	private String book_time;
 	private String book_type;
-	private int book_store;
+	private int business_num;
 	private int member_no;
 	private int book_price;
 	private String book_state;
@@ -22,14 +22,14 @@ public class BookDto {
 
 
 
-	public BookDto(int book_num, String book_date, String book_time, String book_type, int book_store, int member_no,
+	public BookDto(int book_num, String book_date, String book_time, String book_type, int business_num, int member_no,
 			int book_price, String book_state, String book_hostime, String book_counsel) {
 		super();
 		this.book_num = book_num;
 		this.book_date = book_date;
 		this.book_time = book_time;
 		this.book_type = book_type;
-		this.book_store = book_store;
+		this.business_num = business_num;
 		this.member_no = member_no;
 		this.book_price = book_price;
 		this.book_state = book_state;
@@ -87,14 +87,14 @@ public class BookDto {
 
 
 
-	public int getBook_store() {
-		return book_store;
+	public int getBusiness_num() {
+		return business_num;
 	}
 
 
 
-	public void setBook_store(int book_store) {
-		this.book_store = book_store;
+	public void setBusiness_num(int business_num) {
+		this.business_num = business_num;
 	}
 
 
@@ -156,7 +156,5 @@ public class BookDto {
 	public void setBook_counsel(String book_counsel) {
 		this.book_counsel = book_counsel;
 	}
-
-	
 
 }
