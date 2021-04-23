@@ -29,7 +29,7 @@ public class WeatherOpenServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String code = request.getParameter("code");
 		request.setAttribute("code",code);
-		RequestDispatcher rd = request.getRequestDispatcher("weatherInfo.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("weather/weatherInfo.jsp");
 		rd.forward(request, response);
 		
 	}

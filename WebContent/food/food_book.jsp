@@ -41,12 +41,12 @@ height: 50px;
 		<h3>예약페이지 입니다.</h3>
 			<div>
 <<<<<<< HEAD
+=======
 				<input type="hidden" name = "book_store" value="<%=bdto.getBusiness_num() %>">
 				<input type="hidden" name = "book_type" value="<%=bdto.getBusiness_role() %>">
 			</div>	
 			<div>
-=======
->>>>>>> main
+>>>>>>> kjk
 				<div class="book_content"><span>예약일자</span><input type="date" name="book_date"></div>
 			</div>		
 			<div>

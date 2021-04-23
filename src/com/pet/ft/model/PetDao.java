@@ -11,6 +11,7 @@ import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
 
+
 public interface PetDao {
 	String namespace = "com.pet.ft.mapper.";
 
@@ -21,10 +22,9 @@ public interface PetDao {
 	CommunityDto CommunityOne(int seq);
 
 	//병원상담
-	public List<BusinessDto> hospitalList();
-	
-	
-	
+	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
+	public int totalHospital();
+
 	public BusinessDto hospitalSelect(int business_num);
 
 	int CommentInsert(CommunityDto cdto);
@@ -45,22 +45,20 @@ public interface PetDao {
 	int CommunityCommentCount(int seq);
 
 	public int hospitalBookInsert(BookDto dto);
-	
+
 	MemberDto MemberOne(int member_no);
-	
+
 	int MemberInsert(MemberDto dto);
-	
-	
+
+
 	// 내가 추가 !!
 	// id 중복체크
 	MemberDto SignUpIdChk(String member_id);
-	// email 중복체크
 	MemberDto SighUpEmailChk(String member_email);
-	
-	int CalendarInsert(CalendarDto CalDto);
 
-	List<CalendarDto> CalViewList(int member_no, String yyyyMM);
-	
+
+
+		MemberDto Login(String member_id, String member_pw);
 	public int totalMember();
 	public int totalReport();
 	public List<MemberDto> memberList();
@@ -93,6 +91,14 @@ public interface PetDao {
     public int insertTrip(CalendarDto dto);
     public int deleteTrip(int member_no, int calendar_no);
 
-	
+
+    //calendar - 캘린더 내 clud
+    public List<CalendarDto> CalViewList(int member_no, String yyyyMM);
+	public List<CalendarDto> CalendarList(int member_no, String yyyyMMdd);
+	public int CalendarInsert(CalendarDto CalDto);
+	public CalendarDto CalendarOne(int calendar_no);
+	public int CalendarDelete(int calendar_no);
+	public int CalendarUpdate(CalendarDto dto);
+
 
 }
