@@ -22,14 +22,13 @@ public class PetBizImpl implements PetBiz {
 
 
 	@Override
-	public List<BusinessDto> hospitalList() {
-		public List<BusinessDto> hospitalList(int offset, int noOfRecords) {
+	public List<BusinessDto> hospitalList(int offset, int noOfRecords) {
 
 			return dao.hospitalList(offset,noOfRecords);
-		}
+	}
 	
-		@Override
-		public int totalHospital() {
+	@Override
+	public int totalHospital() {
 			// TODO Auto-generated method stub
 			return dao.totalHospital();
 	}
