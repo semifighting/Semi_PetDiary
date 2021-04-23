@@ -22,9 +22,15 @@ public class PetBizImpl implements PetBiz {
 
 
 	@Override
-	public List<BusinessDto> hospitalList() {
+	public List<BusinessDto> hospitalList(int offset, int noOfRecords) {
+
+			return dao.hospitalList(offset,noOfRecords);
+	}
 	
-		return dao.hospitalList();
+	@Override
+	public int totalHospital() {
+			// TODO Auto-generated method stub
+			return dao.totalHospital();
 	}
 
 	@Override
@@ -159,5 +165,39 @@ public class PetBizImpl implements PetBiz {
         return dao.deleteTrip(member_no, calendar_no);
     }
 
+	@Override
+	public List<CalendarDto> CalViewList(int member_no, String yyyyMM) {
+		return dao.CalViewList(member_no, yyyyMM);
+	}
+
+	@Override
+	public List<CalendarDto> CalendarList(int member_no, String yyyyMMdd) {
+		return dao.CalendarList(member_no, yyyyMMdd);
+	}
+
+	@Override
+	public int CalendarInsert(CalendarDto CalDto) {
+		return dao.CalendarInsert(CalDto);
+	}
+
+	@Override
+	public CalendarDto CalendarOne(int calendar_no) {
+		return dao.CalendarOne(calendar_no);
+	}
+
+	@Override
+	public int CalendarDelete(int calendar_no) {
+		return dao.CalendarDelete(calendar_no);
+	}
+
+	@Override
+	public int CalendarUpdate(CalendarDto dto) {
+		return dao.CalendarUpdate(dto);
+	}
+
+	@Override
+	public MemberDto Login(java.lang.String member_id, java.lang.String member_pw) {
+		return dao.Login(member_id, member_pw);
+	}
 	
 }

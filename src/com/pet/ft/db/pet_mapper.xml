@@ -67,7 +67,6 @@
   		<result property="community_reportcontent" column="COMMUNITY_REPORTCONTENT"/>
   		<collection property="memberVO" resultMap="memberListMap"></collection>
   	</resultMap>
-  
 
   
   	<insert id="MemberInsert" parameterType="MemberDto">
@@ -88,6 +87,13 @@
   	<select id="MemberOne" resultType="MemberDto" parameterType="int">
   		SELECT * FROM MEMBER WHERE MEMBER_NO = #{member_no}
   	</select>
+  	
+  	 <select id = "Login" parameterType="Map" resultType="MemberDto">
+ 		SELECT MEMBER_NO, MEMBER_NAME, MEMBER_ID, MEMBER_PW, MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ROLE, MEMBER_ADDRESS
+ 		FROM MEMBER
+ 		WHERE MEMBER_ID = #{member_id} and MEMBER_PW = #{member_pw}
+  	</select>
+  	
   	
   	<select id="CommunityList" resultType="CommunityDto">
   	SELECT * FROM COMMUNITY WHERE COMMUNITY_COMMENT = 0 AND COMMUNITY_REPORT='N' ORDER BY COMMUNITY_SEQ DESC
@@ -158,22 +164,16 @@
    		FROM BUSINESS 
   		WHERE BUSINESS_NUM = #{business_num}
  	</select>
-  	<select id = "CalViewList" parameterType="Map" resultType="CalendarDto">
-  		SELECT * FROM CALENDAR WHERE MEMBER_NO = #{member_no} AND SUBSTR(CALENDAR_STARTDATE, 1, 6) = #{calendar_startdate}
-  	</select>
-  	
-  	<insert id ="CalendarInsert" parameterType="CalendarDto">
-  		INSERT INTO CALENDAR
-  		VALUES(CALENDAR_NO_SEQ.NEXTVAL, #{calendar_startdate}, #{calendar_enddate}, #{calendar_necessity}, #{calendar_item}, #{calendar_title}, #{calendar_content}, ${member_no})
-  	</insert> 
-  	
+	
   	<select id="BusinessList" resultType="BusinessDto">
 	  	SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_ADDR,BUSINESS_ROLE, MEMBER_PHONE, BUSINESS_PARK
 		FROM BUSINESS JOIN MEMBER USING(MEMBER_NO)
 		WHERE BUSINESS_ROLE = 'S'
 		ORDER BY BUSINESS_NUM DESC
   	</select>
+
   	 <select id="BusinessOne" parameterType="int" resultType="BusinessDto">
+
   		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME, BUSINESS_ROLE
    		FROM BUSINESS JOIN MEMBER USING(MEMBER_NO)
   		WHERE BUSINESS_NUM = #{business_num}
@@ -345,9 +345,22 @@
   	</delete>
   	
   	  	<!-- 병원상담 -->
-  	 <select id="hospitalList" resultType="businessDto" >
-  	 	SELECT * FROM BUSINESS WHERE BUSINESS_ROLE = 'H'
+  	  <select id="hospitalList" resultType="businessDto" parameterType="hashmap">
+  		<![CDATA[
+		SELECT X.*
+		FROM(
+			SELECT ROWNUM AS RN, A.*
+			FROM (SELECT * FROM BUSINESS WHERE BUSINESS_ROLE = 'H'
+	 			 ORDER BY BUSINESS_NUM)A
+			WHERE ROWNUM <= #{noOfRecords}) X
+		WHERE X.RN > #{offset}
+	    ]]>
  	 </select>
+
+<select id="totalHospital" resultType="int">
+  		SELECT COUNT(*) FROM BUSINESS WHERE BUSINESS_ROLE = 'H'
+  	</select>
+
  	 <select id="hospitalOne" parameterType="int" resultType="businessDto">
   		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME 
    		FROM BUSINESS 
@@ -356,9 +369,40 @@
   	
   	<insert id="BookCounselInsert" parameterType="BookDto">
   		INSERT INTO BOOK
-  		VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',3, 1,
-  				#{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR},#{book_counsel})
+  	VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',#{business_num},#{member_no},
+	  </insert>
+  	
+  	<!-- 캘린더 내 clud -->
+  	<select id = "CalViewList" parameterType="Map" resultType="CalendarDto">
+  		SELECT *
+  		FROM ( SELECT (ROW_NUMBER() OVER(PARTITION BY SUBSTR(CALENDAR_STARTDATE, 1, 8) ORDER BY CALENDAR_STARTDATE )) RN, CALENDAR_NO, CALENDAR_STARTDATE, CALENDAR_ENDDATE, CALENDAR_NECESSITY, CALENDAR_ITEM, CALENDAR_TITLE, CALENDAR_CONTENT, MEMBER_NO
+  		FROM CALENDAR
+  		WHERE MEMBER_NO = #{member_no} AND SUBSTR(CALENDAR_STARTDATE, 1, 6) = #{calendar_startdate})
+  		WHERE RN BETWEEN 1 AND 3
+  	</select>
+  	
+  	<select id = "CalendarList" parameterType="Map" resultType="CalendarDto">
+  		SELECT * FROM CALENDAR WHERE MEMBER_NO = #{member_no} AND SUBSTR(CALENDAR_STARTDATE, 1, 8) = #{calendar_startdate}
+  	</select>
+  	
+  	<select id = "CalendarOne" parameterType="int" resultType="CalendarDto">
+  		SELECT * FROM CALENDAR WHERE CALENDAR_NO = #{calendar_no}
+  	</select>
+  	
+  	<insert id ="CalendarInsert" parameterType="CalendarDto">
+  		INSERT INTO CALENDAR
+  		VALUES(CALENDAR_NO_SEQ.NEXTVAL, #{calendar_startdate}, #{calendar_enddate}, #{calendar_necessity}, #{calendar_item}, #{calendar_title}, #{calendar_content}, ${member_no})
   	</insert>
+  	
+  	<update id="CalendarUpdate" parameterType="CalendarDto">
+  		UPDATE CALENDAR
+        SET CALENDAR_NECESSITY = #{calendar_necessity}, CALENDAR_ITEM = #{calendar_item}, CALENDAR_TITLE = #{calendar_title}, CALENDAR_CONTENT = #{calendar_content}
+        WHERE CALENDAR_NO = #{calendar_no}
+  	</update>
+  	
+  	<delete id="CalendarDelete" parameterType="int">
+  		DELETE FROM CALENDAR WHERE CALENDAR_NO = #{calendar_no}
+  	</delete>
   	
   	
   	<select id="CountMyinfoPet" parameterType="int" resultType="int">
