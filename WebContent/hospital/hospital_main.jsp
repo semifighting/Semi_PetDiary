@@ -1,13 +1,10 @@
-<<<<<<< HEAD
 <%@page import="com.pet.ft.model.PetDao"%>
 <%@page import="com.pet.ft.model.PetDaoImpl"%>
-=======
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
 <%@page import="com.pet.ft.dto.BusinessDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+    
 <% request.setCharacterEncoding("UTF-8");%>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -25,7 +22,7 @@
 
 <style type="text/css">
 	.hospital{
-
+		
 	}
 	.hospital_header{
 		padding-top:30px;
@@ -34,7 +31,7 @@
 		text-align:center;
 		background-color:wheat;
 		color:salmon;
-
+		
 	}
 	.hospital_header p:first-child{
 		font-size:50px;
@@ -46,7 +43,7 @@
 		font-style:strong;
 	}
 	.hospital_search .hospital_map{
-		margin: 10px 500px;
+		margin: 10px 500px; 
 		padding: 2px;
 		font-size:16px;
 		width:300px;
@@ -55,9 +52,9 @@
 		color:wheat;
 		cursor:pointer;
 		border-radius:12px;
-
+		
 	}
-
+	
 	.hospital_list{
 		background-color: #f9f9f9;
         width: 1260px;
@@ -87,13 +84,13 @@
   		display: flex;
  		 align-items: flex-end;
  		 margin-top: 1rem;
-
+ 		 
 	}
-
+	
 	.hospital_details {
 		  display: flex;
   	      flex-direction: column;
-
+  	     
 	}
 	.hospital_details .hospital_title {
   		font-size: 1.1rem;
@@ -105,13 +102,13 @@
 	.hospital_title:hover{
 		color:black;
 	}
-
+	
 	.hospital_phone {
 	    margin-bottom: 0.1rem;
  	    text-decoration: none;
  	    color:black;
 	}
-
+	
 </style>
 
 </head>
@@ -123,8 +120,8 @@
 		<div class="hospital_header">
 			<p>동물병원 안내</p><br>
 			<p>화상상담/챗봇 연결을 통해 반려견의 상태를 진단받을 수 있습니다.</p>
-		</div>
-		<%--병원리스트 --%>
+		</div>	
+		<%--병원리스트 --%>	
 		<div class="hospital_search">
 			<input class="hospital_map" type="button" value="지도에서 병원찾기" onclick="mapPop();"/>
 		</div>
@@ -138,8 +135,8 @@
 						<c:forEach items="${list }" var="dto">
 			 			<article class="hospital_container">
          				 	<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}"><img class="hospital_image" src="./resources/image/tico1.png"/></a>
-
-
+           
+          
          					<div class="hospital_bottom_section">
            						<div class="hospital_details">
               						<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}" class="hospital_title">${dto.business_name}</a>
@@ -154,16 +151,14 @@
 		</div>
 
 	</div>
+	
 
-
-=======
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
 	<script type="text/javascript">
 		function mapPop(){
 			var popup = window.open('./hospital/map.jsp', '지도', 'width=700px,height=800px,scrollbars=yes');
 		}
-
-
+		
+	
 	</script>
 
 

@@ -91,9 +91,6 @@
 
 
 
-  	<select id="MemberOne" resultType="MemberDto" parameterType="int">
-  		SELECT * FROM MEMBER WHERE MEMBER_NO = #{member_no}
-  	</select>
 
 
   	 <select id = "Login" parameterType="Map" resultType="MemberDto">
@@ -179,14 +176,8 @@
   		WHERE BUSINESS_NUM = #{business_num}
  	</select>
 
-  	<select id = "CalViewList" parameterType="Map" resultType="CalendarDto">
-  		SELECT * FROM CALENDAR WHERE MEMBER_NO = #{member_no} AND SUBSTR(CALENDAR_STARTDATE, 1, 6) = #{calendar_startdate}
-  	</select>
+  	
 
-  	<insert id ="CalendarInsert" parameterType="CalendarDto">
-  		INSERT INTO CALENDAR
-  		VALUES(CALENDAR_NO_SEQ.NEXTVAL, #{calendar_startdate}, #{calendar_enddate}, #{calendar_necessity}, #{calendar_item}, #{calendar_title}, #{calendar_content}, ${member_no})
-  	</insert>
 
 
   	<select id="BusinessList" resultType="BusinessDto">
@@ -368,7 +359,7 @@
   	</delete>
 
   	  	<!-- 병원상담 -->
-  	 <select id="hospitalList" resultType="businessDto" parameterType="int">
+  	 <select id="hospitalList" resultType="businessDto" parameterType="hashmap">
   		<![CDATA[
 
 		SELECT X.*
@@ -376,22 +367,16 @@
 			SELECT ROWNUM AS RN, A.*
 			FROM (SELECT * FROM BUSINESS WHERE BUSINESS_ROLE = 'H'
 	 			 ORDER BY BUSINESS_NUM)A
-			WHERE ROWNUM <= #{pageNumber}*8) X
-		WHERE X.RN > (#{pageNumber}-1)*8
+			WHERE ROWNUM <= #{noOfRecords}) X
+		WHERE X.RN > #{offset}
 	    ]]>
  	 </select>
+ 	 
+ 	<select id="totalHospital" resultType="int">
+  		SELECT COUNT(*) FROM BUSINESS WHERE BUSINESS_ROLE = 'H'
+  	</select>
 
- 	 <select id="hospitalTargetPage" resultType="int" parameterType="int">
- 	 <![CDATA[
-   		SELECT COUNT(X.BUSINESS_NUM)
-		FROM(
-			SELECT ROWNUM AS RN, A.*
-			FROM (SELECT * FROM BUSINESS WHERE BUSINESS_ROLE = 'H'
-	 			 ORDER BY BUSINESS_NUM)A
-			) X
-		WHERE X.RN > (#{pageNumber}-1)*8
-	  ]]>
- 	 </select>
+ 
 
  	 <select id="hospitalOne" parameterType="int" resultType="businessDto">
   		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME
