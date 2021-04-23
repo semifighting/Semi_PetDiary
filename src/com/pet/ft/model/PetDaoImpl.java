@@ -124,7 +124,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		try (SqlSession session = getSqlSessionFactory().openSession(true)){
 			res  = session.selectOne(namespace + "totalMember");
 		}
-	
 		
 		return res;
 		
@@ -516,6 +515,27 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	        }
 	        return res;
 	    }
+	    
+	    @Override
+	    public HashMap<String, Integer> SelectMyinfoCount(int member_no) {
+	    	HashMap<String, Integer> map = new HashMap<String, Integer>();
+	        try (SqlSession session = getSqlSessionFactory().openSession(true)) {
+	        	
+	            int CountMyinfoPet = session.selectOne(namespace + "CountMyinfoPet", member_no);
+	            int CountMyinfoCalendar = session.selectOne(namespace + "CountMyinfoCalendar", member_no);
+	            int CountMyinfoCommunity = session.selectOne(namespace + "CountMyinfoCommunity", member_no);
+	            int CountMyinfoComment = session.selectOne(namespace + "CountMyinfoComment", member_no);
+	            int CountMyinfoBook = session.selectOne(namespace + "CountMyinfoBook", member_no);
+	            
+	            map.put("CountMyinfoPet", CountMyinfoPet);
+	            map.put("CountMyinfoCalendar", CountMyinfoCalendar);
+	            map.put("CountMyinfoCommunity", CountMyinfoCommunity);
+	            map.put("CountMyinfoComment", CountMyinfoComment);
+	            map.put("CountMyinfoBook", CountMyinfoBook);
+	        }
+	        return map;
+	    }
+
 
 		
 }

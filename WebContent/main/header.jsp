@@ -11,16 +11,13 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
 <html>
   <head>
     <title>Title</title>
-    <script
-      src="https://kit.fontawesome.com/95780683f0.js"
-      crossorigin="anonymous"
-    ></script>
+    <script      src="https://kit.fontawesome.com/95780683f0.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <nav class="header">
       <div class="header_logo">
         <i class="fas fa-paw"></i>
-        <a href="">Pet Diary</a>
+        <a href="/semi_PetDiary/pet.do?command=myinfo&member_no=1">Pet Diary</a>
       </div>
       <ul class="header_menu">
         <li><a href="/semi_PetDiary/pet.do?command=pet_main&member_no=1">다이어리</a></li>

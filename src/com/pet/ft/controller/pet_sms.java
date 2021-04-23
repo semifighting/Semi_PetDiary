@@ -11,12 +11,15 @@ import java.net.URL;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.pet.ft.model.BusinessDao;
+import com.pet.ft.model.BusinessDaoImpl;
 
 public class pet_sms {
 
 	
-	public static String SendSMS(String book_date, String book_time, String business_name, int member_no) throws IOException {
-				
+	public static String SendSMS(String book_date, String book_time, int business_num, int member_no) throws IOException {
+		BusinessDao bdao = new BusinessDaoImpl();
+		String business_name = bdao.businessOne(business_num).getBusiness_name();
 		String phone= pet_util.FromMemberNoTogetPhone(member_no).replaceAll("-", "");
 		String Name= pet_util.FromMemberNoTogetName(member_no);
 		String massage = null;

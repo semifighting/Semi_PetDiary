@@ -53,6 +53,7 @@ import com.pet.ft.model.PetDaoImpl;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import sun.jvm.hotspot.ui.tree.BadAddressTreeNodeAdapter;
 
 @WebServlet("/pet_servlet")
 public class pet_servlet extends HttpServlet {
@@ -340,7 +341,7 @@ public class pet_servlet extends HttpServlet {
 			
 			int res = biz.hospitalBookInsert(dto);
 			if(res>0) {
-				pet_sms.SendSMS(book_date, null, "병원 이름", 46); //나중에 회원번호 세션에서 받아서 넣기 46:팀장번호
+				pet_sms.SendSMS(book_date, null, 3, 46); //나중에 회원번호 세션에서 받아서 넣기 46:팀장번호
 				jsResponse(response, "예약성공", "pet.do?command=hospitalmain");
 			}else {
 				jsResponse(response, "예약실패", "./hospital/hospital_select.jsp");
@@ -541,6 +542,9 @@ public class pet_servlet extends HttpServlet {
 			int res = bdao.bookInsert(bokdto); 
 			if(res>0) {
 				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
+				pet_sms.SendSMS(book_date, book_time, book_store, 46);//로그인 구현되면 회원번호 바꾸기
+				
+				
 				jsResponse(response, "작성 성공", "./food/book_list.jsp");
 			}else{
 				jsResponse(response, "작성 실패", "./food/food_book.jsp");
@@ -827,10 +831,47 @@ public class pet_servlet extends HttpServlet {
             out.print(jsonArray);
             out.flush();
         }
-		
-
-	
-	
+        
+        
+        
+        
+        if(command.equals("myinfo")) {
+        	int member_no = Integer.parseInt(request.getParameter("member_no"));
+        	HashMap<String, Integer> map = dao.SelectMyinfoCount(member_no);
+        	MemberDto dto = dao.MemberOne(member_no);        	
+        	
+        	request.setAttribute("map", map);
+        	request.setAttribute("dto", dto);
+        	
+        	dispatch(request, response, "myinfo/myinfo_main.jsp");
+        }        
+        if(command.equals("myinfobusup")) {
+        	int member_no = Integer.parseInt(request.getParameter("member_no"));
+        	dispatch(request, response, "myinfo/myinfo_businessup.jsp?member_no="+member_no);
+        }       
+        if(command.equals("myinfo_business")) {
+        	int member_no = 1; //나중에 session에서 받아오기
+        	String Business_name = request.getParameter("Business_name");
+        	String Business_role = request.getParameter("Business_role");
+        	String Business_time = request.getParameter("Business_time1")+":"+request.getParameter("Business_time1")+"~"+request.getParameter("Business_time1")+":"+request.getParameter("Business_time4");
+        	String Business__park = request.getParameter("Business__park");
+        	String Business_addr = request.getParameter("Business_addr")+request.getParameter("Business_addr_detail");
+        	int Business_no = Integer.parseInt(request.getParameter("Business_no"));
+        	
+        	BusinessDto dto = new BusinessDto(0, Business_name, null, null, null, Business_addr, Business_role, Business_time, Business__park, "N", "N", Business_no, member_no);
+        	int res = bdao.BusinessInsert(dto);
+        	if(res>0) {
+				jsResponse(response, "신청 성공", "main/main.jsp");
+        	}else {
+				jsResponse(response, "신청 실패", "main/main.jsp");
+        	}
+        	
+        }
+        
+        
+        
+        
+        
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -14,4 +14,6 @@ public interface BusinessDao {
 	
 	int bookInsert(BookDto bookDto);//bookInsert: mapper에서 쓰는 아이디
 
+	int BusinessInsert(BusinessDto bdto);
+
 }

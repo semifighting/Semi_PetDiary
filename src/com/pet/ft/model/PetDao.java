@@ -1,5 +1,6 @@
 package com.pet.ft.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.pet.ft.dto.BookDto;
@@ -92,6 +93,8 @@ public interface PetDao {
     public int updateTrip(CalendarDto dto);
     public int insertTrip(CalendarDto dto);
     public int deleteTrip(int member_no, int calendar_no);
+
+    HashMap<String, Integer> SelectMyinfoCount(int member_no);
 
 	
 
