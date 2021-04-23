@@ -34,8 +34,20 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
       </ul>
 
       <ul class="header_login">
-        <li><a href="#">로그인</a></li>
+        <%
+        if(session.getAttribute("member_no") == null) {		
+    %>
+    
+        <li><a href="/semi_PetDiary/pet.do?command=login_login">로그인</a></li>
         <li><a href="/semi_PetDiary/pet.do?command=login_signup">회원가입</a></li>
+    
+    <%			
+        } else {
+    %>
+        <li><a href="/semi_PetDiary/pet.do?command=login_logout">로그아웃</a></li>
+    <%
+        }
+    %>
       </ul>
 
       <ul class="header_icons">

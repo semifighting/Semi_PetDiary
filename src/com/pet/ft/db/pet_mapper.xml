@@ -71,7 +71,7 @@
   
   	<insert id="MemberInsert" parameterType="MemberDto">
   		INSERT INTO MEMBER
-  		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, #{member_pw}, #{member_email}, #{member_phone}, '회원', #{member_address})
+  		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, #{member_pw}, #{member_email}, #{member_phone}, 'USER', #{member_address})
   	</insert>
   	
   	<select id="SignUpIdChk" resultType="MemberDto" parameterType="String">
@@ -424,6 +424,17 @@
   	
   	<insert id="BusinessInsert" parameterType="businessDto">
   		INSERT INTO BUSINESS VALUES(BUSINESS_NUM_SEQ.NEXTVAL, #{business_name},#{business_addr},#{business_role},#{business_time},#{business_park},#{business_book},#{business_etc},#{business_no},#{member_no})
+  	</insert>
+
+
+	<select id="SocialLogin" parameterType="String" resultType="MemberDto">
+  		SELECT MEMBER_NO, MEMBER_NAME, MEMBER_ID, MEMBER_PW, MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ROLE, MEMBER_ADDRESS
+  		FROM MEMBER
+  		WHERE MEMBER_ID = #{member_id}
+  	</select>
+  	<insert id="SocialSignUp" parameterType="MemberDto">
+  		INSERT INTO MEMBER
+  		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, 'PASSWORD', #{member_email}, #{member_phone}, 'USER', #{member_address})
   	</insert>
   		
   	

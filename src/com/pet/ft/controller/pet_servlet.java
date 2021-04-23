@@ -369,10 +369,14 @@ public class pet_servlet extends HttpServlet {
 		
 			}
 		}
-		// 내가 작성
+
 		// 회원가입 페이지로 이동
 		if("login_signup".equals(command)) {
-			response.sendRedirect(loginDirectory+"signup.jsp");
+			if(session.getAttribute("member_no")==null) {
+				response.sendRedirect(loginDirectory+"signup.jsp");
+			} else {
+				jsResponse(response, "이미 로그인 상태입니다.", "main/main.jsp");
+			}
 		}
 		if("login_idchk".equals(command)) {
 			String member_id = request.getParameter("member_id");
@@ -516,11 +520,10 @@ public class pet_servlet extends HttpServlet {
 			dto.setMember_address(memberaddress);
 			
 			int res = dao.MemberInsert(dto);
-			// 수정할지 보기
 			if (res > 0) {
 				jsResponse(response, "회원가입이 완료되었습니다.", "main/main.sjp");
 			} else {
-				jsResponse(response, "회원가입 실패", "history.back();");
+				jsResponse(response, "회원가입 실패", "login/login_signup.jsp");
 			}
 		}
 		
@@ -905,8 +908,7 @@ public class pet_servlet extends HttpServlet {
         // 캘린더 내 clud
         
         if (command.equals("calendar_calMain")) {
-        	int member_no = (int) session.getAttribute("member_no");
-        	dispatch(request, response, CalendarDirectory + "");
+        	dispatch(request, response, CalendarDirectory + "main.jsp");
         }
     
      	if("calendar_calInsert".equals(command)) {
@@ -1053,7 +1055,11 @@ public class pet_servlet extends HttpServlet {
      	}
      	
     	if("login_login".equals(command)) {
-			response.sendRedirect(loginDirectory+"login.jsp");
+			if (session.getAttribute("member_no")==null) {
+				response.sendRedirect(loginDirectory+"login.jsp");
+			} else {
+				jsResponse(response, "이미 로그인 상태입니다.", "main/main.jsp");
+			}
 		}	
      	
     	if("login_loginForm".equals(command)) {
@@ -1081,7 +1087,6 @@ public class pet_servlet extends HttpServlet {
     			
     	}  
     		
-    	// 로그아웃 추가해야 함
     	if("login_logout".equals(command)) {
     		session.invalidate();
     		response.sendRedirect("main/main.jsp");

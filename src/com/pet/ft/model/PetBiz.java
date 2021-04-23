@@ -71,5 +71,7 @@ public interface PetBiz {
 	
 	//member
 	public MemberDto Login(String member_id, String member_pw);
+    public MemberDto SocialLogin(String member_id);
+	public int SocialSignUp(MemberDto dto);
     
 }
