@@ -22,21 +22,21 @@
 
     if (list.isEmpty()) {
 %>
-    <h1>반려 동물을 등록해주세요</h1>
-    <input type="button" value="추가" onclick="window.open('../pet_servlet?command=pet_insert_form&pet_no='<%=member_no%> + ',update', 'left=50, top=50, width=700, height=700')">
+<h1>반려 동물을 등록해주세요</h1>
+<input type="button" value="추가" onclick="window.open('../pet_servlet?command=pet_insert_form&pet_no='<%=member_no%> + ',update', 'left=50, top=50, width=700, height=700')">
 
 <%
-    }
-    else {
-        int totalCount = biz.getCount(1);     //member_no가 들어가야함
-        int petNo = list.get(0).getPet_no();
-        String petName = list.get(0).getPet_name();
-        String petSpecies = list.get(0).getPet_species();
-        String petBreed = list.get(0).getPet_breed();
-        String petBirth = list.get(0).getPet_birthday().substring(0, 10);
-        String petGender = list.get(0).getPet_gender();
-        String petVaccin = list.get(0).getPet_vaccination().substring(0, 10);
-        String path = list.get(0).getPet_path();
+}
+else {
+    int totalCount = biz.getCount(1);     //member_no가 들어가야함
+    int petNo = list.get(0).getPet_no();
+    String petName = list.get(0).getPet_name();
+    String petSpecies = list.get(0).getPet_species();
+    String petBreed = list.get(0).getPet_breed();
+    String petBirth = list.get(0).getPet_birthday().substring(0, 10);
+    String petGender = list.get(0).getPet_gender();
+    String petVaccin = list.get(0).getPet_vaccination().substring(0, 10);
+    String path = list.get(0).getPet_path();
 %>
 <div>
     <img id="petImg" src="<%=path%>" alt="반려동물 사진" width="500px" height="500px">
@@ -65,14 +65,14 @@
     <input type="button" value="추가" onclick="window.open('pet/pet_insert.jsp', 'insert', 'left=50, top=50, width=700, height=700')">
     <input type="button" id="petDel" value="삭제" onclick="location.href='../pet_servlet?command=pet_delete&pet_no=<%=petNo%>'">
     <input type="button" id="petUp" value="수정" onclick="window.open('../pet_servlet?command=pet_update_form&pet_no=<%=petNo%>', 'update', 'left=50, top=50, width=700, height=700')">
-<%
+    <%
         for (int i = 1; i <= totalCount; i++) {
-%>
-            <a href="#" onclick="pet(<%=i%>)">[<%=i%>]</a>
-<%
+    %>
+    <a href="#" onclick="pet(<%=i%>)">[<%=i%>]</a>
+    <%
+            }
         }
-    }
-%>
+    %>
 </div>
 </body>
 </html>

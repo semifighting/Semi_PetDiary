@@ -17,7 +17,7 @@ public class Util {
                     System.out.println("폴더 생성");
                 } else {
                     System.out.println("폴더 생성 실패");
-                } 
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -15,8 +15,8 @@ $(function () {
 
 $(function () {
     $("#end_date").on("input", function () {
-       var end = new Date(this.value);
-       var start = new Date($("#start_date").val());
+        var end = new Date(this.value);
+        var start = new Date($("#start_date").val());
         if (end.getTime() < start.getTime()) {
             alert("날짜 설정이 잘못되었습니다!");
             this.value = null;

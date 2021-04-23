@@ -23,26 +23,26 @@
 
 %>
 <%@include file="../main/header.jsp"%>
-    <form action="../pet_servlet" method="post">
-        <input type="hidden" name="command" value="picture_delete">
-        <div id="selectPictureList">
+<form action="../pet_servlet" method="post">
+    <input type="hidden" name="command" value="picture_delete">
+    <div id="selectPictureList">
         <%
             for (PictureDto dto : list) {
         %>
-            <input type="checkbox" name="picture_no" value="<%=dto.getPicture_no()%>"><img alt="사진" class="smallPic" src="<%=dto.getPicture_directory()%>/<%=dto.getPicture_name()%>">
+        <input type="checkbox" name="picture_no" value="<%=dto.getPicture_no()%>"><img alt="사진" class="smallPic" src="<%=dto.getPicture_directory()%>/<%=dto.getPicture_name()%>">
         <%
             }
         %>
-        </div>
-        <input type="submit" value="삭제">
-    </form>
-    <div id="bigPic">
     </div>
+    <input type="submit" value="삭제">
+</form>
+<div id="bigPic">
+</div>
 
-    <form id="imageUpload" method="post" action="../pet_servlet?command=picture_upload" enctype="multipart/form-data">
-        <input type="file" name="img" accept="image/*" multiple>
-        <input type="submit" value="업로드하기">
-    </form>
+<form id="imageUpload" method="post" action="../pet_servlet?command=picture_upload" enctype="multipart/form-data">
+    <input type="file" name="img" accept="image/*" multiple>
+    <input type="submit" value="업로드하기">
+</form>
 <%@include file="../main/footer.jsp"%>
 </body>
 </html>
