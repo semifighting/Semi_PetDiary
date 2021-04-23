@@ -22,8 +22,8 @@ public interface PetDao {
 	CommunityDto CommunityOne(int seq);
 
 	//병원상담
-	public List<BusinessDto> hospitalList();
-	
+	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
+	public int totalHospital();	
 	
 	
 	public BusinessDto hospitalSelect(int business_num);

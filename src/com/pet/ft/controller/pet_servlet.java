@@ -50,6 +50,7 @@ import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
 import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
+import com.pet.ft.paging.Paging;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -287,14 +288,29 @@ public class pet_servlet extends HttpServlet {
 		}
 		
 		
-		//병원상담
+				//병원상담
+		int currentPageNo = 1;
+		int recordsPerPage = 0;
 		if(command.equals("hospitalmain")) {
-			
-			List<BusinessDto> list = biz.hospitalList();
-			request.setAttribute("list", list);
-		
+			if(request.getParameter("pages") != null)
+				currentPageNo = Integer.parseInt(request.getParameter("pages"));
 
-			dispatch(request,response,"./hospital/hospital_main.jsp");
+			if(request.getParameter("lines") != null)
+				recordsPerPage = Integer.parseInt(request.getParameter("lines"));
+				Paging paging = new Paging(currentPageNo, recordsPerPage);
+				int offset = (paging.getCurrentPageNo()-1)*paging.getRecordsPerPage();
+
+				List<BusinessDto> list = biz.hospitalList(offset, paging.getRecordsPerPage()*currentPageNo);
+				paging.setNumberOfRecords(biz.totalHospital());
+				paging.makePaging();
+
+			if(list != null) {
+				request.setAttribute("list", list);
+				request.setAttribute("paging", paging);
+				dispatch(request,response,"./hospital/hospital_main.jsp");
+			}else {
+				jsResponse(response, "에러", "pet.do?command=hospitalmain");
+			}
 		}else if(command.equals("hospitalselect")) {
 			int business_num = Integer.parseInt(request.getParameter("business_num"));
 			BusinessDto dto = biz.hospitalSelect(business_num);
@@ -304,11 +320,13 @@ public class pet_servlet extends HttpServlet {
 		}else if(command.equals("counselinsert")) {
 			String book_date = request.getParameter("book_date");
 			String book_counsel = request.getParameter("book_counsel");
-			
+			int business_num = Integer.parseInt("business_num");
+			int member_no = Integer.parseInt("member_no");
 			BookDto dto = new BookDto();
 			dto.setBook_date(book_date);
 			dto.setBook_counsel(book_counsel);
-			
+			dto.setBusiness_num(business_num);
+			dto.setMember_no(member_no);
 			int res = biz.hospitalBookInsert(dto);
 			if(res>0) {
 				jsResponse(response, "예약성공", "pet.do?command=hospitalmain");
@@ -493,6 +511,32 @@ public class pet_servlet extends HttpServlet {
 			dispatch(request, response,"./food/food_book.jsp");
 			
 		}
+
+		if(command.equals("bookinsert")) {
+			String book_date = request.getParameter("book_date").replaceAll("-", "");//예약날짜.
+			System.out.println("1. book_date : "+book_date);      //출력구문 1. 예약날짜
+			String book_time = request.getParameter("book_time");//.replaceAll(":", "");
+			System.out.println("2. book_time : "+book_time);
+
+			int book_store = Integer.parseInt(request.getParameter("book_store"));
+			//book_store: 예약업체 번호 / business_num: 회사번호
+			System.out.println("3. book_store : "+book_store);//출력구문 2. 예약업체 번호.
+
+			String book_type = request.getParameter("book_type"); //book_type, business_role 둘다 올수 있는 값이 h,s
+			System.out.println(book_type);
+
+
+			BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null, null);
+			int res = bdao.bookInsert(bokdto); 
+
+			if(res>0) {
+			   //해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
+			   jsResponse(response, "작성 성공", "./food/book_list.jsp");
+			}else{
+			   jsResponse(response, "작성 실패", "./food/food_book.jsp");
+			}
+
+		 }
 		
 		// 일정 등록
 		if("calendar_insert".equals(command)) {
