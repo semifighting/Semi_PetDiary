@@ -50,6 +50,7 @@ import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
 import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
+import com.pet.ft.paging.Paging;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -285,13 +286,28 @@ public class pet_servlet extends HttpServlet {
 		
 		
 		//병원상담
+		int currentPageNo = 1;
+		int recordsPerPage = 0;
 		if(command.equals("hospitalmain")) {
 			
-			List<BusinessDto> list = biz.hospitalList();
-			request.setAttribute("list", list);
+			if(request.getParameter("pages") != null) 
+				currentPageNo = Integer.parseInt(request.getParameter("pages"));
+			
+			if(request.getParameter("lines") != null)
+				recordsPerPage = Integer.parseInt(request.getParameter("lines"));
+			Paging paging = new Paging(currentPageNo, recordsPerPage);
+			int offset = (paging.getCurrentPageNo()-1)*paging.getRecordsPerPage();
 		
-
-			dispatch(request,response,"./hospital/hospital_main.jsp");
+			List<BusinessDto> list = biz.hospitalList(offset, paging.getRecordsPerPage()*currentPageNo);
+			paging.setNumberOfRecords(biz.totalMember());
+			paging.makePaging();
+			if(list != null) {
+				request.setAttribute("list", list);
+				request.setAttribute("paging", paging);
+			}else {
+				
+			}
+			
 		}else if(command.equals("hospitalselect")) {
 			int business_num = Integer.parseInt(request.getParameter("business_num"));
 			BusinessDto dto = biz.hospitalSelect(business_num);
@@ -301,10 +317,15 @@ public class pet_servlet extends HttpServlet {
 		}else if(command.equals("counselinsert")) {
 			String book_date = request.getParameter("book_date");
 			String book_counsel = request.getParameter("book_counsel");
+			int business_num = Integer.parseInt("business_num");
+			int member_no = Integer.parseInt("member_no");
 			
 			BookDto dto = new BookDto();
 			dto.setBook_date(book_date);
 			dto.setBook_counsel(book_counsel);
+			dto.setBusiness_num(business_num);
+			dto.setMember_no(member_no);
+			
 			
 			int res = biz.hospitalBookInsert(dto);
 			if(res>0) {

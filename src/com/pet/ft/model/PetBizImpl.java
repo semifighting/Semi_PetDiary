@@ -22,10 +22,17 @@ public class PetBizImpl implements PetBiz {
 
 
 	@Override
-	public List<BusinessDto> hospitalList() {
+	public List<BusinessDto> hospitalList(int offset, int noOfRecords) {
 	
-		return dao.hospitalList();
+		return dao.hospitalList(offset,noOfRecords);
 	}
+	
+	@Override
+	public int totalHospital() {
+		// TODO Auto-generated method stub
+		return dao.totalHospital();
+	}
+	
 
 	@Override
 	public BusinessDto hospitalSelect(int business_num) {
@@ -158,6 +165,10 @@ public class PetBizImpl implements PetBiz {
     public int deleteTrip(int member_no, int calendar_no) {
         return dao.deleteTrip(member_no, calendar_no);
     }
+
+
+
+
 
 	
 }

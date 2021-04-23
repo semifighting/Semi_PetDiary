@@ -209,13 +209,35 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	
 	//병원상담
 	@Override
-	public List<BusinessDto> hospitalList() {		
+	public List<BusinessDto> hospitalList(int offset, int noOfRecords) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("offset", offset);
+		params.put("noOfRecords", noOfRecords);
+		
 	    SqlSession session = getSqlSessionFactory().openSession();								
-		List<BusinessDto> list = session.selectList(namespace+"hospitalList");
+		List<BusinessDto> list = session.selectList(namespace+"hospitalList",params);
 		session.close();
 			
 		return list;
 	}
+	public int totalHospital() {
+		
+		int res = 0;
+		try (SqlSession session = getSqlSessionFactory().openSession(true)){
+			res  = session.selectOne(namespace + "totalHospital");
+		}
+	
+		
+		return res;
+		
+	}
+
+
+	
+	
+	
+	
+
 	
 	
 	// 내가 작성
@@ -517,5 +539,9 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	        return res;
 	    }
 
+	
+		
+
+	
 		
 }

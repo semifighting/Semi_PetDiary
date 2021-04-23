@@ -345,9 +345,31 @@
   	</delete>
   	
   	  	<!-- 병원상담 -->
-  	 <select id="hospitalList" resultType="businessDto" >
-  	 	SELECT * FROM BUSINESS WHERE BUSINESS_ROLE = 'H'
+  	 <select id="hospitalList" resultType="businessDto" parameterType="int">
+  		<![CDATA[
+   		
+		SELECT X.*
+		FROM(
+			SELECT ROWNUM AS RN, A.* 
+			FROM (SELECT * FROM BUSINESS WHERE BUSINESS_ROLE = 'H'
+	 			 ORDER BY BUSINESS_NUM)A
+			WHERE ROWNUM <= #{pageNumber}*8) X
+		WHERE X.RN > (#{pageNumber}-1)*8
+	    ]]>
  	 </select>
+ 	 
+ 	 <select id="hospitalTargetPage" resultType="int" parameterType="int">
+ 	 <![CDATA[
+   		SELECT COUNT(X.BUSINESS_NUM)
+		FROM(
+			SELECT ROWNUM AS RN, A.* 
+			FROM (SELECT * FROM BUSINESS WHERE BUSINESS_ROLE = 'H'
+	 			 ORDER BY BUSINESS_NUM)A
+			) X
+		WHERE X.RN > (#{pageNumber}-1)*8
+	  ]]>
+ 	 </select>
+ 	 
  	 <select id="hospitalOne" parameterType="int" resultType="businessDto">
   		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME 
    		FROM BUSINESS 
@@ -356,7 +378,7 @@
   	
   	<insert id="BookCounselInsert" parameterType="BookDto">
   		INSERT INTO BOOK
-  		VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',3, 1,
+  		VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',#{business_num},#{member_no},
   				#{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR},#{book_counsel})
   	</insert>
   	

@@ -14,8 +14,10 @@ import com.pet.ft.dto.PictureDto;
 
 public interface PetBiz {
 	
-	public List<BusinessDto> hospitalList();
+	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
 	
+
+	public int totalHospital();
 	
 	public BusinessDto hospitalSelect(int business_num);
 	
