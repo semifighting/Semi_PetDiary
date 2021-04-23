@@ -201,12 +201,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	
 	
 	//병원상담
-	@Override
-	public List<BusinessDto> hospitalList() {
-		SqlSession session = getSqlSessionFactory().openSession();
-		List<BusinessDto> list = session.selectList(namespace + "hospitalList");
-
-	}
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords) {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("offset", offset);

@@ -31,11 +31,13 @@ public interface PetDao {
 
 	List<CommunityDto> CommunitySearchList(String filter, String community_search);
 
-	int CommunityReport(int community_seq);
+	public int CommunityReport(int community_seq);
 
 	int CommunityUpdate(CommunityDto cdto);
 
 	int CommunityDelete(int seq);
+
+	int CommentInsert(CommunityDto cdto);
 
 	int CommunityViews(int seq);
 
@@ -81,12 +83,6 @@ public interface PetDao {
 	public int changeRole(MemberDto dto);
 	public int deleteCommnutiy(int seq);
 	public boolean nextPage(String pageNumber);
-
-    public List<CalendarDto> selectTripList(int member_no);
-    public CalendarDto selectTripOne(int member_no, int calendar_no);
-    public int updateTrip(CalendarDto dto);
-    public int insertTrip(CalendarDto dto);
-    public int deleteTrip(int member_no, int calendar_no);
 
     //calendar - 캘린더 내 clud
     public List<CalendarDto> CalViewList(int member_no, String yyyyMM);
