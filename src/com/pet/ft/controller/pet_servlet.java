@@ -51,6 +51,10 @@ import com.pet.ft.paging.Paging;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+<<<<<<< HEAD
+=======
+import sun.jvm.hotspot.ui.tree.BadAddressTreeNodeAdapter;
+>>>>>>> main
 
 @WebServlet("/pet_servlet")
 public class pet_servlet extends HttpServlet {
@@ -153,7 +157,45 @@ public class pet_servlet extends HttpServlet {
 				request.setAttribute("cdto", dao.CommunityOne(seq));
 				jsResponse(response, "신고가 처리가 실패했습니다", "pet.do?command=community_detail&seq="+no+"&community_no="+olddto.getCommunity_no());
 			}
+<<<<<<< HEAD
 		} else if("community_updateform".equals(command)) {
+=======
+		}
+		
+		if("community_search".equals(command)) {
+			String filter = request.getParameter("filter");
+			String search_content = request.getParameter("search_content");
+			System.out.println(search_content+filter);
+			
+			List<CommunityDto> list = dao.CommunitySearchList(filter, search_content);
+			request.setAttribute("list", list);
+
+			if(request.getParameter("paging")==null){
+				request.getRequestDispatcher(communityDirectory+"search.jsp?&filter="+filter+"&search_content="+search_content+"&paging="+1).forward(request, response);				
+			}else {
+				request.getRequestDispatcher(communityDirectory+"search.jsp?&filter="+filter+"&search_content="+search_content+"&paging="+request.getParameter("paging")).forward(request, response);				
+			}
+		}
+		
+		if("community_report".equals(command)) {
+			int seq = Integer.parseInt(request.getParameter("seq"));
+			int no = Integer.parseInt(request.getParameter("no"));
+			CommunityDto olddto = dao.CommunityOne(seq);
+			int res = dao.CommunityReport(seq);
+			List<CommunityDto> CommentList= dao.CommentList(olddto.getCommunity_no()); 
+			request.setAttribute("cdto", dao.CommunityOne(seq));
+			request.setAttribute("commentList", CommentList);
+			if(res>0) {
+				jsResponse(response, "신고가 정상처리 되었습니다", "pet.do?command=community_detail&seq="+no+"&community_no="+olddto.getCommunity_no());
+				
+			}else {
+				request.setAttribute("cdto", dao.CommunityOne(seq));
+				jsResponse(response, "신고가 처리가 실패했습니다", "pet.do?command=community_detail&seq="+no+"&community_no="+olddto.getCommunity_no());
+			}
+		}
+
+		if("community_updateform".equals(command)) {
+>>>>>>> main
 			int seq = Integer.parseInt(request.getParameter("seq"));
 			request.setAttribute("cdto", dao.CommunityOne(seq));
 			request.getRequestDispatcher(communityDirectory+"update.jsp").forward(request, response);
@@ -299,6 +341,7 @@ public class pet_servlet extends HttpServlet {
 			dto.setMember_no(member_no);
 			int res = biz.hospitalBookInsert(dto);
 			if(res>0) {
+				pet_sms.SendSMS(book_date, null, 3, 46); //나중에 회원번호 세션에서 받아서 넣기 46:팀장번호
 				jsResponse(response, "예약성공", "pet.do?command=hospitalmain");
 			}else {
 				jsResponse(response, "예약실패", "./hospital/hospital_select.jsp");
@@ -460,6 +503,24 @@ public class pet_servlet extends HttpServlet {
 
 		}
 
+<<<<<<< HEAD
+=======
+			BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null, null);
+			int res = bdao.bookInsert(bokdto); 
+
+			if(res>0) {
+				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
+				pet_sms.SendSMS(book_date, book_time, book_store, 46);//로그인 구현되면 회원번호 바꾸기
+				
+				
+				jsResponse(response, "작성 성공", "./food/book_list.jsp");
+			}else{
+			   jsResponse(response, "작성 실패", "./food/food_book.jsp");
+			}
+
+		 }
+		
+>>>>>>> main
 		// 일정 등록
 		if("calendar_insert".equals(command)) {
 			String calendar_title = request.getParameter("calendar_title");
@@ -557,6 +618,202 @@ public class pet_servlet extends HttpServlet {
         	dispatch(request, response, CalendarDirectory + "calendar/calendar_main.jsp");
         }
 
+<<<<<<< HEAD
+=======
+                dto.setPicture_name(file);
+                dto.setPicture_directory("../resources/Upload/" + member_no);
+                dto.setMember_no(member_no);
+                int res = biz.insertPicture(dto);
+                System.out.println(res);
+                if (res > 0) {
+                    System.out.println("업로드 성공");
+                } else {
+                    System.out.println("업로드 실패");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            dispatch(request, response, "pet.do?command=picture_main");
+
+        } else if (command.equals("picture_delete")) {
+            int member_no = 1;
+            int picture_no = Integer.parseInt(request.getParameter("picture_no"));
+            System.out.println(member_no + "/" + picture_no);
+            PictureDto dto = biz.selectPictureOne(member_no, picture_no);
+
+            String path = dto.getPicture_directory() + "/" + dto.getPicture_name();
+
+            Util.deleteFile(path);
+            int res = biz.deletePicture(member_no, picture_no);
+            if (res > 0) {
+                System.out.println("삭제 성공");
+                dispatch(request, response, "pet.do?command=picture_main");
+            } else {
+                System.out.println("삭제 실패");
+                dispatch(request, response, "pet.do?command=picture_main");
+            }
+
+        } else if (command.equals("calendar_main")) {
+            int member_no = 1;
+            List<CalendarDto> list = biz.selectTripList(1);
+            request.setAttribute("list", list);
+            dispatch(request, response, "calendar/calendar_main.jsp");
+
+        } else if (command.equals("calendar_insert_form")) {
+            response.sendRedirect("calendar/calendar_insert.jsp");
+
+        } else if (command.equals("calendar_insert_res")) {
+
+            String calendar_startdate = request.getParameter("calendar_startdate");
+            String calendar_enddate = request.getParameter("calendar_enddate");
+            String calendar_necessity = request.getParameter("calendar_necessity");
+            String calendar_item = request.getParameter("calendar_item");
+            String calendar_title = request.getParameter("calendar_title");
+            String calendar_content = request.getParameter("calendar_content");
+            int member_no = Integer.parseInt(request.getParameter("member_no"));
+
+            CalendarDto dto = new CalendarDto(0, calendar_startdate, calendar_enddate, calendar_necessity, calendar_item, calendar_title, calendar_content, member_no);
+            int res = biz.insertTrip(dto);
+            if (res > 0) {
+                System.out.println("여행 일정 작성 성공");
+                dispatch(request, response, "index.html");
+            } else {
+                System.out.println("여행 일정 작성 실패");
+                dispatch(request, response, "index.html");
+            }
+        } else if (command.equals("calendar_detail")) {
+            int member_no = 1;
+            int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
+
+            CalendarDto dto = biz.selectTripOne(member_no, calendar_no);
+            request.setAttribute("dto", dto);
+            dispatch(request, response, "calendar/calendar_detail.jsp");
+
+        } else if (command.equals("calendar_update_form")) {
+
+            int member_no = 1;
+            int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
+            CalendarDto dto = biz.selectTripOne(member_no, calendar_no);
+            request.setAttribute("dto", dto);
+            dispatch(request, response, "calendar/calendar_update.jsp");
+
+
+        } else if (command.equals("calendar_update_res")) {
+
+            int member_no = 1;
+            int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
+            String start_date = request.getParameter("start_date");
+            String end_date = request.getParameter("end_date");
+            String necessity = request.getParameter("necessity");
+            String item = request.getParameter("item");
+            String title = request.getParameter("title");
+            String content = request.getParameter("content");
+
+            CalendarDto dto = new CalendarDto(calendar_no, start_date, end_date, necessity, item, title, content, member_no);
+            int res = biz.updateTrip(dto);
+            if (res > 0) {
+                System.out.println("수정 성공");
+            } else {
+                System.out.println("수정 실패");
+            }
+
+
+        } else if (command.equals("calendar_delete")) {
+
+            int member_no = 1;
+            int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
+            System.out.println(calendar_no);
+
+            int res = biz.deleteTrip(1, calendar_no);
+
+            if (res > 0) {
+                System.out.println("삭제 성공");
+                dispatch(request, response, "index.html");
+            } else {
+                System.out.println("삭제 실패");
+                dispatch(request, response, "index.html");
+            }
+        } else if (command.equals("pet_Paging")) {
+
+            int member_no = 1;
+            //int pet_no = Integer.parseInt(request.getParameter("pet_no"));
+            int count = Integer.parseInt(request.getParameter("count"));
+            List<PetDto> list = biz.selectPetList(1);
+            PrintWriter out = response.getWriter();
+            JSONArray jsonArray = new JSONArray();
+            //petDto dto = biz.selectPetOne(member_no, 1);
+            PetDto dto = biz.selectPetOnePaging(member_no, count);
+
+            JSONObject jObj = new JSONObject();
+            jObj.put("pet_no", dto.getPet_no());
+            jObj.put("pet_name", dto.getPet_name());
+            jObj.put("pet_species", dto.getPet_species());
+            jObj.put("pet_breed", dto.getPet_breed());
+            jObj.put("pet_birthday", dto.getPet_birthday().substring(0, 10));
+            jObj.put("pet_gender", dto.getPet_gender());
+            jObj.put("pet_path", dto.getPet_path());
+            jObj.put("pet_vaccination", dto.getPet_vaccination());
+
+            jsonArray.add(jObj);
+            out.print(jsonArray);
+            out.flush();
+        }
+        
+        
+        
+        
+        if(command.equals("myinfo")) {
+        	int member_no = Integer.parseInt(request.getParameter("member_no"));
+        	HashMap<String, Integer> map = dao.SelectMyinfoCount(member_no);
+        	MemberDto dto = dao.MemberOne(member_no);        	
+        	
+        	request.setAttribute("map", map);
+        	request.setAttribute("dto", dto);
+        	
+        	dispatch(request, response, "myinfo/myinfo_main.jsp");
+        }        
+        if(command.equals("myinfobusup")) {
+        	int member_no = Integer.parseInt(request.getParameter("member_no"));
+        	dispatch(request, response, "myinfo/myinfo_businessup.jsp?member_no="+member_no);
+        }       
+        if(command.equals("myinfo_business")) {
+        	int member_no = 1; //나중에 session에서 받아오기
+        	String Business_name = request.getParameter("Business_name");
+        	String Business_role = request.getParameter("Business_role");
+        	String Business_time = request.getParameter("Business_time1")+":"+request.getParameter("Business_time1")+"~"+request.getParameter("Business_time1")+":"+request.getParameter("Business_time4");
+        	String Business__park = request.getParameter("Business__park");
+        	String Business_addr = request.getParameter("Business_addr")+request.getParameter("Business_addr_detail");
+        	int Business_no = Integer.parseInt(request.getParameter("Business_no"));
+        	
+        	BusinessDto dto = new BusinessDto(0, Business_name, null, null, null, Business_addr, Business_role, Business_time, Business__park, "N", "N", Business_no, member_no);
+        	int res = bdao.BusinessInsert(dto);
+        	if(res>0) {
+				jsResponse(response, "신청 성공", "main/main.jsp");
+        	}else {
+				jsResponse(response, "신청 실패", "main/main.jsp");
+        	}
+        	
+        }
+        
+        
+        
+        
+        
+
+        if (command.equals("weather_main")) {
+			response.sendRedirect("weather/weatherView.html");
+		}
+        
+        
+        
+        // 캘린더 내 clud
+        
+        if (command.equals("calendar_calMain")) {
+        	int member_no = (int) session.getAttribute("member_no");
+        	dispatch(request, response, CalendarDirectory + "");
+        }
+    
+>>>>>>> main
      	if("calendar_calInsert".equals(command)) {
      		String year = request.getParameter("year");
      		String month = request.getParameter("month");

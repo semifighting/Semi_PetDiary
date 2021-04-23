@@ -85,10 +85,13 @@ List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("commentList"
 			</div>	
 			<div id="community_detail_content">
 				<%=cdto.getCommunity_content() %>
+<<<<<<< HEAD
 			</div>
 			<div onclick="location.href='/semi_PetDiary/pet_sms_servlet'">
 				문자 테스트
 				
+=======
+>>>>>>> main
 			</div>
 		</div>
 		<div id="community_comment_box">

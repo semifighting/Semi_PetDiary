@@ -1,6 +1,7 @@
 <%@ page import="com.pet.ft.dto.PetDto" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
@@ -46,7 +47,7 @@
         </tr>
         <tr>
             <th>생년월일</th>
-            <td colspan="2">${dto.pet_birthday }</td>
+            <td colspan="2">${fn:substring(dto.pet_birthday, 0, 10) }</td>
         </tr>
         <tr>
             <th>성별</th>

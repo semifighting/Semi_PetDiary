@@ -29,6 +29,7 @@ public class PetBizImpl implements PetBiz {
 	public int totalHospital() {
 		// TODO Auto-generated method stub
 		return dao.totalHospital();
+
 	}
 
 	@Override

@@ -30,6 +30,7 @@ public interface PetBiz {
 	public int changeRole(MemberDto dto);
 	public int deleteCommnutiy(int seq);
 
+
 	//pet
     public List<PetDto> selectPetList(int member_no);
     public PetDto selectPetOne(int member_no, int pet_no);
@@ -62,4 +63,5 @@ public interface PetBiz {
 	public int CalendarUpdate(CalendarDto dto);
 
 	public MemberDto Login(String member_id, String member_pw);
+
 }

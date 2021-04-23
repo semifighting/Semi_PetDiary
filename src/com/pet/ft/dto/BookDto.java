@@ -132,24 +132,22 @@ public class BookDto {
 	}
 
 
-
 	public String getBook_hostime() {
 		return book_hostime;
 	}
-	
 
 	public void setBook_hostime(String book_hostime) {
 		this.book_hostime = book_hostime;
 	}
 
-
 	public String getBook_counsel() {
 		return book_counsel;
 	}
 
-	
 	public void setBook_counsel(String book_counsel) {
 		this.book_counsel = book_counsel;
 	}
+
+
 
 }

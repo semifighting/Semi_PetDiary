@@ -15,7 +15,7 @@
 <body>
 <c:choose>
     <c:when test="${empty list }">
-        <a href="/semi_PetDiary/picture/picture_main.jsp">사진 등록하러 가기</a>
+        <a href="../picture/picture_main.jsp">사진 등록하러 가기</a>
     </c:when>
     <c:otherwise>
         <c:forEach items="${list }" var="dto">

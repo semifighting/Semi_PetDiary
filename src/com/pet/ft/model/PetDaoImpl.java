@@ -18,8 +18,6 @@ import com.pet.ft.dto.BusinessDto;
 import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
-
-
 public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
 
@@ -232,7 +230,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 		return res;
 	}
-	
+
 	@Override
 	public BusinessDto hospitalSelect(int business_num) {
 		SqlSession session = null;
@@ -315,8 +313,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 		return res;
 	}
-
-
 	@Override
 	public List<CalendarDto> CalViewList(int member_no, String yyyyMM) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -330,7 +326,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 		return list;
 	}
-
 	@Override
 	public boolean nextPage(String pageNumber) {
 		boolean res = false;
@@ -515,6 +510,49 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	        }
 	        return res;
 	    }
+	    
+	    @Override
+	    public HashMap<String, Integer> SelectMyinfoCount(int member_no) {
+	    	HashMap<String, Integer> map = new HashMap<String, Integer>();
+	        try (SqlSession session = getSqlSessionFactory().openSession(true)) {
+	        	
+	            int CountMyinfoPet = session.selectOne(namespace + "CountMyinfoPet", member_no);
+	            int CountMyinfoCalendar = session.selectOne(namespace + "CountMyinfoCalendar", member_no);
+	            int CountMyinfoCommunity = session.selectOne(namespace + "CountMyinfoCommunity", member_no);
+	            int CountMyinfoComment = session.selectOne(namespace + "CountMyinfoComment", member_no);
+	            int CountMyinfoBook = session.selectOne(namespace + "CountMyinfoBook", member_no);
+	            
+	            map.put("CountMyinfoPet", CountMyinfoPet);
+	            map.put("CountMyinfoCalendar", CountMyinfoCalendar);
+	            map.put("CountMyinfoCommunity", CountMyinfoCommunity);
+	            map.put("CountMyinfoComment", CountMyinfoComment);
+	            map.put("CountMyinfoBook", CountMyinfoBook);
+	        }
+	        return map;
+	    }
+		public int CalendarInsert(CalendarDto CalDto) {
+			int res = 0;
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				res = session.insert(namespace+"CalendarInsert", CalDto);
+			}
+			return res;
+		}
+
+
+		@Override
+		public List<CalendarDto> CalViewList(int member_no, String yyyyMM) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			List<CalendarDto> list = new ArrayList<CalendarDto>();
+			map.put("member_no", member_no);
+			map.put("calendar_startdate", yyyyMM);
+			System.out.println(map);
+			
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				list = session.selectList(namespace+"CalViewList",map);
+			}
+			return list;
+		}
+
 		@Override
 		public List<CalendarDto> CalendarList(int member_no, String yyyyMMdd) {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -569,6 +607,4 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			}
 			return dto;
 		}
-
-		
 }

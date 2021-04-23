@@ -62,16 +62,31 @@ text-align: center
 <%
 		if(paging*12<list.size()){
 			for(int i = (paging-1)*12;i<(paging)*12;i++){
+				CommunityDto dto = list.get(i);
 %>
 			<div class="commnunity_entity" onclick="location.href='/semi_PetDiary/pet.do?command=community_detail&seq=<%=list.get(i).getCommunity_seq()%>&community_no=<%=list.get(i).getCommunity_no()%>'">
 				<div class="commnuity_title">
-					<%=list.get(i).getCommunity_title() %>
+					<%=dto.getCommunity_title() %>
 				</div>
 				<div class="commnuity_regdate">
-					<%=list.get(i).getCommunity_regdate() %>
+					<%=dto.getCommunity_regdate() %>
 				</div>
 				<div class="commnuity_content">
-					<%=list.get(i).getCommunity_content() %>
+			<%if(dto.getCommunity_content().indexOf("<img")>0){ %>
+				
+				<%if(dto.getCommunity_content().split("<img")[0].length()>30){%>
+					<%=dto.getCommunity_content().split("<img")[0].substring(0,30)+"..."%>
+				 <%}else{%>
+					<%=dto.getCommunity_content().split("<img")[0]%>
+					<%} %>
+					<%="<img style='width : 230px; height : 140px; object-fit : cover;' "+dto.getCommunity_content().split("<img")[1].split(">")[0]+">" %>
+			<%}else{ %>
+				<%if(dto.getCommunity_content().length()>140){%>
+					<%=dto.getCommunity_content().substring(0,140)+"..."%>
+				  <%}else{%>
+					<%=dto.getCommunity_content() %>
+				<%} %>  	
+			<%} %>			
 				</div>
 				<div class="commnunity_picture">
 					<a href="#"> <img alt="" src=""> </a>
@@ -86,16 +101,31 @@ text-align: center
 			}			
 		}else{
 			for(int i = (paging-1)*12;i<list.size();i++){
-%>
+				CommunityDto dto =  list.get(i);
+%>		
 			<div class="commnunity_entity" onclick="location.href='/semi_PetDiary/pet.do?command=community_detail&seq=<%=list.get(i).getCommunity_seq()%>&community_no=<%=list.get(i).getCommunity_no()%>'">
 				<div class="commnuity_title">
-					<%=list.get(i).getCommunity_title() %>
+					<%=dto.getCommunity_title() %>
 				</div>
 				<div class="commnuity_regdate">
-					<%=list.get(i).getCommunity_regdate() %>
+					<%=dto.getCommunity_regdate() %>
 				</div>
 				<div class="commnuity_content">
-					<%=list.get(i).getCommunity_content() %>
+			<%if(dto.getCommunity_content().indexOf("<img")>0){ %>
+				
+				<%if(dto.getCommunity_content().split("<img")[0].length()>30){%>
+					<%=dto.getCommunity_content().split("<img")[0].substring(0,30)+"..."%>
+				 <%}else{%>
+					<%=dto.getCommunity_content().split("<img")[0]%>
+					<%} %>
+					<%="<img style='width : 230px; height : 140px; object-fit : cover;' "+dto.getCommunity_content().split("<img")[1].split(">")[0]+">" %>
+			<%}else{ %>
+				<%if(dto.getCommunity_content().length()>140){%>
+					<%=dto.getCommunity_content().substring(0,140)+"..."%>
+				  <%}else{%>
+					<%=dto.getCommunity_content() %>
+				<%} %>  	
+			<%} %>			
 				</div>
 				<div class="commnunity_picture">
 					<a href="#"> <img alt="" src=""> </a>

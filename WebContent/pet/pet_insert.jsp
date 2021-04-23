@@ -15,7 +15,7 @@
 %>
 <form method="post" action="../pet_servlet">
     <input type="hidden" name="command" value="pet_insert">
-    <table border="1">
+    <table>
         <col width="100"/>
         <col width="100"/>
         <col width="100"/>

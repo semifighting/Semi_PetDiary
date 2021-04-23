@@ -18,6 +18,7 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
   <head>
     <title>Title</title>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <script src="https://kit.fontawesome.com/95780683f0.js" crossorigin="anonymous"></script>
   
 </head>
@@ -63,6 +64,8 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
 	</nav>	
 </body>
 =======
+=======
+>>>>>>> main
     <script      src="https://kit.fontawesome.com/95780683f0.js" crossorigin="anonymous"></script>
   </head>
   <body>
