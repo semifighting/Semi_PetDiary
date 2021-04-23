@@ -2,24 +2,22 @@ package com.pet.ft.paging;
 
 public class Paging {
 	
-	private int recordsPerPage;		// 페이지당 레코드 수
-	private int firstPageNo;		// 첫 번째 페지이 수
-	private int prevPageNo;			// 이전 페이지 번호
-	private int startPageNo;		// 시작 페이지 (페이징 너비 기준)
-	int currentPageNo;				// 페이지 번호
-	int endPageNo;					// 끝 페이지(페이징 너비 기준)
-	int nextPageNo;					// 다음 페이지 번호
-	int finalPageNo;				// 마지막 페이지 번호
-	int numberOfRecords;			// 전체 레코드 수
-	int sizeOfPage;					// 보여지는 페이지 개수(1, 2, 3, 4, 5 개수)
+	private int recordsPerPage;
+	private int firstPageNo;
+	private int prevPageNo;
+	private int startPageNo;
+	int currentPageNo;
+	int endPageNo;
+	int nextPageNo;
+	int finalPageNo;
+	int numberOfRecords;
+	int sizeOfPage;
 	
 	public Paging(int currentPageNo, int recordsPerPage) {
 	
 		this.currentPageNo = currentPageNo;
-		// 기본 페이지 : 5개 보기를 default로 설정함
 		this.sizeOfPage = 5;
-		
-		//recordsPerPage가 0이 아니면 recordsPerPage, 아니면 무조건 5(default : 5)
+
 		this.recordsPerPage = (recordsPerPage != 0)? recordsPerPage : 5;
 	}
 	
@@ -84,27 +82,26 @@ public class Paging {
 		this.sizeOfPage = sizeOfPage;
 	}
 	
-	// 페이지 생성
+
 	public void makePaging() {
-		if(numberOfRecords == 0)	// 게시글 전체 수가 없는 경우
+		if(numberOfRecords == 0)
 			return;
 		
-		if(currentPageNo == 0)		// 기본 값 설정
+		if(currentPageNo == 0)
 			setCurrentPageNo(1);
 		
-		if(recordsPerPage == 0)	
-			setRecordsPerPage(10);	// 기본 값 설정
+		if(recordsPerPage == 0)
+			setRecordsPerPage(10);
 		
-		// 마지막 페이지
+
 		int finalPage = (numberOfRecords + (recordsPerPage - 1)) / recordsPerPage;
 		
 		if(currentPageNo > finalPage)
-			setCurrentPageNo(finalPage); // 기본 값 설정
+			setCurrentPageNo(finalPage);
 		
 		if(currentPageNo < 0 || currentPageNo > finalPage)
-			currentPageNo = 1;		// 현재 페이지 유효성 체크
-		
-		// 시작 페이지 (전체)
+			currentPageNo = 1;
+
 		boolean isNowFirst = currentPageNo == 1? true : false;
 		boolean isNowFinal = currentPageNo == finalPage? true : false;
 		
@@ -114,22 +111,22 @@ public class Paging {
 		if(endPage > finalPage)
 			endPage = finalPage;
 		
-		setFirstPageNo(1);		// 첫 번째 페이지 번호
+		setFirstPageNo(1);
 		
 		if(isNowFirst)
-			setPrevPageNo(1);	// 이전 페이지 번호
+			setPrevPageNo(1);
 		else
 			setPrevPageNo(((currentPageNo - 1) < 1 ? 1 : (currentPageNo - 1)));
 		
-		setStartPageNo(startPage);	// 시작 페이지
-		setEndPageNo(endPage);		// 끝 페이지
+		setStartPageNo(startPage);
+		setEndPageNo(endPage);
 		
 		if(isNowFinal)
-			setNextPageNo(finalPage);	// 다음 페이지 번호
+			setNextPageNo(finalPage);
 		else
 			setNextPageNo(((currentPageNo + 1 ) > finalPage ? finalPage : (currentPageNo + 1)));
 		
-		setFinalPageNo(finalPage);	// 마지막 페이지 번호
+		setFinalPageNo(finalPage);
 		
 	}
 	

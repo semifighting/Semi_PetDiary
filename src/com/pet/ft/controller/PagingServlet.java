@@ -56,7 +56,7 @@ public class PagingServlet extends HttpServlet {
 			
 			url = "business/memberlist_main.jsp";
 		} else {
-			request.setAttribute("msg", "Error가 발생했습니다.");
+			request.setAttribute("msg", "error.jsp");
 			
 			url = "business/business_main.jsp";
 		}

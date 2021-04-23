@@ -13,7 +13,7 @@
 <%
     String src = request.getParameter("src");
 %>
-<form method="post" action="../pet.do">
+<form method="post" action="../pet_servlet">
     <input type="hidden" name="command" value="pet_insert">
 <table border="1">
     <col width="100"/>
@@ -22,7 +22,7 @@
     <col width="100">
     <tr>
         <td colspan="2">
-            <input type="button" name="picture" value="사진 선택하기" onclick="location.href='../pet.do?command=picture_insert_select'">
+            <input type="button" name="picture" value="사진 선택하기" onclick="location.href='../pet_servlet?command=picture_insert_select'">
             <img id="selectedPic" src="<%=src%>" alt="선택된 사진" width="500" height="500">
             <input type="hidden" name="path" value="<%=src%>">
         </td>

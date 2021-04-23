@@ -8,14 +8,16 @@ import java.util.Date;
 
 public class Util {
 
-    public static void MakeFolder(int member_no) {
-        String path = "/Users/parkgw/Semi-Project/web/resources/Upload/";
+    public static void MakeFolder(String path, int member_no) {
         File folder = new File(path + member_no);
 
         if (!folder.exists()) {
             try {
-                folder.mkdir();
-                System.out.println("폴더 생성");
+                if (folder.mkdir()) {
+                    System.out.println("폴더 생성");
+                } else {
+                    System.out.println("폴더 생성 실패");
+                } 
             } catch (Exception e) {
                 e.printStackTrace();
             }

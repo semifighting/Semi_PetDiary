@@ -1,72 +1,46 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.pet.ft.mapper">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pet.ft.mapper">
 
+    <resultMap id="diaryMap" type="DiaryDto">
+        <result property="diary_no" column="DIARY_NO"/>
+        <result property="diary_title" column="DIARY_TITLE"/>
+        <result property="diary_content" column="DIARY_CONTENT"/>
+        <result property="diary_regdate" column="DIARY_REGDATE"/>
+        <result property="member_no" column="MEMBER_NO"/>
+    </resultMap>
 
-  <resultMap id="diaryMap" type="DiaryDto">
-      <result property="diary_no" column="DIARY_NO"/>
-      <result property="diary_title" column="DIARY_TITLE"/>
-      <result property="diary_content" column="DIARY_CONTENT"/>
-      <result property="diary_regdate" column="DIARY_REGDATE"/>
-      <result property="member_no" column="MEMBER_NO"/>
-  </resultMap>
+    <resultMap id="petMap" type="PetDto">
+        <result property="pet_no" column="PET_NO"/>
+        <result property="pet_species" column="PET_SPECIES"/>
+        <result property="pet_breed" column="PET_BREED"/>
+        <result property="pet_name" column="PET_NAME"/>
+        <result property="pet_birthday" column="PET_BIRTHDAY"/>
+        <result property="pet_gender" column="PET_GENDER"/>
+        <result property="member_no" column="MEMBER_NO"/>
+        <result property="pet_path" column="PET_PATH"/>
+        <result property="pet_vaccination" column="PET_VACCINATION"/>
+    </resultMap>
 
-  <resultMap id="petMap" type="PetDto">
-      <result property="pet_no" column="PET_NO"/>
-      <result property="pet_species" column="PET_SPECIES"/>
-      <result property="pet_breed" column="PET_BREED"/>
-      <result property="pet_name" column="PET_NAME"/>
-      <result property="pet_birthday" column="PET_BIRTHDAY"/>
-      <result property="pet_gender" column="PET_GENDER"/>
-      <result property="member_no" column="MEMBER_NO"/>
-      <result property="pet_path" column="PET_PATH"/>
-      <result property="pet_vaccination" column="PET_VACCINATION"/>
-  </resultMap>
+    <resultMap id="pictureMap" type="PictureDto">
+        <result property="picture_no" column="PICTURE_NO"/>
+        <result property="picture_name" column="PICTURE_NAME"/>
+        <result property="picture_directory" column="PICTURE_DIRECTORY"/>
+        <result property="member_no" column="MEMBER_NO"/>
+    </resultMap>
 
-  <resultMap id="pictureMap" type="PictureDto">
-      <result property="picture_no" column="PICTURE_NO"/>
-      <result property="picture_name" column="PICTURE_NAME"/>
-      <result property="picture_directory" column="PICTURE_DIRECTORY"/>
-      <result property="member_no" column="MEMBER_NO"/>
-  </resultMap>
-
-
-  <resultMap id="calendarMap" type="CalendarDto">
-      <result property="calendar_no" column="CALENDAR_NO"/>
-      <result property="calendar_startdate" column="CALENDAR_STARTDATE"/>
-      <result property="calendar_enddate" column="CALENDAR_ENDDATE"/>
-      <result property="calendar_necessity" column="CALENDAR_NECESSITY"/>
-      <result property="calendar_item" column="CALENDAR_ITEM"/>
-      <result property="calendar_title" column="CALENDAR_TITLE"/>
-      <result property="calendar_content" column="CALENDAR_CONTENT"/>
-      <result property="member_no" column="MEMBER_NO"/>
-  </resultMap>
-  	<resultMap type="MemberDto" id="memberListMap">
-  		<result property="member_no" column="MEMBER_NO"/>
-  		<result property="member_name" column="MEMBER_NAME"/>
-  		<result property="member_id" column="MEMBER_ID"/>
-  		<result property="member_pw" column="MEMBER_PW"/>
-  		<result property="member_email" column="MEMBER_EMAIL"/>
-  		<result property="member_phone" column="MEMBER_PHONE"/>
-  		<result property="member_role" column="MEMBER_ROLE"/>
-  		<result property="member_address" column="MEMBER_ADDRESS"/>
-  	</resultMap>
-  	
-  	<resultMap type="CommunityDto" id="reportListMap">
-  		<result property="community_seq" column="COMMUNITY_SEQ"/>
-  		<result property="community_title" column="COMMUNITY_TITLE"/>
-  		<result property="community_content" column="COMMUNITY_CONTENT"/>
-  		<result property="community_regdate" column="COMMUNITY_REGDATE"/>
-  		<result property="community_report" column="COMMUNITY_REPORT"/>
-  		<result property="community_reportcount" column="COMMUNITY_REPORTCOUNT"/>
-  		<result property="community_no" column="COMMUNITY_NO"/>
-  		<result property="community_comment" column="COMMUNITY_COMMENT"/>
-  		<result property="member_no" column="MEMBER_NO"/>
-  		<result property="community_reportcontent" column="COMMUNITY_REPORTCONTENT"/>
-  		<collection property="memberVO" resultMap="memberListMap"></collection>
-  	</resultMap>
+    <resultMap id="calendarMap" type="CalendarDto">
+        <result property="calendar_no" column="CALENDAR_NO"/>
+        <result property="calendar_startdate" column="CALENDAR_STARTDATE"/>
+        <result property="calendar_enddate" column="CALENDAR_ENDDATE"/>
+        <result property="calendar_necessity" column="CALENDAR_NECESSITY"/>
+        <result property="calendar_item" column="CALENDAR_ITEM"/>
+        <result property="calendar_title" column="CALENDAR_TITLE"/>
+        <result property="calendar_content" column="CALENDAR_CONTENT"/>
+        <result property="member_no" column="MEMBER_NO"/>
+    </resultMap>
 
     <select id="selectPetList" resultMap="petMap" parameterType="int">
         SELECT PET_NO, PET_SPECIES, PET_BREED, PET_NAME, PET_BIRTHDAY, PET_GENDER, MEMBER_NO, PET_PATH, PET_VACCINATION
@@ -79,7 +53,7 @@
         SELECT PET_NO, PET_SPECIES, PET_BREED, PET_NAME, PET_BIRTHDAY, PET_GENDER, MEMBER_NO, PET_PATH, PET_VACCINATION
         FROM PET
         WHERE MEMBER_NO = ${member_no}
-          AND PET_NO = ${pet_no}
+        AND PET_NO = ${pet_no}
     </select>
     <select id="selectPictureList" resultMap="pictureMap" parameterType="int">
         SELECT PICTURE_NO, PICTURE_NAME, PICTURE_DIRECTORY, MEMBER_NO
@@ -91,7 +65,7 @@
         SELECT PICTURE_NO, PICTURE_NAME, PICTURE_DIRECTORY, MEMBER_NO
         FROM PICTURE
         WHERE MEMBER_NO = #{member_no}
-          AND PICTURE_NO = #{picture_no}
+        AND PICTURE_NO = #{picture_no}
     </select>
 
     <select id="selectTripList" resultMap="calendarMap" parameterType="int">
@@ -103,7 +77,7 @@
         SELECT CALENDAR_NO, CALENDAR_STARTDATE, CALENDAR_ENDDATE, CALENDAR_NECESSITY, CALENDAR_ITEM, CALENDAR_TITLE, CALENDAR_CONTENT, MEMBER_NO
         FROM CALENDAR
         WHERE MEMBER_NO = #{member_no}
-          AND CALENDAR_NO = #{calendar_no}
+        AND CALENDAR_NO = #{calendar_no}
     </select>
 
     <select id="getCount" resultType="int" parameterType="int">
@@ -177,54 +151,4 @@
             CALENDAR_NECESSITY = #{calendar_necessity}, CALENDAR_ITEM = #{calendar_item}, CALENDAR_CONTENT = #{calendar_content}
         WHERE CALENDAR_NO = #{calendar_no}
     </update>
-
-  	<select id="totalMember" resultType="int">
-  		SELECT COUNT(*) FROM MEMBER
-  	</select>
-  	
-  	<select id="memberList" resultMap="memberListMap" >
-  		<![CDATA[
-  		SELECT MEMBER_NO, MEMBER_NAME, MEMBER_ID, MEMBER_EMAIL, MEMBER_ROLE, MEMBER_PHONE, MEMBER_ADDRESS
-  		FROM MEMBER
-  		ORDER BY MEMBER_NO DESC
-  		]]>
-  	</select>
-  		
-  	<select id="memberListPaging" parameterType="hashmap" resultMap="memberListMap" >
-  		SELECT SQL_CALC_FOUND_ROWS
-  			   MEMBER_NO, 
-  			   MEMBER_NAME, 
-  			   MEMBER_ID, 
-  			   MEMBER_EMAIL, 
-  			   MEMBER_ROLE, 
-  			   MEMBER_PHONE, 
-  			   MEMBER_ADDRESS
-  		FROM MEMBER
-  		LIMIT #{offset}, #{noOfRecords}
-  	</select>
-  	
-  	<update id="changeRole" parameterType="MemberDto">
-  		UPDATE MEMBER
-  		SET MEMBER_ROLE = #{member_role}
-  		WHERE MEMBER_NO = #{member_no}
-  	</update>
-  	
-  	<select id="totalReport" resultType="int">
-  		SELECT COUNT(*) FROM COMMUNITY WHERE COMMUNITY_REPORT = 'Y'
-  	</select>
-  	
-  	<select	id="reportList" resultMap="reportListMap">
-  		SELECT a.COMMUNITY_SEQ, a.COMMUNITY_TITLE, a .COMMUNITY_REPORTCOUNT, a.COMMUNITY_REPORTCONTENT, a.COMMUNITY_REGDATE, b.MEMBER_ID
-  		FROM COMMUNITY a JOIN MEMBER b on a.member_no = b.member_no WHERE COMMUNITY_REPORT = 'Y'
-  		ORDER BY COMMUNITY_SEQ DESC
-  	</select>
-  	
-  	<select id="selectTotalRecords" resultType="int">
-  		SELECT FOUND_ROWS();
-  	</select>
-  	
-  	<delete id="deleteCommunity" parameterType="int">
-  		DELETE FROM COMMUNITY
-  		WHERE COMMUNITY_SEQ = #{seq}
-  	</delete>
-  </mapper>
+</mapper>

@@ -29,14 +29,13 @@ $(function () {
 $(function () {
     $(".iselectPic").on("click", function () {
         var src = this.getAttribute("src");
-        alert(src);
-        location.href = "pet/pet_insert.jsp?src=../" + src;
+        location.href = "pet_insert.jsp?src=" + src;
     });
 });
 
 $(function () {
     $(".uselectPic").on("click", function () {
         var src = this.getAttribute("src")
-        location.href = "pet/pet_update.jsp?src=../" + src;
+        location.href = "pet_update.jsp?src=" + src;
     });
 });

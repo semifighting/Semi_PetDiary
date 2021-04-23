@@ -10,7 +10,6 @@ a:visited{text-decoration: none; color:white;}
 
 body{
 	margin:0;
-	font-family:'Source Sans Pro'
 }
 .header {
 	display : flex;

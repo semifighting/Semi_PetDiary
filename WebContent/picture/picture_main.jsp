@@ -1,7 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.pet.ft.dto.PictureDto" %>
-<%@ page import="com.pet.ft.biz.PetBizImpl" %>
-<%@ page import="com.pet.ft.biz.PetBiz" %>
+<%@ page import="com.pet.ft.model.PetBizImpl" %>
+<%@ page import="com.pet.ft.model.PetBiz" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%
     request.setCharacterEncoding("UTF-8");
@@ -23,7 +23,7 @@
 
 %>
 <%@include file="../main/header.jsp"%>
-    <form action="../pet.do" method="post">
+    <form action="../pet_servlet" method="post">
         <input type="hidden" name="command" value="picture_delete">
         <div id="selectPictureList">
         <%
@@ -39,7 +39,7 @@
     <div id="bigPic">
     </div>
 
-    <form id="imageUpload" method="post" action="../pet.do?command=picture_upload" enctype="multipart/form-data">
+    <form id="imageUpload" method="post" action="../pet_servlet?command=picture_upload" enctype="multipart/form-data">
         <input type="file" name="img" accept="image/*" multiple>
         <input type="submit" value="업로드하기">
     </form>
