@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="com.pet.ft.dto.CommunityDto"/>
     <fullyQualifiedTypeName name="com.pet.ft.dto.MemberDto"/>
     <fullyQualifiedTypeName name="java.lang.Integer"/>
+    <fullyQualifiedTypeName name="com.pet.ft.dto.CommunityDto"/>
+    <fullyQualifiedTypeName name="com.sun.org.apache.xalan.internal.xsltc.compiler.sym"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.pet.ft.dto.BusinessDto"/>
+    <fullyQualifiedTypeName name="com.pet.ft.dto.BookDto"/>
 </qualifiedTypeNameHistroy>

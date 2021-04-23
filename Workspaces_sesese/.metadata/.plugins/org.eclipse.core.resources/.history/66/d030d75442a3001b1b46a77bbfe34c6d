@@ -1,0 +1,4 @@
+function goPage(url, pages, lines, key){
+	url += '?' +  "command=" + key + "&pages=" + pages + "&lines=" + lines;
+	location.href = url;
+}

@@ -7,6 +7,8 @@
 	<typeAliases>
 		<typeAlias type="com.pet.ft.dto.MemberDto" alias="MemberDto" />
 		<typeAlias type="com.pet.ft.dto.CommunityDto" alias="CommunityDto" />
+		<typeAlias type="com.pet.ft.dto.BusinessDto" alias="BusinessDto"/>
+		<typeAlias type="com.pet.ft.dto.BookDto" alias="BookDto"/>
 	</typeAliases>
 
 	<environments default="development">

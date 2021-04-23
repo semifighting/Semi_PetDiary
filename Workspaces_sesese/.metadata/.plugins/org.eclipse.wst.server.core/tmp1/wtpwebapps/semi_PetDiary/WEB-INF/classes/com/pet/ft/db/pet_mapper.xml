@@ -4,6 +4,18 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.pet.ft.mapper">
   
+  	<resultMap type="BusinessDto" id="businessListMap">
+  		<result property="business_num" column="BUSINESS_NUM" />
+  		<result property="business_name" column="BUSINESS_NAME" />
+  		<result property="business_addr" column="BUSINESS_ADDR" />
+  		<result property="business_role" column="BUSINESS_ROLE" />
+  		<result property="business_time" column="BUSINESS_TIME" />
+  		<result property="business_park" column="BUSINESS_PARK" />
+  		<result property="business_book" column="BUSINESS_book" />
+  		<result property="business_etc" column="BUSINESS_etc" />
+  		<result property="business_no" column="BUSINESS_NO" />
+  	</resultMap>
+  
   	<resultMap type="MemberDto" id="memberListMap">
   		<result property="member_no" column="MEMBER_NO"/>
   		<result property="member_name" column="MEMBER_NAME"/>
@@ -28,12 +40,36 @@
   		<result property="community_reportcontent" column="COMMUNITY_REPORTCONTENT"/>
   		<collection property="memberVO" resultMap="memberListMap"></collection>
   	</resultMap>
+  	
+  	<resultMap type="BookDto" id="bookListMap">
+  		<result property="book_num" column="BOOK_NUM" />
+  		<result property="book_date" column="BOOK_DATE" />
+  		<result property="book_time" column="BOOK_TIME" />
+  		<result property="book_type" column="BOOK_TYPE" />
+  		<result property="business_num" column="BUSINESS_NUM" />
+  		<result property="member_no" column="MEMBER_NO" />
+  		<result property="book_price" column="BOOK_PRICE" />
+  		<result property="book_state" column="BOOK_STATE" />
+  		<result property="book_hostime" column="BOOK_HOSTIME" />
+  		<result property="book_counsel" column="BOOK_COUNSEL" />
+  		<collection property="memberVO" resultMap="memberListMap"></collection>
+  		<collection property="businessVO" resultMap="businessListMap"></collection>
+  	</resultMap>
   
   	<select id="totalMember" resultType="int">
   		SELECT COUNT(*) FROM MEMBER
   	</select>
   	
-  	<select id="memberList" resultMap="memberListMap" >
+	<select id="totalReport" resultType="int">
+  		SELECT COUNT(*) FROM COMMUNITY WHERE COMMUNITY_REPORT = 'Y'
+  	</select>
+  	
+  	<select id="totalBook" resultType="int">
+  		SELECT COUNT(*) FROM COMMUNITY
+  	</select>
+  	
+<!--   	
+	<select id="memberList" resultMap="memberListMap" >
   		<![CDATA[
   		SELECT MEMBER_NO, MEMBER_NAME, MEMBER_ID, MEMBER_EMAIL, MEMBER_ROLE, MEMBER_PHONE, MEMBER_ADDRESS
   		FROM MEMBER
@@ -41,38 +77,65 @@
   		]]>
   	</select>
   		
+  	<select	id="reportList" resultMap="reportListMap">
+  		SELECT a.COMMUNITY_SEQ, a.COMMUNITY_TITLE, a .COMMUNITY_REPORTCOUNT, a.COMMUNITY_REPORTCONTENT, a.COMMUNITY_REGDATE, b.MEMBER_ID
+  		FROM COMMUNITY a JOIN MEMBER b on a.member_no = b.member_no WHERE COMMUNITY_REPORT = 'Y'
+  		ORDER BY COMMUNITY_SEQ DESC
+  	</select>	 -->
+  		
   	<select id="memberListPaging" parameterType="hashmap" resultMap="memberListMap" >
-  		SELECT SQL_CALC_FOUND_ROWS
-  			   MEMBER_NO, 
-  			   MEMBER_NAME, 
-  			   MEMBER_ID, 
-  			   MEMBER_EMAIL, 
-  			   MEMBER_ROLE, 
-  			   MEMBER_PHONE, 
-  			   MEMBER_ADDRESS
-  		FROM MEMBER
-  		LIMIT #{offset}, #{noOfRecords}
+		<![CDATA[
+		SELECT B.RNUM, B.MEMBER_NO, B.MEMBER_NAME, B.MEMBER_ID, B.MEMBER_EMAIL, B.MEMBER_ROLE, B.MEMBER_PHONE, B.MEMBER_ADDRESS
+		FROM(
+			SELECT ROWNUM AS RNUM, A.MEMBER_NO, A.MEMBER_NAME, A.MEMBER_ID, A.MEMBER_EMAIL, A.MEMBER_ROLE, A.MEMBER_PHONE, A.MEMBER_ADDRESS
+			FROM(
+					SELECT  MEMBER_NO, MEMBER_NAME, MEMBER_ID, MEMBER_EMAIL, MEMBER_ROLE, MEMBER_PHONE, MEMBER_ADDRESS
+					FROM MEMBER
+					ORDER BY MEMBER_NO) A
+			WHERE ROWNUM <= #{noOfRecords}) B
+		WHERE B.RNUM > #{offset}
+		]]>
   	</select>
+  	
+  	<select	id="reportListPaging" parameterType="hashmap" resultMap="reportListMap">
+  		<![CDATA[
+  		SELECT D.RNUM, D.COMMUNITY_SEQ, D.COMMUNITY_TITLE, D.COMMUNITY_REPORTCOUNT, D.COMMUNITY_REPORTCONTENT, D.COMMUNITY_REGDATE, D.MEMBER_ID
+		FROM(
+			SELECT ROWNUM AS RNUM, C.COMMUNITY_SEQ, C.COMMUNITY_TITLE, C.COMMUNITY_REPORTCOUNT, C.COMMUNITY_REPORTCONTENT, C.COMMUNITY_REGDATE, C.MEMBER_ID
+			FROM(
+				SELECT A.COMMUNITY_SEQ, A.COMMUNITY_TITLE, A.COMMUNITY_REPORTCOUNT, A.COMMUNITY_REPORTCONTENT, A.COMMUNITY_REGDATE, B.MEMBER_ID
+				FROM COMMUNITY A JOIN MEMBER B on A.member_no = B.member_no WHERE COMMUNITY_REPORT = 'Y'
+				ORDER BY COMMUNITY_SEQ) C
+			WHERE ROWNUM <= #{noOfRecords}) D
+		WHERE D.RNUM > #{offset}
+		]]>
+  	</select>
+  	
+  	<select	id="bookListPaging" parameterType="hashmap" resultMap="bookListMap">
+  		<![CDATA[
+  		SELECT E.RNUM, E.BOOK_NUM, E.MEMBER_NAME, E.BUSINESS_NAME, E.BOOK_DATE
+		FROM(
+			SELECT ROWNUM AS RNUM, D.BOOK_NUM, D.MEMBER_NAME, D.BUSINESS_NAME, D.BOOK_DATE
+			FROM(
+				SELECT A.BOOK_NUM, B.MEMBER_NAME, C.BUSINESS_NAME, A.BOOK_DATE
+				FROM BOOK A JOIN MEMBER B 
+				ON A.MEMBER_NO = B.MEMBER_NO 
+				JOIN BUSINESS C
+				ON A.BUSINESS_NUM = C.BUSINESS_NUM
+				ORDER BY A.BOOK_NUM
+			) D
+			WHERE ROWNUM <= #{noOfRecords}) E
+		WHERE E.RNUM > #{offset}
+		]]>
+  	</select>
+  	
+  	
   	
   	<update id="changeRole" parameterType="MemberDto">
   		UPDATE MEMBER
   		SET MEMBER_ROLE = #{member_role}
   		WHERE MEMBER_NO = #{member_no}
   	</update>
-  	
-  	<select id="totalReport" resultType="int">
-  		SELECT COUNT(*) FROM COMMUNITY WHERE COMMUNITY_REPORT = 'Y'
-  	</select>
-  	
-  	<select	id="reportList" resultMap="reportListMap">
-  		SELECT a.COMMUNITY_SEQ, a.COMMUNITY_TITLE, a .COMMUNITY_REPORTCOUNT, a.COMMUNITY_REPORTCONTENT, a.COMMUNITY_REGDATE, b.MEMBER_ID
-  		FROM COMMUNITY a JOIN MEMBER b on a.member_no = b.member_no WHERE COMMUNITY_REPORT = 'Y'
-  		ORDER BY COMMUNITY_SEQ DESC
-  	</select>
-  	
-  	<select id="selectTotalRecords" resultType="int">
-  		SELECT FOUND_ROWS();
-  	</select>
   	
   	<delete id="deleteCommunity" parameterType="int">
   		DELETE FROM COMMUNITY

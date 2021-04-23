@@ -22,8 +22,8 @@
 	$(function(){
 		$("select[name=location]").change(function(){
 			var crole = $(this).val();	
-			var no = $(this).parents('div').find('input').val();
-			location.href="/semi_PetDiary/pet.do?command=change&no=" + no + "&role=" + crole;
+			var no = $(this).parents("span").find("input").val();
+		    location.href="/semi_PetDiary/pet.do?command=change&no=" + no + "&role=" + crole;
 		});
 	});
 
@@ -42,6 +42,10 @@
 	.col6 {width: 2%;}
 	.col7 {width: 3%;}
 	
+	.paginate{margin: 0px auto; width: 200px; text-align: center;}
+	.paginate a	{color:black;}
+/* 	.sizePage{border: 1px solid black;}
+	.current-page {color: skyblue;} */
 </style>
 </head>
 <body>
@@ -67,12 +71,12 @@
 				<div class="row">
 					<span class="cell col1">
 						${dto.member_no }
-						<input type="hidden" value="${dto.member_no }" />
 					</span>
 					<span class="cell col2">${dto.member_name }</span>
 					<span class="cell col3">${dto.member_id }</span>
 					<span class="cell col4">${dto.member_email }</span>
 					<span class="cell col5">
+						<input type="hidden" value="${dto.member_no }" />
 						<select name="location">
 							<c:set var="role" value="${dto.member_role }" />
 							<c:choose>
@@ -103,7 +107,6 @@
 			<jsp:param name="endPageNo" value="${paging.endPageNo }"/>
 			<jsp:param name="nextPageNo" value="${paging.nextPageNo }"/>
 			<jsp:param name="finalPageNo" value="${paging.finalPageNo }"/>
-			
 		</jsp:include>
 	
 <%@ include file="/main/footer.jsp" %>
