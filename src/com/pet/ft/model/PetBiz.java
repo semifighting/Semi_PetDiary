@@ -11,6 +11,7 @@ import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
 
 
+<<<<<<< HEAD
 
 public interface PetBiz {
 
@@ -19,6 +20,18 @@ public interface PetBiz {
 
 	public int totalHospital();
 
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> jihyeon
+
+public interface PetBiz {
+	
+	public List<BusinessDto> hospitalList();
+	
+	
+>>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
 	public BusinessDto hospitalSelect(int business_num);
 
 	public int hospitalBookInsert(BookDto dto);
@@ -60,5 +73,23 @@ public interface PetBiz {
     public int insertTrip(CalendarDto dto);
     public int updateTrip(CalendarDto dto);
     public int deleteTrip(int member_no, int calendar_no);
+<<<<<<< HEAD
 
+=======
+	
+<<<<<<< HEAD
+=======
+    //calendar - 캘린더 내 clud
+    public List<CalendarDto> CalViewList(int member_no, String yyyyMM);
+	public List<CalendarDto> CalendarList(int member_no, String yyyyMMdd);
+	public int CalendarInsert(CalendarDto CalDto);
+	public CalendarDto CalendarOne(int calendar_no);
+	public int CalendarDelete(int calendar_no);
+	public int CalendarUpdate(CalendarDto dto);
+	
+	//member
+	public MemberDto Login(String member_id, String member_pw);
+    
+>>>>>>> jihyeon
+>>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
 }

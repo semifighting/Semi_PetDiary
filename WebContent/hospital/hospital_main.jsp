@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 <%@page import="com.pet.ft.model.PetDao"%>
 <%@page import="com.pet.ft.model.PetDaoImpl"%>
+=======
+>>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
 <%@page import="com.pet.ft.dto.BusinessDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -113,11 +116,8 @@
 
 </head>
 <body>
-<<<<<<< HEAD
-=======
 
 
->>>>>>> heeju
 	<%@include file="../main/header.jsp"%>
 	<div class="hospital">
 		<div class="hospital_header">
@@ -152,14 +152,12 @@
        			</c:choose>
             </section>
 		</div>
-<<<<<<< HEAD
+
 	</div>
+
+
 =======
-
-	</div>
-
-
->>>>>>> heeju
+>>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
 	<script type="text/javascript">
 		function mapPop(){
 			var popup = window.open('./hospital/map.jsp', '지도', 'width=700px,height=800px,scrollbars=yes');

@@ -23,7 +23,11 @@
 		width:100%; margin:30px auto;
 	}
 	.detail_box_img{
+<<<<<<< HEAD
 		float:left; width:53%; position:absolute; margin-left:120px;
+=======
+		float:left; width:53%; position:absolute; margin-left:120px; 
+>>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
 	}
 	.detail_box_img .himg{
 		max-height:270px;min-height:270px; border-radius:20px;
@@ -100,7 +104,11 @@
 						    </dd>
 						</dl>
 					</li>
+<<<<<<< HEAD
 
+=======
+					
+>>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
 				</ul>
 			</div>
 		</div>
