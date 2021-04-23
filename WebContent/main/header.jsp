@@ -28,7 +28,10 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
         <li><a href="/semi_PetDiary/pet.do?command=hospitalmain">병원상담</a></li>
         <li><a href="/semi_PetDiary/pet.do?command=foodlist">음식/카페</a></li>
         <li><a href="/semi_PetDiary/pet.do?command=community">커뮤니티</a></li>
+<<<<<<< HEAD
         <li><a href="/semi_PetDiary/pet.do?command=weather_main">날씨보기</a></li>
+=======
+>>>>>>> main
         <li>
           <form action="#" method="post">
             <input type="text" id="searchBox" />
