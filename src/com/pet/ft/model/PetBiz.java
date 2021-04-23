@@ -13,15 +13,17 @@ import com.pet.ft.dto.PictureDto;
 
 
 public interface PetBiz {
-	
-	public List<BusinessDto> hospitalList();
-	
-	
+
+	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
+
+
+	public int totalHospital();
+
 	public BusinessDto hospitalSelect(int business_num);
-	
+
 	public int hospitalBookInsert(BookDto dto);
-	
-	
+
+
 
 	public BusinessDto businessOne(int business_num);
 
@@ -58,5 +60,5 @@ public interface PetBiz {
     public int insertTrip(CalendarDto dto);
     public int updateTrip(CalendarDto dto);
     public int deleteTrip(int member_no, int calendar_no);
-	
+
 }

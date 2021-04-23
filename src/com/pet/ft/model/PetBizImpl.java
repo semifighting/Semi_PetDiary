@@ -15,27 +15,34 @@ import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
 
 public class PetBizImpl implements PetBiz {
-	
+
 	private PetDao dao = new PetDaoImpl();
 	private BusinessDao bdao = new BusinessDaoImpl();
 
 
 
 	@Override
-	public List<BusinessDto> hospitalList() {
-	
-		return dao.hospitalList();
+	public List<BusinessDto> hospitalList(int offset, int noOfRecords) {
+
+		return dao.hospitalList(offset,noOfRecords);
 	}
 
 	@Override
+	public int totalHospital() {
+		// TODO Auto-generated method stub
+		return dao.totalHospital();
+	}
+
+
+	@Override
 	public BusinessDto hospitalSelect(int business_num) {
-	
+
 		return dao.hospitalSelect(business_num);
 	}
 
 	@Override
 	public int hospitalBookInsert(BookDto dto) {
-		
+
 		return dao.hospitalBookInsert(dto);
 	}
 
@@ -159,5 +166,12 @@ public class PetBizImpl implements PetBiz {
         return dao.deleteTrip(member_no, calendar_no);
     }
 
-	
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> heeju
+
 }
