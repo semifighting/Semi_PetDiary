@@ -1,4 +1,3 @@
-<%@page import="com.pet.ft.dto.BusinessDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -57,17 +56,10 @@
 </style>
 </head>
 <body>
-<%
-
-	BusinessDto dto = (BusinessDto)request.getAttribute("dto");
-%>
 
   <%@include file="../main/header.jsp"%>
   <form action="pet.do" method="post">
 		<input type="hidden" name="command" value="counselinsert"/>
-		<input type="hidden" name="business_num" value="<%=dto.getBusiness_num() %>"/>
-		<input type="hidden" name="member_no" value="<%=dto.getMember_no() %>"/>
-		
 	<div class="hospital_container">
 		<h3 class="hospital_name">${dto.business_name}</h3>
 		<div class="detail_box">

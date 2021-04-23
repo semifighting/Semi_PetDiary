@@ -1,6 +1,7 @@
 package com.pet.ft.dto;
 
 
+
 public class BookDto {
 	private int book_num;
 	private String book_date;
@@ -19,11 +20,9 @@ public class BookDto {
 		
 	}
 
-
 	public BookDto(int book_num, String book_date, String book_time, String book_type, int business_num, int member_no,
 			int book_price, String book_state, String book_hostime, String book_counsel) {
 		super();
-
 		this.book_num = book_num;
 		this.book_date = book_date;
 		this.book_time = book_time;
@@ -37,14 +36,17 @@ public class BookDto {
 	}
 
 
+
 	public int getBook_num() {
 		return book_num;
 	}
 
 
+
 	public void setBook_num(int book_num) {
 		this.book_num = book_num;
 	}
+
 
 
 	public String getBook_date() {
@@ -58,9 +60,11 @@ public class BookDto {
 	}
 
 
+
 	public String getBook_time() {
 		return book_time;
 	}
+
 
 
 	public void setBook_time(String book_time) {
@@ -68,9 +72,11 @@ public class BookDto {
 	}
 
 
+
 	public String getBook_type() {
 		return book_type;
 	}
+
 
 
 	public void setBook_type(String book_type) {
@@ -78,14 +84,17 @@ public class BookDto {
 	}
 
 
+
 	public int getBusiness_num() {
 		return business_num;
 	}
 
 
+
 	public void setBusiness_num(int business_num) {
 		this.business_num = business_num;
 	}
+
 
 
 	public int getMember_no() {
@@ -99,9 +108,11 @@ public class BookDto {
 	}
 
 
+
 	public int getBook_price() {
 		return book_price;
 	}
+
 
 
 	public void setBook_price(int book_price) {
@@ -109,9 +120,11 @@ public class BookDto {
 	}
 
 
+
 	public String getBook_state() {
 		return book_state;
 	}
+
 
 
 	public void setBook_state(String book_state) {
@@ -119,11 +132,11 @@ public class BookDto {
 	}
 
 
+
 	public String getBook_hostime() {
 		return book_hostime;
 	}
 	
-
 
 	public void setBook_hostime(String book_hostime) {
 		this.book_hostime = book_hostime;
@@ -134,7 +147,7 @@ public class BookDto {
 		return book_counsel;
 	}
 
-
+	
 	public void setBook_counsel(String book_counsel) {
 		this.book_counsel = book_counsel;
 	}

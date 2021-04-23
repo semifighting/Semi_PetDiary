@@ -13,7 +13,7 @@
 	</c:if>
 	
 	<span>
-		<c:forEach var="i" begin="${param.startPageNo}" end="${param.endPageNo}" step="1">
+		<c:forEach var="i" begin="${param.startPaegNo}" end="${param.endPageNo}" step="1">
 			<c:choose>
 				<c:when test="${i eq param.currentPageNo }">
 					<b><font size=+1>

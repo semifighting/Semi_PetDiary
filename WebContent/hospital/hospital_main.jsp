@@ -1,5 +1,3 @@
-<%@page import="com.pet.ft.model.PetDao"%>
-<%@page import="com.pet.ft.model.PetDaoImpl"%>
 <%@page import="com.pet.ft.dto.BusinessDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -13,10 +11,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
 <title>Insert title here</title>
 
 
@@ -113,8 +107,6 @@
 
 </head>
 <body>
-
-
 	<%@include file="../main/header.jsp"%>
 	<div class="hospital">
 		<div class="hospital_header">
@@ -149,10 +141,7 @@
        			</c:choose>
             </section>
 		</div>
-
 	</div>
-	
-
 	<script type="text/javascript">
 		function mapPop(){
 			var popup = window.open('./hospital/map.jsp', '지도', 'width=700px,height=800px,scrollbars=yes');
