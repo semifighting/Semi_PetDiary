@@ -10,13 +10,7 @@ import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
 
->>>>>>> jihyeon
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
 
 public interface PetDao {
 	String namespace = "com.pet.ft.mapper.";
@@ -62,9 +56,7 @@ public interface PetDao {
 	MemberDto SignUpIdChk(String member_id);
 	MemberDto SighUpEmailChk(String member_email);
 
-	int CalendarInsert(CalendarDto CalDto);
 
-	List<CalendarDto> CalViewList(int member_no, String yyyyMM);
 
 		MemberDto Login(String member_id, String member_pw);
 	public int totalMember();
@@ -99,9 +91,7 @@ public interface PetDao {
     public int insertTrip(CalendarDto dto);
     public int deleteTrip(int member_no, int calendar_no);
 
-<<<<<<< HEAD
 
-=======
     //calendar - 캘린더 내 clud
     public List<CalendarDto> CalViewList(int member_no, String yyyyMM);
 	public List<CalendarDto> CalendarList(int member_no, String yyyyMMdd);
@@ -109,6 +99,6 @@ public interface PetDao {
 	public CalendarDto CalendarOne(int calendar_no);
 	public int CalendarDelete(int calendar_no);
 	public int CalendarUpdate(CalendarDto dto);
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
+
 
 }

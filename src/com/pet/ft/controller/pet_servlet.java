@@ -183,11 +183,7 @@ public class pet_servlet extends HttpServlet {
 			request.setAttribute("cdto", cdto);
 			request.setAttribute("commentList", CommentList);
 			request.getRequestDispatcher(communityDirectory+"detail.jsp").forward(request, response);
-<<<<<<< HEAD
 		}
-=======
-		}				
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
 		if("community_insert".equals(command)){
 			String title = request.getParameter("title");
 			System.out.println(title);
@@ -297,38 +293,37 @@ public class pet_servlet extends HttpServlet {
 		int recordsPerPage = 0;
 		if(command.equals("hospitalmain")) {
 
-<<<<<<< HEAD
+
 			if(request.getParameter("pages") != null)
 				currentPageNo = Integer.parseInt(request.getParameter("pages"));
 
 			if(request.getParameter("lines") != null)
 				recordsPerPage = Integer.parseInt(request.getParameter("lines"));
-			Paging paging = new Paging(currentPageNo, recordsPerPage);
-			int offset = (paging.getCurrentPageNo()-1)*paging.getRecordsPerPage();
+				Paging paging = new Paging(currentPageNo, recordsPerPage);
+				int offset = (paging.getCurrentPageNo()-1)*paging.getRecordsPerPage();
 
-			List<BusinessDto> list = biz.hospitalList(offset, paging.getRecordsPerPage()*currentPageNo);
-			paging.setNumberOfRecords(biz.totalMember());
-			paging.makePaging();
+				List<BusinessDto> list = biz.hospitalList(offset, paging.getRecordsPerPage()*currentPageNo);
+				paging.setNumberOfRecords(biz.totalMember());
+				paging.makePaging();
 			if(list != null) {
 				request.setAttribute("list", list);
 				request.setAttribute("paging", paging);
+				dispatch(request,response,"./hospital/hospital_main.jsp");
 			}else {
-
+				jsResponse(response, "에러", "pet.do?command=hospitalmain");
 			}
 
-=======
-			dispatch(request,response,"./hospital/hospital_main.jsp");
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
+
+			
+
 		}else if(command.equals("hospitalselect")) {
 			int business_num = Integer.parseInt(request.getParameter("business_num"));
 			BusinessDto dto = biz.hospitalSelect(business_num);
 			request.setAttribute("dto", dto);
 			dispatch(request,response,"./hospital/hospital_select.jsp");
-<<<<<<< HEAD
 
-=======
-			
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
+
+
 		}else if(command.equals("counselinsert")) {
 			String book_date = request.getParameter("book_date");
 			String book_counsel = request.getParameter("book_counsel");
@@ -412,32 +407,30 @@ public class pet_servlet extends HttpServlet {
 			 }
 
 			String AuthenticationKey = temp.toString(); // 인증번호 인증을 위한 키 등록
-<<<<<<< HEAD
 
 
-			Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-=======
+
+			
+
 					
 					
 			Session mailSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
+
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(from,"testpet03");
 					}
-				});
-
+			});
+			
 			// 이메일 전송
 			try {
 				InternetAddress addr = new InternetAddress();
 				addr.setPersonal(fromName, "UTF-8");
 				addr.setAddress(from);
-<<<<<<< HEAD
 
-				Message msg = new MimeMessage(session);
-=======
-								
+
 				Message msg = new MimeMessage(mailSession);
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
+
+
 				msg.setFrom(addr);
 
 				msg.setSubject(MimeUtility.encodeText("[펫 다이어리] 회원가입 이메일 인증번호", "UTF-8","B"));
@@ -537,9 +530,9 @@ public class pet_servlet extends HttpServlet {
 			dispatch(request, response,"./food/food_book.jsp");
 
 		}
-<<<<<<< HEAD
+
 		if(command.equals("bookinsert")) {
-<<<<<<< HEAD
+
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//날짜입력 데이터 형식 지정 구문
 			Date book_date = null;
 			try {
@@ -569,10 +562,9 @@ public class pet_servlet extends HttpServlet {
 			//BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null);
 			BookDto bokdto = new BookDto( );
 			response.sendRedirect("./food/book_list.jsp");
-<<<<<<< HEAD
+
 			int res = bdao.bookInsert(bokdto);
-=======
-=======
+
 			String book_date = request.getParameter("book_date").replaceAll("-", "");//예약날짜.
 			System.out.println("1. book_date : "+book_date);		//출력구문 1. 예약날짜
 			String book_time = request.getParameter("book_time");//.replaceAll(":", "");
@@ -587,9 +579,9 @@ public class pet_servlet extends HttpServlet {
 
 
 			BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null, null);
->>>>>>> kjk
+
 			int res = bdao.bookInsert(bokdto); 
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
+
 			if(res>0) {
 				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
 				jsResponse(response, "작성 성공", "./food/book_list.jsp");
@@ -598,13 +590,7 @@ public class pet_servlet extends HttpServlet {
 			}
 
 		}
-<<<<<<< HEAD
 
-=======
-=======
->>>>>>> jihyeon
-		
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
 		// 일정 등록
 		if("calendar_insert".equals(command)) {
 			String calendar_title = request.getParameter("calendar_title");
@@ -884,22 +870,12 @@ public class pet_servlet extends HttpServlet {
             out.print(jsonArray);
             out.flush();
         }
-<<<<<<< HEAD
 
-
-
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
         if (command.equals("weather_main")) {
 			response.sendRedirect("weather/weatherView.html");
 		}
         
->>>>>>> kjk
-		
-=======
->>>>>>> jihyeon
+
 
         if (command.equals("weather_main")) {
 			response.sendRedirect("weather/weatherView.html");
@@ -1093,7 +1069,6 @@ public class pet_servlet extends HttpServlet {
    		}
       
 	
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
 	
 	}
 

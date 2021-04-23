@@ -166,16 +166,6 @@ public class PetBizImpl implements PetBiz {
         return dao.deleteTrip(member_no, calendar_no);
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-
-
-
->>>>>>> heeju
-
-=======
 	@Override
 	public List<CalendarDto> CalViewList(int member_no, String yyyyMM) {
 		return dao.CalViewList(member_no, yyyyMM);
@@ -211,5 +201,5 @@ public class PetBizImpl implements PetBiz {
 		return dao.Login(member_id, member_pw);
 	}
 	
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
+
 }
