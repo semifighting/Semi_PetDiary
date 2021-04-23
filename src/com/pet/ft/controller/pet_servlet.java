@@ -532,39 +532,6 @@ public class pet_servlet extends HttpServlet {
 		}
 
 		if(command.equals("bookinsert")) {
-
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//날짜입력 데이터 형식 지정 구문
-			Date book_date = null;
-			try {
-				book_date = dateFormat.parse(request.getParameter("book_date"));//이 구문 때문에 에러?
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-
-
-
-			int book_store = 2;
-			try {
-				book_store = Integer.parseInt(request.getParameter("business_num"));
-				log(command);
-			} catch (NumberFormatException e1) {
-				e1.printStackTrace();
-			}
-			System.out.println("book_store : "+book_store);//확인용코드, 나중에 지우기.
-			String book_time = null;
-			try {
-				book_time = request.getParameter("book_time").trim();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			System.out.println(book_time);
-			String book_type = request.getParameter("business_role"); //book_type, business_role 둘다 올수 있는 값이 h,s
-			//BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null);
-			BookDto bokdto = new BookDto( );
-			response.sendRedirect("./food/book_list.jsp");
-
-			int res = bdao.bookInsert(bokdto);
-
 			String book_date = request.getParameter("book_date").replaceAll("-", "");//예약날짜.
 			System.out.println("1. book_date : "+book_date);		//출력구문 1. 예약날짜
 			String book_time = request.getParameter("book_time");//.replaceAll(":", "");
@@ -579,7 +546,6 @@ public class pet_servlet extends HttpServlet {
 
 
 			BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null, null);
-
 			int res = bdao.bookInsert(bokdto); 
 
 			if(res>0) {
