@@ -257,7 +257,7 @@
 				<br/>
 				<div id="signup">
 					<input type="submit" value=" 회원가입 "/>
-					<input type="button" value=" 취소 "/>
+					<input type="button" value=" 취소 " onclick="location.href='/semi_PetDiary/main/main.jsp'"/>
 				</div>
 			</div>
 	</form>
