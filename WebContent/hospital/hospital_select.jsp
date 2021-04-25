@@ -1,7 +1,7 @@
 <%@page import="com.pet.ft.dto.BusinessDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+    
 <% request.setCharacterEncoding("UTF-8");%>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -23,11 +23,7 @@
 		width:100%; margin:30px auto;
 	}
 	.detail_box_img{
-<<<<<<< HEAD
-		float:left; width:53%; position:absolute; margin-left:120px;
-=======
 		float:left; width:53%; position:absolute; margin-left:120px; 
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
 	}
 	.detail_box_img .himg{
 		max-height:270px;min-height:270px; border-radius:20px;
@@ -39,7 +35,7 @@
 		width:100%; padding:0px 0;
 	}
 	.text_wrap li{
-		float:left; width:100%; padding:18px 0; border-bottom:1px solid #dddbd6;
+		float:left; width:100%; padding:18px 0; border-bottom:1px solid #dddbd6; 
 	}
 	.text_wrap li:first-child{
 		margin-top:1.7px;
@@ -48,16 +44,16 @@
 		width:100%;
 	}
 	.text_wrap li dt{
-		float:left; width:21%; font-size:16px; font-style:strong; color:#626262; padding-left:30px;
+		float:left; width:21%; font-size:16px; font-style:strong; color:#626262; padding-left:30px; 
 	}
 	.text_wrap li dd{
 		font-size:14px; color: #a1a1a1; line-height:18px; text-align:left; overflow:hidden;
 		text-overflow:ellipsis; -webkit-line-clamp:1; -webkit-box-orient:vertical;
 		word-break:break-all; display:-webkit-box;
-
-
+	
+	
 	}
-
+	
 </style>
 </head>
 <body>
@@ -71,7 +67,7 @@
 		<input type="hidden" name="command" value="counselinsert"/>
 		<input type="hidden" name="business_num" value="<%=dto.getBusiness_num() %>"/>
 		<input type="hidden" name="member_no" value="<%=dto.getMember_no() %>"/>
-
+		
 	<div class="hospital_container">
 		<h3 class="hospital_name">${dto.business_name}</h3>
 		<div class="detail_box">
@@ -104,17 +100,13 @@
 						    </dd>
 						</dl>
 					</li>
-<<<<<<< HEAD
-
-=======
 					
->>>>>>> 550e24551e0483872a29fce8e2a5cf6b9849af4b
 				</ul>
 			</div>
 		</div>
-
+	
 	</div>
-
+	
  </form>
 
 </body>
