@@ -13,9 +13,22 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="/semi_PetDiary/resources/js/script.js"></script>
+
+<script type="text/javascript">
+
+	$(function(){
+		$("select").change(function(){
+			location.href="/semi_PetDiary/paging.do?command=bookst";
+		});
+	});
+
+</script>
+
+
 <style type="text/css">
 	
 	h2{width:200px; margin: 10px auto;}
+	#sell{margin: 0px auto; width: 150px;}
 	#table {display: table; width: 60%; margin: 20px auto;}
 	.row {display: table-row;}
 	.main{background-color: salmon; color:white; text-align: center;}
@@ -37,14 +50,21 @@
 
 <%@ include file="/main/header.jsp" %>
 
-	<h2>예약 조회</h2>
+	<h2>병원예약 조회</h2>
 
+	<div id="sell">
+		<select>
+			<option value="hbook" selected>병원예약 조회</option>
+			<option value="sbook">매장예약 조회</option>
+		</select>
+	</div>
+	
 	<div id="table">
 		<div class="row main">
 			<span class="cell col1">예약 번호</span>
 			<span class="cell col2">예약자 성명</span>
 			<span class="cell col3">예약 업체</span>
-			<span class="cell col4">예약 시간</span>
+			<span class="cell col4">예약 날짜</span>
 		</div>
 		
 		<c:forEach items="${list }" var="dto" varStatus="stat">
@@ -56,6 +76,14 @@
 			</div>
 		</c:forEach>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	<jsp:include page="/main/paging.jsp" flush="true">
 		<jsp:param name="servletPath" value="${servletPath }"/>

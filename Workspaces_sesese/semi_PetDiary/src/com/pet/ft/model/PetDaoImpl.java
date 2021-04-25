@@ -48,14 +48,37 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	
 
 	@Override
-	public int totalBook() {
+	public int totalBookHos() {
 		
 		int res = 0;
 		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.selectOne(namespace + "totalBook");
+			res = session.selectOne(namespace + "totalBookHos");
 		}
 		return res;
 	}
+	
+	@Override
+	public int totalBookSt() {
+		
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)) {
+			res = session.selectOne(namespace + "totalBookSt");
+		}
+		return res;
+	}
+	
+
+	@Override
+	public List<BookDto> totalDateTime() {
+		
+		SqlSession session = getSqlSessionFactory().openSession();
+		List<BookDto> list = session.selectList(namespace + "totalDateTime");
+		session.close();
+		
+		return list;
+		
+	}
+
 
 /*
 	@Override
@@ -110,7 +133,22 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	}
 	
 	@Override
-	public List<BookDto> bookList(int offset, int noOfRecords) {
+	public List<BookDto> bookListHos(int offset, int noOfRecords) {
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		
+		params.put("offset", offset);
+		params.put("noOfRecords", noOfRecords);
+		
+		SqlSession session = getSqlSessionFactory().openSession();
+		List<BookDto> list = session.selectList(namespace + "bookListHosPaging", params);
+		session.close();
+		
+		return list;
+	}
+
+	@Override
+	public List<BookDto> bookListSt(int offset, int noOfRecords) {
 		
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		
@@ -120,7 +158,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		params.put("noOfRecords", noOfRecords);
 		
 		SqlSession session = getSqlSessionFactory().openSession();
-		List<BookDto> list = session.selectList(namespace + "bookListPaging", params);
+		List<BookDto> list = session.selectList(namespace + "bookListStPaging", params);
 		session.close();
 		
 		return list;
@@ -147,6 +185,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 		return res;
 	}
+
 
 
 }

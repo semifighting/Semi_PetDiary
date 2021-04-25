@@ -10,7 +10,9 @@ public interface PetDao {
 
 	public int totalMember();
 	public int totalReport();
-	public int totalBook();
+	public int totalBookHos();
+	public int totalBookSt();
+	public List<BookDto> totalDateTime();
 	
 	/* 
 	 * ∆‰¿Ã¬° x
@@ -23,7 +25,8 @@ public interface PetDao {
 	// ∆‰¿Ã¬° o
 	public List<MemberDto> memberList(int offset, int noOfRecords);
 	public List<CommunityDto> reportList(int offset, int noOfRecords);
-	public List<BookDto> bookList(int offset, int noOfRecords);
+	public List<BookDto> bookListHos(int offset, int noOfRecords);
+	public List<BookDto> bookListSt(int offset, int noOfRecords);
 	
 	public int changeRole(MemberDto dto);
 	public int deleteCommnutiy(int seq);

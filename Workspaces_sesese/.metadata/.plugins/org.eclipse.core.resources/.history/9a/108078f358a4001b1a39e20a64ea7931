@@ -1,0 +1,139 @@
+<%@page import="com.pet.ft.dto.BusinessDto"%>
+<%@page import="com.pet.ft.model.PetBizImpl"%>
+<%@page import="com.pet.ft.model.PetBiz"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<% request.setCharacterEncoding("UTF-8"); %>
+<% response.setContentType("text/html; charset=UTF-8"); %>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>관리자 모드</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style type="text/css">
+
+	.viewMember, .viewBorder, .viewBook, .BookMethod{
+		position: fixed	;
+		border-bottom : 2px solid black;	
+		width:180px;
+		height:20px;
+		margin : 50px;
+		background-color: skyblue;
+		text-align: center;
+		border-radius: 6px;
+		cursor:pointer
+	}
+	
+	.viewMember:hover, .viewBorder:hover, .viewBook:hover, .BookMethod{
+		background-color:mistyrose;
+	}
+	
+	.viewBorder {
+		margin: 100px 50px;
+		background-color: #ff6670;
+	}
+	
+	.viewBook{
+		margin: 150px 50px;
+		background-color: gray;
+	}
+	
+	.BookMethod{
+		margin: 200px 50px;
+		background-color: orange;
+	}
+	
+	.datetime{
+		margin: 250px 50px;
+	}
+	
+</style>
+
+</head>
+<body>
+
+<%@ include file="/main/header.jsp" %>
+
+<%
+	PetBiz biz = new PetBizImpl();
+	int mRes = biz.totalMember();
+	int rRes = biz.totalReport();
+	
+%>
+
+	<!-- <div class="viewMember" onclick="location.href='/semi_PetD	iary/pet.do?command=list'"> -->
+	<div class="viewMember" onclick="location.href='/semi_PetDiary/paging.do?command=member'">
+		<span>전체 회원 조회 : </span>&nbsp;
+		<span class="dot"><%=mRes %></span>
+	</div>
+
+	<div class="viewBorder" onclick="location.href='/semi_PetDiary/paging.do?command=report'">
+		<span>신고 글 조회 : </span>&nbsp;
+		<span class="dot"><%=rRes %></span>
+	</div>
+	
+	<div class="viewBook" onclick="location.href='/semi_PetDiary/paging.do?command=book'">
+		<span>예약 조회</span>&nbsp;
+	</div>
+	
+	<div class="BookMethod">
+		<span>예약</span>
+	</div>
+	<div class="datetime">
+		<input type="date" name="test01"/>
+		<input type="time" name="test02" />
+		<input type="button" value="확인" name="check" />
+	</div>
+	
+	<script type="text/javascript">
+	
+		$(function(){
+			$("input[name=check]").click(function(){
+				var datein = $("input[name=test01]").val();
+				var timein = $("input[name=test02]").val();
+				
+				var dateout = "2021-04-19";
+				var timeout = "11:30";
+				
+				if(datein == dateout){
+					alert(datein + "일치하다");
+					
+					var go = datein.split("-");
+					var go1 = go[0] + go[1] + go[2];
+					var go2 = Number(go1);
+					alert(go2);
+					
+					var no1 = timein.split(":");
+					var no2 = timeout.split(":");
+
+					
+					var e = Number(no1[0]);
+					var e1 = Number(no1[1]);
+					var w = Number(no2[0]);
+					var w1 = Number(no2[1]);
+					
+					var x = ((w * 100) + w1) - ((e * 100) + e1) - 40;
+					
+					if(x <= 60){
+						var y = x / 10;
+						alert("예상 대기 시간은 " + 5 * y + " ~ " + (5 * y + 5) + "분");
+					} else {
+						alert("예약 완료");
+					}
+					
+					
+				} else{
+					alert(datein + "불일치하다");
+				}
+			});
+		});
+		
+	</script>
+
+<%@ include file="/main/footer.jsp" %>
+
+</body>
+</html>

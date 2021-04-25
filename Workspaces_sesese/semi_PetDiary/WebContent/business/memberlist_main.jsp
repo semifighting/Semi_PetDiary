@@ -82,11 +82,11 @@
 							<c:choose>
 								<c:when test="${role eq 'ADMIN'}">
 									<option value="ADMIN" selected>ADMIN</option>
-									<option value="EMPLOYEE">EMPLOYEE</option>
+									<option value="USER">USER</option>
 								</c:when>
-								<c:when test="${role eq 'EMPLOYEE'}">
+								<c:when test="${role eq 'USER'}">
 									<option value="ADMIN">ADMIN</option>
-									<option value="EMPLOYEE" selected>EMPLOYEE</option>
+									<option value="USER" selected>USER</option>
 								</c:when>
 							</c:choose>
 						</select>

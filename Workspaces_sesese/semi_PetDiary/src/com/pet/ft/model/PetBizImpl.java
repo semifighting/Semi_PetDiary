@@ -21,8 +21,18 @@ public class PetBizImpl implements PetBiz {
 	}
 	
 	@Override
-	public int totalBook() {
-		return dao.totalBook();
+	public int totalBookHos() {
+		return dao.totalBookHos();
+	}
+	
+	@Override
+	public int totalBookSt() {
+		return dao.totalBookSt();
+	}
+	
+	@Override
+	public List<BookDto> totalDateTime(){
+		return dao.totalDateTime();
 	}
 
 	/*
@@ -49,9 +59,15 @@ public class PetBizImpl implements PetBiz {
 	}
 	
 	@Override
-	public List<BookDto> bookList(int offset, int noOfRecords) {
-		return dao.bookList(offset, noOfRecords);
+	public List<BookDto> bookListHos(int offset, int noOfRecords) {
+		return dao.bookListHos(offset, noOfRecords);
 	}
+	
+	@Override
+	public List<BookDto> bookListSt(int offset, int noOfRecords) {
+		return dao.bookListSt(offset, noOfRecords);
+	}
+
 
 
 	@Override

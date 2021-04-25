@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
 import com.pet.ft.model.PetBiz;
@@ -83,6 +84,50 @@ public class pet_servlet extends HttpServlet {
 				jsResponse(response, "삭세 실패", "/semi_PetDiary/paging.do?command=report");
 			}
 			
+		} else if("bookcheck".equals(command)) {
+			String date = (String) request.getParameter("test-date"); 
+			String time = String.valueOf(request.getParameter("test-time")); 
+			
+			date = date.replaceAll("[^0-9]", "");
+			time = time.replaceAll("[^0-9]", "");
+			// 정규 표현식, 0~9의 문자를 제외한 문자는 ""로 치환
+			
+			List<BookDto> list = biz.totalDateTime();
+			String checkout = null;
+			for(BookDto dto : list) {
+				if(date.equals(dto.getBook_date())) {
+					checkout = dto.getBook_date();
+					
+					int timecheck = Integer.parseInt(dto.getBook_time().replaceAll("[^0-9]", ""));
+					int timeall = Integer.parseInt(time);
+					int x = 0;
+					
+					if((timecheck/100) == (timeall/100)) {
+						x = timeall - timecheck;
+						
+					} else {
+						x = (timeall - timecheck) - 40;
+					}
+					
+					if(x <= 60 && x >= 10) {
+						int y = x / 10;
+						String msg = "현재 대기 손님은 " + y + "명 입니다. " + "예샹 대기 시간은 : " + 5 * y + " ~ " + (5 * y + 5) + "분 입니다.";
+						
+						
+						 System.out.println("현재 대기 손님은 " + y + "명 입니다.");
+						 System.out.println("예샹 대기 시간은 : " + 5 * y + " ~ " + (5 * y + 5) + "분 입니다.");
+						 
+						
+						jsResponse(response, msg, "pet.do?command=selectBook&booknum="+dto.getBook_num());
+					}
+					
+					
+				}
+			}
+			
+			if(!date.equals(checkout)){
+				System.out.println("예약 완료되었습니다.");
+			}
 		}
 		
 	
@@ -104,5 +149,5 @@ public class pet_servlet extends HttpServlet {
 						    + "</script>";
 		response.getWriter().print(responseText);
 	}
-
+	
 }

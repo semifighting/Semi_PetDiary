@@ -64,8 +64,16 @@
   		SELECT COUNT(*) FROM COMMUNITY WHERE COMMUNITY_REPORT = 'Y'
   	</select>
   	
-  	<select id="totalBook" resultType="int">
-  		SELECT COUNT(*) FROM COMMUNITY
+  	<select id="totalBookHos" resultType="int">
+  		SELECT COUNT(*) FROM BOOK WHERE BOOK_TYPE = 'H'
+  	</select>
+  	
+  	<select id="totalBookSt" resultType="int">
+  		SELECT COUNT(*) FROM BOOK WHERE BOOK_TYPE = 'S'
+  	</select>
+  	
+  	<select id="totalDateTime" resultMap="bookListMap">
+  		SELECT BOOK_DATE, BOOK_TIME FROM BOOK
   	</select>
   	
 <!--   	
@@ -111,7 +119,7 @@
 		]]>
   	</select>
   	
-  	<select	id="bookListPaging" parameterType="hashmap" resultMap="bookListMap">
+  	<select	id="bookListHosPaging" parameterType="hashmap" resultMap="bookListMap">
   		<![CDATA[
   		SELECT E.RNUM, E.BOOK_NUM, E.MEMBER_NAME, E.BUSINESS_NAME, E.BOOK_DATE
 		FROM(
@@ -122,6 +130,26 @@
 				ON A.MEMBER_NO = B.MEMBER_NO 
 				JOIN BUSINESS C
 				ON A.BUSINESS_NUM = C.BUSINESS_NUM
+				WHERE BOOK_TYPE = 'H'
+				ORDER BY A.BOOK_NUM
+			) D
+			WHERE ROWNUM <= #{noOfRecords}) E
+		WHERE E.RNUM > #{offset}
+		]]>
+  	</select>
+
+  	<select	id="bookListStPaging" parameterType="hashmap" resultMap="bookListMap">
+  		<![CDATA[
+  		SELECT E.RNUM, E.BOOK_NUM, E.MEMBER_NAME, E.BUSINESS_NAME, E.BOOK_DATE, E.BOOK_TIME
+		FROM(
+			SELECT ROWNUM AS RNUM, D.BOOK_NUM, D.MEMBER_NAME, D.BUSINESS_NAME, D.BOOK_DATE, D.BOOK_TIME
+			FROM(
+				SELECT A.BOOK_NUM, B.MEMBER_NAME, C.BUSINESS_NAME, A.BOOK_DATE, A.BOOK_TIME
+				FROM BOOK A JOIN MEMBER B 
+				ON A.MEMBER_NO = B.MEMBER_NO 
+				JOIN BUSINESS C
+				ON A.BUSINESS_NUM = C.BUSINESS_NUM
+				WHERE BOOK_TYPE = 'S'
 				ORDER BY A.BOOK_NUM
 			) D
 			WHERE ROWNUM <= #{noOfRecords}) E

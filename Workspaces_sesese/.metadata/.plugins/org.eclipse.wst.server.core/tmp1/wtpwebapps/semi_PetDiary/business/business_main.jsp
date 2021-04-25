@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 모드</title>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style type="text/css">
 
 	.viewMember, .viewBorder, .viewBook{
@@ -41,6 +41,9 @@
 		background-color: gray;
 	}
 	
+	.datetime{
+		margin: 250px 50px;
+	}
 	
 </style>
 
@@ -53,7 +56,6 @@
 	PetBiz biz = new PetBizImpl();
 	int mRes = biz.totalMember();
 	int rRes = biz.totalReport();
-	int bRes = biz.totalBook();
 	
 %>
 
@@ -69,10 +71,9 @@
 	</div>
 	
 	<div class="viewBook" onclick="location.href='/semi_PetDiary/paging.do?command=book'">
-		<span>예약 조회 : </span>&nbsp;
-		<span class="dot"><%=bRes %></span>
+		<span>예약 조회</span>&nbsp;
 	</div>
-
+	
 <%@ include file="/main/footer.jsp" %>
 
 </body>

@@ -40,7 +40,7 @@
 	.col7 {width: 1%;}
 	
 	.paginate{margin: 0px auto; width: 200px; text-align: center;}
-	.paginate a	{color:black;}
+	.paginate a	{color: black;}
 		
 </style>
 </head>
