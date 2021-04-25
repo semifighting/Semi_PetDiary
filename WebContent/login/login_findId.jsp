@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <!DOCTYPE html>
@@ -8,7 +9,6 @@
 <meta charset="UTF-8">
 <title>펫 다이어리</title>
 <style type="text/css">
-		
 	#wrap {
 		text-align: center;
 	}
@@ -21,28 +21,19 @@
 	}
 </style>
 <script type="text/javascript">
-
-	onload = function(){
-		 var memberemailauth = opener.document.getElementsByName("member_email_auth")[0].value;
-		 document.getElementsByName("member_email_auth")[0].value = memberemailauth;
-	}
-	
-	function confirmEmail(){
-		opener.document.getElementsByName("member_email_auth")[0].title = "y"; 	
-		
+	function findId(){
 		self.close();
 	}
-	
 </script>
 </head>
 <body>
-	<br/><br/><br/>
+	<br/><br/><br/><br/>
 	<div id="wrap">
+		<div>회원님의 아이디는 ${member_id } 입니다.</div>
+		<br/>
 		<div>
-			<p>이메일 인증이 완료되었습니다.</p>
-			<p>회원가입을 계속 진행해 주세요.</p>
+			<input type="button" value="확인" onclick="findId();" />
 		</div>
-		<div><input type="button" value="확인" onclick="confirmEmail()"/></div>
 	</div>
 </body>
 </html>

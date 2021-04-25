@@ -55,6 +55,11 @@ public interface PetDao {
 	public MemberDto Login(String member_id, String member_pw);
 	public MemberDto SocialLogin(String member_id);
 	public int SocialSignUp(MemberDto dto);
+	public MemberDto findId(String member_name, String member_email);
+	public MemberDto findPw(String member_name, String member_email, String member_id);
+	public int resetPw(String member_name, String member_email, String member_id, String member_pw);
+	public int memberUpdate(MemberDto dto);
+	public int memberDelete(int member_no);
 	
 	
 	public int totalMember();

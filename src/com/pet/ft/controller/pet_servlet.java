@@ -521,7 +521,7 @@ public class pet_servlet extends HttpServlet {
 			
 			int res = dao.MemberInsert(dto);
 			if (res > 0) {
-				jsResponse(response, "회원가입이 완료되었습니다.", "main/main.sjp");
+				jsResponse(response, "회원가입이 완료되었습니다.", "main/main.jsp");
 			} else {
 				jsResponse(response, "회원가입 실패", "login/login_signup.jsp");
 			}
@@ -1091,6 +1091,51 @@ public class pet_servlet extends HttpServlet {
     		session.invalidate();
     		response.sendRedirect("main/main.jsp");
    		}
+
+		   if("myinfo_update".equals(command)) {
+    		response.sendRedirect("myinfo/myinfo_update.jsp");
+    	}
+    	
+    	if("myinfo_updateform".equals(command)) {
+    		int member_no = Integer.parseInt(request.getParameter("member_no"));
+			String member_pw = request.getParameter("member_pw");
+			String member_email = request.getParameter("member_email");
+			String member_phone = request.getParameter("member_phone");
+			String member_addr = request.getParameter("member_addr");
+			String member_addr_detail = request.getParameter("member_addr_detail");
+		
+			String memberaddress = member_addr + " " + member_addr_detail;
+			
+			MemberDto dto = new MemberDto();
+			dto.setMember_no(member_no);
+			dto.setMember_pw(member_pw);
+			dto.setMember_email(member_email);
+			dto.setMember_phone(member_phone);
+			dto.setMember_address(memberaddress);
+			
+			int res = biz.memberUpdate(dto);
+			
+			if (res > 0) {
+				jsResponse(response, "회원 정보가 수정되었습니다.", "myinfo/myinfo_update.jsp");
+			} else {
+				jsResponse(response, "회원 정보가 수정되지 않았습니다.", "myinfo/myinfo_update.jsp");
+			}
+    	}
+			
+		if("myinfo_delete".equals(command)) {
+			int member_no = Integer.parseInt(request.getParameter("member_no"));
+			
+			int res = biz.memberDelete(member_no);
+			
+			if(res > 0) {
+				session.invalidate();
+				jsResponse(response, "탈퇴가 완료되었습니다.", "main/main.jsp");
+			} else {
+				jsResponse(response, "회원 탈퇴가 이루어지지 않았습니다.", "myinfo/myinfo_update.jsp");
+			}
+			
+		}
+	
       
 	
 	

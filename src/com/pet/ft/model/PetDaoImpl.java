@@ -627,6 +627,62 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			return res;
 		}
 
+		@Override
+		public MemberDto findId(String member_name, String member_email) {
+			MemberDto dto = null;
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("member_name", member_name);
+			map.put("member_email", member_email);
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				dto = session.selectOne(namespace+"findId", map);
+			}
+			return dto;
+		}
+		
+		@Override
+		public MemberDto findPw(String member_name, String member_email, String member_id) {
+			MemberDto dto = null;
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("member_name", member_name);
+			map.put("member_email", member_email);
+			map.put("member_id", member_id);
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				dto = session.selectOne(namespace+"findPw", map);
+			}
+			return dto;
+		}
+		
+		@Override
+		public int resetPw(String member_name, String member_email, String member_id, String member_pw) {
+			int res=0;
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("member_name", member_name);
+			map.put("member_email", member_email);
+			map.put("member_id", member_id);
+			map.put("member_pw", member_pw);
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				res = session.update(namespace+"resetPw", map);
+			}
+			return res;
+		}
+
+		@Override
+		public int memberUpdate(MemberDto dto) {
+			int res = 0;
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				res = session.update(namespace+"memberUpdate", dto);
+			}
+			return res;
+		}
+
+		@Override
+		public int memberDelete(int member_no) {
+			int res = 0;
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				res = session.delete(namespace+"memberDelete", member_no);
+			}
+			return res;
+		}
 
 		
 }

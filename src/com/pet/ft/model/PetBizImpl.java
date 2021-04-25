@@ -209,5 +209,37 @@ public class PetBizImpl implements PetBiz {
 	public int SocialSignUp(MemberDto dto) {
 		return dao.SocialSignUp(dto);
 	}
+
+	@Override
+	public MemberDto findId(String member_name, String member_email) {
+		// TODO Auto-generated method stub
+		return dao.findId(member_name, member_email);
+	}
+	
+	@Override
+	public MemberDto findPw(String member_name, String member_email, String member_id) {
+		// TODO Auto-generated method stub
+		return dao.findPw(member_name, member_email, member_id);
+	}
+	
+	@Override
+	public int resetPw(String member_name, String member_email, String member_id, String member_pw) {
+		// TODO Auto-generated method stub
+		return dao.resetPw(member_name, member_email, member_id, member_pw);
+	}
+
+	@Override
+	public int memberUpdate(MemberDto dto) {
+		// TODO Auto-generated method stub
+		return dao.memberUpdate(dto);
+	}
+
+	@Override
+	public int memberDelete(int member_no) {
+		// TODO Auto-generated method stub
+		return dao.memberDelete(member_no);
+	}
+
+
 	
 }

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>일정 수정</title>
+<title>캘린더</title>
 <style type="text/css">
 	
 	#update {

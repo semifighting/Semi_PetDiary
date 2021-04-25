@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>펫 다이어리 : 회원 가입</title>
 <link href="/semi_PetDiary/resources/css/stylesheet.css" rel="stylesheet">
 <style type="text/css">
 
@@ -82,7 +82,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
-    var idpwExp = /^[a-zA-Z0-9]{6,20}$/;
+    var idpwExp = /^[a-zA-Z0-9]{5,20}$/;
     var phoneExp = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/;
     var nameExp = /^[가-힣]{2,15}$/;
     
@@ -102,9 +102,9 @@
 		if (id.value.trim() == "" || id.value == null){
 			alert("아이디를 입력해 주세요.");
 		} else if(!idpwExp.test(id.value)) {
-			alert("아이디는 6~20자의 영문 대소문자와 숫자로만 입력해 주세요.");
+			alert("아이디는 5~20자의 영문 대소문자와 숫자로만 입력해 주세요.");
 		} else {
-			open("/semi_PetDiary/pet.do?command=login_idchk&member_id="+id.value, "", "width=200, height=200");
+			open("/semi_PetDiary/pet.do?command=login_idchk&member_id="+id.value, "", "width=350, height=280");
 		}
 	}
 	
@@ -125,7 +125,7 @@
 		} else if(!emailExp.test(email.value)) {
 			alert("이메일 형식이 올바르지 않습니다.");
 		} else {
-			open("/semi_PetDiary/pet.do?command=login_emailchk&member_email="+email.value, "", "width=200, height=200");
+			open("/semi_PetDiary/pet.do?command=login_emailchk&member_email="+email.value, "", "width=500, height=280");
 		}
 	}
 	
@@ -135,7 +135,7 @@
 		if (emailauth.value.trim() == "" || emailauth.value == null){
 			alert("인증번호를 입력해 주세요.");
 		} else {
-			open("/semi_PetDiary/pet.do?command=login_emailAuth&member_email_auth="+emailauth.value, "", "width=300, height=300");
+			open("/semi_PetDiary/pet.do?command=login_emailAuth&member_email_auth="+emailauth.value, "", "width=350, height=280");
 		}
 	}
 	
@@ -224,33 +224,34 @@
 						<th>비밀번호</th>
 						<th>이름</th>
 						<th>이메일</th>
+						<th>&nbsp;</th>
 						<th>전화번호</th>
 						<th>주소</th>
 					</tr>
 					<tr>
 						<td>
-							<input type="text" name="member_id" id="member_Id" maxlength="20" placeholder="아이디" title="n" required="required" onkeyup="idCheckInit(join);" />
+							<input type="text" name="member_id" id="member_Id" maxlength="20" placeholder="  아이디" title="n" required="required" onkeyup="idCheckInit(join);" />
 							<input type="button" value=" 중복 체크 " onclick="idCheck();"/>
 						</td>
 						<td>
-							<input type="password" name="member_pw" maxlength="20" placeholder=" 비밀번호" required="required" onclick="idCheckConfirm();"/>
+							<input type="password" name="member_pw" maxlength="20" placeholder="  비밀번호" required="required" onclick="idCheckConfirm();"/>
 						</td>
 						<td>
-							<input type="text" name="member_name" placeholder="이름" required="required" onclick="idCheckConfirm();"/>
+							<input type="text" name="member_name" placeholder="  이름" required="required" onclick="idCheckConfirm();"/>
 						</td>
 						<td>
-							<input type="text" name="member_email"  id="member_Email" placeholder=" 이메일" title="n" required="required" onclick="idCheckConfirm();" onkeyup="emailCheckInit(join);"/>
+							<input type="text" name="member_email"  id="member_email" placeholder="  이메일" title="n" required="required" onclick="idCheckConfirm();" onkeyup="emailCheckInit(join);"/>
 							<input type="button" value=" 이메일 인증 " onclick="emailCheck();"/>
 							<br/>
-							<input type="text" name="member_email_auth" id="member_email_auth" placeholder=" 인증번호를 입력하세요." title="n" required="required" onclick="idCheckConfirm(); emailCheckConfirm();" onkeyup="emailauthCheckInit(join);"/>
+							<input type="text" name="member_email_auth" id="member_email_auth" placeholder="  인증번호를 입력하세요." title="n" required="required" onclick="idCheckConfirm(); emailCheckConfirm();" onkeyup="emailauthCheckInit(join);"/>
 							<input type="button" value=" 인증번호 확인 " onclick="emailauthCheck();" />
 						</td>
 						<td>
-							<input type="text" name="member_phone" placeholder=" ex) 010-1234-5678" maxlength="13" required="required" onclick="idCheckConfirm();"/></td>
+							<input type="text" name="member_phone" placeholder="  ex) 010-1234-5678" maxlength="13" required="required" onclick="idCheckConfirm();"/></td>
 						<td>
-							<input type="text" name="member_addr" id="member_addr" placeholder=" 기본 주소" required="required" readonly="readonly" onclick=""/>
+							<input type="text" name="member_addr" id="member_addr" placeholder="  기본 주소" required="required" readonly="readonly"/>
 							<input type="button" value=" 주소 검색 " onclick="searchAddr();"/> <br/>
-							<input type="text" name="member_addr_detail" id="member_addr_detail" placeholder=" 상세 주소" required="required" readonly="readonly" onclick=""/>
+							<input type="text" name="member_addr_detail" id="member_addr_detail" placeholder="  상세 주소" required="required" readonly="readonly"/>
 						</td>
 					</tr>	
 				</table>

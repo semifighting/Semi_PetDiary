@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>일정 확인</title>
+<title>캘린더</title>
 <style type="text/css">
 
 	#wrap {

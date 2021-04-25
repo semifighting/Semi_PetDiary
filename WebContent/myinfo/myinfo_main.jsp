@@ -107,7 +107,7 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 				</tr>
 				<tr>
 					<td colspan="2">	
-					<input type="button" value="수정">
+					<input type="button" value="수정" onclick="location.href='/semi_PetDiary/pet.do?command=myinfo_update'">
 					<input type="button" value="Business계정 신청" onclick="location.href='/semi_PetDiary/pet.do?command=myinfobusup&member_no=<%=dto.getMember_no()%>'">
 					
 					</td>

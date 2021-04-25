@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>일정 추가</title>
+<title>캘린더</title>
 <style>
 
 	#head {
@@ -192,6 +192,5 @@
 		</div>
 	</div>
 </form>
-<%@include file="/main/footer.jsp"%>
 </body>
 </html>

@@ -437,7 +437,30 @@
   		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, 'PASSWORD', #{member_email}, #{member_phone}, 'USER', #{member_address})
   	</insert>
   		
+  	  	<select id="findId" parameterType="Map" resultType="MemberDto">
+  		SELECT * FROM MEMBER WHERE MEMBER_NAME= #{member_name} AND MEMBER_EMAIL = #{member_email}
+  	</select>
   	
+  	<select id="findPw" parameterType="Map" resultType="MemberDto">
+  		SELECT * FROM MEMBER WHERE MEMBER_NAME = #{member_name} AND MEMBER_EMAIL = #{member_email} AND MEMBER_ID = #{member_id}
+  	</select>
+  	
+  	<update id="resetPw" parameterType="Map">
+  		UPDATE MEMBER
+  		SET MEMBER_PW = #{member_pw}
+  		WHERE MEMBER_NAME = #{member_name} AND MEMBER_EMAIL = #{member_email} AND MEMBER_ID = #{member_id}
+  	</update>
+  	
+  	<update id="memberUpdate" parameterType="MemberDto">
+  		UPDATE MEMBER
+  		SET MEMBER_PW = #{member_pw}, MEMBER_EMAIL = #{member_email}, MEMBER_PHONE = #{member_phone}, MEMBER_ADDRESS = #{member_address}
+  		WHERE MEMBER_NO = #{member_no}
+  	</update>
+  	
+  	<delete id="memberDelete" parameterType="int">
+  		DELETE FROM MEMBER
+  		WHERE MEMBER_NO = #{member_no}
+  	</delete>
   	
   	
   </mapper>
