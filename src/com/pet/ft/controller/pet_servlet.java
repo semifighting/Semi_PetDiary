@@ -1,6 +1,7 @@
 package com.pet.ft.controller;
 
 import java.io.Console;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.PrintWriter;
@@ -54,7 +55,6 @@ import com.pet.ft.paging.Paging;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import sun.jvm.hotspot.ui.tree.BadAddressTreeNodeAdapter;
 
 @WebServlet("/pet_servlet")
 public class pet_servlet extends HttpServlet {
@@ -121,14 +121,9 @@ public class pet_servlet extends HttpServlet {
 		}
 
 		
-		if("community".equals(command)) {			
+		if("community".equals(command)) {		
 			List<CommunityDto> list = dao.CommunityList();			
 			request.setAttribute("list", list);
-			List<Integer> commentcount = new ArrayList<Integer>();
-			for(CommunityDto cdto : list) {
-				commentcount.add(dao.CommunityCommentCount(cdto.getCommunity_no())-1);
-			}
-			request.setAttribute("commentcount", commentcount);
 			if(request.getParameter("paging")==null){
 				request.getRequestDispatcher(communityDirectory+"main.jsp?paging="+1).forward(request, response);
 			}else {
@@ -205,8 +200,13 @@ public class pet_servlet extends HttpServlet {
 			request.setAttribute("cdto", dao.CommunityOne(seq));
 			request.getRequestDispatcher(communityDirectory+"update.jsp").forward(request, response);		
 		}
-		if("community_insert_form".equals(command)) {
-			response.sendRedirect(communityDirectory+"insert.jsp");
+		if("community_insert_form".equals(command)) {	
+			if(session.getAttribute("member_no")==null) {
+				jsResponse(response, "로그인해주십시오", loginDirectory+"login.jsp");
+			}else{
+				response.sendRedirect(communityDirectory+"insert.jsp");
+			}
+		
 		}
 		if("community_detail".equals(command)) {
 			int seq = Integer.parseInt(request.getParameter("seq"));
@@ -224,7 +224,7 @@ public class pet_servlet extends HttpServlet {
 			System.out.println(content);
 			System.out.println("내부");
 			//-----------------------------id 로그인 생기면 마지막파라미터(회원번호)바꾸기
-			CommunityDto CDto = new CommunityDto(0, title, content, null, "N", 0, 0, 0, 1);
+			CommunityDto CDto = new CommunityDto(0, title, content, null, "N", 0, 0, 0, (int)session.getAttribute("member_no"));
 			int res = dao.CommunityInsert(CDto);
 			if(res>0) {
 				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
@@ -239,7 +239,7 @@ public class pet_servlet extends HttpServlet {
 		if("community_comment".equals(command)) {
 			String content = request.getParameter("comment");
 			int community_no = Integer.parseInt(request.getParameter("community_no"));
-			CommunityDto CDto = new CommunityDto(0, " ", content, null, "N", 0, community_no, 0, 1);
+			CommunityDto CDto = new CommunityDto(0, " ", content, null, "N", 0, community_no, 0, Integer.parseInt(request.getParameter("member_no")));
 			int res = dao.CommentInsert(CDto);
 			if(res>0) {
 				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
@@ -353,8 +353,8 @@ public class pet_servlet extends HttpServlet {
 		}else if(command.equals("counselinsert")) {
 			String book_date = request.getParameter("book_date");
 			String book_counsel = request.getParameter("book_counsel");
-			int business_num = Integer.parseInt("business_num");
-			int member_no = Integer.parseInt("member_no");
+			int business_num = Integer.parseInt(request.getParameter("business_num"));
+			int member_no = (int)session.getAttribute("member_no");
 			BookDto dto = new BookDto();
 			dto.setBook_date(book_date);
 			dto.setBook_counsel(book_counsel);
@@ -362,7 +362,7 @@ public class pet_servlet extends HttpServlet {
 			dto.setMember_no(member_no);
 			int res = biz.hospitalBookInsert(dto);
 			if(res>0) {
-				pet_sms.SendSMS(book_date, null, 3, 46); //나중에 회원번호 세션에서 받아서 넣기 46:팀장번호
+				pet_sms.SendSMS(book_date, null, business_num, member_no); //나중에 회원번호 세션에서 받아서 넣기 46:팀장번호
 				jsResponse(response, "예약성공", "pet.do?command=hospitalmain");
 			}else {
 				jsResponse(response, "예약실패", "./hospital/hospital_select.jsp");

@@ -139,7 +139,6 @@ public class login_servlet extends HttpServlet {
 			res.append(inputLine);
 			}
 			br.close();
-
 			JSONParser parsing = new JSONParser();
 			Object obj = parsing.parse(res.toString());
 			JSONObject jsonObj = (JSONObject)obj;

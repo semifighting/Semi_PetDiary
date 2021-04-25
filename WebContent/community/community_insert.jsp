@@ -14,16 +14,23 @@
 #community_insert_contentbox{
 	position : relative;
 	align-self : center;
-	border : 1px solid black;
+	border : 2px solid salmon;
 	height: 800px;
 	width: 800px;
 	margin: 0 auto;
-	margin-top : 50px;
+	margin-top : 30px;
+	margin-bottom : 20px;
 }
 
 #community_insert_title{
-	height: 100px;
-	text-align: center;
+	text-align: center;	
+    font-weight: 600;
+    font-size: 15pt;
+    width: 780px;
+    margin: 10px;
+    height: 50px
+    border : 1px solid #bbb;
+    
 }
 
 #community_insert_input_box{
@@ -31,6 +38,25 @@
     width: 800px;
     border : 1px solid black;
 }
+
+
+.insert_button{
+	float:right;
+    border: 2px solid salmon;
+    background-color: white;
+    color: salmon;
+    padding: 5px;
+    margin-top: 2px;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.insert_button:hover{
+    background-color: salmon;
+    color: white;
+}
+
+
 </style>
 </head>
 
@@ -50,11 +76,11 @@ $(document).ready(function() {
 	//여기 아래 부분
 	$('#summernote').summernote({
 		  height: 780,                 // 에디터 높이
-		  minHeight: null,             // 최소 높이
-		  maxHeight: null,             // 최대 높이
+		  minHeight: 610,             // 최소 높이
+		  maxHeight: 610,             // 최대 높이
 		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
 		  lang: "ko-KR",					// 한글 설정
-		  placeholder: '최대 3000자까지 쓸 수 있습니다'	//placeholder 설정
+		  placeholder: '내용을 입력해 주세요'	//placeholder 설정
           
 	});
 });
@@ -68,14 +94,14 @@ $(document).ready(function() {
 		<div id="community_insert_fullbox">
 			<div id ="community_insert_contentbox">
 				<div id="community_insert_title">
-					<input style="width:780px;height:50px"type="text" name="title"/>
+					<input required="required" style="width:780px;height:50px"type="text" name="title"/>
 				</div>	
 				<div id="community_insert_content">
-					<textarea id="summernote" name="content"></textarea>
+					<textarea required="required" id="summernote" name="content"></textarea>
 				</div>
 				<div id="community_insert_button">
-					<input type="submit" value="작성">
-					<input type="button" value="돌아가기">
+					<input class="insert_button" type="button" value="돌아가기">
+					<input class="insert_button" type="submit" value="작성">
 				</div>
 			</div>
 		</div>
