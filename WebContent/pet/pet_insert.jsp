@@ -8,22 +8,43 @@
 <html>
 <head>
     <title>Title</title>
+    <style type="text/css">
+
+        table {
+            border: none;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            border-radius: 6px ;
+        }
+        table tr th{
+            background-color: salmon;
+            color: #ffffff;
+            text-align: left;
+            width: 70px;
+        }
+
+    </style>
 </head>
 <body>
 <%
     String src = request.getParameter("src");
 %>
-<form method="post" action="../pet_servlet">
+<form method="post" name="frm" action="../pet_servlet" onsubmit="return petCheck()">
     <input type="hidden" name="command" value="pet_insert">
-    <table>
+    <table border="1">
         <col width="100"/>
         <col width="100"/>
         <col width="100"/>
         <col width="100">
         <tr>
-            <td colspan="2">
-                <input type="button" name="picture" value="사진 선택하기" onclick="location.href='../pet_servlet?command=picture_insert_select'">
+            <td colspan="3">
+                <a href="../pet_servlet?command=picture_insert_select">
                 <img id="selectedPic" src="<%=src%>" alt="선택된 사진" width="500" height="500">
+                </a>
                 <input type="hidden" name="path" value="<%=src%>">
             </td>
         </tr>
@@ -50,7 +71,7 @@
         </tr>
         <tr>
             <th>성별</th>
-            <td><input type="radio" name="gender" value="M">M</td>
+            <td><input type="radio" name="gender" checked="checked" value="M">M</td>
             <td><input type="radio" name="gender" value="F">F</td>
         </tr>
         <tr>
@@ -59,7 +80,7 @@
         </tr>
         <tr>
             <td colspan="3" align="right">
-                <input type="submit" value="작성">
+                <input type="submit" id="iPet" disabled="disabled" value="작성">
             </td>
         </tr>
     </table>

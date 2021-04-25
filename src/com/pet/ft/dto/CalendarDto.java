@@ -1,9 +1,4 @@
 package com.pet.ft.dto;
-<<<<<<< HEAD
-import java.util.Date;
-=======
->>>>>>> main
-
 public class CalendarDto {
 
 	private int calendar_no;

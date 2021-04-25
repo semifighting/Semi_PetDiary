@@ -9,6 +9,27 @@
 <html>
 <head>
     <title>Title</title>
+    <style type="text/css">
+
+        table {
+            border: none;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            border-radius: 6px ;
+        }
+        table tr th{
+            background-color: salmon;
+            color: #ffffff;
+            text-align: left;
+            width: 70px;
+        }
+    </style>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../resources/javascript/script.js"></script>
 </head>
 <body>
 <%
@@ -27,9 +48,11 @@
         <col width="100"/>
         <col width="100">
         <tr>
-            <td colspan="2">
-                <input type="button" name="picture" value="사진 선택하기" onclick="location.href='../pet_servlet?command=picture_update_select'">
+            <td colspan="3">
+                <!--<input type="button" name="picture" value="사진 선택하기" onclick="location.href='../pet_servlet?command=picture_update_select'">-->
+                <a href="../pet_servlet?command=picture_update_select">
                 <img id="selectedPic" src="<%=src%>" alt="선택된 사진" width="500" height="500">
+                </a>
                 <input type="hidden" name="path" value="<%=src%>">
             </td>
         </tr>
@@ -55,11 +78,11 @@
         </tr>
         <tr>
             <th>예방 접종 일자</th>
-            <td colspan="2"><input type="date" name="vaccination"></td>
+            <td colspan="2"><input type="date" id="uVaccin" name="vaccination"></td>
         </tr>
         <tr>
-            <td colspan="2" align="right">
-                <input type="submit" value="수정">
+            <td colspan="3" align="right">
+                <input type="submit" id="uPet" disabled="disabled" value="수정">
             </td>
         </tr>
     </table>

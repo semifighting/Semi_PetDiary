@@ -10,7 +10,7 @@
 <script type="text/javascript">
 
 	function registForm(){
-		location.href="/semi_PetDiary/pet.do?command=login_toSignup";
+		location.href="../pet.do?command=login_toSignup";
 	}
 
 </script>
@@ -19,7 +19,7 @@
 <%@include file="/main/header.jsp"%>
 
 	<div>
-		<form action="/semi_PetDiary/pet.do" method="post" onsubmit="return checkForm()">
+		<form action="../pet.do" method="post" onsubmit="return checkForm()">
 			<input type="hidden" name="command" value="login_loginForm"/>
 				<div>일반 로그인</div>
 				<div>

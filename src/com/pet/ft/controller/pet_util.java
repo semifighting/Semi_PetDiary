@@ -5,11 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.pet.ft.dto.CalendarDto;
-<<<<<<< HEAD
-=======
 import com.pet.ft.model.BusinessDao;
 import com.pet.ft.model.BusinessDaoImpl;
->>>>>>> main
 import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
 
@@ -33,10 +30,11 @@ public class pet_util {
 	public static String FromMemberNoTogetId(int member_no) {
 		return dao.MemberOne(member_no).getMember_id();
 	}	
+
+
 	public static int CommunityCommentCount(int seq) {
 		int res = dao.CommunityCommentCount(seq)-1;
 		return res;
-<<<<<<< HEAD
 	}
 	public static String FromBussinessNoTogetName(int seq) {
 		return null;
@@ -59,43 +57,7 @@ public class pet_util {
 	
 	public static String isTwo(String msg) {
 		return (msg.length() < 2)? "0"+msg : msg;
-=======
->>>>>>> main
 	}
-
-	public static String fontColor(int date, int dayOfWeek) {
-		String color = "";
-		
-		if ((dayOfWeek-1+date) % 7 == 0) {
-			color= "blue";
-		} else if ((dayOfWeek-1+date)%7 == 1) {
-			color = "red";
-		} else {
-			color = "black";
-		}
-		
-		return color;
-	}
-	
-	public static String isTwo(String msg) {
-		return (msg.length() < 2)? "0"+msg : msg;
-	}
-	
-	public static String getCalView(int i, List<CalendarDto> list) {
-		String d = isTwo(i+"");
-		String res = "";
-		
-		for (CalendarDto dto : list) {
-			if (dto.getCalendar_startdate().substring(6, 8).equals(d)) {
-				res += "<p>"
-						+ ((dto.getCalendar_title().length() > 6)? dto.getCalendar_title().substring(0,6) + "   ··" : dto.getCalendar_title())
-						+ "</p>";
-			}
-		}
-		
-		return res;
-	}
-	
 	
 	public static String getCalView(int i, List<CalendarDto> list) {
 		String d = isTwo(i+"");

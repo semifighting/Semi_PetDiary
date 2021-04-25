@@ -28,7 +28,7 @@ height: 50px;
 <%@include file="../main/header.jsp"%>
 <%BusinessDto bdto = (BusinessDto)request.getAttribute("bdto"); %>
 
-	<form action="/semi_PetDiary/pet.do" method="post">
+	<form action="../pet.do" method="post">
 	<input type="hidden" name="command" value="bookinsert"/>
 
 		<div class="book">

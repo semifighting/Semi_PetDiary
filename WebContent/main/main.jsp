@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Title</title>
-    <link href="/semi_PetDiary/resources/css/main_view.css" rel="stylesheet" type="text/css" />
+    <link href="../resources/css/main_view.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <%@include file="../main/header.jsp"%>

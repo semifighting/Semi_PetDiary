@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-=======
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
->>>>>>> main
+
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -82,7 +78,7 @@ function back(){
 		<div>상세 내용 :</div>
 		<textarea name="calendar_content" cols="33" rows="10" placeholder="${dto.calendar_content }" readonly="readonly"></textarea>
 		<br/>
-		<input type="button" value=" 수정 " onclick="location.href='/semi_PetDiary/pet.do?command=calendar_calUpdate&calendar_no=${dto.calendar_no }&year=${year }&month=${month }&date=${date }&member_no=${member_no }'"/>
+		<input type="button" value=" 수정 " onclick="location.href='../pet.do?command=calendar_calUpdate&calendar_no=${dto.calendar_no }&year=${year }&month=${month }&date=${date }&member_no=${member_no }'"/>
 		<input type="button" value=" 뒤로가기 " onclick="back();" />
 	</div>
 </body>

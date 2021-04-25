@@ -530,28 +530,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	        }
 	        return map;
 	    }
-		public int CalendarInsert(CalendarDto CalDto) {
-			int res = 0;
-			try(SqlSession session = getSqlSessionFactory().openSession(true)){
-				res = session.insert(namespace+"CalendarInsert", CalDto);
-			}
-			return res;
-		}
-
-
-		@Override
-		public List<CalendarDto> CalViewList(int member_no, String yyyyMM) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			List<CalendarDto> list = new ArrayList<CalendarDto>();
-			map.put("member_no", member_no);
-			map.put("calendar_startdate", yyyyMM);
-			System.out.println(map);
-			
-			try(SqlSession session = getSqlSessionFactory().openSession(true)){
-				list = session.selectList(namespace+"CalViewList",map);
-			}
-			return list;
-		}
 
 		@Override
 		public List<CalendarDto> CalendarList(int member_no, String yyyyMMdd) {

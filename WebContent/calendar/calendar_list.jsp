@@ -67,7 +67,7 @@
 			</tr>
 				<c:forEach items="${list }" var="dto">
 					<tr>
-						<td><a href="/semi_PetDiary/pet.do?command=calendar_calDetail&&calendar_no=${dto.calendar_no }&year=${year }&month=${month }&date=${date }">${dto.calendar_title }</a></td>
+						<td><a href="../pet.do?command=calendar_calDetail&&calendar_no=${dto.calendar_no }&year=${year }&month=${month }&date=${date }">${dto.calendar_title }</a></td>
 						<td>
 						<%=month %>월 <%=date %>일
 						<c:out value="${fn:substring(dto.calendar_startdate, 8, 10)}:"/>
@@ -79,7 +79,7 @@
 						<c:out value="${fn:substring(dto.calendar_enddate, 10, 12)}"/>
 						</td>
 						<td>
-							<input type="button" value="삭제" onclick="location.href='/semi_PetDiary/pet.do?command=calendar_calDelete&calendar_no=${dto.calendar_no }&year=${year }&month=${month }&date=${date }&member_no=<%=member_no%>'"/>
+							<input type="button" value="삭제" onclick="location.href='../pet.do?command=calendar_calDelete&calendar_no=${dto.calendar_no }&year=${year }&month=${month }&date=${date }&member_no=<%=member_no%>'"/>
 						</td>
 					</tr>
 				</c:forEach>

@@ -13,30 +13,84 @@
     <style type="text/css">
 
         .iframe {
-            /*
-            높이 넓이를 자식창에 맞도록 변경
-            height 값의 경우 100vh가 맞지만 top: -150px 을 해주었기 때문에 비율 만큼 더했다!
-            */
             display: block;
             border: none;
             /*상단 숨김 코드*/
             width: 500px;
-            height: 500px;
-            top: -150px;
-        }
-        a {
-            text-decoration: none; color: black;
+            height: 650px;
+            margin-top: -50px;
         }
 
+        .pet_update > a:visited, .pet_update > a:link {
+            text-decoration: none;
+            color: black;
+         }
+
+        div > p {
+            padding-top: 50px;
+            border: 1px solid salmon;
+        }
         .pet_info{
+            margin-top: 50px;
             float: left;
             width: 500px;
             height: 500px;
-            border: 1px solid blue;
             margin-left: 100px;
         }
 
+        .pet_info_style {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            border-radius: 6px ;
+        }
+
+
+        .pet_info_style tr th {
+            background-color: salmon;
+            color: #ffffff;
+            text-align: left;
+            width: 70px;
+        }
+
+        .pet_info_style tr:first-child th:first-child {
+            border-radius: 6px 0 0 0 ;
+        }
+        .pet_info_style tr:last-child th:first-child {
+            border-radius: 0 0 0 6px;
+        }
+
+        .pet_info_style th,
+        .pet_info_style td {
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        .pet_info_style tr {
+            border-bottom: 1px solid #dddddd;
+        }
+        .pet_info_style tr:last-child {
+            border-bottom: none;
+        }
         .pet_update {
+            margin-top: 5%;
+            margin-right: 8%;
+            float: right;
+        }
+
+        input[type=button] {
+            background-color: salmon;
+            color: white;
+            border: 1px solid salmon;
+            border-radius: 6px;
+            padding: 5px 5px 5px 5px;
+        }
+
+        #empty {
+            margin-top: 100px;
         }
     </style>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -46,19 +100,20 @@
 
 <%@include file="../main/header.jsp"%>
 <%
-    //int member_no = Integer.parseInt(request.getParameter("member_no"));
-    int member_no = 1;
+    int member_no = (int) session.getAttribute("member_no");
     PetBiz biz = new PetBizImpl();
     List<PetDto> list = biz.selectPetList(member_no);
 
     if (list.isEmpty()) {
 %>
-<h1>반려 동물을 등록해주세요</h1>
-<input type="button" value="추가" onclick="window.open('../pet_servlet?command=pet_insert_form&pet_no='<%=member_no%> + ',update', 'left=50, top=50, width=700, height=700')">
+    <div id="empty" align="center">
+        <h1>반려 동물을 등록해주세요</h1>
+        <input type="button" value="추가" onclick="window.open('pet/pet_insert.jsp', ',update','left=50, top=50, width=520, height=750')">
+    </div>
 <%
 }
 else {
-    int totalCount = biz.getCount(1);     //member_no가 들어가야함
+    int totalCount = biz.getCount(member_no);     //member_no가 들어가야함
     int petNo = list.get(0).getPet_no();
     String petName = list.get(0).getPet_name();
     String petSpecies = list.get(0).getPet_species();
@@ -73,47 +128,51 @@ else {
             <img id="petImg" src="<%=path%>" alt="반려동물 사진" width="500px" height="500px">
         </div>
         <div class="pet_info">
-            <p id = "petName">
-                이름 <%=petName%>
-            </p>
-            <p id = "petSpecies">
-                종   <%=petSpecies%>
-            </p>
-            <p id = "petBreed">
-                품종 <%=petBreed%>
-            </p>
-            <p id="petBirthday">
-                태어난 날 <%=petBirth%>
-            </p>
-            <p id="petGender">
-                성별 <%=petGender%>
-            </p>
-            <p id="petVaccination">
-                예방 접종 예정일 <%=petVaccin%>
-            </p>
+            <table class="pet_info_style">
+                <tr>
+                    <th>이름</th>
+                    <td id="petName"><%=petName%></td>
+                </tr>
+                <tr>
+                    <th>종</th>
+                    <td id="petSpecies"><%=petSpecies%></td>
+                </tr>
+                <tr>
+                    <th>품종</th>
+                    <td id="petBreed"><%=petBreed%></td>
+                </tr>
+                <tr>
+                    <th>태어난 날</th>
+                    <td id="petBirthday"><%=petBirth%></td>
+                </tr>
+                <tr>
+                    <th>성별</th>
+                    <td id="petGender"><%=petGender%></td>
+                </tr>
+                <tr>
+                    <th>예방 접종 예정일</th>
+                    <td id="petVaccination"><%=petVaccin%></td>
+                </tr>
+            </table>
         </div>
         <div class="pet_info">
-            <iframe src="../pet.do?command=calendar_calMain" class="iframe" scrolling="none">
-
+            <iframe src="../pet.do?command=calendar_calMain" class="iframe" >
             </iframe>
         </div>
     </div>
-
-
-    <div class="pet_update">
-        <input type="button" value="추가" onclick="window.open('pet/pet_insert.jsp', 'insert', 'left=50, top=50, width=700, height=700')">
-        <input type="button" id="petDel" value="삭제" onclick="location.href='../pet_servlet?command=pet_delete&pet_no=<%=petNo%>'">
-        <input type="button" id="petUp" value="수정" onclick="window.open('../pet_servlet?command=pet_update_form&pet_no=<%=petNo%>', 'update', 'left=50, top=50, width=700, height=700')">
+<div class="pet_update">
+    <input type="button" value="추가" onclick="window.open('pet/pet_insert.jsp', 'insert', 'left=50, top=50, width=520, height=750')">
+    <input type="button" id="petDel" value="삭제" onclick="location.href='../pet_servlet?command=pet_delete&pet_no=<%=petNo%>'">
+    <input type="button" id="petUp" value="수정" onclick="window.open('../pet_servlet?command=pet_update_form&pet_no=<%=petNo%>', 'update', 'left=50, top=50, width=520, height=750')">
     <%
         for (int i = 1; i <= totalCount; i++) {
     %>
-        <a href="#" class="pet_paging" onclick="pet(<%=i%>)">[<%=i%>]</a>
+    <a href="#" class="pet_paging" onclick="pet(<%=i%>)">[<%=i%>]</a>
     <%
             }
         }
     %>
-    </div>
-
+</div>
 <%@include file="../main/footer.jsp"%>
 </body>
 </html>

@@ -64,7 +64,6 @@
 </script>
 </head>
 <body>
-<%@include file="/main/header.jsp"%>
 <%
 
 	int year = Integer.parseInt(request.getParameter("year"));
@@ -79,7 +78,7 @@
 	int member_no = (int) session.getAttribute("member_no");
 %>
 
-<form id="insert" action="/semi_PetDiary/pet.do" method="post">
+<form id="insert" action="../pet.do" method="post">
 	<input type="hidden" name="command" value="calendar_insert"/>
 	<input type="hidden" name="member_no" value="${member_no }"/>
 	<!-- 나중에 수정 -->
@@ -193,6 +192,5 @@
 		</div>
 	</div>
 </form>
-<%@include file="/main/footer.jsp"%>
 </body>
 </html>

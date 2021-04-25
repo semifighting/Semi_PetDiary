@@ -108,28 +108,3 @@ body{
 		display:block;
 	}
 }
-#selectPictureOne > img {
-	position: absolute;
-	border: 1px solid salmon;
-	margin: 100px 100px;
-	width: 500px;
-	height: 500px;
-}
-#selectPictureOne p a img{
-	width: 50px;
-	height: 50px;
-}
-#selectPictureList img {
-	margin-top: 10px;
-	margin-left: 10px;
-	position: relative;
-	border: 1px solid salmon;
-	width: 200px;
-	height: 200px;
-}
-
-#imageUpload {
-	position: absolute;
-	text-align: right;
-	bottom: 15%;
-}
