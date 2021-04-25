@@ -196,8 +196,18 @@ public class PetBizImpl implements PetBiz {
 	}
 
 	@Override
-	public MemberDto Login(java.lang.String member_id, java.lang.String member_pw) {
+	public MemberDto Login(String member_id, String member_pw) {
 		return dao.Login(member_id, member_pw);
+	}
+
+	@Override
+	public MemberDto SocialLogin(String member_id) {
+		return dao.SocialLogin(member_id);
+	}
+
+	@Override
+	public int SocialSignUp(MemberDto dto) {
+		return dao.SocialSignUp(dto);
 	}
 	
 }

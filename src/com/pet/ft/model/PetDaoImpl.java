@@ -605,7 +605,27 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 				
 			}
 			return dto;
-		}	
+		}
+		
+		@Override
+		public MemberDto SocialLogin(String member_id) {
+			MemberDto dto = null;
+			
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				dto = session.selectOne(namespace+"SocialLogin", member_id);
+			}
+			return dto;
+		}
+	
+	
+		@Override
+		public int SocialSignUp(MemberDto dto) {
+			int res = 0;
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				res = session.delete(namespace+"SocialSignUp", dto);
+			}
+			return res;
+		}
 
 
 		

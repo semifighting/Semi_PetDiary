@@ -48,11 +48,14 @@ public interface PetDao {
 	public int hospitalBookInsert(BookDto dto);
 	
 	// member
-	MemberDto MemberOne(int member_no);
-	int MemberInsert(MemberDto dto);
-	MemberDto SignUpIdChk(String member_id);
-	MemberDto SighUpEmailChk(String member_email);
-	MemberDto Login(String member_id, String member_pw);
+	public MemberDto MemberOne(int member_no);
+	public int MemberInsert(MemberDto dto);
+	public MemberDto SignUpIdChk(String member_id);
+	public MemberDto SighUpEmailChk(String member_email);
+	public MemberDto Login(String member_id, String member_pw);
+	public MemberDto SocialLogin(String member_id);
+	public int SocialSignUp(MemberDto dto);
+	
 	
 	public int totalMember();
 	public int totalReport();
@@ -97,5 +100,6 @@ public interface PetDao {
 	public CalendarDto CalendarOne(int calendar_no);
 	public int CalendarDelete(int calendar_no);
 	public int CalendarUpdate(CalendarDto dto);
+
 
 }

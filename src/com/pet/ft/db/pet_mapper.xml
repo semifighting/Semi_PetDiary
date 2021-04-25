@@ -71,7 +71,7 @@
   
   	<insert id="MemberInsert" parameterType="MemberDto">
   		INSERT INTO MEMBER
-  		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, #{member_pw}, #{member_email}, #{member_phone}, '회원', #{member_address})
+  		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, #{member_pw}, #{member_email}, #{member_phone}, 'USER', #{member_address})
   	</insert>
   	
   	<select id="SignUpIdChk" resultType="MemberDto" parameterType="String">
@@ -100,11 +100,11 @@
   	</select>  	
   	
   	<select id="CommunitySearchCommentContent" parameterType="String" resultType="CommunityDto">
-  	SELECT * FROM COMMUNITY WHERE COMMUNITY_COMMENT >0 AND INSTR(COMMUNITY_CONTENT, #{community_search})>0 AND COMMUNITY_REPORT='N' ORDER BY COMMUNITY_SEQ DESC
+  	SELECT * FROM COMMUNITY WHERE COMMUNITY_NO IN (SELECT COMMUNITY_NO FROM COMMUNITY WHERE COMMUNITY_COMMENT >0 AND DBMS_LOB.INSTR(COMMUNITY_CONTENT, #{community_search})>0) AND COMMUNITY_REPORT='N' AND COMMUNITY_COMMENT = 0
   	</select>
   	
   	<select id="CommunitySearchContent" parameterType="String" resultType="CommunityDto">
-  	SELECT * FROM COMMUNITY WHERE COMMUNITY_COMMENT = 0 AND INSTR(COMMUNITY_CONTENT, #{community_search})>0 AND COMMUNITY_REPORT='N' ORDER BY COMMUNITY_SEQ DESC
+  	SELECT * FROM COMMUNITY WHERE COMMUNITY_COMMENT = 0 AND DBMS_LOB.INSTR(COMMUNITY_CONTENT, #{community_search})>0 AND COMMUNITY_REPORT='N' ORDER BY COMMUNITY_SEQ DESC
   	</select>
   	
   	<select id="CommunitySearchTitle"  parameterType="String" resultType="CommunityDto">
@@ -178,6 +178,7 @@
    		FROM BUSINESS JOIN MEMBER USING(MEMBER_NO)
   		WHERE BUSINESS_NUM = #{business_num}
   	</select>
+  	
   	 <insert id="BookInsert" parameterType="BookDto">
   		INSERT INTO BOOK
   		VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time}, #{book_type}, #{business_num}, #{member_no}, 0, 'N', #{book_hostime,jdbcType=VARCHAR}, #{book_counsel,jdbcType=VARCHAR})  	
@@ -369,7 +370,8 @@
   	
   	<insert id="BookCounselInsert" parameterType="BookDto">
   		INSERT INTO BOOK
-  	VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',#{business_num},#{member_no},
+  		VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',#{business_num},#{member_no},
+  				#{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR},#{book_counsel})
 	  </insert>
   	
   	<!-- 캘린더 내 clud -->
@@ -424,6 +426,17 @@
   	
   	<insert id="BusinessInsert" parameterType="businessDto">
   		INSERT INTO BUSINESS VALUES(BUSINESS_NUM_SEQ.NEXTVAL, #{business_name},#{business_addr},#{business_role},#{business_time},#{business_park},#{business_book},#{business_etc},#{business_no},#{member_no})
+  	</insert>
+
+
+	<select id="SocialLogin" parameterType="String" resultType="MemberDto">
+  		SELECT MEMBER_NO, MEMBER_NAME, MEMBER_ID, MEMBER_PW, MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ROLE, MEMBER_ADDRESS
+  		FROM MEMBER
+  		WHERE MEMBER_ID = #{member_id}
+  	</select>
+  	<insert id="SocialSignUp" parameterType="MemberDto">
+  		INSERT INTO MEMBER
+  		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, 'PASSWORD', #{member_email}, #{member_phone}, 'USER', #{member_address})
   	</insert>
   		
   	

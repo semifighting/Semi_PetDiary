@@ -10,11 +10,29 @@
 <link href="/semi_PetDiary/resources/css/stylesheet.css" rel="stylesheet">
 <style type="text/css">
 
+	table{
+		display:flex;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		overflow-x: auto;
+		overflow-y: hidden;
+	}
+
+	tbody
+	{display:flex}
+	
+	th {width: 100px;
+		text-align: left;
+		font-weight: normal;
+		}
+
+	th,td{display:block}
+
 	#wrapform {
 		position : absolute;
 		top: 50%;
 		left: 50%;
-		line-height: 25px;
+		line-height: 40px;
 		transform: translate(-50%, -50%);
 	}
 	#h1 {
@@ -25,6 +43,13 @@
 	}
 	
 	#join input[type='text'] { 
+	    border:#ccc 1px solid;
+	    border-radius:5px;
+	    height: 25px;
+	    width: 250px;
+	}
+	
+	#join input[type='password'] { 
 	    border:#ccc 1px solid;
 	    border-radius:5px;
 	    height: 25px;
@@ -45,6 +70,12 @@
 	    height: 25px;
 	    background-color: salmon;
 	}
+	
+	#signup {
+		margin: auto;
+		width: 50%;
+	}
+	
 	
 
 </style>
@@ -123,7 +154,7 @@
 	}
 	
 	function searchAddr() {
-		  var pop = window.open("login_addrChk.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
+		  var pop = window.open("login_addrChk.jsp","pop","width=570,height=420"); 
 	}
 	
 	function jusoCallBack(roadAddrPart1, roadAddrPart2,addrDetail){
@@ -172,7 +203,6 @@
 			alert("주소를 정확히 입력해주세요.");
 			return false;
 		} else {
-			alert("회원가입이 완료되었습니다.");
 			return true;
 		}
 	}
@@ -185,65 +215,51 @@
 	
 	<form id="join" name="join" action="/semi_PetDiary/pet.do" method="post" onsubmit="return checkForm()">
 		<input type="hidden" name="command" value="login_signupForm"/>
-		<table>
 			<div id="wrapform">
 				<br/>
 				<h1 id="h1">회원가입</h1>
-				<div>
-					<div>아이디</div>
-					<div>
-						<input type="text" name="member_id" id="member_Id" maxlength="20" placeholder="아이디" title="n" required="required" onkeyup="idCheckInit(join);" />
-						<input type="button" value=" 중복 체크 " onclick="idCheck();"/>
-					</div>
-				</div>
-				<div>
-					<div>비밀번호</div>
-					<div>
-						<input type="text" name="member_pw" maxlength="20" placeholder=" 비밀번호" required="required" onclick="idCheckConfirm();"/>
-					</div>
-				</div>
-				<div>
-					<div>이름</div>
-					<div>
-						<input type="text" name="member_name" placeholder="이름" required="required" onclick="idCheckConfirm();"/>
-					</div>
-				</div>
-				<div>
-					<div>이메일</div>
-					<div>
-						<input type="text" name="member_email"  id="member_Email" placeholder=" 이메일" title="n" required="required" onclick="idCheckConfirm();" onkeyup="emailCheckInit(join);"/>
-						<input type="button" value=" 이메일 인증 " onclick="emailCheck();"/>
-					</div>
-				</div>
-				<div>
-					<div>
-						<input type="text" name="member_email_auth" id="member_email_auth" placeholder=" 인증번호를 입력하세요." title="n" required="required" onclick="idCheckConfirm(); emailCheckConfirm();" onkeyup="emailauthCheckInit(join);"/>
-						<input type="button" value=" 인증번호 확인 " onclick="emailauthCheck();" />
-					</div>
-				</div>
-				<div>
-					<div>전화번호</div>
-					<div>
-						<input type="text" name="member_phone" placeholder=" ex) 010-1234-5678" maxlength="13" required="required" onclick="idCheckConfirm();"/>
-					</div>
-				</div>
-				<div>
-					<div>주소</div>
-					<div>
-						<input type="text" name="member_addr" id="member_addr" placeholder=" 기본 주소" required="required" readonly="readonly" onclick=""/>
-						<input type="button" value=" 주소 검색 " onclick="searchAddr();"/> <br/>
-						<input type="text" name="member_addr_detail" id="member_addr_detail" placeholder=" 상세 주소" required="required" readonly="readonly" onclick=""/>
-					</div>
-				</div>
+				<table>
+					<tr>
+						<th>아이디</th>
+						<th>비밀번호</th>
+						<th>이름</th>
+						<th>이메일</th>
+						<th>전화번호</th>
+						<th>주소</th>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" name="member_id" id="member_Id" maxlength="20" placeholder="아이디" title="n" required="required" onkeyup="idCheckInit(join);" />
+							<input type="button" value=" 중복 체크 " onclick="idCheck();"/>
+						</td>
+						<td>
+							<input type="password" name="member_pw" maxlength="20" placeholder=" 비밀번호" required="required" onclick="idCheckConfirm();"/>
+						</td>
+						<td>
+							<input type="text" name="member_name" placeholder="이름" required="required" onclick="idCheckConfirm();"/>
+						</td>
+						<td>
+							<input type="text" name="member_email"  id="member_Email" placeholder=" 이메일" title="n" required="required" onclick="idCheckConfirm();" onkeyup="emailCheckInit(join);"/>
+							<input type="button" value=" 이메일 인증 " onclick="emailCheck();"/>
+							<br/>
+							<input type="text" name="member_email_auth" id="member_email_auth" placeholder=" 인증번호를 입력하세요." title="n" required="required" onclick="idCheckConfirm(); emailCheckConfirm();" onkeyup="emailauthCheckInit(join);"/>
+							<input type="button" value=" 인증번호 확인 " onclick="emailauthCheck();" />
+						</td>
+						<td>
+							<input type="text" name="member_phone" placeholder=" ex) 010-1234-5678" maxlength="13" required="required" onclick="idCheckConfirm();"/></td>
+						<td>
+							<input type="text" name="member_addr" id="member_addr" placeholder=" 기본 주소" required="required" readonly="readonly" onclick=""/>
+							<input type="button" value=" 주소 검색 " onclick="searchAddr();"/> <br/>
+							<input type="text" name="member_addr_detail" id="member_addr_detail" placeholder=" 상세 주소" required="required" readonly="readonly" onclick=""/>
+						</td>
+					</tr>	
+				</table>
 				<br/>
-				<div>
-					<div id="signup">
-						<input type="submit" value=" 회원가입 "/>
-						<input type="button" value=" 취소 "/>
-					</div>
+				<div id="signup">
+					<input type="submit" value=" 회원가입 "/>
+					<input type="button" value=" 취소 " onclick="location.href='/semi_PetDiary/main/main.jsp'"/>
 				</div>
 			</div>
-		</table>
 	</form>
 	
 
