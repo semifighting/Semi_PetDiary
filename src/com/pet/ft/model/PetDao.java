@@ -24,8 +24,10 @@ public interface PetDao {
 	//병원상담
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
 	public int totalHospital();
-	
+
 	public BusinessDto hospitalSelect(int business_num);
+		
+	
 
 	List<CommunityDto> CommentList(int community_no);
 

@@ -14,7 +14,7 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
     <nav class="header">
       <div class="header_logo">
         <i class="fas fa-paw"></i>
-        <a href="/semi_PetDiary/pet.do?command=myinfo&member_no=1">Pet Diary</a>
+        <a href="/semi_PetDiary/pet.do?command=myinfo">Pet Diary</a>
       </div>
       <ul class="header_menu">
         <li>
@@ -56,7 +56,7 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
    		</ul>
 
 		<ul class="header_icons">
-			<li><a href="#"><i class="fas fa-user-circle"></i></a></li>
+			<li><a href="/semi_PetDiary/pet.do?command=business"><i class="fas fa-user-circle"></i></a></li>
 
 		</ul>
 			<a href="#" class="header_toggleBtn">

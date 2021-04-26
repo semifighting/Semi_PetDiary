@@ -143,7 +143,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		
 		return list;
 	}
-	
 	public int totalHospital() {
 
 		int res = 0;
@@ -696,9 +695,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			return dto;
 		}
 
-
-
-		
 		
 
 		@Override

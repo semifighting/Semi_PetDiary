@@ -59,4 +59,5 @@ public class BusinessDaoImpl extends SqlMapConfig implements BusinessDao {
 		return res;
 	}
 
+
 }

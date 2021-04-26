@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -161,6 +162,11 @@ public class pet_servlet extends HttpServlet {
 		if("community".equals(command)) {	
 			List<CommunityDto> list = dao.CommunityList();			
 			request.setAttribute("list", list);
+			List<Integer> commentcount = new ArrayList<Integer>();
+			for(CommunityDto cdto : list) {
+				commentcount.add(dao.CommunityCommentCount(cdto.getCommunity_no())-1);
+			}
+			request.setAttribute("commentcount", commentcount);
 			if(request.getParameter("paging")==null){
 				request.getRequestDispatcher(communityDirectory+"main.jsp?paging="+1).forward(request, response);
 			}else {
@@ -205,13 +211,8 @@ public class pet_servlet extends HttpServlet {
 			request.setAttribute("cdto", dao.CommunityOne(seq));
 			request.getRequestDispatcher(communityDirectory+"update.jsp").forward(request, response);
 		}
-		if("community_insert_form".equals(command)) {	
-			if(session.getAttribute("member_no")==null) {
-				jsResponse(response, "로그인해주십시오", loginDirectory+"login.jsp");
-			}else{
-				response.sendRedirect(communityDirectory+"insert.jsp");
-			}
-		
+		if("community_insert_form".equals(command)) {
+			response.sendRedirect(communityDirectory+"insert.jsp");
 		}
 		if("community_detail".equals(command)) {
 			int seq = Integer.parseInt(request.getParameter("seq"));
@@ -229,7 +230,7 @@ public class pet_servlet extends HttpServlet {
 			System.out.println(content);
 			System.out.println("내부");
 			//-----------------------------id 로그인 생기면 마지막파라미터(회원번호)바꾸기
-			CommunityDto CDto = new CommunityDto(0, title, content, null, "N", 0, 0, 0, (int)session.getAttribute("member_no"));
+			CommunityDto CDto = new CommunityDto(0, title, content, null, "N", 0, 0, 0, 1);
 			int res = dao.CommunityInsert(CDto);
 			if(res>0) {
 				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
@@ -244,7 +245,7 @@ public class pet_servlet extends HttpServlet {
 		if("community_comment".equals(command)) {
 			String content = request.getParameter("comment");
 			int community_no = Integer.parseInt(request.getParameter("community_no"));
-			CommunityDto CDto = new CommunityDto(0, " ", content, null, "N", 0, community_no, 0, Integer.parseInt(request.getParameter("member_no")));
+			CommunityDto CDto = new CommunityDto(0, " ", content, null, "N", 0, community_no, 0, 1);
 			int res = dao.CommentInsert(CDto);
 			if(res>0) {
 				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
@@ -313,7 +314,10 @@ public class pet_servlet extends HttpServlet {
 		//병원상담
 		int currentPageNo = 1;
 		int recordsPerPage = 0;
+		String url = null;
 		if(command.equals("hospitalmain")) {
+
+
 			if(request.getParameter("pages") != null)
 				currentPageNo = Integer.parseInt(request.getParameter("pages"));
 
@@ -321,50 +325,62 @@ public class pet_servlet extends HttpServlet {
 				recordsPerPage = Integer.parseInt(request.getParameter("lines"));
 				Paging paging = new Paging(currentPageNo, recordsPerPage);
 				int offset = (paging.getCurrentPageNo()-1)*paging.getRecordsPerPage();
-
+				
+				System.out.println("offset : " +offset);
+				
 				List<BusinessDto> list = biz.hospitalList(offset, paging.getRecordsPerPage()*currentPageNo);
 				paging.setNumberOfRecords(biz.totalHospital());
 				paging.makePaging();
-
+				
+				System.out.println("recordsPerPage *currentpage : " +paging.getRecordsPerPage()*currentPageNo);
+				System.out.println("currentpage : " +paging.getCurrentPageNo());
+				System.out.println("recordsPerpage : " +paging.getRecordsPerPage());
 			if(list != null) {
+				
 				request.setAttribute("list", list);
 				request.setAttribute("paging", paging);
-				dispatch(request,response,"./hospital/hospital_main.jsp");
+				request.setAttribute("servletPath", "pet.do");
+				request.setAttribute("key", "hospitalmain");
+				url = "/hospital/hospital_main.jsp";
 			}else {
-				jsResponse(response, "에러", "pet.do?command=hospitalmain");
+				request.setAttribute("msg", "에러");
+				url = "/hospital/hospital_main.jsp";
 			}
+			request.getRequestDispatcher(url).forward(request, response);
+
+			
+
 		}else if(command.equals("hospitalselect")) {
 			int business_num = Integer.parseInt(request.getParameter("business_num"));
 			BusinessDto dto = biz.hospitalSelect(business_num);
 			request.setAttribute("dto", dto);
 			dispatch(request,response,"./hospital/hospital_select.jsp");
 
-		}else if(command.equals("counselinsert")) {
+		}else if(command.equals("counselInsert")) {
 			String book_date = request.getParameter("book_date");
 			String book_counsel = request.getParameter("book_counsel");
 			int business_num = Integer.parseInt(request.getParameter("business_num"));
 			int member_no = (int)session.getAttribute("member_no");
+
 			BookDto dto = new BookDto();
 			dto.setBook_date(book_date);
 			dto.setBook_counsel(book_counsel);
 			dto.setBusiness_num(business_num);
 			dto.setMember_no(member_no);
+
+
 			int res = biz.hospitalBookInsert(dto);
 			if(res>0) {
-				pet_sms.SendSMS(book_date, null, business_num, member_no); //나중에 회원번호 세션에서 받아서 넣기 46:팀장번호
+				pet_sms.SendSMS(book_date, null, business_num, member_no);
 				jsResponse(response, "예약성공", "pet.do?command=hospitalmain");
 			}else {
 				jsResponse(response, "예약실패", "./hospital/hospital_select.jsp");
 			}
 		}
-
+		// 내가 작성
 		// 회원가입 페이지로 이동
 		if("login_signup".equals(command)) {
-			if(session.getAttribute("member_no")==null) {
-				response.sendRedirect(loginDirectory+"signup.jsp");
-			} else {
-				jsResponse(response, "이미 로그인 상태입니다.", "main/main.jsp");
-			}
+			response.sendRedirect(loginDirectory+"signup.jsp");
 		}
 		if("login_idchk".equals(command)) {
 			String member_id = request.getParameter("member_id");
@@ -426,6 +442,7 @@ public class pet_servlet extends HttpServlet {
 
 					
 			Session mailSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(from,"testpet03");
 					}
@@ -436,8 +453,11 @@ public class pet_servlet extends HttpServlet {
 				InternetAddress addr = new InternetAddress();
 				addr.setPersonal(fromName, "UTF-8");
 				addr.setAddress(from);
-								
+
+
 				Message msg = new MimeMessage(mailSession);
+
+
 				msg.setFrom(addr);
 
 				msg.setSubject(MimeUtility.encodeText("[펫 다이어리] 회원가입 이메일 인증번호", "UTF-8","B"));
@@ -507,10 +527,11 @@ public class pet_servlet extends HttpServlet {
 			dto.setMember_address(memberaddress);
 
 			int res = dao.MemberInsert(dto);
+			// 수정할지 보기
 			if (res > 0) {
-				jsResponse(response, "회원가입이 완료되었습니다.", "main/main.jsp");
+				jsResponse(response, "회원가입이 완료되었습니다.", "main/main.sjp");
 			} else {
-				jsResponse(response, "회원가입 실패", "login/login_signup.jsp");
+				jsResponse(response, "회원가입 실패", "history.back();");
 			}
 		}
 
@@ -558,30 +579,7 @@ public class pet_servlet extends HttpServlet {
 			} else {
 				jsResponse(response, "일정이 등록되지 않았습니다.", "history.back();");
 			}
-		}
-		//여기부터
-		else if (command.equals("pet_update_res")) {
-            int member_no = (int) session.getAttribute("member_no");
-            int pet_no = Integer.parseInt(request.getParameter("pet_no"));
-            String path = request.getParameter("path");
-            String vaccination = request.getParameter("vaccination");
-			if (vaccination.equals("") || vaccination == null) {
-				vaccination = Util.today();
-			}
-            PetDto dto = new PetDto();
-
-            dto.setPet_no(pet_no);
-            dto.setPet_path(path);
-            dto.setPet_vaccination(vaccination);
-
-            int res = biz.updatePet(dto);
-            if (res > 0) {
-                System.out.println("수정 성공");
-            } else {
-                System.out.println("수정 실패");
-            }
-
-        }   else if (command.equals("picture_delete")) {
+		}if (command.equals("picture_delete")) {
 			int member_no = (int) session.getAttribute("member_no");
 			int picture_no = Integer.parseInt(request.getParameter("picture_no"));
 			PictureDto dto = biz.selectPictureOne(member_no, picture_no);
@@ -713,7 +711,7 @@ public class pet_servlet extends HttpServlet {
         }
 
         if(command.equals("myinfo")) {
-        	int member_no = Integer.parseInt(request.getParameter("member_no"));
+        	int member_no = (int)session.getAttribute("member_no");
         	HashMap<String, Integer> map = dao.SelectMyinfoCount(member_no);
         	MemberDto dto = dao.MemberOne(member_no);        	
         	
@@ -881,11 +879,7 @@ public class pet_servlet extends HttpServlet {
      	}
 
     	if("login_login".equals(command)) {
-			if (session.getAttribute("member_no")==null) {
-				response.sendRedirect(loginDirectory+"login.jsp");
-			} else {
-				jsResponse(response, "이미 로그인 상태입니다.", "main/main.jsp");
-			}
+			response.sendRedirect(loginDirectory+"login.jsp");
 		}	
      	
     	if("login_loginForm".equals(command)) {
@@ -912,6 +906,7 @@ public class pet_servlet extends HttpServlet {
     			
     	}  
     		
+    	// 로그아웃 추가해야 함
     	if("login_logout".equals(command)) {
     		session.invalidate();
     		response.sendRedirect("main/main.jsp");
@@ -992,16 +987,17 @@ public class pet_servlet extends HttpServlet {
 	         System.out.println(book_type);
 
 	         BookDto bokdto = new BookDto(0, book_date, book_time, book_type, business_num, (int)session.getAttribute("member_no"), null, null, null, null);
+	         
 	         int res = bdao.bookInsert(bokdto); 
 	         System.out.println(res);
 	         
 	         if(res>0) {
 	            //해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
 		        pet_sms.SendSMS(book_date, book_time, business_num, (int)session.getAttribute("member_no"));
-	            jsResponse(response, "작성 성공", "pet.do??command=foodlist");
+	            jsResponse(response, "작성 성공", "pet.do?command=foodlist");
 	         
 	         }else{
-	            jsResponse(response, "작성 실패", "pet.do??command=foodlist");
+	            jsResponse(response, "작성 실패", "pet.do?command=foodlist");
 	         }
 
 	      }
@@ -1437,35 +1433,7 @@ public class pet_servlet extends HttpServlet {
 
      	}
      	
-    	if("login_login".equals(command)) {
-			response.sendRedirect(loginDirectory+"login.jsp");
-		}	
-     	
-    	if("login_loginForm".equals(command)) {
-    	
-    		String member_id = request.getParameter("member_id");
-    		String member_pw = request.getParameter("member_pw");
-    			
-    		MemberDto dto = biz.Login(member_id, member_pw);
-    			
-    		if(dto != null) {
-    			session.setAttribute("dto", dto);
-    			session.setAttribute("member_no", dto.getMember_no());
-    			session.setMaxInactiveInterval(3600);
-    				
-    			if (dto.getMember_role().equals("ADMIN")) {
-    				// 관리자 페이지 이동
-    			} else if (dto.getMember_role().equals("USER")) {
-    				response.sendRedirect("main/main.jsp");
-    			} else if (dto.getMember_role().equals("EMPLOYEE")) {
-    				// 사업자 페이지로 이동
-    			}
-    		} else {
-    			jsResponse(response, "가입하지 않은 아이디거나, 잘못된 비밀번호입니다.", loginDirectory+"login.jsp");
-    		}
-    			
-    	}  
-    		
+    	    		
     	// 로그아웃 추가해야 함
     	if("login_logout".equals(command)) {
     		session.invalidate();

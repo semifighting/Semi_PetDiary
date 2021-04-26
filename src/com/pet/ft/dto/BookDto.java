@@ -1,5 +1,6 @@
 package com.pet.ft.dto;
 
+
 public class BookDto {
 
 	private int book_num;
@@ -20,9 +21,11 @@ public class BookDto {
 		
 	}
 
+
 	public BookDto(int book_num, String book_date, String book_time, String book_type, int business_num, int member_no,
 			String book_price, String book_state, String book_hostime, String book_counsel) {
 		super();
+
 		this.book_num = book_num;
 		this.book_date = book_date;
 		this.book_time = book_time;
@@ -52,7 +55,6 @@ public class BookDto {
 		this.memberVO = memberVO;
 		this.businessVO = businessVO;
 	}
-
 
 	public int getBook_num() {
 		return book_num;
@@ -137,6 +139,8 @@ public class BookDto {
 	public String getBook_hostime() {
 		return book_hostime;
 	}
+	
+
 
 	public void setBook_hostime(String book_hostime) {
 		this.book_hostime = book_hostime;
@@ -165,7 +169,5 @@ public class BookDto {
 	public void setBusinessVO(BusinessDto businessVO) {
 		this.businessVO = businessVO;
 	}
-	
-	
 	
 }

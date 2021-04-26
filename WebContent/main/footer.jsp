@@ -90,7 +90,7 @@
 			<h3>QUICK LINKS</h3>
 				<div>
 					<span>HOME</span>
-					<span>캘린더</span>
+					<span>다이어리</span>
 					<span>병원 찾기</span>
 					<span>반려동물 출입가능 시설 찾기</span>
 					<span>예약내역</span>

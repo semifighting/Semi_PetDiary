@@ -17,7 +17,6 @@ response.setCharacterEncoding("UTF-8");
 <meta charset="UTF-8">
 <title>캘린더</title>
 <style type="text/css">
-
 	#calendar {
 		margin: 0 auto;
 		padding-top: 60px;
@@ -59,7 +58,6 @@ response.setCharacterEncoding("UTF-8");
 	.date {
 		font-size: 18px;
 		padding: 3px;
-
 	}
 	
 	
@@ -70,7 +68,6 @@ response.setCharacterEncoding("UTF-8");
 		background-color: #ffffb3;
 		border-radius: 5px 5px 5px 5px;
 		text-align: center;
-
 	}
 	
 		input[value='달력 보기'] { 
@@ -85,7 +82,6 @@ response.setCharacterEncoding("UTF-8");
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <script type="text/javascript">
-
 function calendar_list(year, month, d, member_no) {
 	var year = year;
 	var month = month;
@@ -128,10 +124,11 @@ function calendar_list(year, month, d, member_no) {
 	cal.set(year,month-1,1);
 	int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 	int lastDay = cal.getActualMaximum(Calendar.DATE);
-	int member_no = 0;
 	
 	String yyyyMM = year + util.isTwo(String.valueOf(month));
-
+	int member_no = (int) session.getAttribute("member_no");
+	System.out.println("번호"+member_no);
+	List<CalendarDto> list = dao.CalViewList(member_no, yyyyMM);
 %>
 	<div id = "calendar">
 		<div id= "sform">
@@ -192,22 +189,12 @@ function calendar_list(year, month, d, member_no) {
 			<td id="dates">
 				<a class="date" style="color:<%=color%>; cursor: pointer" onclick="location.href='../pet.do?command=calendar_calInsert&year=<%=year%>&month=<%=month%>&date=<%=d%>&lastday=<%=lastDay %>&member_no=<%=member_no%>'"><%=d%></a>
 				<div>
-<%
-				if(session.getAttribute("member_no") != null ){
-				List<CalendarDto> list = dao.CalViewList((int)session.getAttribute("member_no"), yyyyMM);
-%>	
-				<a id="calendar_list" style="cursor: pointer; color: black" href="javascript:calendar_list('<%=year%>','<%=month%>','<%=d%>','<%=(int)session.getAttribute("member_no")%>')">
-				
+				<a id="calendar_list" style="cursor: pointer; color: black" href="javascript:calendar_list('<%=year%>','<%=month%>','<%=d%>','<%=member_no%>')">
 				<%=util.getCalView(d, list)%>
 				</a>
 				</div>	
 			</td>
-<%
-	} else {
 		
-	}
-%>
- 		
 	<%
 	
 		if(count == 7) {
@@ -223,11 +210,6 @@ function calendar_list(year, month, d, member_no) {
 	%>
 			</tr>
 		</table>
-<<<<<<< HEAD
-		
-	</div>	
-=======
 	</div>
->>>>>>> gwanwoo
 </body>
 </html>

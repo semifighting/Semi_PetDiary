@@ -6,20 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>펫 다이어리</title>
-<style type="text/css">
-		
-	#wrap {
-		text-align: center;
-	}
-		
-	input[type='button'] { 
-		border: salmon 2px solid;
-		border-radius:5px;
-	    height: 25px;
-	    background-color: white;
-	}
-</style>
+<title>Insert title here</title>
 <script type="text/javascript">
 
 	function failedEmail(){ 	
@@ -32,14 +19,13 @@
 <body>
 
 <% String member_email = (String) request.getAttribute("member_email"); %>
-	<br/><br/><br/>
-	<div id="wrap">
-		<div>
-			<p><%=member_email %> 은 중복된 이메일입니다.</p>
-			<p>다른 이메일을 입력해주세요.</p>
-		</div>
-		
-		<div><input type="button" value="확인" onclick="failedEmail()"/></div>
+
+	<div>
+		<p><%=member_email %> 은 이미 가입된 이메일입니다.</p>
+		<p>다른 이메일을 입력해주세요.</p>
 	</div>
+	
+	<div><input type="button" value="확인" onclick="failedEmail()"/></div>
+
 </body>
 </html>

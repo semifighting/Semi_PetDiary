@@ -13,10 +13,13 @@ import com.pet.ft.dto.PictureDto;
 
 public interface PetBiz {
 	
-
+	
+	
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
+
+
 	public int totalHospital();
-    
+
 	public BusinessDto hospitalSelect(int business_num);
 
 	public int hospitalBookInsert(BookDto dto);
@@ -79,4 +82,5 @@ public interface PetBiz {
 	public int resetPw(String member_name, String member_email, String member_id, String member_pw);
 	public int memberUpdate(MemberDto dto);
 	public int memberDelete(int member_no);
+    
 }
