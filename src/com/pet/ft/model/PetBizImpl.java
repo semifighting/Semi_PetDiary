@@ -15,7 +15,7 @@ import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
 
 public class PetBizImpl implements PetBiz {
-	
+
 	private PetDao dao = new PetDaoImpl();
 	private BusinessDao bdao = new BusinessDaoImpl();
 
@@ -24,24 +24,25 @@ public class PetBizImpl implements PetBiz {
 	@Override
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords) {
 
-			return dao.hospitalList(offset,noOfRecords);
-	}
-	
-	@Override
-	public int totalHospital() {
-			// TODO Auto-generated method stub
-			return dao.totalHospital();
+		return dao.hospitalList(offset,noOfRecords);
 	}
 
 	@Override
+	public int totalHospital() {
+		// TODO Auto-generated method stub
+		return dao.totalHospital();
+	}
+
+
+	@Override
 	public BusinessDto hospitalSelect(int business_num) {
-	
+
 		return dao.hospitalSelect(business_num);
 	}
 
 	@Override
 	public int hospitalBookInsert(BookDto dto) {
-		
+
 		return dao.hospitalBookInsert(dto);
 	}
 
@@ -196,50 +197,9 @@ public class PetBizImpl implements PetBiz {
 	}
 
 	@Override
-	public MemberDto Login(String member_id, String member_pw) {
+	public MemberDto Login(java.lang.String member_id, java.lang.String member_pw) {
 		return dao.Login(member_id, member_pw);
 	}
-
-	@Override
-	public MemberDto SocialLogin(String member_id) {
-		return dao.SocialLogin(member_id);
-	}
-
-	@Override
-	public int SocialSignUp(MemberDto dto) {
-		return dao.SocialSignUp(dto);
-	}
-
-	@Override
-	public MemberDto findId(String member_name, String member_email) {
-		// TODO Auto-generated method stub
-		return dao.findId(member_name, member_email);
-	}
 	
-	@Override
-	public MemberDto findPw(String member_name, String member_email, String member_id) {
-		// TODO Auto-generated method stub
-		return dao.findPw(member_name, member_email, member_id);
-	}
-	
-	@Override
-	public int resetPw(String member_name, String member_email, String member_id, String member_pw) {
-		// TODO Auto-generated method stub
-		return dao.resetPw(member_name, member_email, member_id, member_pw);
-	}
 
-	@Override
-	public int memberUpdate(MemberDto dto) {
-		// TODO Auto-generated method stub
-		return dao.memberUpdate(dto);
-	}
-
-	@Override
-	public int memberDelete(int member_no) {
-		// TODO Auto-generated method stub
-		return dao.memberDelete(member_no);
-	}
-
-
-	
 }

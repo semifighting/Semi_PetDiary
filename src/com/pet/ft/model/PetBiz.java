@@ -13,17 +13,22 @@ import com.pet.ft.dto.PictureDto;
 
 
 
+
+
 public interface PetBiz {
 	
-
+	
+	
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
+
+
 	public int totalHospital();
-    
+
 	public BusinessDto hospitalSelect(int business_num);
-	
+
 	public int hospitalBookInsert(BookDto dto);
-	
-	
+
+
 
 	public BusinessDto businessOne(int business_num);
 
@@ -60,7 +65,7 @@ public interface PetBiz {
     public int insertTrip(CalendarDto dto);
     public int updateTrip(CalendarDto dto);
     public int deleteTrip(int member_no, int calendar_no);
-	
+
     //calendar - 캘린더 내 clud
     public List<CalendarDto> CalViewList(int member_no, String yyyyMM);
 	public List<CalendarDto> CalendarList(int member_no, String yyyyMMdd);
@@ -71,11 +76,5 @@ public interface PetBiz {
 	
 	//member
 	public MemberDto Login(String member_id, String member_pw);
-    public MemberDto SocialLogin(String member_id);
-	public int SocialSignUp(MemberDto dto);
-    public MemberDto findId(String member_name, String member_email);
-	public MemberDto findPw(String member_name, String member_email, String member_id);
-	public int resetPw(String member_name, String member_email, String member_id, String member_pw);
-	public int memberUpdate(MemberDto dto);
-	public int memberDelete(int member_no);
+    
 }

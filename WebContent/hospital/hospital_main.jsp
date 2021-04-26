@@ -18,6 +18,8 @@
 
 
 <title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="/semi_PetDiary/resources/js/script.js"></script>
 
 
 <style type="text/css">
@@ -58,7 +60,7 @@
 	.hospital_list{
 		background-color: #f9f9f9;
         width: 1260px;
-		height: 750px;
+		height: 630px;
 	}
 	.hospital_section {
     	 border-top: none;
@@ -108,6 +110,18 @@
  	    text-decoration: none;
  	    color:black;
 	}
+	.paginate a{
+		color:black;
+		border:2px outset ;
+		border-color:salmon;
+		border-radius:4px;
+		float:center;
+		
+		
+	}
+	
+
+
 	
 </style>
 
@@ -152,7 +166,20 @@
 
 	</div>
 	
-
+	<jsp:include page="/main/paging.jsp" flush="true">
+			<jsp:param name="servletPath" value="${servletPath }"/>
+			<jsp:param name="recordsPerPage" value="${paging.recordsPerPage }"/>
+			<jsp:param name="firstPageNo" value="${paging.firstPageNo }"/>
+			<jsp:param name="prevPageNo" value="${paging.prevPageNo }"/>
+			<jsp:param name="startPageNo" value="${paging.startPageNo }"/>
+			<jsp:param name="currentPageNo" value="${paging.currentPageNo }"/>
+			<jsp:param name="endPageNo" value="${paging.endPageNo }"/>
+			<jsp:param name="nextPageNo" value="${paging.nextPageNo }"/>
+			<jsp:param name="finalPageNo" value="${paging.finalPageNo }"/>
+			
+	</jsp:include>
+	
+	
 	<script type="text/javascript">
 		function mapPop(){
 			var popup = window.open('./hospital/map.jsp', '지도', 'width=700px,height=800px,scrollbars=yes');

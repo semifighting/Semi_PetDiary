@@ -7,32 +7,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>캘린더</title>
+<title>일정 추가</title>
 <style>
-
-	#head {
-		font-size: 20px;
-		text-align: center;
-		padding-bottom: 20px;
-	}
-
-	#insert {
-		position : absolute;
-		top: 50%;
-		left: 50%;
-		line-height: 30px;
-		transform: translate(-50%, -50%);
-		text-align: center;
-	}
-	
-	#insert input[type='text'] { 
-	    border:#ccc 1px solid;
-	    border-radius:5px;
-	    height: 25px;
-	    width: 250px;
-
-	}
-	
 	table {
 		bordor-collapse: collapse;
 	}
@@ -41,22 +17,6 @@
 		border: 1px solid salmon;
 		padding: 5px;
 	}
-	
-	#insert input[type='button'] { 
-		border: salmon 2px solid;
-		border-radius:5px;
-	    height: 25px;
-	    background-color: white;
-	}
-	
-	#insert input[type='submit'] { 
-		border: salmon 2px solid;
-		color: white;
-		border-radius:5px;
-	    height: 25px;
-	    background-color: salmon;
-	}
-	
 </style>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -75,23 +35,28 @@
 	Calendar cal = Calendar.getInstance();
 	int hour = cal.get(Calendar.HOUR_OF_DAY);
 	int min = cal.get(Calendar.MINUTE);
-	
-	int member_no = (int) session.getAttribute("member_no");
 %>
 
-<form id="insert" action="/semi_PetDiary/pet.do" method="post">
+<form action="/semi_PetDiary/pet.do" method="post">
 	<input type="hidden" name="command" value="calendar_insert"/>
-	<input type="hidden" name="member_no" value="<%=member_no%>"/>
-	<div id="head">일정 등록하기</div>
+	<input type="hidden" name="member_no" value="1"/>
+	<!-- 나중에 수정 -->
+	<div>일정 등록</div>
 		<div>
-			<input type="text" name="calendar_title" placeholder=" 일정 제목을 입력해 주세요. " required="required"/>
+			<input type="text" name="calendar_title" placeholder=" 일정 제목을 입력해 주세요. "/>
 		</div>
 		<div>시작일자</div>
 		<div>
 			<select name="s_year">
-				<option value="<%=year%>"><%=year %></option>
-			</select>년
-			<select name="s_month">
+<%			
+				for (int i = year-5; i <= year+5; i++){ //
+%>
+				<option value="<%=i %>" <%=(year==i)? "selected":"" %> ><%=i %></option>
+<%
+				}
+%>					
+				</select>년
+				<select name="s_month">
 <%
 				for (int i = 1; i < 13; i++) {
 %>						
@@ -133,9 +98,13 @@
 		<div>종료 일자</div>
 		<div>
 			<select name="e_year">
-
-				<option value="<%=year%>"><%=year %></option>
-	
+<%			
+				for (int i = year-5; i <= year+5; i++){ // 선택 기준 5년전~5년후
+%>
+				<option value="<%=i %>" <%=(year==i)? "selected":"" %> ><%=i %></option>
+<%
+				}
+%>					
 				</select>년
 				<select name="e_month">
 <%
@@ -177,14 +146,13 @@
 			</select>분
 		</div>
 		<div>
-			<input type="text" name="calendar_necessity" maxlength="150" placeholder=" 필수품 " required="required"/>
+			<input type="text" name="calendar_necessity" maxlength="150" placeholder=" 필수품 "/>
 		</div>
 		<div>
-			<input type="text" name="calendar_item" maxlength="150" placeholder=" 세면/화장도구 " required="required"/>
+			<input type="text" name="calendar_item" maxlength="150" placeholder=" 아이템 "/>
 		</div>
 		<div>
-			<br/>
-			<textarea name="calendar_content" cols="33" rows="10" maxlength="1000" placeholder=" 상세 내용을 입력해주세요. " required="required"/></textarea>
+			<textarea name="calendar_content" maxlength="1000" placeholder=" 상세 내용을 입력해주세요. "/></textarea>
 		</div>
 		<div>
 			<input type="submit" value=" 일정 등록 "/>
@@ -192,5 +160,6 @@
 		</div>
 	</div>
 </form>
+<%@include file="/main/footer.jsp"%>
 </body>
 </html>

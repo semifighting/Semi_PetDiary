@@ -64,9 +64,9 @@
 
   <%@include file="../main/header.jsp"%>
   <form action="pet.do" method="post">
-		<input type="hidden" name="command" value="counselinsert"/>
-		<input type="hidden" name="business_num" value="<%=dto.getBusiness_num() %>"/>
-		<input type="hidden" name="member_no" value="<%=dto.getMember_no() %>"/>
+		<input type="hidden" name="command" value="counselInsert"/>
+		<input type="hidden" name="business_num" value="<%=dto.getBusiness_num()%>"/>
+		<input type="hidden" name="member_no" value="<%=dto.getMember_no()%>"/>
 		
 	<div class="hospital_container">
 		<h3 class="hospital_name">${dto.business_name}</h3>

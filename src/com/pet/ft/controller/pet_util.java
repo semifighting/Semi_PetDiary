@@ -5,15 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.pet.ft.dto.CalendarDto;
-import com.pet.ft.model.BusinessDao;
-import com.pet.ft.model.BusinessDaoImpl;
 import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
 
 public class pet_util {
 
 	static PetDao dao = new PetDaoImpl();
-
 	
 	public static String FromMemberNoTogetName(int member_no) {
 		return dao.MemberOne(member_no).getMember_name();
@@ -34,6 +31,10 @@ public class pet_util {
 		int res = dao.CommunityCommentCount(seq)-1;
 		return res;
 	}
+	public static String FromBussinessNoTogetName(int seq) {
+		return null;
+	}
+	
 
 	public static String fontColor(int date, int dayOfWeek) {
 		String color = "";

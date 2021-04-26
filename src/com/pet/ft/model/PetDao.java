@@ -1,6 +1,5 @@
 package com.pet.ft.model;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.pet.ft.dto.BookDto;
@@ -11,6 +10,7 @@ import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
+
 
 public interface PetDao {
 	String namespace = "com.pet.ft.mapper.";
@@ -23,10 +23,13 @@ public interface PetDao {
 
 	//병원상담
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
-	public int totalHospital();	
-	
-	
+	public int totalHospital();
+
 	public BusinessDto hospitalSelect(int business_num);
+	
+	public int hospitalBookInsert(BookDto dto);
+	
+	
 
 	int CommentInsert(CommunityDto cdto);
 
@@ -45,23 +48,21 @@ public interface PetDao {
 
 	int CommunityCommentCount(int seq);
 
-	public int hospitalBookInsert(BookDto dto);
 	
-	// member
-	public MemberDto MemberOne(int member_no);
-	public int MemberInsert(MemberDto dto);
-	public MemberDto SignUpIdChk(String member_id);
-	public MemberDto SighUpEmailChk(String member_email);
-	public MemberDto Login(String member_id, String member_pw);
-	public MemberDto SocialLogin(String member_id);
-	public int SocialSignUp(MemberDto dto);
-	public MemberDto findId(String member_name, String member_email);
-	public MemberDto findPw(String member_name, String member_email, String member_id);
-	public int resetPw(String member_name, String member_email, String member_id, String member_pw);
-	public int memberUpdate(MemberDto dto);
-	public int memberDelete(int member_no);
-	
-	
+
+	MemberDto MemberOne(int member_no);
+
+	int MemberInsert(MemberDto dto);
+
+
+	// 내가 추가 !!
+	// id 중복체크
+	MemberDto SignUpIdChk(String member_id);
+	MemberDto SighUpEmailChk(String member_email);
+
+
+
+		MemberDto Login(String member_id, String member_pw);
 	public int totalMember();
 	public int totalReport();
 	public List<MemberDto> memberList();
@@ -94,9 +95,6 @@ public interface PetDao {
     public int insertTrip(CalendarDto dto);
     public int deleteTrip(int member_no, int calendar_no);
 
-    HashMap<String, Integer> SelectMyinfoCount(int member_no);
-
-	
 
     //calendar - 캘린더 내 clud
     public List<CalendarDto> CalViewList(int member_no, String yyyyMM);

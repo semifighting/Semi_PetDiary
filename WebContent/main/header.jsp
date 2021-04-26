@@ -11,13 +11,16 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
 <html>
   <head>
     <title>Title</title>
-    <script      src="https://kit.fontawesome.com/95780683f0.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/95780683f0.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <nav class="header">
       <div class="header_logo">
         <i class="fas fa-paw"></i>
-        <a href="/semi_PetDiary/pet.do?command=myinfo&member_no=1">Pet Diary</a>
+        <a href="">Pet Diary</a>
       </div>
       <ul class="header_menu">
         <li><a href="/semi_PetDiary/pet.do?command=pet_main&member_no=1">다이어리</a></li>
@@ -34,20 +37,8 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
       </ul>
 
       <ul class="header_login">
-        <%
-        if(session.getAttribute("member_no") == null) {		
-    %>
-    
-        <li><a href="/semi_PetDiary/pet.do?command=login_login">로그인</a></li>
+        <li><a href="#">로그인</a></li>
         <li><a href="/semi_PetDiary/pet.do?command=login_signup">회원가입</a></li>
-    
-    <%			
-        } else {
-    %>
-        <li><a href="/semi_PetDiary/pet.do?command=login_logout">로그아웃</a></li>
-    <%
-        }
-    %>
       </ul>
 
       <ul class="header_icons">
