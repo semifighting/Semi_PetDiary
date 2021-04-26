@@ -1,20 +1,14 @@
 <%@ page language="java" pageEncoding="UTF-8"%> <%
 request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
 %>
-<link href="/semi_PetDiary/resources/css/stylesheet.css" rel="stylesheet" />
-<link rel="preconnect" href="https://fonts.gstatic.com" />
-<link
-  href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap"
-  rel="stylesheet"
-/>
+<link href="/semi_PetDiary/resources/css/stylesheet.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 
 <html>
   <head>
     <title>Title</title>
-    <script
-      src="https://kit.fontawesome.com/95780683f0.js"
-      crossorigin="anonymous"
-    ></script>
+    <script  src="https://kit.fontawesome.com/95780683f0.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <nav class="header">
@@ -24,9 +18,7 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
       </div>
       <ul class="header_menu">
         <li>
-          <a href="/semi_PetDiary/pet.do?command=pet_main&member_no=1"
-            >다이어리</a
-          >
+          <a href="/semi_PetDiary/pet.do?command=pet_main&member_no=1">다이어리</a>
         </li>
         <li><a href="#">나와 닮은 동물 찾기</a></li>
         <li>
@@ -57,17 +49,19 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
         <% } %>
       </ul>
 
-      <ul class="header_icons">
-        <li>
-          <a href="/semi_PetDiary/pet.do?command=business"
-            ><i class="fas fa-user-circle"></i
-          ></a>
-        </li>
-      </ul>
+   		<ul class="header_login">
+   			<li><a href="../pet.do?command=login_login">로그인</a></li>
+   			<li><a href="../pet.do?command=">회원가입</a></li>
+   		</ul>
 
-      <a href="#" class="header_toggleBtn">
-        <i class="fas fa-bars"></i>
-      </a>
-    </nav>
-  </body>
+		<ul class="header_icons">
+			<li><a href="#"><i class="fas fa-user-circle"></i></a></li>
+
+		</ul>
+			<a href="#" class="header_toggleBtn">
+					<i class="fas fa-bars"></i>
+			</a>
+
+	</nav>	
+</body>
 </html>

@@ -22,17 +22,17 @@ $(function() {
 
 						var weather_condition = obj.wfKor;
 						if (weather_condition == "맑음"){
-							$("#weather_img").attr("src","/semi_PetDiary/image/sun.png");
+							$("#weather_img").attr("src","../image/sun.png");
 						}else if (weather_condition == "비"){
-							$("#weather_img").attr("src","/semi_PetDiary/image/rain.png");
+							$("#weather_img").attr("src","../image/rain.png");
 						}else if (weather_condition == "눈"){
-							$("#weather_img").attr("src","/semi_PetDiary/image/snow.png");
+							$("#weather_img").attr("src","../image/snow.png");
 						}else if (weather_condition == "흐림"){
-							$("#weather_img").attr("src","/semi_PetDiary/image/cloud.png");
+							$("#weather_img").attr("src","../image/cloud.png");
 						}else if (weather_condition == "구름 조금"){
-							$("#weather_img").attr("src","/semi_PetDiary/image/cloud_sun.png");
+							$("#weather_img").attr("src","../image/cloud_sun.png");
 						}else{
-							$("#weather_img").attr("src","/semi_PetDiary/image/etc.png");
+							$("#weather_img").attr("src","../image/etc.png");
 						}
 					},
 					error : function() {

@@ -20,9 +20,6 @@ public interface PetBiz {
 	public BusinessDto hospitalSelect(int business_num);
 	
 	public int hospitalBookInsert(BookDto dto);
-	
-	
-
 	public BusinessDto businessOne(int business_num);
 
 	public int totalMember();
@@ -43,9 +40,7 @@ public interface PetBiz {
 	public int deleteCommnutiy(int seq);
 
 
-
-
-	   //pet
+	//pet
     public List<PetDto> selectPetList(int member_no);
     public PetDto selectPetOne(int member_no, int pet_no);
     public int updatePet(PetDto dto);
@@ -67,7 +62,7 @@ public interface PetBiz {
     public int insertTrip(CalendarDto dto);
     public int updateTrip(CalendarDto dto);
     public int deleteTrip(int member_no, int calendar_no);
-	
+
     //calendar - 캘린더 내 clud
     public List<CalendarDto> CalViewList(int member_no, String yyyyMM);
 	public List<CalendarDto> CalendarList(int member_no, String yyyyMMdd);
@@ -75,8 +70,7 @@ public interface PetBiz {
 	public CalendarDto CalendarOne(int calendar_no);
 	public int CalendarDelete(int calendar_no);
 	public int CalendarUpdate(CalendarDto dto);
-	
-	//member
+
 	public MemberDto Login(String member_id, String member_pw);
     public MemberDto SocialLogin(String member_id);
 	public int SocialSignUp(MemberDto dto);

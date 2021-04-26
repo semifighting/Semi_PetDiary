@@ -6,13 +6,10 @@
 <%@page import="com.pet.ft.model.PetDaoImpl"%>
 <%@page import="com.pet.ft.controller.pet_util"%>
 <%@page import="java.util.Calendar"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("UTF-8");
-%>
-<%
-response.setContentType("text/html; charset=UTF-8");
+response.setCharacterEncoding("UTF-8");
 %>
 <!DOCTYPE html>
 <html>
@@ -27,7 +24,6 @@ response.setContentType("text/html; charset=UTF-8");
 	}
 	
 	#sform {
-		position: absolute;
 		top: 140px;
 		left: 65%;
 	}
@@ -95,17 +91,13 @@ function calendar_list(year, month, d, member_no) {
 	var month = month;
 	var date = d;
 	var member_no = member_no;
-	open("/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no, "", "width= 600, height=400");
+	open("../pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no, "", "width= 600, height=400");
 }
-
 </script>
 </head>
 <body>
-
-<%@include file="/main/header.jsp"%>
 <%
-
-	pet_util util = new pet_util();
+    pet_util util = new pet_util();
 	PetDao dao = new PetDaoImpl();
 	Calendar cal = Calendar.getInstance();
 	int year = cal.get(Calendar.YEAR);
@@ -168,11 +160,11 @@ function calendar_list(year, month, d, member_no) {
 	
 		<table id = "calendar">
 			<caption>
-			<a href="calendar_main.jsp?year=<%=year-1%>&month=<%=month%>" style="color:salmon">◁</a>
-			<a href="calendar_main.jsp?year=<%=year%>&month=<%=month-1%>" style="color:salmon">◀</a>			
+			<a href="../calendar/calendar_main.jsp?year=<%=year-1%>&month=<%=month%>" style="color:salmon">◁</a>
+			<a href="../calendar/calendar_main.jsp?year=<%=year%>&month=<%=month-1%>" style="color:salmon">◀</a>
 			<span class="y"><%=year %>년</span> <span class="m"><%=month%>월</span>
-			<a href="calendar_main.jsp?year=<%=year%>&month=<%=month+1%>" style="color:salmon">▶</a>
-			<a href="calendar_main.jsp?year=<%=year+1%>&month=<%=month%>" style="color:salmon">▷</a>
+			<a href="../calendar/calendar_main.jsp?year=<%=year%>&month=<%=month+1%>" style="color:salmon">▶</a>
+			<a href="../calendar/calendar_main.jsp?year=<%=year+1%>&month=<%=month%>" style="color:salmon">▷</a>
 			</caption>
 			<tr id="day">
 				<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
@@ -198,7 +190,7 @@ function calendar_list(year, month, d, member_no) {
 	%>
 				
 			<td id="dates">
-				<a class="date" style="color:<%=color%>; cursor: pointer" onclick="location.href='/semi_PetDiary/pet.do?command=calendar_calInsert&year=<%=year%>&month=<%=month%>&date=<%=d%>&lastday=<%=lastDay %>'"><%=d%></a>
+				<a class="date" style="color:<%=color%>; cursor: pointer" onclick="location.href='../pet.do?command=calendar_calInsert&year=<%=year%>&month=<%=month%>&date=<%=d%>&lastday=<%=lastDay %>&member_no=<%=member_no%>'"><%=d%></a>
 				<div>
 <%
 				if(session.getAttribute("member_no") != null ){
@@ -231,7 +223,11 @@ function calendar_list(year, month, d, member_no) {
 	%>
 			</tr>
 		</table>
+<<<<<<< HEAD
 		
 	</div>	
+=======
+	</div>
+>>>>>>> gwanwoo
 </body>
 </html>

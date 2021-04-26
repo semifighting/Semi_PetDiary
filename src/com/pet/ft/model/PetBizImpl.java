@@ -19,14 +19,12 @@ public class PetBizImpl implements PetBiz {
 	private PetDao dao = new PetDaoImpl();
 	private BusinessDao bdao = new BusinessDaoImpl();
 
-
-
 	@Override
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords) {
 
-			return dao.hospitalList(offset,noOfRecords);
+		return dao.hospitalList(offset,noOfRecords);
 	}
-	
+
 	@Override
 	public int totalHospital() {
 			return dao.totalHospital();
@@ -153,7 +151,6 @@ public class PetBizImpl implements PetBiz {
     public int deleteTrip(int member_no, int calendar_no) {
         return dao.deleteTrip(member_no, calendar_no);
     }
-
 	@Override
 	public List<CalendarDto> CalViewList(int member_no, String yyyyMM) {
 		return dao.CalViewList(member_no, yyyyMM);

@@ -19,6 +19,18 @@ MEMBER_ROLE    VARCHAR2(20)   NULL,
 MEMBER_ADDRESS VARCHAR2(500)  NULL
 );
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+select * from business
+select * from book
+
+
+select * from business
+>>>>>>> main
+select * from MEMBER
+>>>>>>> gwanwoo
 INSERT INTO MEMBER
 VALUES(MEMBER_SEQ.NEXTVAL, '일반사원', 'employee', '123456', 'employee@a.com', '010-2222-2222', 'EMPLOYEE', '경기도 고양시 토당동');
 ----------------picture
@@ -146,7 +158,27 @@ VALUES(PET_NO_SEQ.NEXTVAL,'강아지','말티푸','티코',TO_DATE('02-20-2020 1
 SELECT * FROM PET;
 
 ------------------------COMMUNITY TABLE
+<<<<<<< HEAD
+DROP TABLE COMMUNITY
+DROP SEQUENCE COMMUNITY_SEQ_SEQ;
+DROP SEQUENCE COMMUNITY_NO_SEQ;
+
+CREATE SEQUENCE COMMUNITY_SEQ_SEQ;
+CREATE SEQUENCE COMMUNITY_NO_SEQ;
+
+
+
+
+
+
+
+
+
+------------------------COMMUNITY TABLE
+DROP TABLE COMMUNITY
+=======
 DROP TABLE COMMUNITY;
+>>>>>>> main
 DROP SEQUENCE COMMUNITY_SEQ_SEQ;
 DROP SEQUENCE COMMUNITY_NO_SEQ;
 
@@ -203,7 +235,21 @@ CREATE TABLE BOOK(
   CONSTRAINT BOOK_FK_MN FOREIGN KEY (MEMBER_NO) REFERENCES MEMBER (MEMBER_NO)
 );
 
+<<<<<<< HEAD
 select * from menu
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+select * from menu
+
+=======
+>>>>>>> main
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main2
+>>>>>>> gwanwoo
 SELECT * FROM BOOK;
 
 =======
@@ -214,3 +260,29 @@ SELECT *
 FROM ALL_TAB_COLUMNS
 
 WHERE TABLE_NAME = 'BOOK';
+<<<<<<< HEAD
+=======
+>>>>>>> kjk
+
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+
+>>>>>>> kjk
+=======
+
+<<<<<<< HEAD
+>>>>>>> ig
+=======
+>>>>>>> gwanwoo
+<<<<<<< HEAD
+=======
+>>>>>>> main2
+>>>>>>> main
+>>>>>>> gwanwoo

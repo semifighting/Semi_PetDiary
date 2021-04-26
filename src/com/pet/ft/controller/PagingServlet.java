@@ -19,7 +19,7 @@ import com.pet.ft.paging.Paging;
 @WebServlet("/paging.do")
 public class PagingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
@@ -61,7 +61,7 @@ public class PagingServlet extends HttpServlet {
 				
 				url = "business/memberlist_main.jsp";
 			} else {
-				request.setAttribute("msg", "Error°¡ ¹ß»ıÇß½À´Ï´Ù.");
+				request.setAttribute("msg", "Errorê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
 				
 				url = "business/business_main.jsp";
 			}
@@ -94,8 +94,8 @@ public class PagingServlet extends HttpServlet {
 				url = "business/reportlist_main.jsp";
 			} else {
 				
-				System.out.println("³Î");
-				request.setAttribute("msg", "Error°¡ ¹ß»ıÇß½À´Ï´Ù.");
+				System.out.println("ï¿½ï¿½");
+				request.setAttribute("msg", "Errorê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
 				
 				url = "business/reportlist_main.jsp";
 			}
@@ -131,7 +131,7 @@ public class PagingServlet extends HttpServlet {
 				url = "business/booklist_main.jsp";
 			} else {
 				
-				request.setAttribute("msg", "Error°¡ ¹ß»ıÇß½À´Ï´Ù.");
+				request.setAttribute("msg", "Errorê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
 				
 				url = "business/booklist_main.jsp";
 			}
@@ -161,7 +161,7 @@ public class PagingServlet extends HttpServlet {
 			paging.makePaging();
 			
 			if(list != null) {
-				System.out.println("ÀÖ´Ù");
+				System.out.println("ï¿½Ö´ï¿½");
 				request.setAttribute("key", "bookst");
 				request.setAttribute("list", list);
 				request.setAttribute("paging", paging);
@@ -170,8 +170,8 @@ public class PagingServlet extends HttpServlet {
 				url = "business/booklist_st.jsp";
 			} else {
 				
-				System.out.println("³Î");
-				request.setAttribute("msg", "Error°¡ ¹ß»ıÇß½À´Ï´Ù.");
+				System.out.println("ï¿½ï¿½");
+				request.setAttribute("msg", "Errorê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
 				
 				url = "business/booklist_st.jsp";
 			}

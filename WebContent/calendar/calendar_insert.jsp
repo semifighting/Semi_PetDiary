@@ -1,6 +1,5 @@
 <%@page import="java.util.Calendar"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <!DOCTYPE html>
@@ -65,8 +64,8 @@
 </script>
 </head>
 <body>
-<%@include file="/main/header.jsp"%>
 <%
+
 	int year = Integer.parseInt(request.getParameter("year"));
 	int month = Integer.parseInt(request.getParameter("month"));
 	int date = Integer.parseInt(request.getParameter("date"));
@@ -79,7 +78,7 @@
 	int member_no = (int) session.getAttribute("member_no");
 %>
 
-<form id="insert" action="/semi_PetDiary/pet.do" method="post">
+<form id="insert" action="../pet.do" method="post">
 	<input type="hidden" name="command" value="calendar_insert"/>
 	<input type="hidden" name="member_no" value="<%=member_no%>"/>
 	<div id="head">일정 등록하기</div>

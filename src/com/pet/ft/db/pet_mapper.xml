@@ -1,8 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.pet.ft.mapper">
+	  
+<mapper namespace="com.pet.ft.mapper">
+
+  <resultMap id="diaryMap" type="DiaryDto">
+      <result property="diary_no" column="DIARY_NO"/>
+      <result property="diary_title" column="DIARY_TITLE"/>
+      <result property="diary_content" column="DIARY_CONTENT"/>
+      <result property="diary_regdate" column="DIARY_REGDATE"/>
+      <result property="member_no" column="MEMBER_NO"/>
+  </resultMap>
   
   	<resultMap type="BusinessDto" id="businessListMap">
   		<result property="business_num" column="BUSINESS_NUM" />
@@ -15,7 +24,38 @@
   		<result property="business_etc" column="BUSINESS_etc" />
   		<result property="business_no" column="BUSINESS_NO" />
   	</resultMap>
-  
+
+  <resultMap id="petMap" type="PetDto">
+      <result property="pet_no" column="PET_NO"/>
+      <result property="pet_species" column="PET_SPECIES"/>
+      <result property="pet_breed" column="PET_BREED"/>
+      <result property="pet_name" column="PET_NAME"/>
+      <result property="pet_birthday" column="PET_BIRTHDAY"/>
+      <result property="pet_gender" column="PET_GENDER"/>
+      <result property="member_no" column="MEMBER_NO"/>
+      <result property="pet_path" column="PET_PATH"/>
+      <result property="pet_vaccination" column="PET_VACCINATION"/>
+  </resultMap>
+
+  <resultMap id="pictureMap" type="PictureDto">
+      <result property="picture_no" column="PICTURE_NO"/>
+      <result property="picture_name" column="PICTURE_NAME"/>
+      <result property="picture_directory" column="PICTURE_DIRECTORY"/>
+      <result property="member_no" column="MEMBER_NO"/>
+  </resultMap>
+
+
+  <resultMap id="calendarMap" type="CalendarDto">
+      <result property="calendar_no" column="CALENDAR_NO"/>
+      <result property="calendar_startdate" column="CALENDAR_STARTDATE"/>
+      <result property="calendar_enddate" column="CALENDAR_ENDDATE"/>
+      <result property="calendar_necessity" column="CALENDAR_NECESSITY"/>
+      <result property="calendar_item" column="CALENDAR_ITEM"/>
+      <result property="calendar_title" column="CALENDAR_TITLE"/>
+      <result property="calendar_content" column="CALENDAR_CONTENT"/>
+      <result property="member_no" column="MEMBER_NO"/>
+  </resultMap>
+
   	<resultMap type="MemberDto" id="memberListMap">
   		<result property="member_no" column="MEMBER_NO"/>
   		<result property="member_name" column="MEMBER_NAME"/>
@@ -171,7 +211,6 @@
   	</select>
 
   	 <select id="BusinessOne" parameterType="int" resultType="BusinessDto">
-
   		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME, BUSINESS_ROLE
    		FROM BUSINESS JOIN MEMBER USING(MEMBER_NO)
   		WHERE BUSINESS_NUM = #{business_num}
@@ -194,8 +233,10 @@
         SELECT PET_NO, PET_SPECIES, PET_BREED, PET_NAME, PET_BIRTHDAY, PET_GENDER, MEMBER_NO, PET_PATH, PET_VACCINATION
         FROM PET
         WHERE MEMBER_NO = ${member_no}
+        AND PET_NO = ${pet_no}
           AND PET_NO = ${pet_no}
     </select>
+
     <select id="selectPictureList" resultMap="pictureMap" parameterType="int">
         SELECT PICTURE_NO, PICTURE_NAME, PICTURE_DIRECTORY, MEMBER_NO
         FROM PICTURE
@@ -206,6 +247,7 @@
         SELECT PICTURE_NO, PICTURE_NAME, PICTURE_DIRECTORY, MEMBER_NO
         FROM PICTURE
         WHERE MEMBER_NO = #{member_no}
+        AND PICTURE_NO = #{picture_no}
           AND PICTURE_NO = #{picture_no}
     </select>
 
@@ -218,6 +260,7 @@
         SELECT CALENDAR_NO, CALENDAR_STARTDATE, CALENDAR_ENDDATE, CALENDAR_NECESSITY, CALENDAR_ITEM, CALENDAR_TITLE, CALENDAR_CONTENT, MEMBER_NO
         FROM CALENDAR
         WHERE MEMBER_NO = #{member_no}
+        AND CALENDAR_NO = #{calendar_no}
           AND CALENDAR_NO = #{calendar_no}
     </select>
 
@@ -293,9 +336,6 @@
         WHERE CALENDAR_NO = #{calendar_no}
     </update>
 
-  	<select id="totalMember" resultType="int">
-  		SELECT COUNT(*) FROM MEMBER
-  	</select>
   	
   	<select id="memberList" resultMap="memberListMap" >
   		<![CDATA[
@@ -463,8 +503,7 @@
   	<delete id="CalendarDelete" parameterType="int">
   		DELETE FROM CALENDAR WHERE CALENDAR_NO = #{calendar_no}
   	</delete>
-  	
-  	
+
   	<select id="CountMyinfoPet" parameterType="int" resultType="int">
   		SELECT COUNT(PET_NO) FROM PET WHERE MEMBER_NO = #{member_no}
   	</select>
@@ -480,8 +519,7 @@
 	<select id="CountMyinfoBook" parameterType="int" resultType="int">
 	SELECT COUNT(BOOK_NUM) FROM BOOK WHERE MEMBER_NO = #{member_no}
 	</select>
-  	
-  	
+
   	<insert id="BusinessInsert" parameterType="businessDto">
   		INSERT INTO BUSINESS VALUES(BUSINESS_NUM_SEQ.NEXTVAL, #{business_name},#{business_addr},#{business_role},#{business_time},#{business_park},#{business_book},#{business_etc},#{business_no},#{member_no})
   	</insert>

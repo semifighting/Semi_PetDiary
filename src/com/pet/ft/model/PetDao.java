@@ -22,23 +22,22 @@ public interface PetDao {
 
 	//병원상담
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
-	public int totalHospital();	
-	
+	public int totalHospital();
 	
 	public BusinessDto hospitalSelect(int business_num);
-
-	int CommentInsert(CommunityDto cdto);
 
 	List<CommunityDto> CommentList(int community_no);
 
 
 	List<CommunityDto> CommunitySearchList(String filter, String community_search);
 
-	int CommunityReport(int community_seq);
+	public int CommunityReport(int community_seq);
 
 	int CommunityUpdate(CommunityDto cdto);
 
 	int CommunityDelete(int seq);
+
+	int CommentInsert(CommunityDto cdto);
 
 	int CommunityViews(int seq);
 
@@ -66,12 +65,6 @@ public interface PetDao {
 	public int totalBookSt();
 	public List<BookDto> totalDateTime();
 	
-	/* 
-	 * ����¡ x
-	 * public List<MemberDto> memberList();
-	 * public List<CommunityDto> reportList();
-	 *  
-	*/
 	
 	
 	// ����¡ o
@@ -80,9 +73,6 @@ public interface PetDao {
 	public List<BookDto> bookListHos(int offset, int noOfRecords);
 	public List<BookDto> bookListSt(int offset, int noOfRecords);
 	
-	public int changeRole(MemberDto dto);
-	public int deleteCommnutiy(int seq);
-	public boolean nextPage(String pageNumber);
 
 	// pet
     public List<PetDto> selectPetList(int member_no);
@@ -107,9 +97,12 @@ public interface PetDao {
     public int insertTrip(CalendarDto dto);
     public int deleteTrip(int member_no, int calendar_no);
 
-    HashMap<String, Integer> SelectMyinfoCount(int member_no);
+	// member
 
-	
+	public int changeRole(MemberDto dto);
+	public int deleteCommnutiy(int seq);
+	public boolean nextPage(String pageNumber);
+    HashMap<String, Integer> SelectMyinfoCount(int member_no);
 
     //calendar - 캘린더 내 clud
     public List<CalendarDto> CalViewList(int member_no, String yyyyMM);
