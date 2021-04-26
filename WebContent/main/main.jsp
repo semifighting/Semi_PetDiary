@@ -1,5 +1,8 @@
+<%
+    request.setCharacterEncoding("UTF-8");
+    response.setCharacterEncoding("UTF-8");
+%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-
 <html>
 <head>
     <title>Title</title>
@@ -27,6 +30,7 @@
         <td align="center"><input id="logbutton" type="button" value="로그인"></td>
     </tr>
 </table>
+
 <%@include file="/main/footer.jsp"%>
 </body>
 </html>

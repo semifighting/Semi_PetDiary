@@ -1,28 +1,29 @@
 package com.pet.ft.dto;
 
-
-
 public class BookDto {
+
 	private int book_num;
 	private String book_date;
 	private String book_time;
 	private String book_type;
-	private int business_num;
+	private int business_num;	
 	private int member_no;
-	private int book_price;
+	private String book_price;
 	private String book_state;
 	private String book_hostime;
 	private String book_counsel;
 	
+	private MemberDto memberVO;
+	private BusinessDto businessVO;
 	
-
 	public BookDto() {
 		
 	}
 
 	public BookDto(int book_num, String book_date, String book_time, String book_type, int business_num, int member_no,
-			int book_price, String book_state, String book_hostime, String book_counsel) {
-	
+			String book_price, String book_state, String book_hostime, String book_counsel, MemberDto memberVO,
+			BusinessDto businessVO) {
+		super();
 		this.book_num = book_num;
 		this.book_date = book_date;
 		this.book_time = book_time;
@@ -33,6 +34,8 @@ public class BookDto {
 		this.book_state = book_state;
 		this.book_hostime = book_hostime;
 		this.book_counsel = book_counsel;
+		this.memberVO = memberVO;
+		this.businessVO = businessVO;
 	}
 
 	public int getBook_num() {
@@ -83,11 +86,11 @@ public class BookDto {
 		this.member_no = member_no;
 	}
 
-	public int getBook_price() {
+	public String getBook_price() {
 		return book_price;
 	}
 
-	public void setBook_price(int book_price) {
+	public void setBook_price(String book_price) {
 		this.book_price = book_price;
 	}
 
@@ -106,6 +109,7 @@ public class BookDto {
 	public void setBook_hostime(String book_hostime) {
 		this.book_hostime = book_hostime;
 	}
+
 	public String getBook_counsel() {
 		return book_counsel;
 	}
@@ -113,18 +117,23 @@ public class BookDto {
 	public void setBook_counsel(String book_counsel) {
 		this.book_counsel = book_counsel;
 	}
-	
 
-	public String getBook_counsel() {
-		return book_counsel;
+	public MemberDto getMemberVO() {
+		return memberVO;
 	}
 
-
-
-	public void setBook_counsel(String book_counsel) {
-		this.book_counsel = book_counsel;
+	public void setMemberVO(MemberDto memberVO) {
+		this.memberVO = memberVO;
 	}
 
-	
+	public BusinessDto getBusinessVO() {
+		return businessVO;
+	}
 
+	public void setBusinessVO(BusinessDto businessVO) {
+		this.businessVO = businessVO;
+	}
+	
+	
+	
 }
