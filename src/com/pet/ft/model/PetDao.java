@@ -2,10 +2,9 @@ package com.pet.ft.model;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
-import org.apache.ibatis.annotations.Param;
 import com.pet.ft.dto.CalendarDto;
 import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
@@ -60,13 +59,27 @@ public interface PetDao {
 	public int resetPw(String member_name, String member_email, String member_id, String member_pw);
 	public int memberUpdate(MemberDto dto);
 	public int memberDelete(int member_no);
-	
-	
+
 	public int totalMember();
 	public int totalReport();
-	public List<MemberDto> memberList();
+	public int totalBookHos();
+	public int totalBookSt();
+	public List<BookDto> totalDateTime();
+	
+	/* 
+	 * ����¡ x
+	 * public List<MemberDto> memberList();
+	 * public List<CommunityDto> reportList();
+	 *  
+	*/
+	
+	
+	// ����¡ o
 	public List<MemberDto> memberList(int offset, int noOfRecords);
-	public List<CommunityDto> reportList();
+	public List<CommunityDto> reportList(int offset, int noOfRecords);
+	public List<BookDto> bookListHos(int offset, int noOfRecords);
+	public List<BookDto> bookListSt(int offset, int noOfRecords);
+	
 	public int changeRole(MemberDto dto);
 	public int deleteCommnutiy(int seq);
 	public boolean nextPage(String pageNumber);

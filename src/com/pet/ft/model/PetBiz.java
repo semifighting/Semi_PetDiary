@@ -11,8 +11,6 @@ import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
 
 
-
-
 public interface PetBiz {
 	
 
@@ -29,9 +27,18 @@ public interface PetBiz {
 
 	public int totalMember();
 	public int totalReport();
-	public List<MemberDto> memberList();
+	public int totalBookHos();
+	public int totalBookSt();
+	public List<BookDto> totalDateTime();
+	
+//	public List<MemberDto> memberList();
+//	public List<CommunityDto> reportList();
+	
 	public List<MemberDto> memberList(int offset, int noOfRecords);
-	public List<CommunityDto> reportList();
+	public List<CommunityDto> reportList(int offset, int noOfRecords);
+	public List<BookDto> bookListHos(int offset, int noOfRecords);
+	public List<BookDto> bookListSt(int offset, int noOfRecords);
+	
 	public int changeRole(MemberDto dto);
 	public int deleteCommnutiy(int seq);
 

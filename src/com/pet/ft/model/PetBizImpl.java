@@ -29,7 +29,6 @@ public class PetBizImpl implements PetBiz {
 	
 	@Override
 	public int totalHospital() {
-			// TODO Auto-generated method stub
 			return dao.totalHospital();
 	}
 
@@ -56,11 +55,6 @@ public class PetBizImpl implements PetBiz {
 	}
 
 	@Override
-	public List<MemberDto> memberList() {
-		return dao.memberList();
-	}
-
-	@Override
 	public int changeRole(MemberDto dto) {
 		return dao.changeRole(dto);
 	}
@@ -68,11 +62,6 @@ public class PetBizImpl implements PetBiz {
 	@Override
 	public int totalReport() {
 		return dao.totalReport();
-	}
-
-	@Override
-	public List<CommunityDto> reportList() {
-		return dao.reportList();
 	}
 
 	@Override
@@ -212,7 +201,6 @@ public class PetBizImpl implements PetBiz {
 
 	@Override
 	public MemberDto findId(String member_name, String member_email) {
-		// TODO Auto-generated method stub
 		return dao.findId(member_name, member_email);
 	}
 	
@@ -224,20 +212,47 @@ public class PetBizImpl implements PetBiz {
 	
 	@Override
 	public int resetPw(String member_name, String member_email, String member_id, String member_pw) {
-		// TODO Auto-generated method stub
 		return dao.resetPw(member_name, member_email, member_id, member_pw);
 	}
 
 	@Override
 	public int memberUpdate(MemberDto dto) {
-		// TODO Auto-generated method stub
 		return dao.memberUpdate(dto);
 	}
 
 	@Override
 	public int memberDelete(int member_no) {
-		// TODO Auto-generated method stub
 		return dao.memberDelete(member_no);
+	}
+
+	@Override
+	public int totalBookHos() {
+		return dao.totalBookHos();
+	}
+
+	@Override
+	public int totalBookSt() {
+		return dao.totalBookSt();
+	}
+
+	@Override
+	public List<BookDto> totalDateTime(){
+		return dao.totalDateTime();
+	}
+
+	@Override
+	public List<CommunityDto> reportList(int offset, int noOfRecords) {
+		return dao.reportList(offset, noOfRecords);
+	}
+	
+	@Override
+	public List<BookDto> bookListHos(int offset, int noOfRecords) {
+		return dao.bookListHos(offset, noOfRecords);
+	}
+	
+	@Override
+	public List<BookDto> bookListSt(int offset, int noOfRecords) {
+		return dao.bookListSt(offset, noOfRecords);
 	}
 
 

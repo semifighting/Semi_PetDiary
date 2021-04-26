@@ -3,26 +3,8 @@ package com.pet.ft.controller;
 import java.io.Console;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
 
-import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeUtility;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,10 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
-import com.pet.ft.dto.PetDto;
-import com.pet.ft.dto.PictureDto;
 import com.pet.ft.model.PetBiz;
 import com.pet.ft.model.PetBizImpl;
 import javax.servlet.http.HttpSession;
@@ -61,8 +42,10 @@ public class pet_servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html;charset=UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		
 		String command = request.getParameter("command");
 		System.out.println(command);
 		
@@ -75,17 +58,34 @@ public class pet_servlet extends HttpServlet {
 
 
 		PetBiz biz = new PetBizImpl();
-	
+		
+		if("community".equals(command)) {
+			response.sendRedirect("community/community_main.jsp");
+			
+		}
+		if("community_insert".equals(command)) {
+			response.sendRedirect("community/community_insert.jsp");
+		}
 		
 		if("business".equals(command)) {
 			response.sendRedirect("business/business_main.jsp");
-		} else if("list".equals(command)) {
+		} 
+		
+		/* else if("list".equals(command)) {
 			
 			List<MemberDto> list = biz.memberList();
 			request.setAttribute("list", list);
 			dispatch(request, response, "business/memberlist_main.jsp");
 			
-		} else if("change".equals(command)) {
+		} else if("report".equals(command)) {
+			
+			List<CommunityDto> list = biz.reportList();
+			request.setAttribute("list", list);
+			dispatch(request, response, "business/reportlist_main.jsp");
+			
+		} */
+		
+		else if("change".equals(command)) {
 			
 			int no = Integer.parseInt(request.getParameter("no"));
 			String role = request.getParameter("role");
@@ -97,16 +97,10 @@ public class pet_servlet extends HttpServlet {
 			int res = biz.changeRole(dto);
 			
 			if(res > 0) {
-				jsResponse(response, role + "등급으로 변경", "/semi_PetDiary/pet.do?command=list");
+				jsResponse(response, role + "등급 변경", "/semi_PetDiary/paging.do?command=member"); 
 			} else {
-				jsResponse(response, "변경 실패", "/semi_PetDiary/pet.do?command=business");
+				jsResponse(response, "변경 실패", "/semi_PetDiary/paging.do?command=member");
 			}
-		} else if("report".equals(command)) {
-			
-			List<CommunityDto> list = biz.reportList();
-			request.setAttribute("list", list);
-			dispatch(request, response, "business/reportlist_main.jsp");
-			
 		} else if("delete".equals(command)) {
 			
 			int seq = Integer.parseInt(request.getParameter("seq"));
@@ -114,12 +108,54 @@ public class pet_servlet extends HttpServlet {
 			int res = biz.deleteCommnutiy(seq);
 			
 			if(res > 0) {
-				jsResponse(response, "삭제 성공", "/semi_PetDiary/pet.do?command=report");
+				jsResponse(response, "삭제 성공", "/semi_PetDiary/paging.do?command=report");
 			} else {
-				jsResponse(response, "삭제 실패", "/semi_PetDiary/pet.do?command=report");
+				jsResponse(response, "삭제 실패", "/semi_PetDiary/paging.do?command=report");
+			}
+		} else if("bookcheck".equals(command)) {
+			String date = (String) request.getParameter("test-date"); 
+			String time = String.valueOf(request.getParameter("test-time")); 
+			
+			date = date.replaceAll("[^0-9]", "");
+			time = time.replaceAll("[^0-9]", "");
+			
+			List<BookDto> list = biz.totalDateTime();
+			String checkout = null;
+			for(BookDto dto : list) {
+				if(date.equals(dto.getBook_date())) {
+					checkout = dto.getBook_date();
+					
+					int timecheck = Integer.parseInt(dto.getBook_time().replaceAll("[^0-9]", ""));
+					int timeall = Integer.parseInt(time);
+					int x = 0;
+					
+					if((timecheck/100) == (timeall/100)) {
+						x = timeall - timecheck;
+						
+					} else {
+						x = (timeall - timecheck) - 40;
+					}
+					
+					if(x <= 60 && x >= 10) {
+						int y = (60 - x)/10;
+						
+						String msg = "현재 대기 손님은 " + y + "명이고, " + "예상 대기시간은 " + 5 * y + " ~ " + (5 * y + 5) + "분 입니다.";
+						
+						jsResponse(response, msg, "pet.do?command=selectBook&booknum="+dto.getBook_num());
+					}
+					
+					
+				}
+			}
+			
+			if(!date.equals(checkout)){
+				System.out.println("예약완료");
 			}
 		}
-
+		
+	
+	}
+			
 		
 		if("community".equals(command)) {		
 			List<CommunityDto> list = dao.CommunityList();			
@@ -136,37 +172,9 @@ public class pet_servlet extends HttpServlet {
 			String search_content = request.getParameter("search_content");
 			System.out.println(search_content+filter);
 			
-			List<CommunityDto> list = dao.CommunitySearchList(filter, search_content);
-			request.setAttribute("list", list);
-
-			if(request.getParameter("paging")==null){
-				request.getRequestDispatcher(communityDirectory+"search.jsp?&filter="+filter+"&search_content="+search_content+"&paging="+1).forward(request, response);				
-			}else {
-				request.getRequestDispatcher(communityDirectory+"search.jsp?&filter="+filter+"&search_content="+search_content+"&paging="+request.getParameter("paging")).forward(request, response);				
-			}
-		}
-		
-		if("community_report".equals(command)) {
-			int seq = Integer.parseInt(request.getParameter("seq"));
-			int no = Integer.parseInt(request.getParameter("no"));
-			CommunityDto olddto = dao.CommunityOne(seq);
-			int res = dao.CommunityReport(seq);
-			List<CommunityDto> CommentList= dao.CommentList(olddto.getCommunity_no()); 
-			request.setAttribute("cdto", dao.CommunityOne(seq));
-			request.setAttribute("commentList", CommentList);
-			if(res>0) {
-				jsResponse(response, "신고가 정상처리 되었습니다", "pet.do?command=community_detail&seq="+no+"&community_no="+olddto.getCommunity_no());
-				
-			}else {
-				request.setAttribute("cdto", dao.CommunityOne(seq));
-				jsResponse(response, "신고가 처리가 실패했습니다", "pet.do?command=community_detail&seq="+no+"&community_no="+olddto.getCommunity_no());
-			}
-		}
-		
-		if("community_search".equals(command)) {
-			String filter = request.getParameter("filter");
-			String search_content = request.getParameter("search_content");
-			System.out.println(search_content+filter);
+		} else if("bookcheck".equals(command)) {
+			String date = (String) request.getParameter("test-date"); 
+			String time = String.valueOf(request.getParameter("test-time")); 
 			
 			List<CommunityDto> list = dao.CommunitySearchList(filter, search_content);
 			request.setAttribute("list", list);
@@ -436,12 +444,14 @@ public class pet_servlet extends HttpServlet {
 					
 			String AuthenticationKey = temp.toString(); // 인증번호 인증을 위한 키 등록
 					
+					int timecheck = Integer.parseInt(dto.getBook_time().replaceAll("[^0-9]", ""));
+					int timeall = Integer.parseInt(time);
+					int x = 0;
 					
 			Session mailSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(from,"testpet03");
 					}
-				});
 					
 			// 이메일 전송
 			try {
@@ -525,27 +535,6 @@ public class pet_servlet extends HttpServlet {
 			} else {
 				jsResponse(response, "회원가입 실패", "login/login_signup.jsp");
 			}
-		}
-		
-		
-		// 일정 리스트
-		if("calendarlist".equals(command)) {
-			
-		}
-		//식당,카페 리스트
-		BusinessDao bdao = new BusinessDaoImpl();
-		if(command.equals("foodlist")) {
-			List<BusinessDto> list = bdao.BusinessList();
-			request.setAttribute("list", list);
-			request.getRequestDispatcher("food/food_list.jsp").forward(request, response);
-		}
-		if(command.equals("bookform")) {//-------------------------------------------------------
-			int business_num = Integer.parseInt(request.getParameter("business_num"));
-			System.out.println(business_num);
-			BusinessDto bdto = bdao.businessOne(business_num);
-			request.setAttribute("bdto", bdto);
-			System.out.println(bdto.getBusiness_name());
-			dispatch(request, response,"./food/food_book.jsp");
 			
 		}
 
@@ -1157,5 +1146,5 @@ public class pet_servlet extends HttpServlet {
 						    + "</script>";
 		response.getWriter().print(responseText);
 	}
-
+	
 }
