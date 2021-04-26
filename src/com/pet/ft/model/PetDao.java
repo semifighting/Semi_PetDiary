@@ -11,6 +11,7 @@ import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
 
+
 public interface PetDao {
 	String namespace = "com.pet.ft.mapper.";
 

@@ -38,7 +38,7 @@ height: 50px;
 			<div>
 				<input type="hidden" name = "business_num" value="<%=bdto.getBusiness_num() %>">
 				<input type="hidden" name = "book_type" value="<%=bdto.getBusiness_role() %>">
-			</div>	
+			</div>
 			<div>
 				<div class="book_content"><span>예약일자</span><input type="date" name="book_date"></div>
 			</div>		

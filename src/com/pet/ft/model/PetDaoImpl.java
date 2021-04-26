@@ -82,7 +82,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 /*
 	@Override
 	public List<MemberDto> memberList() {
-		
+
 		SqlSession session = getSqlSessionFactory().openSession();
 		List<MemberDto> list = session.selectList(namespace + "memberList");
 		session.close();
@@ -90,7 +90,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		System.out.println("rk");
 		return list;
 	}
-	
+
 	@Override
 	public List<CommunityDto> reportList() {
 		SqlSession session = getSqlSessionFactory().openSession();
@@ -103,16 +103,16 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	
 	@Override
 	public List<MemberDto> memberList(int offset, int noOfRecords) {
-		
+
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		
+
 		params.put("offset", offset);
 		params.put("noOfRecords", noOfRecords);
-		
+
 		SqlSession session = getSqlSessionFactory().openSession();
 		List<MemberDto> list = session.selectList(namespace + "memberListPaging", params);	// �������� �� record����
 		session.close();
-		
+
 		return list;
 	}
 	
@@ -129,9 +129,10 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
 		return list;
 	}
-	
-	
+
+
 	//병원상담
+	@Override
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords) {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("offset", offset);
@@ -153,7 +154,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
 	}
 	// 내가 작성
-	
+
 	@Override
 	public int MemberInsert(MemberDto dto) {
 		int res = 0;
@@ -167,12 +168,12 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	public BusinessDto hospitalSelect(int business_num) {
 		SqlSession session = null;
 		BusinessDto dto = null;
-		
+
 		try {
 			session = getSqlSessionFactory().openSession();
 			dto = session.selectOne(namespace + "hospitalOne", business_num);
 		} catch (Exception e) {
-			
+
 			e.printStackTrace();
 		}finally {
 			session.close();
@@ -228,6 +229,11 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 		return res;
 	}
+
+
+
+
+
 
 	@Override
 	public int changeRole(MemberDto dto) {
@@ -468,61 +474,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	    }
 
 		@Override
-		public List<CalendarDto> CalendarList(int member_no, String yyyyMMdd) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			List<CalendarDto> list = new ArrayList<CalendarDto>();
-			map.put("member_no", member_no);
-			map.put("calendar_startdate", yyyyMMdd);
-			System.out.println(map);
-			
-			try(SqlSession session = getSqlSessionFactory().openSession(true)){
-				list = session.selectList(namespace+"CalendarList",map);
-			}
-			return list;
-		}
-
-		@Override
-		public CalendarDto CalendarOne(int carlendar_no) {
-			CalendarDto CalDto = null;
-			try(SqlSession session = getSqlSessionFactory().openSession(true)){
-				CalDto = session.selectOne(namespace+"CalendarOne", carlendar_no);
-			}
-			return CalDto;
-		}
-		
-		@Override
-		public int CalendarDelete(int calendar_no) {
-			int res = 0;
-			try(SqlSession session = getSqlSessionFactory().openSession(true)){
-				res = session.delete(namespace+"CalendarDelete", calendar_no);
-			}
-			return res;
-		}
-		@Override
-		
-		public int CalendarUpdate(CalendarDto dto) {
-			int res = 0;
-			try(SqlSession session = getSqlSessionFactory().openSession(true)){
-				res = session.delete(namespace+"CalendarUpdate", dto);
-			}
-			return res;
-		}
-	    
-		@Override
-		public MemberDto Login(String member_id, String member_pw) {
-			MemberDto dto = null;
-			Map<String, Object> map = new HashMap<>();
-			map.put("member_id", member_id);
-			map.put("member_pw", member_pw);
-			
-			try(SqlSession session = getSqlSessionFactory().openSession(true)){
-				dto = session.selectOne(namespace+"Login", map);
-				
-			}
-			return dto;
-		}
-		
-		@Override
 		public MemberDto SocialLogin(String member_id) {
 			MemberDto dto = null;
 			
@@ -748,4 +699,60 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
 
 		
+		
+
+		@Override
+		public List<CalendarDto> CalendarList(int member_no, String yyyyMMdd) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			List<CalendarDto> list = new ArrayList<CalendarDto>();
+			map.put("member_no", member_no);
+			map.put("calendar_startdate", yyyyMMdd);
+			System.out.println(map);
+			
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				list = session.selectList(namespace+"CalendarList",map);
+			}
+			return list;
+		}
+
+		@Override
+		public CalendarDto CalendarOne(int carlendar_no) {
+			CalendarDto CalDto = null;
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				CalDto = session.selectOne(namespace+"CalendarOne", carlendar_no);
+			}
+			return CalDto;
+		}
+		
+		@Override
+		public int CalendarDelete(int calendar_no) {
+			int res = 0;
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				res = session.delete(namespace+"CalendarDelete", calendar_no);
+			}
+			return res;
+		}
+		@Override
+		
+		public int CalendarUpdate(CalendarDto dto) {
+			int res = 0;
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				res = session.delete(namespace+"CalendarUpdate", dto);
+			}
+			return res;
+		}
+	    
+		@Override
+		public MemberDto Login(String member_id, String member_pw) {
+			MemberDto dto = null;
+			Map<String, Object> map = new HashMap<>();
+			map.put("member_id", member_id);
+			map.put("member_pw", member_pw);
+			
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				dto = session.selectOne(namespace+"Login", map);
+				
+			}
+			return dto;
+		}	
 }

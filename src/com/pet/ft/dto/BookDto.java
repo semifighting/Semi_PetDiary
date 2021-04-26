@@ -54,17 +54,14 @@ public class BookDto {
 	}
 
 
-
 	public int getBook_num() {
 		return book_num;
 	}
 
 
-
 	public void setBook_num(int book_num) {
 		this.book_num = book_num;
 	}
-
 
 
 	public String getBook_date() {
@@ -78,11 +75,9 @@ public class BookDto {
 	}
 
 
-
 	public String getBook_time() {
 		return book_time;
 	}
-
 
 
 	public void setBook_time(String book_time) {
@@ -90,11 +85,9 @@ public class BookDto {
 	}
 
 
-
 	public String getBook_type() {
 		return book_type;
 	}
-
 
 
 	public void setBook_type(String book_type) {
@@ -102,17 +95,14 @@ public class BookDto {
 	}
 
 
-
 	public int getBusiness_num() {
 		return business_num;
 	}
 
 
-
 	public void setBusiness_num(int business_num) {
 		this.business_num = business_num;
 	}
-
 
 
 	public int getMember_no() {
@@ -134,11 +124,9 @@ public class BookDto {
 	}
 
 
-
 	public String getBook_state() {
 		return book_state;
 	}
-
 
 
 	public void setBook_state(String book_state) {

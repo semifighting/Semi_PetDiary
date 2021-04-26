@@ -18,7 +18,7 @@ public interface PetBiz {
 	public int totalHospital();
     
 	public BusinessDto hospitalSelect(int business_num);
-	
+
 	public int hospitalBookInsert(BookDto dto);
 	public BusinessDto businessOne(int business_num);
 
