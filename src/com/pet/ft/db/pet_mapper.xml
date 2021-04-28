@@ -378,7 +378,7 @@
   		FROM ( SELECT (ROW_NUMBER() OVER(PARTITION BY SUBSTR(CALENDAR_STARTDATE, 1, 8) ORDER BY CALENDAR_STARTDATE )) RN, CALENDAR_NO, CALENDAR_STARTDATE, CALENDAR_ENDDATE, CALENDAR_NECESSITY, CALENDAR_ITEM, CALENDAR_TITLE, CALENDAR_CONTENT, MEMBER_NO
   		FROM CALENDAR
   		WHERE MEMBER_NO = #{member_no} AND SUBSTR(CALENDAR_STARTDATE, 1, 6) = #{calendar_startdate})
-  		WHERE RN BETWEEN 1 AND 3
+  		WHERE RN BETWEEN 1 AND 2
   	</select>
   	
   	<select id = "CalendarList" parameterType="Map" resultType="CalendarDto">
@@ -437,7 +437,7 @@
   		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, 'PASSWORD', #{member_email}, #{member_phone}, 'USER', #{member_address})
   	</insert>
   		
-  	  	<select id="findId" parameterType="Map" resultType="MemberDto">
+  	 <select id="findId" parameterType="Map" resultType="MemberDto">
   		SELECT * FROM MEMBER WHERE MEMBER_NAME= #{member_name} AND MEMBER_EMAIL = #{member_email}
   	</select>
   	
