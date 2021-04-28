@@ -32,17 +32,18 @@ response.setCharacterEncoding("UTF-8");
 	}
 	
 	th, td {
-		border: 1px solid salmon;
-		width: 120px;
+		border: 1px solid #E5E3D8;
+		width: 80px;
 		text-decoration : none;
 	}
 	
-	tr {
-		height: 50px;
+	th {
+		height: 40px;
+		background-color: #E4FAB6;
 	}
 	
 	td {
-		height: 80px;
+		height: 70px;
 		vertical-align: top;
 	}
 		 
@@ -56,18 +57,18 @@ response.setCharacterEncoding("UTF-8");
 	}
 		
 	.date {
-		font-size: 18px;
+		font-size: 15px;
 		padding: 3px;
 	}
 	
 	
 	#calendar_list > p {
-		font-size: 13px;
-		width: 90px;
-		margin-left: 20px;
+		font-size: 12px;
+		width: 50px;
 		background-color: #ffffb3;
-		border-radius: 5px 5px 5px 5px;
+		vertical-align: middle;
 		text-align: center;
+		margin: 5px;
 	}
 	
 		input[value='달력 보기'] { 
@@ -127,7 +128,6 @@ function calendar_list(year, month, d, member_no) {
 	
 	String yyyyMM = year + util.isTwo(String.valueOf(month));
 	int member_no = (int) session.getAttribute("member_no");
-	System.out.println("번호"+member_no);
 	List<CalendarDto> list = dao.CalViewList(member_no, yyyyMM);
 %>
 	<div id = "calendar">
@@ -157,11 +157,11 @@ function calendar_list(year, month, d, member_no) {
 	
 		<table id = "calendar">
 			<caption>
-			<a href="../calendar/calendar_main.jsp?year=<%=year-1%>&month=<%=month%>" style="color:salmon">◁</a>
-			<a href="../calendar/calendar_main.jsp?year=<%=year%>&month=<%=month-1%>" style="color:salmon">◀</a>
+			<a href="../calendar/calendar_main.jsp?year=<%=year-1%>&month=<%=month%>" style="color:#C1EC7C">◁</a>
+			<a href="../calendar/calendar_main.jsp?year=<%=year%>&month=<%=month-1%>" style="color:#C1EC7C">◀</a>
 			<span class="y"><%=year %>년</span> <span class="m"><%=month%>월</span>
-			<a href="../calendar/calendar_main.jsp?year=<%=year%>&month=<%=month+1%>" style="color:salmon">▶</a>
-			<a href="../calendar/calendar_main.jsp?year=<%=year+1%>&month=<%=month%>" style="color:salmon">▷</a>
+			<a href="../calendar/calendar_main.jsp?year=<%=year%>&month=<%=month+1%>" style="color:#C1EC7C">▶</a>
+			<a href="../calendar/calendar_main.jsp?year=<%=year+1%>&month=<%=month%>" style="color:#C1EC7C">▷</a>
 			</caption>
 			<tr id="day">
 				<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>

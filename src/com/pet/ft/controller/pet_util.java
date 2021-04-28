@@ -62,9 +62,8 @@ public class pet_util {
 		
 		for (CalendarDto dto : list) {
 			if (dto.getCalendar_startdate().substring(6, 8).equals(d)) {
-				res += "<p>"+ dto.getCalendar_title() + "</p>";
 				res += "<p>"
-						+ ((dto.getCalendar_title().length() > 6)? dto.getCalendar_title().substring(0,6) + "   ··" : dto.getCalendar_title())
+						+ ((dto.getCalendar_title().length() > 4)? dto.getCalendar_title().substring(0,4) + "   ··" : dto.getCalendar_title())
 						+ "</p>";
 			}
 		}
