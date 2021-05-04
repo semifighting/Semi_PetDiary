@@ -1,21 +1,17 @@
 package com.pet.ft.controller;
 
-import java.io.Console;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.io.PrintWriter;
-import java.util.HashMap;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
 
+import javax.activation.CommandMap;
+import javax.activation.CommandObject;
+import javax.activation.MailcapCommandMap;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -30,28 +26,38 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pet.ft.dto.CommunityDto;
-import com.pet.ft.dto.MemberDto;
-import com.pet.ft.dto.PetDto;
-import com.pet.ft.dto.PictureDto;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.pet.ft.dto.*;
 import com.pet.ft.model.PetBiz;
 import com.pet.ft.model.PetBizImpl;
 import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.pet.ft.dto.BookDto;
-import com.pet.ft.dto.BusinessDto;
 import com.pet.ft.model.BusinessDao;
 import com.pet.ft.model.BusinessDaoImpl;
 
-import com.pet.ft.dto.CalendarDto;
 import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
 import com.pet.ft.paging.Paging;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.json.simple.parser.JSONParser;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 @WebServlet("/pet_servlet")
 public class pet_servlet extends HttpServlet {
@@ -531,13 +537,15 @@ public class pet_servlet extends HttpServlet {
             }
 
         }   else if (command.equals("picture_delete")) {
+
+			String fileSeperator = File.separator;
 			int member_no = (int) session.getAttribute("member_no");
 			int picture_no = Integer.parseInt(request.getParameter("picture_no"));
 			PictureDto dto = biz.selectPictureOne(member_no, picture_no);
-
-			String path = dto.getPicture_directory() + "/" + dto.getPicture_name();
-
+			String path = request.getSession().getServletContext().getRealPath("resources" + fileSeperator + "Upload" + fileSeperator + member_no + fileSeperator + dto.getPicture_name());
+			System.out.println(path);
 			Util.deleteFile(path);
+
 			int res = biz.deletePicture(member_no, picture_no);
 			if (res > 0) {
 				System.out.println("삭제 성공");
@@ -547,15 +555,15 @@ public class pet_servlet extends HttpServlet {
 				dispatch(request, response, "pet.do?command=picture_main");
 			}
 
-		}   else if (command.equals("calendar_detail")) {
-            int member_no = (int) session.getAttribute("member_no");
-            int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
+		}  else if (command.equals("calendar_detail")) {
+			int member_no = (int) session.getAttribute("member_no");
+			int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
 
-            CalendarDto dto = biz.selectTripOne(member_no, calendar_no);
-            request.setAttribute("dto", dto);
-            dispatch(request, response, "calendar/calendar_detail.jsp");
+			CalendarDto dto = biz.selectTripOne(member_no, calendar_no);
+			request.setAttribute("dto", dto);
+			dispatch(request, response, "calendar/calendar_detail.jsp");
 
-        }
+		}
         if (command.equals("weather_main")) {
 			response.sendRedirect("weather/weatherView.html");
 		} else if (command.equals("calendar_main")) {
@@ -1032,9 +1040,25 @@ public class pet_servlet extends HttpServlet {
                 dispatch(request, response, "pet/pet_main.jsp?member_no=1");
             }
         } else if (command.equals("picture_main")) {
-            response.sendRedirect("picture/picture_main.jsp");
+			int member_no = (int) session.getAttribute("member_no");
+			int min = 0;
+			int max = 0;
 
+			if (request.getParameter("max") == null) {
+				min = max-5;
+				max = 6;
+			} else {
+				max = Integer.parseInt(request.getParameter("max"));
+				min = max - 5;
+			}
+
+			List<PictureDto> list = biz.selectPicturePaging(member_no, min, max);
+
+			request.setAttribute("list", list);
+			dispatch(request, response, "picture/picture_main.jsp");
         } else if (command.equals("picture_upload")) {
+
+			Map<String, String> user = new HashMap<String, String>();
 
 			String fileSeperator = File.separator;
 			int member_no = (int) session.getAttribute("member_no");
@@ -1042,68 +1066,107 @@ public class pet_servlet extends HttpServlet {
 			Util.MakeFolder(path);
 
             int size = 1024 * 1024 * 10;
-            String file = "";
+            String fileName = "";
             String originalFile = "";
 
-            PictureDto dto = new PictureDto();
+            boolean isMultipart = FileUpload.isMultipartContent(request);
 
-            try {
-                MultipartRequest multi = new MultipartRequest(request, path, size, "UTF-8", new DefaultFileRenamePolicy());
+			try {
+				if (isMultipart) {
+					DiskFileItemFactory factory = new DiskFileItemFactory();
 
-                Enumeration files = multi.getFileNames();
+					ServletFileUpload upload = new ServletFileUpload(factory);
 
-                String str = (String) files.nextElement();
+					upload.setHeaderEncoding("UTF-8");
 
-                file = multi.getFilesystemName(str);
-                originalFile = multi.getOriginalFileName(str);
+					List<FileItem> items = upload.parseRequest(request);
+					Iterator<FileItem> iter = items.iterator();
 
-                dto.setPicture_name(file);
-                dto.setPicture_directory("../resources/Upload/" + member_no);
-                dto.setMember_no(member_no);
-                int res = biz.insertPicture(dto);
-                System.out.println(res);
-                if (res > 0) {
-                    System.out.println("업로드 성공");
-                } else {
-                    System.out.println("업로드 실패");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            dispatch(request, response, "pet.do?command=picture_main");
+					while (iter.hasNext()) {
+						FileItem item = iter.next();
+
+						item.getString("UTF-8");
+
+						if (item.isFormField()) {
+
+							String name = item.getFieldName();
+							String value = new String((item.getString()).getBytes("8859_1"), "UTF-8");
+							user.put(name, value);
+
+						} else {
+							fileName = new File(item.getName()).getName();
+
+							PictureDto dto = new PictureDto();
+							dto.setPicture_directory(".." + fileSeperator + "resources" + fileSeperator + "Upload" + fileSeperator + member_no);
+							dto.setPicture_name(fileName);
+							dto.setMember_no(member_no);
+							int res = biz.insertPicture(dto);
+
+							File storeFile = new File(path + fileSeperator + fileName);
+							user.put("user_img", fileName);
+							item.write(storeFile);
+						}
+					}
+
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			dispatch(request, response, "picture/picture_main.jsp");
 
 		} else if (command.equals("picture_insert_upload")) {
+
+
+			Map<String, String> user = new HashMap<String, String>();
+
 			String fileSeperator = File.separator;
 			int member_no = (int) session.getAttribute("member_no");
 			String path = request.getSession().getServletContext().getRealPath("resources" + fileSeperator + "Upload" + fileSeperator + member_no);
-			System.out.println(path);
 			Util.MakeFolder(path);
 
 			int size = 1024 * 1024 * 10;
-			String file = "";
+			String fileName = "";
 			String originalFile = "";
 
-			PictureDto dto = new PictureDto();
+			boolean isMultipart = FileUpload.isMultipartContent(request);
 
 			try {
-				MultipartRequest multi = new MultipartRequest(request, path, size, "UTF-8", new DefaultFileRenamePolicy());
+				if (isMultipart) {
+					DiskFileItemFactory factory = new DiskFileItemFactory();
 
-				Enumeration files = multi.getFileNames();
+					ServletFileUpload upload = new ServletFileUpload(factory);
 
-				String str = (String) files.nextElement();
+					upload.setHeaderEncoding("UTF-8");
 
-				file = multi.getFilesystemName(str);
-				originalFile = multi.getOriginalFileName(str);
+					List<FileItem> items = upload.parseRequest(request);
+					Iterator<FileItem> iter = items.iterator();
 
-				dto.setPicture_name(file);
-				dto.setPicture_directory("../resources/Upload/" + member_no);
-				dto.setMember_no(member_no);
-				int res = biz.insertPicture(dto);
-				System.out.println(res);
-				if (res > 0) {
-					System.out.println("업로드 성공");
-				} else {
-					System.out.println("업로드 실패");
+					while (iter.hasNext()) {
+						FileItem item = iter.next();
+
+						item.getString("UTF-8");
+
+						if (item.isFormField()) {
+
+							String name = item.getFieldName();
+							String value = new String((item.getString()).getBytes("8859_1"), "UTF-8");
+							user.put(name, value);
+
+						} else {
+							fileName = new File(item.getName()).getName();
+
+							PictureDto dto = new PictureDto();
+							dto.setPicture_directory(".." + fileSeperator + "resources" + fileSeperator + "Upload" + fileSeperator + fileName);
+							dto.setPicture_name(fileName);
+							dto.setMember_no(member_no);
+							int res = biz.insertPicture(dto);
+
+							File storeFile = new File(path + fileSeperator + fileName);
+							user.put("user_img", fileName);
+							item.write(storeFile);
+						}
+					}
+
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1190,6 +1253,47 @@ public class pet_servlet extends HttpServlet {
 				System.out.println("삭제 실패");
 				dispatch(request, response, "index.html");
 			}
+		} else if (command.equals("memberInfo")) {
+			int member_no = (int) session.getAttribute("member_no");
+			PrintWriter out = response.getWriter();
+			MemberDto dto = biz.MemberOne(member_no);
+			JSONObject jObj = new JSONObject();
+			JSONArray jarr = new JSONArray();
+			jObj.put("member_email", dto.getMember_email());
+			jObj.put("member_name", dto.getMember_name());
+			jObj.put("member_phone", dto.getMember_phone());
+			jObj.put("member_address", dto.getMember_address());
+
+			jarr.add(jObj);
+			out.print(jarr);
+			out.flush();
+		} else if (command.equals("orderSuccess")) {
+			int member_no = (int) session.getAttribute("member_no");
+			String order_data = request.getParameter("order_data");
+			JSONObject json = JSONObject.fromObject(order_data);
+
+			OrderDto dto = new OrderDto();
+			System.out.println((String) json.get("merchant_uid"));
+
+			dto.setMerchant_uid((String) json.get("merchant_uid"));
+			dto.setOrder_amount((Integer) json.get("order_amount"));
+			dto.setMember_name((String) json.get("order_name"));
+			dto.setOrder_information((String) json.get("order_info"));
+			dto.setMember_no(member_no);
+			dto.setOrder_state("예약 완료");
+
+			int res = biz.orderInsert(dto);
+			if (res > 0) {
+				System.out.println("결제 성공");
+			} else {
+				System.out.println("결제 실패");
+
+			}
+		} else if (command.equals("payCancle")) {
+			Pay_function pay = new Pay_function();
+			String token = pay.getImportToken();
+			String merchant_uid = "merchant_1620109971604";
+			System.out.println(pay.cancelPayment(token, merchant_uid));
 		}
 	}
 

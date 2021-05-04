@@ -17,8 +17,8 @@
             border: none;
             /*상단 숨김 코드*/
             width: 500px;
-            height: 650px;
-            margin-top: -50px;
+            height: 700px;
+            margin-top: -100px;
         }
 
         .pet_update > a:visited, .pet_update > a:link {
@@ -26,12 +26,18 @@
             color: black;
          }
 
+        .pet_update {
+            position: absolute;
+            bottom: 20%;
+            left: 45%;
+        }
+
         div > p {
             padding-top: 50px;
             border: 1px solid salmon;
         }
         .pet_info{
-            margin-top: 50px;
+            margin-top: 5%;
             float: left;
             width: 500px;
             height: 500px;

@@ -3,14 +3,9 @@ package com.pet.ft.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.pet.ft.dto.BookDto;
-import com.pet.ft.dto.BusinessDto;
+
+import com.pet.ft.dto.*;
 import org.apache.ibatis.annotations.Param;
-import com.pet.ft.dto.CalendarDto;
-import com.pet.ft.dto.CommunityDto;
-import com.pet.ft.dto.MemberDto;
-import com.pet.ft.dto.PetDto;
-import com.pet.ft.dto.PictureDto;
 
 public interface PetDao {
 	String namespace = "com.pet.ft.mapper.";
@@ -60,6 +55,8 @@ public interface PetDao {
     public PictureDto selectPictureOne(int member_no, int picture_no);
     public int insertPicture(PictureDto dto);
     public int deletePicture(int member_no, int picture_no);
+	public List<PictureDto> selectPicturePaging(int member_no, int min, int max);
+	public int getPictureCount(int member_no);
 
     //calendar
     public List<CalendarDto> selectTripList(int member_no);
@@ -70,7 +67,7 @@ public interface PetDao {
     public int deleteTrip(int member_no, int calendar_no);
 
 	// member
-	MemberDto MemberOne(int member_no);
+	public MemberDto MemberOne(int member_no);
 	int MemberInsert(MemberDto dto);
 	MemberDto SignUpIdChk(String member_id);
 	MemberDto SighUpEmailChk(String member_email);
@@ -93,5 +90,8 @@ public interface PetDao {
 	public CalendarDto CalendarOne(int calendar_no);
 	public int CalendarDelete(int calendar_no);
 	public int CalendarUpdate(CalendarDto dto);
+
+	//Order
+	public int orderInsert(OrderDto dto);
 
 }

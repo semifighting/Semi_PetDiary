@@ -1,8 +1,7 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.pet.ft.dto.PictureDto" %>
-<%@ page import="com.pet.ft.model.PetBizImpl" %>
 <%@ page import="com.pet.ft.model.PetBiz" %>
+<%@ page import="com.pet.ft.model.PetBizImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
@@ -10,8 +9,8 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="../resources/css/stylesheet.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../resources/javascript/picturePaging.js"></script>
     <script src="../resources/javascript/script.js"></script>
     <style type="text/css">
         #selectPictureOne > img {
@@ -59,56 +58,68 @@
             margin-top: 100px;
             text-align: center;
         }
+
+        .picture_paging {
+            margin-top: 100px;
+            margin-left: 500px;
+        }
     </style>
 </head>
 <body>
 <%
-    PetBiz biz = new PetBizImpl();
     int i = 0;
+    PetBiz biz = new PetBizImpl();
     int member_no = (int) session.getAttribute("member_no");
-    List<PictureDto> list = biz.selectPictureList(member_no);
-    if (list.isEmpty()) {
+    int count = biz.getPictureCount(member_no);
+    int totalPage = count / 6;
+    if (count % 6 != 0) {
+        totalPage +=1;
+    }
 %>
-<h1 id="request">사진을 등록 해주세요!</h1>
-<form id="imageUpload" method="post" action="../pet_servlet?command=picture_upload" enctype="multipart/form-data">
-    <input type="file" name="img" accept="image/*" multiple>
-    <input type="submit" value="업로드하기">
-</form>
-<%
-} else {
-%>
-<div id="selectPictureList">
-    <div>
-    <form action="../pet_servlet" method="post">
-        <input type="hidden" name="command" value="picture_delete">
-
-        <%
-            for (PictureDto dto : list) {
+<c:choose>
+    <c:when test="${empty list }">
+        <h1 id="request">사진을 등록 해주세요!</h1>
+        <form id="imageUpload" method="post" action="../pet_servlet?command=picture_upload" enctype="multipart/form-data">
+            <input type="file" name="img" id="fileName" accept="image/*" multiple="multiple">
+            <input type="submit" id="pictureUpload" value="업로드하기">
+        </form>
+    </c:when>
+    <c:otherwise>
+        <div id="selectPictureList">
+            <div>
+                <form action="../pet_servlet" method="post">
+                    <input type="hidden" name="command" value="picture_delete">
+        <c:forEach items="${list }" var="dto">
+            <%
                 i++;
-
-        %>
-        <input type="checkbox" name="picture_no" value="<%=dto.getPicture_no()%>"><img alt="사진" class="smallPic" src="<%=dto.getPicture_directory()%>/<%=dto.getPicture_name()%>">
-        <input type="submit" value="삭제">
-
-        <%
-                if (i % 2 == 0){
-        %>
-        <br>
-        <%
+            %>
+            <input type="checkbox" name="picture_no" value="${dto.picture_no }>"><img alt="사진" class="smallPic" src="${dto.picture_directory }/${dto.picture_name }">
+            <input type="submit" value="삭제">
+            <%
+                if (i % 2 == 0) {
+            %>
+            <br>
+            <%
                 }
-            }
-        %>
-    </form>
-    </div>
-</div>
+            %>
+        </c:forEach>
+                </form>
+            </div>
+        </div>
+    </c:otherwise>
+</c:choose>
 <div id="bigPic">
 </div>
-<form id="imageUpload" method="post" action="../pet_servlet?command=picture_upload" enctype="multipart/form-data">
-    <input type="file" name="img" accept="image/*" multiple>
-    <input type="submit" value="업로드하기">
-</form>
+<%
+    for (int j = 1; j <= totalPage; j++) {
+%>
+    <a href="#" class="picture_paging" onclick="location.href='../pet_servlet?command=picture_main&max=<%=j*6%>'">[<%=j%>]</a>
 <%
     }
 %>
+<form id="imageUpload" method="post" action="../pet_servlet?command=picture_upload" enctype="multipart/form-data">
+    <input type="file" name="img" accept="image/*" multiple>
+    <input type="submit" value="업로드하기">
+</form>
 </body>
 </html>

@@ -1,7 +1,7 @@
 package com.pet.ft.model;
 
-import com.pet.ft.dto.BookDto;
-import com.pet.ft.dto.BusinessDto;
+import com.pet.ft.dto.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,13 +11,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.pet.ft.dto.CalendarDto;
-import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.BusinessDto;
 
-import com.pet.ft.dto.MemberDto;
-import com.pet.ft.dto.PetDto;
-import com.pet.ft.dto.PictureDto;
 public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
 
@@ -442,7 +437,30 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	        return res;
 	    }
 
-	    @Override
+	@Override
+	public List<PictureDto> selectPicturePaging(int member_no, int min, int max) {
+
+		SqlSession session = getSqlSessionFactory().openSession();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("member_no", member_no);
+		map.put("min", min);
+		map.put("max", max);
+
+		List<PictureDto> list = session.selectList(namespace + "selectPicturePaging", map);
+
+		return list;
+	}
+
+	@Override
+	public int getPictureCount(int member_no) {
+		int res = 0;
+		SqlSession session = getSqlSessionFactory().openSession();
+		res = session.selectOne(namespace + "getPictureCount", member_no);
+
+		return res;
+	}
+
+	@Override
 	    public PetDto selectPetOnePaging(int member_no, int count) {
 
 
@@ -585,4 +603,14 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			}
 			return dto;
 		}
+
+	@Override
+	public int orderInsert(OrderDto dto) {
+
+		int res = 0;
+		try (SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.insert(namespace + "orderInsert", dto);
+		}
+		return res;
+	}
 }

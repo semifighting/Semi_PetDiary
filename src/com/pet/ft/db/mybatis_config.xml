@@ -11,6 +11,7 @@
       <typeAlias type="com.pet.ft.dto.DiaryDto" alias="diaryDto"/>
       <typeAlias type="com.pet.ft.dto.PetDto" alias="petDto"/>
       <typeAlias type="com.pet.ft.dto.PictureDto" alias="pictureDto"/>
+      <typeAlias type="com.pet.ft.dto.OrderDto" alias="orderDto"/>
   </typeAliases>
 
   <environments default="development">

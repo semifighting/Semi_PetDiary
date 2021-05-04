@@ -2,13 +2,7 @@ package com.pet.ft.model;
 
 import java.util.List;
 
-import com.pet.ft.dto.BookDto;
-import com.pet.ft.dto.BusinessDto;
-import com.pet.ft.dto.CalendarDto;
-import com.pet.ft.dto.CommunityDto;
-import com.pet.ft.dto.MemberDto;
-import com.pet.ft.dto.PetDto;
-import com.pet.ft.dto.PictureDto;
+import com.pet.ft.dto.*;
 
 
 public interface PetBiz {
@@ -21,6 +15,8 @@ public interface PetBiz {
 	
 	public int hospitalBookInsert(BookDto dto);
 	public BusinessDto businessOne(int business_num);
+
+    public MemberDto MemberOne(int member_no);
 
 	public int totalMember();
 	public int totalReport();
@@ -46,6 +42,8 @@ public interface PetBiz {
     public PictureDto selectPictureOne(int member_no, int picture_no);
     public int insertPicture(PictureDto dto);
     public int deletePicture(int member_no, int picture_no);
+    public List<PictureDto> selectPicturePaging(int member_no, int min, int max);
+    public int getPictureCount(int member_no);
 
     //calendar
     public List<CalendarDto> selectTripList(int member_no);
@@ -63,5 +61,8 @@ public interface PetBiz {
 	public int CalendarUpdate(CalendarDto dto);
 
 	public MemberDto Login(String member_id, String member_pw);
+
+    //order
+    public int orderInsert(OrderDto dto);
 
 }

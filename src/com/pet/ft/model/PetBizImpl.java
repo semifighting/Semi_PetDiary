@@ -2,17 +2,9 @@ package com.pet.ft.model;
 
 import java.util.List;
 
-import com.pet.ft.dto.BookDto;
-import com.pet.ft.dto.BusinessDto;
-import com.pet.ft.dto.CalendarDto;
+import com.pet.ft.dto.*;
 import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
-
-
-import com.pet.ft.dto.CommunityDto;
-import com.pet.ft.dto.MemberDto;
-import com.pet.ft.dto.PetDto;
-import com.pet.ft.dto.PictureDto;
 
 public class PetBizImpl implements PetBiz {
 	
@@ -23,6 +15,11 @@ public class PetBizImpl implements PetBiz {
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords) {
 
 		return dao.hospitalList(offset,noOfRecords);
+	}
+
+	@Override
+	public MemberDto MemberOne(int member_no) {
+		return dao.MemberOne(member_no);
 	}
 
 	@Override
@@ -139,7 +136,17 @@ public class PetBizImpl implements PetBiz {
         return dao.deletePicture(member_no, picture_no);
     }
 
-    @Override
+	@Override
+	public List<PictureDto> selectPicturePaging(int member_no, int min, int max) {
+		return dao.selectPicturePaging(member_no, min, max);
+	}
+
+	@Override
+	public int getPictureCount(int member_no) {
+		return dao.getPictureCount(member_no);
+	}
+
+	@Override
     public List<CalendarDto> selectTripList(int member_no) {
         return dao.selectTripList(member_no);
     }
@@ -197,5 +204,9 @@ public class PetBizImpl implements PetBiz {
 	public MemberDto Login(java.lang.String member_id, java.lang.String member_pw) {
 		return dao.Login(member_id, member_pw);
 	}
-	
+
+	@Override
+	public int orderInsert(OrderDto dto) {
+		return dao.orderInsert(dto);
+	}
 }

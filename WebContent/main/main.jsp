@@ -15,6 +15,9 @@
         동물친구들이 아파요 병원에 가기 힘들때 간단히 원격진료로 해결하세요!<br>
     </div>
 </div>
+
+<button type="button" onclick="window.open('../teachable/teachable_webCam.jsp', 'update', 'left=50, top=50, width=700, height=700')">나와 닮은 동물 찾기</button>
+
 <table id = "logbox">
     <tr>
         <td align="center"><input type="text" placeholder="아이디"></td>
