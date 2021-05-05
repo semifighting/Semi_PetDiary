@@ -67,8 +67,33 @@ public class PetBizImpl implements PetBiz {
 	}
 
 	@Override
-	public List<CommunityDto> reportList() {
-		return dao.reportList();
+	public int totalBookHos(int member_no) {
+		return dao.totalBookHos(member_no);
+	}
+
+	@Override
+	public int totalBookSt(int member_no) {
+		return dao.totalBookSt(member_no);
+	}
+
+	@Override
+	public List<BookDto> totalDateTime() {
+		return dao.totalDateTime();
+	}
+
+	@Override
+	public List<CommunityDto> reportList(int offset, int noOfRecords) {
+		return dao.reportList(offset, noOfRecords);
+	}
+
+	@Override
+	public List<BookDto> bookListHos(int offset, int noOfRecords, int member_no) {
+		return dao.bookListHos(offset, noOfRecords, member_no);
+	}
+
+	@Override
+	public List<BookDto> bookListSt(int offset, int noOfRecords, int member_no) {
+		return dao.bookListSt(offset, noOfRecords, member_no);
 	}
 
 	@Override
@@ -206,7 +231,62 @@ public class PetBizImpl implements PetBiz {
 	}
 
 	@Override
+	public MemberDto SocialLogin(String member_id) {
+		return dao.SocialLogin(member_id);
+	}
+
+	@Override
+	public int SocialSignUp(MemberDto dto) {
+		return dao.SocialSignUp(dto);
+	}
+
+	@Override
+	public MemberDto findId(String member_name, String member_email) {
+		return dao.findId(member_name, member_email);
+	}
+
+	@Override
+	public MemberDto findPw(String member_name, String member_email, String member_id) {
+		return dao.findPw(member_name, member_email, member_id);
+	}
+
+	@Override
+	public int resetPw(String member_name, String member_email, String member_id, String member_pw) {
+		return 0;
+	}
+
+	@Override
+	public int memberUpdate(MemberDto dto) {
+		return 0;
+	}
+
+	@Override
+	public int memberDelete(int member_no) {
+		return 0;
+	}
+
+	@Override
+	public int getBookNum(int member_no, String book_time) {
+		return dao.getBookNum(member_no, book_time);
+	}
+
+	@Override
+	public List<BusinessDto> businessList()  {
+		return null;
+	}
+
+	@Override
+	public int bookdelete(int book_num) {
+		return 0;
+	}
+
+	@Override
 	public int orderInsert(OrderDto dto) {
 		return dao.orderInsert(dto);
+	}
+
+	@Override
+	public int orderUpdate(String merchant_uid, int book_num) {
+		return dao.orderUpdate(merchant_uid, book_num);
 	}
 }

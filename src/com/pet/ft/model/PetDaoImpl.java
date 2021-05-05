@@ -17,6 +17,169 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
 
 	@Override
+	public MemberDto SocialLogin(String member_id) {
+		MemberDto dto = null;
+
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			dto = session.selectOne(namespace+"SocialLogin", member_id);
+		}
+		return dto;
+	}
+
+	@Override
+	public int SocialSignUp(MemberDto dto) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.delete(namespace+"SocialSignUp", dto);
+		}
+		return res;
+	}
+
+	@Override
+	public MemberDto findId(String member_name, String member_email) {
+		MemberDto dto = null;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("member_name", member_name);
+		map.put("member_email", member_email);
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			dto = session.selectOne(namespace+"findId", map);
+		}
+		return dto;
+	}
+
+	@Override
+	public MemberDto findPw(String member_name, String member_email, String member_id) {
+		MemberDto dto = null;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("member_name", member_name);
+		map.put("member_email", member_email);
+		map.put("member_id", member_id);
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			dto = session.selectOne(namespace+"findPw", map);
+		}
+		return dto;
+	}
+
+	@Override
+	public int resetPw(String member_name, String member_email, String member_id, String member_pw) {
+		int res=0;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("member_name", member_name);
+		map.put("member_email", member_email);
+		map.put("member_id", member_id);
+		map.put("member_pw", member_pw);
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.update(namespace+"resetPw", map);
+		}
+		return res;
+	}
+
+	@Override
+	public int memberUpdate(MemberDto dto) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.update(namespace+"memberUpdate", dto);
+		}
+		return res;
+	}
+
+	@Override
+	public int memberDelete(int member_no) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.delete(namespace+"memberDelete", member_no);
+		}
+		return res;
+	}
+
+	@Override
+	public int totalBookHos(int member_no) {
+
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.selectOne(namespace + "totalBookHos", member_no);
+		}
+		return res;
+	}
+
+	@Override
+	public int totalBookSt(int member_no) {
+		int res = 0;
+		try (SqlSession session = getSqlSessionFactory().openSession(true)) {
+			res = session.selectOne(namespace + "totalBookSt", member_no);
+		}
+		return res;
+	}
+
+	@Override
+	public List<BookDto> totalDateTime() {
+		SqlSession session = getSqlSessionFactory().openSession();
+		List<BookDto> list = session.selectList(namespace + "totalDateTime");
+		session.close();
+
+		return list;
+	}
+
+	@Override
+	public List<CommunityDto> reportList(int offset, int noOfRecords) {
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("offset", offset);
+		params.put("noOfRecords", noOfRecords);
+		SqlSession session = getSqlSessionFactory().openSession();
+		List<CommunityDto> list = session.selectList(namespace + "reportListPaging", params);	// �������� �� record����
+		session.close();
+
+		return list;
+	}
+
+	@Override
+	public int getBookNum(int member_no, String book_time) {
+
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("member_no", String.valueOf(member_no));
+		map.put("book_time", book_time);
+		SqlSession session = getSqlSessionFactory().openSession();
+		int res = session.selectOne(namespace + "getBookNum", map);
+
+		return res;
+	}
+
+
+	@Override
+	public List<BookDto> bookListHos(int offset, int noOfRecords, int member_no) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("offset", offset);
+		params.put("noOfRecords", noOfRecords);
+		params.put("member_no", member_no);
+
+		SqlSession session = getSqlSessionFactory().openSession();
+		List<BookDto> list = session.selectList(namespace + "bookListHosPaging", params);
+		session.close();
+
+		return list;
+	}
+
+	@Override
+	public List<BookDto> bookListSt(int offset, int noOfRecords, int member_no) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		System.out.println("of :" + offset + "no : " + noOfRecords + "no :" + member_no);
+
+		params.put("offset", offset);
+		params.put("noOfRecords", noOfRecords);
+		params.put("member_no", member_no);
+
+		SqlSession session = getSqlSessionFactory().openSession();
+		List<BookDto> list = session.selectList(namespace + "bookListStPaging", params);
+		session.close();
+
+		return list;
+	}
+
+	@Override
 	public MemberDto MemberOne(int member_no) {
 		MemberDto mdto = null;
 		try(SqlSession session = getSqlSessionFactory().openSession(true)){
@@ -611,6 +774,19 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		try (SqlSession session = getSqlSessionFactory().openSession(true)){
 			res = session.insert(namespace + "orderInsert", dto);
 		}
+		return res;
+	}
+	@Override
+	public int orderUpdate(String merchant_uid, int book_num) {
+		int res=0;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("merchant_uid", merchant_uid);
+		map.put("book_num", String.valueOf(book_num));
+
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.update(namespace+"orderUpdate", map);
+		}
+
 		return res;
 	}
 }

@@ -29,16 +29,16 @@ height: 50px;
 <%BusinessDto bdto = (BusinessDto)request.getAttribute("bdto"); %>
 
 	<form action="../pet.do" method="post">
-	<input type="hidden" name="command" value="bookinsert"/>
+	<input type="hidden" name="command" value="booklistview"/>
 
 		<div class="book">
 		<h3><%=bdto.getBusiness_name() %></h3>
 		<p><%=bdto.getBusiness_role() %></p>
 		<h3>예약페이지 입니다.</h3>
 			<div>
-				<input type="hidden" name = "book_store" value="<%=bdto.getBusiness_num() %>">
+				<input type="hidden" name = "business_num" value="<%=bdto.getBusiness_num() %>">
 				<input type="hidden" name = "book_type" value="<%=bdto.getBusiness_role() %>">
-			</div>	
+			</div>
 			<div>
 				<div class="book_content"><span>예약일자</span><input type="date" name="book_date"></div>
 			</div>		

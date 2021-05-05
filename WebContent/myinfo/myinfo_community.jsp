@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="../resources/css/stylesheet.css" rel="stylesheet">
+<link href="/semi_PetDiary/resources/css/stylesheet.css" rel="stylesheet">
 <style type="text/css">
 
 .community_row{
@@ -165,7 +165,7 @@ outline-color: salmon;
 <body>
 <%@include file="/main/header.jsp"%>
 
-<%List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("list");
+<%List<CommunityDto> mList = (List<CommunityDto>)request.getAttribute("mList");
   int paging = Integer.parseInt(request.getParameter("paging"));
   int count = 0;
   SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일"); //원하는 데이터 포맷 지정
@@ -174,7 +174,7 @@ outline-color: salmon;
 
 	<div>
 		<div id="community_search">
-			<button class="write" onclick="location.href='/semi_PetDiary/pet.do?command=community_insert_form'">글 작성</button>
+			<button class="write">필터링</button>
 			<form action="/semi_PetDiary/pet.do?" method="post">			
 				<input type="hidden" name="command" value="community_search">
 				<select class="filter" name="filter">
@@ -190,7 +190,7 @@ outline-color: salmon;
 	<div id="community_table">
 			
 		<div class="community_row">
-	<%for(CommunityDto dto : list){
+	<%for(CommunityDto dto : mList){
 		String strDate = simpleDateFormat.format(dto.getCommunity_regdate()); //지정한 포맷으로 변환
 	
 		
@@ -239,13 +239,13 @@ outline-color: salmon;
 		<div id="pagaing">
 			<ul class="pagination">
 			<%
-			for(int i =0; i<list.size()/12+1;i++){
+			for(int i =0; i<mList.size()/12+1;i++){
 				if(i+1==paging){
 			%>
-				<li class="active"><a style="background-color: salmon;border-color: salmon;"  href='/semi_PetDiary/pet.do?command=community&paging=<%=(i+1)%>'><%=i+1 %></a></li>
+				<li class="active"><a style="background-color: salmon;border-color: salmon;"  href='/semi_PetDiary/pet.do?command=listmycommnunity&paging=<%=(i+1)%>'><%=i+1 %></a></li>
 			<%}else{%>
 					
-				<li><a href='/semi_PetDiary/pet.do?command=community&paging=<%=(i+1)%>'><%=i+1 %></a></li>
+				<li><a href='/semi_PetDiary/pet.do?command=listmycommnunity&paging=<%=(i+1)%>'><%=i+1 %></a></li>
 				<%}
 			}%>
 			</ul>

@@ -103,12 +103,6 @@ public class pet_servlet extends HttpServlet {
 			} else {
 				jsResponse(response, "변경 실패", "../pet.do?command=business");
 			}
-		} else if("report".equals(command)) {
-
-			List<CommunityDto> list = biz.reportList();
-			request.setAttribute("list", list);
-			dispatch(request, response, "business/reportlist_main.jsp");
-
 		} else if("delete".equals(command)) {
 
 			int seq = Integer.parseInt(request.getParameter("seq"));
@@ -887,43 +881,124 @@ public class pet_servlet extends HttpServlet {
 			dispatch(request, response,"./food/food_book.jsp");
 
 		}
-		if(command.equals("bookinsert")) {
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//날짜입력 데이터 형식 지정 구문
-			Date book_date = null;
-			try {
-				book_date = dateFormat.parse(request.getParameter("book_date"));//이 구문 때문에 에러?
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
 
-			int book_store = 2;
-			try {
-				book_store = Integer.parseInt(request.getParameter("business_num"));
-				log(command);
-			} catch (NumberFormatException e1) {
-				e1.printStackTrace();
-			}
-			System.out.println("book_store : "+book_store);//확인용코드, 나중에 지우기.
-			String book_time = null;
-			try {
-				book_time = request.getParameter("book_time").trim();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			System.out.println(book_time);
-			String book_type = request.getParameter("business_role"); //book_type, business_role 둘다 올수 있는 값이 h,s
-			//BookDto bokdto = new BookDto(0, book_date, book_time, book_type, book_store, 1, 0, null, null);
-			BookDto bokdto = new BookDto( );
-			response.sendRedirect("./food/book_list.jsp");
-			int res = bdao.bookInsert(bokdto);
-			if(res>0) {
+		if(command.equals("bookinsert")) {
+			String book_date = request.getParameter("book_date").replaceAll("-", "");//예약날짜.
+			System.out.println("1. book_date : "+ book_date);      //출력구문 1. 예약날짜
+			String book_time = request.getParameter("book_time");//.replaceAll(":", "");
+			System.out.println("2. book_time : "+ book_time);
+
+			String merchant_uid = request.getParameter("merchant_uid");
+
+			int member_no = (int) session.getAttribute("member_no");
+
+
+			int business_num = Integer.parseInt(request.getParameter("business_num"));
+			// business_num: 회사번호
+			System.out.println("3. business_num : "+business_num);//출력구문 2. 예약업체 번호.
+
+			String book_type = request.getParameter("book_type"); //book_type, business_role 둘다 올수 있는 값이 h,s
+			System.out.println(book_type);
+
+			BookDto bokdto = new BookDto(0, book_date, book_time, book_type, business_num, (int)session.getAttribute("member_no"), null, null, null, null);
+
+			int book_res = bdao.bookInsert(bokdto);
+			int book_num = biz.getBookNum(member_no, book_time);
+			System.out.println(book_num);
+
+			int order_res = biz.orderUpdate(merchant_uid, book_num);
+
+			System.out.println(book_res);
+
+			if(book_res > 0) {
 				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
-				jsResponse(response, "작성 성공", "./food/book_list.jsp");
+				pet_sms.SendSMS(book_date, book_time, business_num, (int)session.getAttribute("member_no"));
+				jsResponse(response, "작성 성공", "../pet_servlet?command=foodlist");
+
 			}else{
-				jsResponse(response, "작성 실패", "./food/food_book.jsp");
+				jsResponse(response, "작성 실패", "../pet_servlet?command=foodlist");
 			}
 
 		}
+
+		if(command.equals("booklistview")) {
+			String book_date = request.getParameter("book_date");
+			String book_time = request.getParameter("book_time");
+			int business_num = Integer.parseInt(request.getParameter("business_num"));
+			String book_type = request.getParameter("book_type");
+
+
+			String date = book_date.replaceAll("[^0-9]", "");
+			String time = book_time.replaceAll("[^0-9]", "");
+
+			List<BookDto> list = biz.totalDateTime();
+			String msg = "없음";
+			int pe = 0;
+
+			for(BookDto dto : list) {
+
+				if(business_num == dto.getBusiness_num()) {
+
+					if(date.equals(dto.getBook_date())) {
+
+						int timecheck = Integer.parseInt(dto.getBook_time().replaceAll("[^0-9]", ""));
+						int timeall = Integer.parseInt(time);
+						int x = 0;
+
+						if((timecheck/100) == (timeall/100)) {
+							x = timeall - timecheck;
+
+						} else {
+							x = (timeall - timecheck) - 40;
+						}
+
+						if(x <= 60 && x >= 10) {
+							pe = (60 - x)/10;
+
+							msg = "예상 대기시간은 " + 5 * pe + " ~ " + (5 * pe + 5) + "분 입니다.";
+
+							jsResponse(response, msg, "pet.do?command=selectBook&booknum="+dto.getBook_num());
+						}
+					}
+				}
+			}
+
+			System.out.println("pe : " +pe);
+
+			request.setAttribute("msg", msg);
+			request.setAttribute("pe", pe);
+
+			dispatch(request, response, "business/booklist_view.jsp");
+		}
+
+		if(command.equals("bookview")) {
+			int book_num = Integer.parseInt(request.getParameter("book_num"));
+			String date = request.getParameter("date");
+			String time = request.getParameter("time");
+
+			String dateTime = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8) + " " + time;
+
+			request.setAttribute("date", date);
+			request.setAttribute("time", time);
+			request.setAttribute("dateTime", dateTime);
+
+			dispatch(request, response, "business/business_bookview.jsp");
+
+		}
+
+		if(command.equals("bookdelete")) {
+			int book_num = Integer.parseInt(request.getParameter("book_num"));
+
+			int res = biz.bookdelete(book_num);
+
+			if(res > 0) {
+				System.out.println("삭제성공");
+
+				dispatch(request, response, "pet.do?command=business");
+			}
+
+		}
+
 
 		if(command.equals("myinfo_business")) {
 			int member_no = 1; //나중에 session에서 받아오기
@@ -1267,13 +1342,19 @@ public class pet_servlet extends HttpServlet {
 			jarr.add(jObj);
 			out.print(jarr);
 			out.flush();
+		} else if (command.equals("payCancle")) {
+			Pay_function pay = new Pay_function();
+			String token = pay.getImportToken();
+			String merchant_uid = "merchant_1620109971604";
+			System.out.println(pay.cancelPayment(token, merchant_uid));
 		} else if (command.equals("orderSuccess")) {
+
 			int member_no = (int) session.getAttribute("member_no");
+
 			String order_data = request.getParameter("order_data");
 			JSONObject json = JSONObject.fromObject(order_data);
 
 			OrderDto dto = new OrderDto();
-			System.out.println((String) json.get("merchant_uid"));
 
 			dto.setMerchant_uid((String) json.get("merchant_uid"));
 			dto.setOrder_amount((Integer) json.get("order_amount"));
@@ -1282,18 +1363,7 @@ public class pet_servlet extends HttpServlet {
 			dto.setMember_no(member_no);
 			dto.setOrder_state("예약 완료");
 
-			int res = biz.orderInsert(dto);
-			if (res > 0) {
-				System.out.println("결제 성공");
-			} else {
-				System.out.println("결제 실패");
-
-			}
-		} else if (command.equals("payCancle")) {
-			Pay_function pay = new Pay_function();
-			String token = pay.getImportToken();
-			String merchant_uid = "merchant_1620109971604";
-			System.out.println(pay.cancelPayment(token, merchant_uid));
+			int order_res = biz.orderInsert(dto);
 		}
 	}
 

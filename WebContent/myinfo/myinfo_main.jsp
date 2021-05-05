@@ -55,7 +55,9 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 			<table>
 				<tr>
 					<th>내가 쓴 게시글
-					<td><%=map.get("CountMyinfoCommunity") %>
+					<td>
+						<a style="color:black;" href="/semi_PetDiary/pet.do?command=listmycommnunity" ><%=map.get("CountMyinfoCommunity") %></a>
+					</td>
 				<tr>
 				<tr>
 					<th> 내가 쓴 댓글
@@ -107,7 +109,7 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 				</tr>
 				<tr>
 					<td colspan="2">	
-					<input type="button" value="수정">
+					<input type="button" value="수정" onclick="location.href='/semi_PetDiary/pet.do?command=myinfo_update'">
 					<input type="button" value="Business계정 신청" onclick="location.href='/semi_PetDiary/pet.do?command=myinfobusup&member_no=<%=dto.getMember_no()%>'">
 					
 					</td>

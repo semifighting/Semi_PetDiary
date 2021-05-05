@@ -105,6 +105,7 @@
 	<result property="order_amount" column="ORDER_AMOUNT"/>
 	<result property="member_no" column="MEMBER_NO"/>
 	<result property="member_name" column="MEMBER_NAME"/>
+	<result property="book_num" column="BOOK_NUM"/>
 </resultMap>
 
 	<insert id="MemberInsert" parameterType="MemberDto">
@@ -250,6 +251,13 @@
 	INSERT INTO BOOK
 	VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time}, #{book_type}, #{business_num}, #{member_no}, 0, 'N', #{book_hostime,jdbcType=VARCHAR}, #{book_counsel,jdbcType=VARCHAR})
 </insert>
+
+<select id="getBookNum" parameterType="hashMap" resultType="int">
+	SELECT BOOK_NUM
+	FROM BOOK
+	WHERE MEMBER_NO = #{member_no}
+	  AND BOOK_TIME = #{book_time}
+</select>
 
 <select id="selectPetList" resultMap="petMap" parameterType="int">
 	SELECT PET_NO, PET_SPECIES, PET_BREED, PET_NAME, PET_BIRTHDAY, PET_GENDER, MEMBER_NO, PET_PATH, PET_VACCINATION
@@ -581,7 +589,15 @@
 
 <insert id="orderInsert" parameterType="orderDto">
 	INSERT INTO ORDERINFO
-	VALUES (ORDERINFO_SEQ.NEXTVAL, #{merchant_uid}, SYSDATE, #{order_state}, #{order_information}, #{order_amount}, #{member_no}, #{member_name})
+	VALUES (ORDERINFO_SEQ.NEXTVAL, #{merchant_uid}, SYSDATE, #{order_state}, #{order_information}, #{order_amount}, #{member_no}, #{member_name}, #{book_num})
 </insert>
 
+<update id="orderUpdate" parameterType="hashMap">
+	UPDATE ORDERINFO SET BOOK_NUM = #{book_num} WHERE merchant_uid = #{merchant_uid}
+</update>
+<select id="getMerchant_uid" parameterType="int">
+	SELECT MERCHANT_UID
+	FROM ORDERINFO
+	WHERE BOOK_NUM = #{book_num}
+</select>
 </mapper>

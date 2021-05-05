@@ -10,7 +10,6 @@
 <head>
     <title>Title</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../resources/javascript/picturePaging.js"></script>
     <script src="../resources/javascript/script.js"></script>
     <style type="text/css">
         #selectPictureOne > img {
@@ -27,9 +26,8 @@
 
         #selectPictureList {
             position: absolute;
-            border: 1px solid salmon;
-            width: 500px;
-            height: 500px;
+            width: 700px;
+            height: 800px;
         }
         #selectPictureList img {
             margin-top: 10px;
@@ -41,7 +39,6 @@
         }
 
         #imageUpload {
-            left: 1000px;
             position: absolute;
             text-align: right;
             bottom: 18%;
@@ -50,7 +47,7 @@
         #bigPic {
             position: absolute;
             margin-left: 600px;
-            bottom: 15%;
+            bottom: 30%;
             width: 500px;
             height: 500px;
         }
@@ -60,8 +57,13 @@
         }
 
         .picture_paging {
-            margin-top: 100px;
-            margin-left: 500px;
+            position: absolute;
+            margin-top: 680px;
+            margin-left: 250px;
+        }
+        #selectedPic {
+            height: 500px;
+            width: 500px;
         }
     </style>
 </head>
@@ -90,18 +92,9 @@
                 <form action="../pet_servlet" method="post">
                     <input type="hidden" name="command" value="picture_delete">
         <c:forEach items="${list }" var="dto">
-            <%
-                i++;
-            %>
-            <input type="checkbox" name="picture_no" value="${dto.picture_no }>"><img alt="사진" class="smallPic" src="${dto.picture_directory }/${dto.picture_name }">
+            <input type="hidden" name="picture_no" value="${dto.picture_no }">
+            <img alt="사진" class="smallPic" src="${dto.picture_directory }/${dto.picture_name }">
             <input type="submit" value="삭제">
-            <%
-                if (i % 2 == 0) {
-            %>
-            <br>
-            <%
-                }
-            %>
         </c:forEach>
                 </form>
             </div>
@@ -109,6 +102,7 @@
     </c:otherwise>
 </c:choose>
 <div id="bigPic">
+    <img id="selectedPic" src="#" alt="선택된 사진" hidden="hidden" >
 </div>
 <%
     for (int j = 1; j <= totalPage; j++) {

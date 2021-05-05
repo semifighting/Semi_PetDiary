@@ -1,33 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
-    
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="/semi_PetDiary/resources/js/script.js"></script>
+<script type="text/javascript" src="../resources/js/script.js"></script>
+
 <script type="text/javascript">
 
 	$(function(){
-		$("input[name=submit]").click(function(){
-			var seq = $(this).parents('span').find('input').val();
-			location.href="/semi_PetDiary/pet.do?command=delete&seq=" + seq;
+		$("select").change(function(){
+			location.href="../paging.do?command=book";
 		});
+		
+	/* 	$("input[name=test-button]").click(function(){
+			var d1 = $("input[name=test-date]").val();
+			var t1 = $("input[name=test-time]").val();
+			
+			var d2 = d1.split("-");
+			var t2 = t1.split(":");
+			
+			var date = d2[0] + d2[1] + d2[2];
+			var time = t2[0] + t2[1];
+			
+			date = Number(date);
+			time = Number(time);
+			
+			alert(date);
+			alert(time);
+		}); */
 	});
 
 </script>
 
+
 <style type="text/css">
 	
 	h2{width:200px; margin: 10px auto;}
-	#table {display: table; width: 60%; margin: 20px auto;}
+	#sell{margin: 0px auto; width: 150px;}
+	#table {display: table; width: 40%; margin: 20px auto;}
 	.row {display: table-row;}
 	.main{background-color: salmon; color:white; text-align: center;}
 	.cell {display: table-cell; padding: 3px; border: 0.5px solid #DDD; text-align: center;}
@@ -40,7 +59,7 @@
 	.col7 {width: 1%;}
 	
 	.paginate{margin: 0px auto; width: 200px; text-align: center;}
-	.paginate a	{color: black;}
+	.paginate a	{color:black;}
 		
 </style>
 </head>
@@ -48,31 +67,31 @@
 
 <%@ include file="/main/header.jsp" %>
 
-	<h2>신고글 조회</h2>
-
+	<h2>매장예약 조회</h2>
+	
+	<div id="sell">
+		<select>
+			<option value="hbook">병원예약 조회</option>
+			<option value="sbook" selected>매장예약 조회</option>
+		</select>
+	</div>
+	
 	<div id="table">
 		<div class="row main">
-			<span class="cell col1">게시글 번호</span>
-			<span class="cell col2">제목</span>
-			<span class="cell col3">작성자</span>
-			<span class="cell col4">신고내용</span>
-			<span class="cell col5">신고횟수</span>
-			<span class="cell col6">작성일자</span>
-			<span class="cell col7">권한</span>
+			<span class="cell col1">예약 번호</span>
+			<span class="cell col2">예약자 성명</span>
+			<span class="cell col3">예약 업체</span>
+			<span class="cell col4">예약 시간</span>
+			<span class="cell col5">예약 시간</span>
 		</div>
 		
 		<c:forEach items="${list }" var="dto" varStatus="stat">
-			<div class="row">
-				<span class="cell col1">${dto.community_seq }</span>
-				<span class="cell col2">${dto.community_title }</span>
-				<span class="cell col3">${dto.memberVO.member_id }</span>
-				<span class="cell col4">${dto.community_reportcontent }</span>
-				<span class="cell col5">${dto.community_reportcount }</span>
-				<span class="cell col6">${dto.community_regdate }</span>
-				<span class="cell col7">
-					<input type="hidden" value="${dto.community_seq }"/>
-					<input type="button" name="submit" value="삭제"/>
-				</span>
+			<div class="row" onclick="location.href='pet.do?command=bookview&book_num=${dto.book_num }&date=${dto.book_date}&time=${dto.book_time}'">
+				<span class="cell col1">${dto.book_num }</span>
+				<span class="cell col2">${dto.memberVO.member_name }</span>
+				<span class="cell col3">${dto.businessVO.business_name }</span>
+				<span class="cell col4">${dto.book_date}</span>
+				<span class="cell col5">${dto.book_time}</span>
 			</div>
 		</c:forEach>
 	</div>

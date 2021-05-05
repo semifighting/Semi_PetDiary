@@ -10,11 +10,12 @@ public class OrderDto {
     private int order_amount;
     private int member_no;
     private String member_name;
+    private int book_num;
 
     public OrderDto() {
     }
 
-    public OrderDto(int order_no, String merchant_uid, String order_date, String order_state, String order_information, int order_amount, int member_no, String member_name) {
+    public OrderDto(int order_no, String merchant_uid, String order_date, String order_state, String order_information, int order_amount, int member_no, String member_name, int book_num) {
         this.order_no = order_no;
         this.merchant_uid = merchant_uid;
         this.order_date = order_date;
@@ -23,6 +24,7 @@ public class OrderDto {
         this.order_amount = order_amount;
         this.member_no = member_no;
         this.member_name = member_name;
+        this.book_num = book_num;
     }
 
     public String getMerchant_uid() {
@@ -87,5 +89,13 @@ public class OrderDto {
 
     public void setMember_no(int member_no) {
         this.member_no = member_no;
+    }
+
+    public int getBook_num() {
+        return book_num;
+    }
+
+    public void setBook_num(int book_num) {
+        this.book_num = book_num;
     }
 }

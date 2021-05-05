@@ -12,7 +12,7 @@ public interface PetBiz {
 	public int totalHospital();
     
 	public BusinessDto hospitalSelect(int business_num);
-	
+
 	public int hospitalBookInsert(BookDto dto);
 	public BusinessDto businessOne(int business_num);
 
@@ -20,9 +20,18 @@ public interface PetBiz {
 
 	public int totalMember();
 	public int totalReport();
+    public int totalBookHos(int member_no);
+    public int totalBookSt(int member_no);
+
+    public List<BookDto> totalDateTime();
+
 	public List<MemberDto> memberList();
 	public List<MemberDto> memberList(int offset, int noOfRecords);
-	public List<CommunityDto> reportList();
+    public List<CommunityDto> reportList(int offset, int noOfRecords);
+    public List<BookDto> bookListHos(int offset, int noOfRecords, int member_no);
+    public List<BookDto> bookListSt(int offset, int noOfRecords, int member_no);
+    public int getBookNum(int member_no, String book_time);
+
 	public int changeRole(MemberDto dto);
 	public int deleteCommnutiy(int seq);
 
@@ -61,8 +70,18 @@ public interface PetBiz {
 	public int CalendarUpdate(CalendarDto dto);
 
 	public MemberDto Login(String member_id, String member_pw);
+    public MemberDto SocialLogin(String member_id);
+    public int SocialSignUp(MemberDto dto);
+    public MemberDto findId(String member_name, String member_email);
+    public MemberDto findPw(String member_name, String member_email, String member_id);
+    public int resetPw(String member_name, String member_email, String member_id, String member_pw);
+    public int memberUpdate(MemberDto dto);
+    public int memberDelete(int member_no);
+    public List<BusinessDto> businessList();
+    public int bookdelete(int book_num);
 
     //order
     public int orderInsert(OrderDto dto);
+    public int orderUpdate(String merchant_uid, int book_num);
 
 }

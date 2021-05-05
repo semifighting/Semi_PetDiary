@@ -19,8 +19,10 @@ public interface PetDao {
 	//병원상담
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
 	public int totalHospital();
-	
+
 	public BusinessDto hospitalSelect(int business_num);
+
+
 
 	List<CommunityDto> CommentList(int community_no);
 
@@ -40,6 +42,27 @@ public interface PetDao {
 	int CommunityCommentCount(int seq);
 
 	public int hospitalBookInsert(BookDto dto);
+
+	// member
+	public MemberDto SocialLogin(String member_id);
+	public int SocialSignUp(MemberDto dto);
+	public MemberDto findId(String member_name, String member_email);
+	public MemberDto findPw(String member_name, String member_email, String member_id);
+	public int resetPw(String member_name, String member_email, String member_id, String member_pw);
+	public int memberUpdate(MemberDto dto);
+	public int memberDelete(int member_no);
+
+	public int totalBookHos(int member_no);
+	public int totalBookSt(int member_no);
+	public List<BookDto> totalDateTime();
+
+
+
+	//
+	public List<CommunityDto> reportList(int offset, int noOfRecords);
+	public List<BookDto> bookListHos(int offset, int noOfRecords, int member_no);
+	public List<BookDto> bookListSt(int offset, int noOfRecords, int member_no);
+	public int getBookNum(int member_no, String book_time);
 
 	// pet
     public List<PetDto> selectPetList(int member_no);
@@ -93,5 +116,6 @@ public interface PetDao {
 
 	//Order
 	public int orderInsert(OrderDto dto);
+	public int orderUpdate(String merchant_uid, int book_num);
 
 }

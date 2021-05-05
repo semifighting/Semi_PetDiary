@@ -34,7 +34,9 @@ function requestPay() {
                             type: "POST",
                             data : {order_data : JSON.stringify(order_info)},
                             success: function () {
-                                alert("결제 성공!");
+                                $("#bookSuccess").attr("disabled", false);
+                                $("#pay").attr("disabled", true);
+                                $("#merchant_uid").attr("value", rsp.merchant_uid);
                             },
                             error: function (request, status, error) {
                                 console.log("code:" + request.status + "<br>" + "message:" + request.responseText + "<br>" + "error:" + error);
