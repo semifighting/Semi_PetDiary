@@ -38,9 +38,7 @@
 				<div>번호 : <%=bdto.getBusiness_num() %></div>			
 				<div>번호 : <%=bdto.getBusiness_role() %></div>			
 			
-			
-			
-			
+
 				<div>이름 : <%=bdto.getBusiness_name() %></div>
 				<div>주소 : <%=bdto.getBusiness_addr() %></div>
 				<div>전화번호 : <%=bdto.getMember_phone() %></div>

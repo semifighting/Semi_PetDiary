@@ -1,3 +1,5 @@
+<%@page import="com.pet.ft.model.PetDao"%>
+<%@page import="com.pet.ft.model.PetDaoImpl"%>
 <%@page import="com.pet.ft.dto.BusinessDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -11,7 +13,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
 <title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="/semi_PetDiary/resources/js/script.js"></script>
 
 
 <style type="text/css">
@@ -52,7 +60,7 @@
 	.hospital_list{
 		background-color: #f9f9f9;
         width: 1260px;
-		height: 750px;
+		height: 630px;
 	}
 	.hospital_section {
     	 border-top: none;
@@ -102,11 +110,25 @@
  	    text-decoration: none;
  	    color:black;
 	}
+	.paginate a{
+		color:black;
+		border:2px outset ;
+		border-color:salmon;
+		border-radius:4px;
+		float:center;
+		
+		
+	}
+	
+
+
 	
 </style>
 
 </head>
 <body>
+
+
 	<%@include file="../main/header.jsp"%>
 	<div class="hospital">
 		<div class="hospital_header">
@@ -126,13 +148,12 @@
 					<c:otherwise>
 						<c:forEach items="${list }" var="dto">
 			 			<article class="hospital_container">
-         				 	<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}"><img class="hospital_image" src="./resources/image/tico1.png"/></a>
-           
-          
+         				 	<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}"><img class="hospital_image" src="./resources/image/tico1.png"/></a>       
          					<div class="hospital_bottom_section">
            						<div class="hospital_details">
               						<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}" class="hospital_title">${dto.business_name}</a>
              						<p class="hospital_addr">${dto.business_addr}</p>
+             						
               					</div>
          					</div>
        					</article>
@@ -141,7 +162,23 @@
        			</c:choose>
             </section>
 		</div>
+
 	</div>
+	
+	<jsp:include page="/main/paging.jsp" flush="true">
+			<jsp:param name="servletPath" value="${servletPath }"/>
+			<jsp:param name="recordsPerPage" value="${paging.recordsPerPage }"/>
+			<jsp:param name="firstPageNo" value="${paging.firstPageNo }"/>
+			<jsp:param name="prevPageNo" value="${paging.prevPageNo }"/>
+			<jsp:param name="startPageNo" value="${paging.startPageNo }"/>
+			<jsp:param name="currentPageNo" value="${paging.currentPageNo }"/>
+			<jsp:param name="endPageNo" value="${paging.endPageNo }"/>
+			<jsp:param name="nextPageNo" value="${paging.nextPageNo }"/>
+			<jsp:param name="finalPageNo" value="${paging.finalPageNo }"/>
+			
+	</jsp:include>
+	
+	
 	<script type="text/javascript">
 		function mapPop(){
 			var popup = window.open('./hospital/map.jsp', '지도', 'width=700px,height=800px,scrollbars=yes');

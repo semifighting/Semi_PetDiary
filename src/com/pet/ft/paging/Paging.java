@@ -1,28 +1,28 @@
 package com.pet.ft.paging;
 
 public class Paging {
-	
-	private int recordsPerPage;		// ÆäÀÌÁö´ç ·¹ÄÚµå ¼ö
-	private int firstPageNo;		// Ã¹ ¹øÂ° ÆäÁöÀÌ ¼ö
-	private int prevPageNo;			// ÀÌÀü ÆäÀÌÁö ¹øÈ£
-	private int startPageNo;		// ½ÃÀÛ ÆäÀÌÁö (ÆäÀÌÂ¡ ³Êºñ ±âÁØ)
-	int currentPageNo;				// ÆäÀÌÁö ¹øÈ£
-	int endPageNo;					// ³¡ ÆäÀÌÁö(ÆäÀÌÂ¡ ³Êºñ ±âÁØ)
-	int nextPageNo;					// ´ÙÀ½ ÆäÀÌÁö ¹øÈ£
-	int finalPageNo;				// ¸¶Áö¸· ÆäÀÌÁö ¹øÈ£
-	int numberOfRecords;			// ÀüÃ¼ ·¹ÄÚµå ¼ö
-	int sizeOfPage;					// º¸¿©Áö´Â ÆäÀÌÁö °³¼ö(1, 2, 3, 4, 5 °³¼ö)
-	
+
+	private int recordsPerPage;		// í˜ì´ì§€ë‹¹ ë ˆì½”ë“œ ìˆ˜
+	private int firstPageNo;		// ì²« ë²ˆì§¸ í˜ì§€ì´ ìˆ˜
+	private int prevPageNo;			// ì´ì „ í˜ì´ì§€ ë²ˆí˜¸
+	private int startPageNo;		// ì‹œì‘ í˜ì´ì§€ (í˜ì´ì§• ë„ˆë¹„ ê¸°ì¤€)
+	int currentPageNo;				// í˜ì´ì§€ ë²ˆí˜¸
+	int endPageNo;					// ë í˜ì´ì§€(í˜ì´ì§• ë„ˆë¹„ ê¸°ì¤€)
+	int nextPageNo;					// ë‹¤ìŒ í˜ì´ì§€ ë²ˆí˜¸
+	int finalPageNo;				// ë§ˆì§€ë§‰ í˜ì´ì§€ ë²ˆí˜¸
+	int numberOfRecords;			// ì „ì²´ ë ˆì½”ë“œ ìˆ˜
+	int sizeOfPage;					// ë³´ì—¬ì§€ëŠ” í˜ì´ì§€ ê°œìˆ˜(1, 2, 3, 4, 5 ê°œìˆ˜)
+
 	public Paging(int currentPageNo, int recordsPerPage) {
-	
+
 		this.currentPageNo = currentPageNo;
-		// ±âº» ÆäÀÌÁö : 5°³ º¸±â¸¦ default·Î ¼³Á¤ÇÔ
+		// ê¸°ë³¸ í˜ì´ì§€ : 5ê°œ ë³´ê¸°ë¥¼ defaultë¡œ ì„¤ì •í•¨
 		this.sizeOfPage = 5;
-		
-		//recordsPerPage°¡ 0ÀÌ ¾Æ´Ï¸é recordsPerPage, ¾Æ´Ï¸é ¹«Á¶°Ç 5(default : 5)
+
+		//recordsPerPageê°€ 0ì´ ì•„ë‹ˆë©´ recordsPerPage, ì•„ë‹ˆë©´ ë¬´ì¡°ê±´ 5(default : 5)
 		this.recordsPerPage = (recordsPerPage != 0)? recordsPerPage : 5;
 	}
-	
+
 	public int getRecordsPerPage() {
 		return recordsPerPage;
 	}
@@ -83,54 +83,54 @@ public class Paging {
 	public void setSizeOfPage(int sizeOfPage) {
 		this.sizeOfPage = sizeOfPage;
 	}
-	
-	// ÆäÀÌÁö »ı¼º
+
+	// í˜ì´ì§€ ìƒì„±
 	public void makePaging() {
-		if(numberOfRecords == 0)	// °Ô½Ã±Û ÀüÃ¼ ¼ö°¡ ¾ø´Â °æ¿ì
+		if(numberOfRecords == 0)	// ê²Œì‹œê¸€ ì „ì²´ ìˆ˜ê°€ ì—†ëŠ” ê²½ìš°
 			return;
-		
-		if(currentPageNo == 0)		// ±âº» °ª ¼³Á¤
+
+		if(currentPageNo == 0)		// ê¸°ë³¸ ê°’ ì„¤ì •
 			setCurrentPageNo(1);
-		
-		if(recordsPerPage == 0)	
-			setRecordsPerPage(10);	// ±âº» °ª ¼³Á¤
-		
-		// ¸¶Áö¸· ÆäÀÌÁö
+
+		if(recordsPerPage == 0)
+			setRecordsPerPage(10);	// ê¸°ë³¸ ê°’ ì„¤ì •
+
+		// ë§ˆì§€ë§‰ í˜ì´ì§€
 		int finalPage = (numberOfRecords + (recordsPerPage - 1)) / recordsPerPage;
-		
+
 		if(currentPageNo > finalPage)
-			setCurrentPageNo(finalPage); // ±âº» °ª ¼³Á¤
-		
+			setCurrentPageNo(finalPage); // ê¸°ë³¸ ê°’ ì„¤ì •
+
 		if(currentPageNo < 0 || currentPageNo > finalPage)
-			currentPageNo = 1;		// ÇöÀç ÆäÀÌÁö À¯È¿¼º Ã¼Å©
-		
-		// ½ÃÀÛ ÆäÀÌÁö (ÀüÃ¼)
+			currentPageNo = 1;		// í˜„ì¬ í˜ì´ì§€ ìœ íš¨ì„± ì²´í¬
+
+		// ì‹œì‘ í˜ì´ì§€ (ì „ì²´)
 		boolean isNowFirst = currentPageNo == 1? true : false;
 		boolean isNowFinal = currentPageNo == finalPage? true : false;
-		
+
 		int startPage = ((currentPageNo - 1) / sizeOfPage) * sizeOfPage + 1;
 		int endPage = startPage + sizeOfPage - 1;
-		
+
 		if(endPage > finalPage)
 			endPage = finalPage;
-		
-		setFirstPageNo(1);		// Ã¹ ¹øÂ° ÆäÀÌÁö ¹øÈ£
-		
+
+		setFirstPageNo(1);		// ì²« ë²ˆì§¸ í˜ì´ì§€ ë²ˆí˜¸
+
 		if(isNowFirst)
-			setPrevPageNo(1);	// ÀÌÀü ÆäÀÌÁö ¹øÈ£
+			setPrevPageNo(1);	// ì´ì „ í˜ì´ì§€ ë²ˆí˜¸
 		else
 			setPrevPageNo(((currentPageNo - 1) < 1 ? 1 : (currentPageNo - 1)));
-		
-		setStartPageNo(startPage);	// ½ÃÀÛ ÆäÀÌÁö
-		setEndPageNo(endPage);		// ³¡ ÆäÀÌÁö
-		
+
+		setStartPageNo(startPage);	// ì‹œì‘ í˜ì´ì§€
+		setEndPageNo(endPage);		// ë í˜ì´ì§€
+
 		if(isNowFinal)
-			setNextPageNo(finalPage);	// ´ÙÀ½ ÆäÀÌÁö ¹øÈ£
+			setNextPageNo(finalPage);	// ë‹¤ìŒ í˜ì´ì§€ ë²ˆí˜¸
 		else
 			setNextPageNo(((currentPageNo + 1 ) > finalPage ? finalPage : (currentPageNo + 1)));
-		
-		setFinalPageNo(finalPage);	// ¸¶Áö¸· ÆäÀÌÁö ¹øÈ£
-		
+
+		setFinalPageNo(finalPage);	// ë§ˆì§€ë§‰ í˜ì´ì§€ ë²ˆí˜¸
+
 	}
-	
+
 }

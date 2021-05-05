@@ -41,6 +41,16 @@ public class BusinessDaoImpl extends SqlMapConfig implements BusinessDao {
 	}
 
 	@Override
+	public int BusinessInsert(BusinessDto bdto) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.insert(namespace1+"BusinessInsert", bdto);
+		}
+		return res;
+	}
+	
+
+	@Override
 	public int bookInsert(BookDto bookDto) {
 		int res = 0;
 		try(SqlSession session = getSqlSessionFactory().openSession(true)){
@@ -48,5 +58,6 @@ public class BusinessDaoImpl extends SqlMapConfig implements BusinessDao {
 		}
 		return res;
 	}
+
 
 }
