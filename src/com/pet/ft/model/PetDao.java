@@ -41,13 +41,14 @@ public interface PetDao {
 	public int CommunityCommentCount(int seq);
 	public List<CommunityDto> CommunityPageList(int page);
 	public List<CommunityDto> MyCommunityList(int member_no);
-	
+	public int CommunityPageMax();
+
 	
 	// member
 	public MemberDto MemberOne(int member_no);
 	public int MemberInsert(MemberDto dto);
 	public MemberDto SignUpIdChk(String member_id);
-	public MemberDto SighUpEmailChk(String member_email);
+	public MemberDto SignUpEmailChk(String member_email);
 	public MemberDto Login(String member_id, String member_pw);
 	public MemberDto SocialLogin(String member_id);
 	public int SocialSignUp(MemberDto dto);
@@ -62,7 +63,6 @@ public interface PetDao {
 	public int totalBookHos();
 	public int totalBookSt();
 	public List<BookDto> totalDateTime();
-	public int CommunityPageMax();
 
 	
 	

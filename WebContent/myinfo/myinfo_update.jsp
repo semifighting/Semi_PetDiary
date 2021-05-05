@@ -120,7 +120,7 @@
 	}
 	
 	function searchAddr() {
-		  var pop = window.open("/semi_PetDiary/login/login_addrChk.jsp","pop","width=570,height=420"); 
+		  var pop = window.open("../login/login_addrChk.jsp","pop","width=570,height=420"); 
 	}
 	
 	function jusoCallBack(roadAddrPart1, roadAddrPart2,addrDetail){
@@ -162,7 +162,7 @@
 		var result = confirm("회원 탈퇴 시 회원님의 모든 정보가 삭제됩니다. \n탈퇴하시겠습니까?");
 		if(result){
 			var member_no = document.getElementsByName("member_no")[0].value;
-			location.href="/semi_PetDiary/pet.do?command=myinfo_delete&member_no="+member_no;
+			location.href="../pet.do?command=myinfo_delete&member_no="+member_no;
 		} else {
 			alert("취소되었습니다.")
 		}
@@ -184,7 +184,7 @@
 
 	<div id="wrap">
 		<div id="top"><i class="fas fa-paw"></i>&nbsp;<span>Pet Diary</span></div>
-		<form id="update" action="/semi_PetDiary/pet.do" method="post" onsubmit="return checkForm()">
+		<form id="update" action="../pet.do" method="post" onsubmit="return checkForm()">
 			<input type="hidden" name="command" value="myinfo_updateform"/>
 			<input type="hidden" name="member_no" value="<%=member_no%>"/>
 				<div id="wrapform">

@@ -1,12 +1,12 @@
 package com.pet.ft.model;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
@@ -588,18 +588,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			return res;
 		}
 
-		@Override
-		public List<CommunityDto> CommentList(int community_no) {
-			List<CommunityDto> list = new ArrayList<CommunityDto>();
-			try(SqlSession session = getSqlSessionFactory().openSession(true)){
-				list = session.selectList(namespace+"CommentList", community_no);
-			}
-			for(CommunityDto dto : list) {
-			}
-			
-			return list;
-
-		}
 		
 
 		@Override
@@ -644,14 +632,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			return res;
 		}
 
-		@Override
-		public int CommunityDelete(int seq) {
-			int res = 0;
-			try(SqlSession session = getSqlSessionFactory().openSession(true)){
-				res = session.delete(namespace+"CommunityDelete", seq);
-			}		
-			return res;
-		}
 
 		@Override
 		public int CommunityViews(int seq) {
@@ -689,7 +669,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 
 		@Override
-		public MemberDto SighUpEmailChk(String member_email) {
+		public MemberDto SignUpEmailChk(String member_email) {
 			MemberDto dto = null;
 			try(SqlSession session = getSqlSessionFactory().openSession(true)){
 				dto = session.selectOne(namespace+"SignUpEmailChk", member_email);
@@ -895,7 +875,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			}	
 			return list;
 		}
-		}	
+		
 		
 		@Override
 		public List<BusinessDto> businessList() {
@@ -904,7 +884,29 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		    session.close();
 
 		    return list;
-		    }
+		}
 
 		
+		@Override
+		public List<CommunityDto> CommentList(int community_no) {
+			List<CommunityDto> list = new ArrayList<CommunityDto>();
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				list = session.selectList(namespace+"CommentList", community_no);
+			}
+			for(CommunityDto dto : list) {
+			}
+			
+			return list;
+
+		}
+
+		@Override
+		public int CommunityDelete(int seq) {
+			int res = 0;
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				res = session.delete(namespace+"CommunityDelete", seq);
+			}		
+			return res;
+		}
+
 }

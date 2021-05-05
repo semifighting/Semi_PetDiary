@@ -38,7 +38,7 @@ textarea {
 <body>
 	<div class="title"><h3>신고 처리</h3></div>
 	<div>
-		<form action="/semi_PetDiary/pet.do">
+		<form action="../pet.do">
 			<input type="hidden" name="command" value="community_report">
 			<textarea placeholder="신고할 내용을 입력해주세요..." rows="20" cols="30"></textarea>
 			<input type="hidden" name="seq" value="<%=(int)request.getAttribute("seq")%>">

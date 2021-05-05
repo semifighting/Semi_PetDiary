@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="/semi_PetDiary/resources/css/stylesheet.css" rel="stylesheet">
+<link href="../resources/css/stylesheet.css" rel="stylesheet">
 <style type="text/css">
 #community_update_contentbox{
 	position : relative;
@@ -62,7 +62,7 @@ $(document).ready(function() {
 
 <body>
 <%@include file="/main/header.jsp"%>
-	<form action="/semi_PetDiary/pet.do" method="get" >
+	<form action="../pet.do" method="get" >
 		<input type="hidden" name="command" value="community_update">
 		<input type="hidden" name="community_no" value="<%=cdto.getCommunity_no()%>">
 		<input type="hidden" name="seq" value="<%=cdto.getCommunity_seq()%>">

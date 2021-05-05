@@ -2,11 +2,10 @@ package com.pet.ft.model;
 
 import java.util.List;
 
+
 import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
 import com.pet.ft.dto.CalendarDto;
-import com.pet.ft.model.PetDao;
-import com.pet.ft.model.PetDaoImpl;
 
 
 import com.pet.ft.dto.CommunityDto;
@@ -261,6 +260,25 @@ public class PetBizImpl implements PetBiz {
 	public int InsertFilter(List<String> list) {
 		return dao.InsertFilter(list);
 	}
-	
+	public List<BusinessDto> BusinessList(int offset, int noOfRecords) {
+		return bdao.BusinessList(offset, noOfRecords);
+	}
 
+
+	@Override
+	public int businessTotal() {
+		return bdao.businessTotal();
+	}
+
+
+	@Override
+	public List<BusinessDto> menu() {
+		return bdao.menu();
+	}
+
+
+	@Override
+	public List<BusinessDto> businessList() {
+        return dao.businessList();
+    }
 }

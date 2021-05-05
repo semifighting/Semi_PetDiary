@@ -9,6 +9,9 @@ public interface BusinessDao {
 	String namespace1 = "com.pet.ft.mapper.";
 
 	List<BusinessDto> BusinessList();
+	public List<BusinessDto> BusinessList(int offset, int noOfRecords);
+	
+	public int businessTotal();
 	
 	BusinessDto businessOne(int business_num);//mapper id = businessOne
 	
@@ -16,6 +19,5 @@ public interface BusinessDao {
 
 	int BusinessInsert(BusinessDto bdto);
 	
-	
-
+	public List<BusinessDto> menu();
 }

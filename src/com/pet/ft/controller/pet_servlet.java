@@ -112,9 +112,9 @@ public class pet_servlet extends HttpServlet {
 			int res = biz.changeRole(dto);
 
 			if(res > 0) {
-				jsResponse(response, role + "등급 변경", "/semi_PetDiary/paging.do?command=member"); 
+				jsResponse(response, role + "등급 변경", "../paging.do?command=member"); 
 			} else {
-				jsResponse(response, "변경 실패", "/semi_PetDiary/paging.do?command=member");
+				jsResponse(response, "변경 실패", "../paging.do?command=member");
 			}
 		} else if("delete".equals(command)) {
 
@@ -123,9 +123,9 @@ public class pet_servlet extends HttpServlet {
 			int res = biz.deleteCommnutiy(seq);
 
 			if(res > 0) {
-				jsResponse(response, "삭제 성공", "/semi_PetDiary/paging.do?command=report");
+				jsResponse(response, "삭제 성공", "../paging.do?command=report");
 			} else {
-				jsResponse(response, "삭제 실패", "/semi_PetDiary/paging.do?command=report");
+				jsResponse(response, "삭제 실패", "../paging.do?command=report");
 			}
 		} else if("bookcheck".equals(command)) {
 			String date = (String) request.getParameter("test-date"); 
@@ -277,11 +277,11 @@ public class pet_servlet extends HttpServlet {
 				UUID id = UUID.randomUUID();
 				String pictureAcc = "style="+picture.split("\" style=")[1].split("data-filename")[0]+">";
 				String data = picture.split(",")[1].split("\" style=")[0];
-				String path = request.getServletContext().getRealPath("/");
+				String path = request.getSession().getServletContext().getRealPath("/");
 				byte[] imageBytes = Base64Decoder.decodeToBytes(data);				
 				BufferedImage bufimg = ImageIO.read(new ByteArrayInputStream(imageBytes));
 				ImageIO.write(bufimg, filenamme.split("\\.")[1], new File(path+"resources/community_img/"+id.toString()+"."+filenamme.split("\\.")[1]));
-				content =content.replace("<img src=\"data"+content.split("<img src=\"data")[1].split(">")[0]+">","<img src='/semi_PetDiary/resources/community_img/"+id.toString()+"."+filenamme.split("\\.")[1]+"'"+pictureAcc);
+				content =content.replace("<img src=\"data"+content.split("<img src=\"data")[1].split(">")[0]+">","<img src='../resources/community_img/"+id.toString()+"."+filenamme.split("\\.")[1]+"'"+pictureAcc);
 			}
 			 
 			System.out.println(content);
@@ -327,11 +327,11 @@ public class pet_servlet extends HttpServlet {
 				UUID id = UUID.randomUUID();
 				String pictureAcc = "style="+picture.split("\" style=")[1].split("data-filename")[0]+">";
 				String data = picture.split(",")[1].split("\" style=")[0];
-				String path = request.getServletContext().getRealPath("/");
+				String path = request.getSession().getServletContext().getRealPath("/");
 				byte[] imageBytes = Base64Decoder.decodeToBytes(data);				
 				BufferedImage bufimg = ImageIO.read(new ByteArrayInputStream(imageBytes));
 				ImageIO.write(bufimg, filenamme.split("\\.")[1], new File(path+"resources/community_img/"+id.toString()+"."+filenamme.split("\\.")[1]));
-				content =content.replace("<img src=\"data"+content.split("<img src=\"data")[1].split(">")[0]+">","<img src='/semi_PetDiary/resources/community_img/"+id.toString()+"."+filenamme.split("\\.")[1]+"'"+pictureAcc);
+				content =content.replace("<img src=\"data"+content.split("<img src=\"data")[1].split(">")[0]+">","<img src='../resources/community_img/"+id.toString()+"."+filenamme.split("\\.")[1]+"'"+pictureAcc);
 			}
 			int seq = Integer.parseInt(request.getParameter("seq"));
 			int community_no = Integer.parseInt(request.getParameter("community_no"));
@@ -534,9 +534,6 @@ public class pet_servlet extends HttpServlet {
 			int picture_no = Integer.parseInt(request.getParameter("picture_no"));
 			PictureDto dto = biz.selectPictureOne(member_no, picture_no);
 
-			String path = dto.getPicture_directory() + "/" + dto.getPicture_name();
-
-			Util.deleteFile(path);
 			int res = biz.deletePicture(member_no, picture_no);
 			if (res > 0) {
 				System.out.println("삭제 성공");
@@ -556,7 +553,7 @@ public class pet_servlet extends HttpServlet {
 
         }
         if (command.equals("weather_main")) {
-			response.sendRedirect("weather/weatherView.html");
+			response.sendRedirect("weather/Test2.jsp");
 		} else if (command.equals("calendar_main")) {
             //int member_no = 1;
             List<CalendarDto> list = biz.selectTripList(1);
@@ -693,10 +690,6 @@ public class pet_servlet extends HttpServlet {
         	int member_no = Integer.parseInt(request.getParameter("member_no"));
         	dispatch(request, response, "myinfo/myinfo_businessup.jsp?member_no="+member_no);
         }
-
-         if (command.equals("weather_main")) {
-			response.sendRedirect("weather/weatherView.html");
-		}
       
 
     	if("login_login".equals(command)) {
@@ -840,7 +833,6 @@ public class pet_servlet extends HttpServlet {
             List<PetDto> petlist = biz.selectPetList(member_no);
             request.setAttribute("petlist", petlist);
             dispatch(request, response, "pet/pet_main.jsp");
-
 
         } else if (command.equals("picture_insert_select")) {
 
@@ -1089,14 +1081,7 @@ public class pet_servlet extends HttpServlet {
 				System.out.println("삭제 실패");
 				dispatch(request, response, "index.html");
 			}
-		}
-
-        if (command.equals("weather_main")) {
-			response.sendRedirect("weather/weatherView.html");
-		}
-        
-        
-        
+		}        
         // 캘린더 내 clud
         
         if (command.equals("calendar_calMain")) {
@@ -1197,9 +1182,9 @@ public class pet_servlet extends HttpServlet {
      		
      		int res = biz.CalendarDelete(calendar_no);
      		if (res > 0) {
-     			jsResponse(response, "삭제가 완료되었습니다.", "/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
+     			jsResponse(response, "삭제가 완료되었습니다.", "../pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
      		} else {
-     			jsResponse(response, "오류가 발생했습니다.", "/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
+     			jsResponse(response, "오류가 발생했습니다.", "../pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
      		}
      	}
      		
@@ -1239,9 +1224,9 @@ public class pet_servlet extends HttpServlet {
      		int res = biz.CalendarUpdate(dto);
      			
      		if (res > 0) {
-     			jsResponse(response, "수정이 완료되었습니다.", "/semi_PetDiary/pet.do?command="+"calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
+     			jsResponse(response, "수정이 완료되었습니다.", "../pet.do?command="+"calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
      		} else {
-     			jsResponse(response, "오류가 발생했습니다.", "/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
+     			jsResponse(response, "오류가 발생했습니다.", "../pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
      		}
 
      	}
@@ -1255,9 +1240,6 @@ public class pet_servlet extends HttpServlet {
     		response.sendRedirect("main/main.jsp");
    		}
     	
-    	if(command.equals("weather")) {
-    		response.sendRedirect("weather/Test.jsp");
-    	}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

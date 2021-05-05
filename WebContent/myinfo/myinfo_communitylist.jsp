@@ -65,7 +65,7 @@ SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd"); //원하
 	
 		<%for(CommunityDto dto : list){ %>	
 				
-				<div class="row" onclick="location.href='/semi_PetDiary/pet.do?command=community_detail&seq=<%=dto.getCommunity_seq()%>&community_no=<%=dto.getCommunity_no()%>'">
+				<div class="row" onclick="location.href='../pet.do?command=community_detail&seq=<%=dto.getCommunity_seq()%>&community_no=<%=dto.getCommunity_no()%>'">
 					<span class="cell col1"><%=dto.getCommunity_seq() %></span>
 					<span class="cell col2"><%=dto.getCommunity_title() %></span>
 					<span class="cell col3"><%=simpleDateFormat.format(dto.getCommunity_regdate()) %></span>

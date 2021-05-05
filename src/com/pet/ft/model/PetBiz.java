@@ -90,5 +90,14 @@ public interface PetBiz {
 	
 	
 	public List<BusinessDto> businessList();
+	
+	//식당 카페 리스트
+	public List<BusinessDto> BusinessList(int offset, int noOfRecords);
+	public int businessTotal();
+	public List<BusinessDto> menu();
+	
+	
+
+	
     
 }

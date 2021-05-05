@@ -19,7 +19,7 @@
 
 <title>Insert title here</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="/semi_PetDiary/resources/js/script.js"></script>
+<script type="text/javascript" src="../resources/js/script.js"></script>
 
 
 <style type="text/css">

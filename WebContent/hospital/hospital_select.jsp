@@ -16,7 +16,7 @@
 function PopUpSubmit(RTC) {
 	var frm = document.getElementById(RTC);
 		window.open('', 'viewer', 'width=1400, height=960 location = no');
-		frm.action = "/semi_PetDiary/pet.do";
+		frm.action = "../pet.do";
 		frm.target = "viewer";
 		frm.method = "post";
 		frm.submit();
@@ -82,7 +82,6 @@ function PopUpSubmit(RTC) {
 	}
 %>
   <%@include file="../main/header.jsp"%>
-
 		
 	<div class="hospital_container">
 		<h3 class="hospital_name">${dto.business_name}</h3>
