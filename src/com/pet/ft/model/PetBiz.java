@@ -88,4 +88,7 @@ public interface PetBiz {
 	//비속어 필터링
 	public int InsertFilter(List<String> list);
 	
+	
+	public List<BusinessDto> businessList();
+    
 }

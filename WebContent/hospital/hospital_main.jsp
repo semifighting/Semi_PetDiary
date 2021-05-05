@@ -152,8 +152,7 @@
          					<div class="hospital_bottom_section">
            						<div class="hospital_details">
               						<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}" class="hospital_title">${dto.business_name}</a>
-             						<p class="hospital_addr">${dto.business_addr}</p>
-             						
+             						<p class="hospital_addr">${dto.business_addr}</p> 						
               					</div>
          					</div>
        					</article>

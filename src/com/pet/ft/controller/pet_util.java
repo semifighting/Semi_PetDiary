@@ -30,6 +30,7 @@ public class pet_util {
 
 
 	public static int CommunityCommentCount(int seq) {
+<<<<<<< HEAD
 		
 		int res = dao.CommunityCommentCount(seq)-1;
 		if(res ==-1) {
@@ -39,6 +40,13 @@ public class pet_util {
 	}
 	public static int LikesCount(int seq) {
 		return dao.SelectLikeCount(seq);
+=======
+		int res = dao.CommunityCommentCount(seq)-1;
+		return res;
+	}
+	public static String FromBussinessNoTogetName(int seq) {
+		return null;
+>>>>>>> jihyeon
 	}
 	
 
@@ -66,9 +74,14 @@ public class pet_util {
 		
 		for (CalendarDto dto : list) {
 			if (dto.getCalendar_startdate().substring(6, 8).equals(d)) {
+<<<<<<< HEAD
 				res += "<p>"+ dto.getCalendar_title() + "</p>";
 				res += "<p>"
 						+ ((dto.getCalendar_title().length() > 6)? dto.getCalendar_title().substring(0,6) + "   ··" : dto.getCalendar_title())
+=======
+				res += "<p name=\"view\" id=\"view\">"
+						+ ((dto.getCalendar_title().length() > 5)? dto.getCalendar_title().substring(0,5) : dto.getCalendar_title())
+>>>>>>> jihyeon
 						+ "</p>";
 			}
 		}

@@ -55,7 +55,10 @@
       <result property="calendar_content" column="CALENDAR_CONTENT"/>
       <result property="member_no" column="MEMBER_NO"/>
   </resultMap>
+<<<<<<< HEAD
 
+=======
+>>>>>>> jihyeon
   	<resultMap type="MemberDto" id="memberListMap">
   		<result property="member_no" column="MEMBER_NO"/>
   		<result property="member_name" column="MEMBER_NAME"/>
@@ -66,7 +69,6 @@
   		<result property="member_role" column="MEMBER_ROLE"/>
   		<result property="member_address" column="MEMBER_ADDRESS"/>
   	</resultMap>
-
   	<resultMap type="CommunityDto" id="reportListMap">
   		<result property="community_seq" column="COMMUNITY_SEQ"/>
   		<result property="community_title" column="COMMUNITY_TITLE"/>
@@ -105,7 +107,6 @@
   		SELECT MEMBER_ID FROM MEMBER
   		WHERE MEMBER_ID = #{member_id}
   	</select>
-
   	<select id="SignUpEmailChk" resultType="MemberDto" parameterType="String">
   		SELECT MEMBER_EMAIL FROM MEMBER
   		WHERE MEMBER_EMAIL = #{member_email}
@@ -271,9 +272,7 @@
         FROM PET
         WHERE MEMBER_NO = ${member_no}
         AND PET_NO = ${pet_no}
-          AND PET_NO = ${pet_no}
     </select>
-
     <select id="selectPictureList" resultMap="pictureMap" parameterType="int">
         SELECT PICTURE_NO, PICTURE_NAME, PICTURE_DIRECTORY, MEMBER_NO
         FROM PICTURE
@@ -285,7 +284,6 @@
         FROM PICTURE
         WHERE MEMBER_NO = #{member_no}
         AND PICTURE_NO = #{picture_no}
-          AND PICTURE_NO = #{picture_no}
     </select>
 
     <select id="selectTripList" resultMap="calendarMap" parameterType="int">
@@ -298,7 +296,6 @@
         FROM CALENDAR
         WHERE MEMBER_NO = #{member_no}
         AND CALENDAR_NO = #{calendar_no}
-          AND CALENDAR_NO = #{calendar_no}
     </select>
 
     <select id="getCount" resultType="int" parameterType="int">
@@ -529,22 +526,21 @@
   		FROM ( SELECT (ROW_NUMBER() OVER(PARTITION BY SUBSTR(CALENDAR_STARTDATE, 1, 8) ORDER BY CALENDAR_STARTDATE )) RN, CALENDAR_NO, CALENDAR_STARTDATE, CALENDAR_ENDDATE, CALENDAR_NECESSITY, CALENDAR_ITEM, CALENDAR_TITLE, CALENDAR_CONTENT, MEMBER_NO
   		FROM CALENDAR
   		WHERE MEMBER_NO = #{member_no} AND SUBSTR(CALENDAR_STARTDATE, 1, 6) = #{calendar_startdate})
-  		WHERE RN BETWEEN 1 AND 3
+  		WHERE RN BETWEEN 1 AND 2
   	</select>
-
+  	
   	<select id = "CalendarList" parameterType="Map" resultType="CalendarDto">
   		SELECT * FROM CALENDAR WHERE MEMBER_NO = #{member_no} AND SUBSTR(CALENDAR_STARTDATE, 1, 8) = #{calendar_startdate}
   	</select>
-
+  	
   	<select id = "CalendarOne" parameterType="int" resultType="CalendarDto">
   		SELECT * FROM CALENDAR WHERE CALENDAR_NO = #{calendar_no}
   	</select>
-
+  	
   	<insert id ="CalendarInsert" parameterType="CalendarDto">
   		INSERT INTO CALENDAR
   		VALUES(CALENDAR_NO_SEQ.NEXTVAL, #{calendar_startdate}, #{calendar_enddate}, #{calendar_necessity}, #{calendar_item}, #{calendar_title}, #{calendar_content}, ${member_no})
   	</insert>
-
   	<update id="CalendarUpdate" parameterType="CalendarDto">
   		UPDATE CALENDAR
         SET CALENDAR_NECESSITY = #{calendar_necessity}, CALENDAR_ITEM = #{calendar_item}, CALENDAR_TITLE = #{calendar_title}, CALENDAR_CONTENT = #{calendar_content}
@@ -627,7 +623,44 @@
 		SELECT COMMUNITY_SEQ,COMMUNITY_TITLE, COMMUNITY_REGDATE, COMMUNITY_REPORT, COMMUNITY_REPORTCOUNT, COMMUNITY_REPORTCONTENT, COMMUNITY_VIEWS,COMMUNITY_NO, MEMBER_NO FROM COMMUNITY WHERE MEMBER_NO = #{member_no} ORDER BY COMMUNITY_SEQ DESC
 	</select>
 	
-	
-	
-	
+	<select id="SocialLogin" parameterType="String" resultType="MemberDto">
+  		SELECT MEMBER_NO, MEMBER_NAME, MEMBER_ID, MEMBER_PW, MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ROLE, MEMBER_ADDRESS
+  		FROM MEMBER
+  		WHERE MEMBER_ID = #{member_id}
+  	</select>
+  	<insert id="SocialSignUp" parameterType="MemberDto">
+  		INSERT INTO MEMBER
+  		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, 'PASSWORD', #{member_email}, #{member_phone}, 'USER', #{member_address})
+  	</insert>
+  		
+  	 <select id="findId" parameterType="Map" resultType="MemberDto">
+  		SELECT * FROM MEMBER WHERE MEMBER_NAME= #{member_name} AND MEMBER_EMAIL = #{member_email}
+  	</select>
+  	
+  	<select id="findPw" parameterType="Map" resultType="MemberDto">
+  		SELECT * FROM MEMBER WHERE MEMBER_NAME = #{member_name} AND MEMBER_EMAIL = #{member_email} AND MEMBER_ID = #{member_id}
+  	</select>
+  	
+  	<update id="resetPw" parameterType="Map">
+  		UPDATE MEMBER
+  		SET MEMBER_PW = #{member_pw}
+  		WHERE MEMBER_NAME = #{member_name} AND MEMBER_EMAIL = #{member_email} AND MEMBER_ID = #{member_id}
+  	</update>
+  	
+  	<update id="memberUpdate" parameterType="MemberDto">
+  		UPDATE MEMBER
+  		SET MEMBER_PW = #{member_pw}, MEMBER_EMAIL = #{member_email}, MEMBER_PHONE = #{member_phone}, MEMBER_ADDRESS = #{member_address}
+  		WHERE MEMBER_NO = #{member_no}
+  	</update>
+  	
+  	<delete id="memberDelete" parameterType="int">
+  		DELETE FROM MEMBER
+  		WHERE MEMBER_NO = #{member_no}
+  	</delete>
+  	
+  	<!-- 추가 -->
+  	<select id="BusinessListAll" resultMap="businessListMap">
+        SELECT * FROM BUSINESS
+    </select>
+  	
   </mapper>

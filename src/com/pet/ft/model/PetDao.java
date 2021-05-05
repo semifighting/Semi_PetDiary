@@ -136,5 +136,7 @@ public interface PetDao {
 
 	
 	
+	
+	public List<BusinessDto> businessList();
 
 }
