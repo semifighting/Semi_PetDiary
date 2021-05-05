@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <% request.setCharacterEncoding("UTF-8"); %>
@@ -8,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>일정 수정</title>
+<title>캘린더</title>
 <style type="text/css">
 	
 	#update {
@@ -62,7 +63,7 @@
 
 %>
 
-	<form id="update" action="/semi_PetDiary/pet.do" method="post">
+	<form id="update" action="../pet.do" method="post">
 		<div id="date"><%=year %>년 <%=month %>월 <%=date %>일</div>
 		<br/>
 		<input type="hidden" name="command" value="calendar_calUpdateform"/>
@@ -97,7 +98,5 @@
 			</div>
 		</table>
 	</form>
-
-
 </body>
 </html>

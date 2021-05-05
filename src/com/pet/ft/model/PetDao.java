@@ -1,10 +1,10 @@
 package com.pet.ft.model;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
-import org.apache.ibatis.annotations.Param;
 import com.pet.ft.dto.CalendarDto;
 import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
@@ -26,47 +26,56 @@ public interface PetDao {
 	public int totalHospital();
 
 	public BusinessDto hospitalSelect(int business_num);
-
-	int CommentInsert(CommunityDto cdto);
+		
+	
 
 	List<CommunityDto> CommentList(int community_no);
 
 
 	List<CommunityDto> CommunitySearchList(String filter, String community_search);
 
-	int CommunityReport(int community_seq);
+	public int CommunityReport(int community_seq);
 
 	int CommunityUpdate(CommunityDto cdto);
 
 	int CommunityDelete(int seq);
+
+	int CommentInsert(CommunityDto cdto);
 
 	int CommunityViews(int seq);
 
 	int CommunityCommentCount(int seq);
 
 	public int hospitalBookInsert(BookDto dto);
+	
+	// member
+	public MemberDto MemberOne(int member_no);
+	public int MemberInsert(MemberDto dto);
+	public MemberDto SignUpIdChk(String member_id);
+	public MemberDto SighUpEmailChk(String member_email);
+	public MemberDto Login(String member_id, String member_pw);
+	public MemberDto SocialLogin(String member_id);
+	public int SocialSignUp(MemberDto dto);
+	public MemberDto findId(String member_name, String member_email);
+	public MemberDto findPw(String member_name, String member_email, String member_id);
+	public int resetPw(String member_name, String member_email, String member_id, String member_pw);
+	public int memberUpdate(MemberDto dto);
+	public int memberDelete(int member_no);
 
-	MemberDto MemberOne(int member_no);
-
-	int MemberInsert(MemberDto dto);
-
-
-	// 내가 추가 !!
-	// id 중복체크
-	MemberDto SignUpIdChk(String member_id);
-	MemberDto SighUpEmailChk(String member_email);
-
-
-
-		MemberDto Login(String member_id, String member_pw);
 	public int totalMember();
 	public int totalReport();
-	public List<MemberDto> memberList();
+	public int totalBookHos();
+	public int totalBookSt();
+	public List<BookDto> totalDateTime();
+	
+	
+	
+	// ����¡ o
 	public List<MemberDto> memberList(int offset, int noOfRecords);
-	public List<CommunityDto> reportList();
-	public int changeRole(MemberDto dto);
-	public int deleteCommnutiy(int seq);
-	public boolean nextPage(String pageNumber);
+	public List<CommunityDto> reportList(int offset, int noOfRecords);
+	public List<BookDto> bookListHos(int offset, int noOfRecords);
+	public List<BookDto> bookListSt(int offset, int noOfRecords);
+	
 
 	// pet
     public List<PetDto> selectPetList(int member_no);
@@ -91,6 +100,12 @@ public interface PetDao {
     public int insertTrip(CalendarDto dto);
     public int deleteTrip(int member_no, int calendar_no);
 
+	// member
+
+	public int changeRole(MemberDto dto);
+	public int deleteCommnutiy(int seq);
+	public boolean nextPage(String pageNumber);
+    HashMap<String, Integer> SelectMyinfoCount(int member_no);
 
     //calendar - 캘린더 내 clud
     public List<CalendarDto> CalViewList(int member_no, String yyyyMM);

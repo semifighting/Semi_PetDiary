@@ -11,10 +11,6 @@ import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
 
 
-
-
-
-
 public interface PetBiz {
 	
 	
@@ -27,23 +23,28 @@ public interface PetBiz {
 	public BusinessDto hospitalSelect(int business_num);
 
 	public int hospitalBookInsert(BookDto dto);
-
-
-
 	public BusinessDto businessOne(int business_num);
 
 	public int totalMember();
 	public int totalReport();
-	public List<MemberDto> memberList();
+	public int totalBookHos();
+	public int totalBookSt();
+	public List<BookDto> totalDateTime();
+	
+//	public List<MemberDto> memberList();
+//	public List<CommunityDto> reportList();
+	
 	public List<MemberDto> memberList(int offset, int noOfRecords);
-	public List<CommunityDto> reportList();
+
+	public List<CommunityDto> reportList(int offset, int noOfRecords);
+	public List<BookDto> bookListHos(int offset, int noOfRecords);
+	public List<BookDto> bookListSt(int offset, int noOfRecords);
+	
 	public int changeRole(MemberDto dto);
 	public int deleteCommnutiy(int seq);
 
 
-
-
-	   //pet
+	//pet
     public List<PetDto> selectPetList(int member_no);
     public PetDto selectPetOne(int member_no, int pet_no);
     public int updatePet(PetDto dto);
@@ -73,8 +74,23 @@ public interface PetBiz {
 	public CalendarDto CalendarOne(int calendar_no);
 	public int CalendarDelete(int calendar_no);
 	public int CalendarUpdate(CalendarDto dto);
-	
-	//member
+
 	public MemberDto Login(String member_id, String member_pw);
+    public MemberDto SocialLogin(String member_id);
+	public int SocialSignUp(MemberDto dto);
+    public MemberDto findId(String member_name, String member_email);
+	public MemberDto findPw(String member_name, String member_email, String member_id);
+	public int resetPw(String member_name, String member_email, String member_id, String member_pw);
+	public int memberUpdate(MemberDto dto);
+	public int memberDelete(int member_no);
+	
+	//식당 카페 리스트
+	public List<BusinessDto> BusinessList(int offset, int noOfRecords);
+	public int businessTotal();
+	public List<BusinessDto> menu();
+	
+	
+
+	
     
 }

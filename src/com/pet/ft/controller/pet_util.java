@@ -27,6 +27,8 @@ public class pet_util {
 	public static String FromMemberNoTogetId(int member_no) {
 		return dao.MemberOne(member_no).getMember_id();
 	}	
+
+
 	public static int CommunityCommentCount(int seq) {
 		int res = dao.CommunityCommentCount(seq)-1;
 		return res;
@@ -60,14 +62,12 @@ public class pet_util {
 		
 		for (CalendarDto dto : list) {
 			if (dto.getCalendar_startdate().substring(6, 8).equals(d)) {
+				res += "<p>"+ dto.getCalendar_title() + "</p>";
 				res += "<p>"
 						+ ((dto.getCalendar_title().length() > 6)? dto.getCalendar_title().substring(0,6) + "   ··" : dto.getCalendar_title())
 						+ "</p>";
 			}
 		}
-		
 		return res;
 	}
-	
-	
 }

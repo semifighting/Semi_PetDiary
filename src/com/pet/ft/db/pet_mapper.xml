@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.pet.ft.mapper">
-
+	  
+<mapper namespace="com.pet.ft.mapper">
 
   <resultMap id="diaryMap" type="DiaryDto">
       <result property="diary_no" column="DIARY_NO"/>
@@ -12,6 +12,19 @@
       <result property="diary_regdate" column="DIARY_REGDATE"/>
       <result property="member_no" column="MEMBER_NO"/>
   </resultMap>
+  
+  	<resultMap type="BusinessDto" id="businessListMap">
+  		<result property="business_num" column="BUSINESS_NUM" />
+  		<result property="member_phone" column="MEMBER_PHONE" />
+  		<result property="business_name" column="BUSINESS_NAME" />
+  		<result property="business_addr" column="BUSINESS_ADDR" />
+  		<result property="business_role" column="BUSINESS_ROLE" />
+  		<result property="business_time" column="BUSINESS_TIME" />
+  		<result property="business_park" column="BUSINESS_PARK" />
+  		<result property="business_book" column="BUSINESS_book" />
+  		<result property="business_etc" column="BUSINESS_etc" />
+  		<result property="business_no" column="BUSINESS_NO" />
+  	</resultMap>
 
   <resultMap id="petMap" type="PetDto">
       <result property="pet_no" column="PET_NO"/>
@@ -43,6 +56,7 @@
       <result property="calendar_content" column="CALENDAR_CONTENT"/>
       <result property="member_no" column="MEMBER_NO"/>
   </resultMap>
+
   	<resultMap type="MemberDto" id="memberListMap">
   		<result property="member_no" column="MEMBER_NO"/>
   		<result property="member_name" column="MEMBER_NAME"/>
@@ -68,8 +82,21 @@
   		<collection property="memberVO" resultMap="memberListMap"></collection>
   	</resultMap>
 
-
-
+  	<resultMap type="BookDto" id="bookListMap">
+  		<result property="book_num" column="BOOK_NUM" />
+  		<result property="book_date" column="BOOK_DATE" />
+  		<result property="book_time" column="BOOK_TIME" />
+  		<result property="book_type" column="BOOK_TYPE" />
+  		<result property="business_num" column="BUSINESS_NUM" />
+  		<result property="member_no" column="MEMBER_NO" />
+  		<result property="book_price" column="BOOK_PRICE" />
+  		<result property="book_state" column="BOOK_STATE" />
+  		<result property="book_hostime" column="BOOK_HOSTIME" />
+  		<result property="book_counsel" column="BOOK_COUNSEL" />
+  		<collection property="memberVO" resultMap="memberListMap"></collection>
+  		<collection property="businessVO" resultMap="businessListMap"></collection>
+  	</resultMap>
+  
   	<insert id="MemberInsert" parameterType="MemberDto">
   		INSERT INTO MEMBER
   		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, #{member_pw}, #{member_email}, #{member_phone}, '회원', #{member_address})
@@ -138,6 +165,22 @@
   	<select id="CommunityOne" resultType="CommunityDto" parameterType="int">
   	  	SELECT * FROM COMMUNITY WHERE COMMUNITY_SEQ = #{community_seq}
   	</select>
+  	
+  	<select id="totalMember" resultType="int">
+  		SELECT COUNT(*) FROM MEMBER
+  	</select>
+  	
+	<select id="totalReport" resultType="int">
+  		SELECT COUNT(*) FROM COMMUNITY WHERE COMMUNITY_REPORT = 'Y'
+  	</select>
+  	
+  	<select id="totalBookHos" resultType="int">
+  		SELECT COUNT(*) FROM BOOK WHERE BOOK_TYPE = 'H'
+  	</select>
+  	
+  	<select id="totalBookSt" resultType="int">
+  		SELECT COUNT(*) FROM BOOK WHERE BOOK_TYPE = 'S'
+  	</select>
 
   	<update id="CommunityReport" parameterType="int">
   		UPDATE COMMUNITY SET COMMUNITY_REPORTCOUNT = COMMUNITY_REPORTCOUNT+1 WHERE COMMUNITY_SEQ = #{community_seq}
@@ -175,20 +218,39 @@
    		FROM BUSINESS
   		WHERE BUSINESS_NUM = #{business_num}
  	</select>
+ 	
+ 	
+ 	
+ 	
+ 																																	<!-- 식당 리스트 -->
+  	<select id="BusinessList" parameterType="hashmap" resultMap="businessListMap">
+		<![CDATA[
+		SELECT B.RNUM, B.BUSINESS_NUM, B.BUSINESS_NAME, B.BUSINESS_ADDR, B.BUSINESS_ROLE, B.MEMBER_PHONE, B.BUSINESS_PARK, B.BUSINESS_ETC, B.BUSINESS_BOOK
+		FROM(
+			SELECT ROWNUM AS RNUM, A.BUSINESS_NUM, A.BUSINESS_NAME, A.BUSINESS_ADDR, A.BUSINESS_ROLE, A.MEMBER_PHONE, A.BUSINESS_PARK, A.BUSINESS_ETC, A.BUSINESS_BOOK
+			FROM(
+					SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_ADDR, BUSINESS_ROLE, MEMBER_PHONE, BUSINESS_PARK, BUSINESS_ETC, BUSINESS_BOOK
+					FROM BUSINESS JOIN MEMBER USING(MEMBER_NO)
+					WHERE BUSINESS_ROLE = 'S'
+					ORDER BY BUSINESS_NUM) A
+			WHERE ROWNUM <= #{noOfRecords}) B
+		WHERE B.RNUM > #{offset}
+		]]>
+  	</select>
+  	<select id="menu" resultType="businessDto">
+  		SELECT DISTINCT *
+		FROM MENU
+		ORDER BY MENU_NAME
+  	</select>
 
-  	
 
-
-
-  	<select id="BusinessList" resultType="BusinessDto">
-	  	SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_ADDR,BUSINESS_ROLE, MEMBER_PHONE, BUSINESS_PARK
-		FROM BUSINESS JOIN MEMBER USING(MEMBER_NO)
+  	<select id="BusinessTotal" resultType="int">
+		SELECT COUNT(*) FROM BUSINESS JOIN MEMBER USING(MEMBER_NO)
 		WHERE BUSINESS_ROLE = 'S'
-		ORDER BY BUSINESS_NUM DESC
   	</select>
 
   	 <select id="BusinessOne" parameterType="int" resultType="BusinessDto">
- 		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME, BUSINESS_ROLE
+  		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME, BUSINESS_ROLE
    		FROM BUSINESS JOIN MEMBER USING(MEMBER_NO)
   		WHERE BUSINESS_NUM = #{business_num}
   	</select>
@@ -209,8 +271,10 @@
         SELECT PET_NO, PET_SPECIES, PET_BREED, PET_NAME, PET_BIRTHDAY, PET_GENDER, MEMBER_NO, PET_PATH, PET_VACCINATION
         FROM PET
         WHERE MEMBER_NO = ${member_no}
+        AND PET_NO = ${pet_no}
           AND PET_NO = ${pet_no}
     </select>
+
     <select id="selectPictureList" resultMap="pictureMap" parameterType="int">
         SELECT PICTURE_NO, PICTURE_NAME, PICTURE_DIRECTORY, MEMBER_NO
         FROM PICTURE
@@ -221,6 +285,7 @@
         SELECT PICTURE_NO, PICTURE_NAME, PICTURE_DIRECTORY, MEMBER_NO
         FROM PICTURE
         WHERE MEMBER_NO = #{member_no}
+        AND PICTURE_NO = #{picture_no}
           AND PICTURE_NO = #{picture_no}
     </select>
 
@@ -233,6 +298,7 @@
         SELECT CALENDAR_NO, CALENDAR_STARTDATE, CALENDAR_ENDDATE, CALENDAR_NECESSITY, CALENDAR_ITEM, CALENDAR_TITLE, CALENDAR_CONTENT, MEMBER_NO
         FROM CALENDAR
         WHERE MEMBER_NO = #{member_no}
+        AND CALENDAR_NO = #{calendar_no}
           AND CALENDAR_NO = #{calendar_no}
     </select>
 
@@ -308,10 +374,7 @@
         WHERE CALENDAR_NO = #{calendar_no}
     </update>
 
-  	<select id="totalMember" resultType="int">
-  		SELECT COUNT(*) FROM MEMBER
-  	</select>
-
+  	
   	<select id="memberList" resultMap="memberListMap" >
   		<![CDATA[
   		SELECT MEMBER_NO, MEMBER_NAME, MEMBER_ID, MEMBER_EMAIL, MEMBER_ROLE, MEMBER_PHONE, MEMBER_ADDRESS
@@ -319,35 +382,100 @@
   		ORDER BY MEMBER_NO DESC
   		]]>
   	</select>
-
-  	<select id="memberListPaging" parameterType="hashmap" resultMap="memberListMap" >
-  		SELECT SQL_CALC_FOUND_ROWS
-  			   MEMBER_NO,
-  			   MEMBER_NAME,
-  			   MEMBER_ID,
-  			   MEMBER_EMAIL,
-  			   MEMBER_ROLE,
-  			   MEMBER_PHONE,
-  			   MEMBER_ADDRESS
+	  
+  	<select id="totalDateTime" resultMap="bookListMap">
+  		SELECT BOOK_DATE, BOOK_TIME FROM BOOK
+  	</select>
+  	
+<!--   	
+	<select id="memberList" resultMap="memberListMap" >
+  		<![CDATA[
+  		SELECT MEMBER_NO, MEMBER_NAME, MEMBER_ID, MEMBER_EMAIL, MEMBER_ROLE, MEMBER_PHONE, MEMBER_ADDRESS
   		FROM MEMBER
-  		LIMIT #{offset}, #{noOfRecords}
+  		ORDER BY MEMBER_NO DESC
+  		]]>
+  	</select>
+  		
+  	<select	id="reportList" resultMap="reportListMap">
+  		SELECT a.COMMUNITY_SEQ, a.COMMUNITY_TITLE, a .COMMUNITY_REPORTCOUNT, a.COMMUNITY_REPORTCONTENT, a.COMMUNITY_REGDATE, b.MEMBER_ID
+  		FROM COMMUNITY a JOIN MEMBER b on a.member_no = b.member_no WHERE COMMUNITY_REPORT = 'Y'
+  		ORDER BY COMMUNITY_SEQ DESC
+  	</select>	 -->
+  		
+  	<select id="memberListPaging" parameterType="hashmap" resultMap="memberListMap" >
+		<![CDATA[
+		SELECT B.RNUM, B.MEMBER_NO, B.MEMBER_NAME, B.MEMBER_ID, B.MEMBER_EMAIL, B.MEMBER_ROLE, B.MEMBER_PHONE, B.MEMBER_ADDRESS
+		FROM(
+			SELECT ROWNUM AS RNUM, A.MEMBER_NO, A.MEMBER_NAME, A.MEMBER_ID, A.MEMBER_EMAIL, A.MEMBER_ROLE, A.MEMBER_PHONE, A.MEMBER_ADDRESS
+			FROM(
+					SELECT  MEMBER_NO, MEMBER_NAME, MEMBER_ID, MEMBER_EMAIL, MEMBER_ROLE, MEMBER_PHONE, MEMBER_ADDRESS
+					FROM MEMBER
+					ORDER BY MEMBER_NO) A
+			WHERE ROWNUM <= #{noOfRecords}) B
+		WHERE B.RNUM > #{offset}
+		]]>
+  	</select>
+  	
+  	<select	id="reportListPaging" parameterType="hashmap" resultMap="reportListMap">
+  		<![CDATA[
+  		SELECT D.RNUM, D.COMMUNITY_SEQ, D.COMMUNITY_TITLE, D.COMMUNITY_REPORTCOUNT, D.COMMUNITY_REPORTCONTENT, D.COMMUNITY_REGDATE, D.MEMBER_ID
+		FROM(
+			SELECT ROWNUM AS RNUM, C.COMMUNITY_SEQ, C.COMMUNITY_TITLE, C.COMMUNITY_REPORTCOUNT, C.COMMUNITY_REPORTCONTENT, C.COMMUNITY_REGDATE, C.MEMBER_ID
+			FROM(
+				SELECT A.COMMUNITY_SEQ, A.COMMUNITY_TITLE, A.COMMUNITY_REPORTCOUNT, A.COMMUNITY_REPORTCONTENT, A.COMMUNITY_REGDATE, B.MEMBER_ID
+				FROM COMMUNITY A JOIN MEMBER B on A.member_no = B.member_no WHERE COMMUNITY_REPORT = 'Y'
+				ORDER BY COMMUNITY_SEQ) C
+			WHERE ROWNUM <= #{noOfRecords}) D
+		WHERE D.RNUM > #{offset}
+		]]>
+  	</select>
+  	
+  	<select	id="bookListHosPaging" parameterType="hashmap" resultMap="bookListMap">
+  		<![CDATA[
+  		SELECT E.RNUM, E.BOOK_NUM, E.MEMBER_NAME, E.BUSINESS_NAME, E.BOOK_DATE
+		FROM(
+			SELECT ROWNUM AS RNUM, D.BOOK_NUM, D.MEMBER_NAME, D.BUSINESS_NAME, D.BOOK_DATE
+			FROM(
+				SELECT A.BOOK_NUM, B.MEMBER_NAME, C.BUSINESS_NAME, A.BOOK_DATE
+				FROM BOOK A JOIN MEMBER B 
+				ON A.MEMBER_NO = B.MEMBER_NO 
+				JOIN BUSINESS C
+				ON A.BUSINESS_NUM = C.BUSINESS_NUM
+				WHERE BOOK_TYPE = 'H'
+				ORDER BY A.BOOK_NUM
+			) D
+			WHERE ROWNUM <= #{noOfRecords}) E
+		WHERE E.RNUM > #{offset}
+		]]>
   	</select>
 
+  	<select	id="bookListStPaging" parameterType="hashmap" resultMap="bookListMap">
+  		<![CDATA[
+  		SELECT E.RNUM, E.BOOK_NUM, E.MEMBER_NAME, E.BUSINESS_NAME, E.BOOK_DATE, E.BOOK_TIME
+		FROM(
+			SELECT ROWNUM AS RNUM, D.BOOK_NUM, D.MEMBER_NAME, D.BUSINESS_NAME, D.BOOK_DATE, D.BOOK_TIME
+			FROM(
+				SELECT A.BOOK_NUM, B.MEMBER_NAME, C.BUSINESS_NAME, A.BOOK_DATE, A.BOOK_TIME
+				FROM BOOK A JOIN MEMBER B 
+				ON A.MEMBER_NO = B.MEMBER_NO 
+				JOIN BUSINESS C
+				ON A.BUSINESS_NUM = C.BUSINESS_NUM
+				WHERE BOOK_TYPE = 'S'
+				ORDER BY A.BOOK_NUM
+			) D
+			WHERE ROWNUM <= #{noOfRecords}) E
+		WHERE E.RNUM > #{offset}
+		]]>
+  	</select>
+  	
+  	
+  	
   	<update id="changeRole" parameterType="MemberDto">
   		UPDATE MEMBER
   		SET MEMBER_ROLE = #{member_role}
   		WHERE MEMBER_NO = #{member_no}
   	</update>
-
-  	<select id="totalReport" resultType="int">
-  		SELECT COUNT(*) FROM COMMUNITY WHERE COMMUNITY_REPORT = 'Y'
-  	</select>
-
-  	<select	id="reportList" resultMap="reportListMap">
-  		SELECT a.COMMUNITY_SEQ, a.COMMUNITY_TITLE, a .COMMUNITY_REPORTCOUNT, a.COMMUNITY_REPORTCONTENT, a.COMMUNITY_REGDATE, b.MEMBER_ID
-  		FROM COMMUNITY a JOIN MEMBER b on a.member_no = b.member_no WHERE COMMUNITY_REPORT = 'Y'
-  		ORDER BY COMMUNITY_SEQ DESC
-  	</select>
+  	
 
   	<select id="selectTotalRecords" resultType="int">
   		SELECT FOUND_ROWS();
@@ -386,8 +514,14 @@
 
   	<insert id="BookCounselInsert" parameterType="BookDto">
   		INSERT INTO BOOK
-  		VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',#{business_num},#{member_no},
-  				#{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR},#{book_counsel})
+        VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',#{business_num}, #{member_no},
+               #{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR},#{book_counsel})         
+  	</insert>
+
+  	<insert id="counselInsert" parameterType="BookDto">
+  		INSERT INTO BOOK
+        VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',#{business_num}, #{member_no},
+               #{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR},#{book_counsel})         
   	</insert>
 
   	<!-- 캘린더 내 clud -->
@@ -421,6 +555,26 @@
   	<delete id="CalendarDelete" parameterType="int">
   		DELETE FROM CALENDAR WHERE CALENDAR_NO = #{calendar_no}
   	</delete>
+
+  	<select id="CountMyinfoPet" parameterType="int" resultType="int">
+  		SELECT COUNT(PET_NO) FROM PET WHERE MEMBER_NO = #{member_no}
+  	</select>
+  	<select id="CountMyinfoCalendar" parameterType="int" resultType="int">
+ 	  	SELECT COUNT(CALENDAR_NO) FROM CALENDAR WHERE MEMBER_NO = #{member_no} 	
+  	</select>
+  	<select id="CountMyinfoCommunity" parameterType="int" resultType="int">
+		SELECT COUNT(COMMUNITY_NO) FROM COMMUNITY WHERE MEMBER_NO = #{member_no} AND COMMUNITY_COMMENT = 0
+	</select>
+	<select id="CountMyinfoComment" parameterType="int" resultType="int">
+	SELECT COUNT(COMMUNITY_NO) FROM COMMUNITY WHERE MEMBER_NO = #{member_no} AND COMMUNITY_COMMENT >0
+	</select>
+	<select id="CountMyinfoBook" parameterType="int" resultType="int">
+	SELECT COUNT(BOOK_NUM) FROM BOOK WHERE MEMBER_NO = #{member_no}
+	</select>
+
+  	<insert id="BusinessInsert" parameterType="businessDto">
+  		INSERT INTO BUSINESS VALUES(BUSINESS_NUM_SEQ.NEXTVAL, #{business_name},#{business_addr},#{business_role},#{business_time},#{business_park},#{business_book},#{business_etc},#{business_no},#{member_no})
+  	</insert>
 
 
 
