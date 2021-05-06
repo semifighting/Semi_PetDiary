@@ -28,14 +28,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		return dto;
 	}
 
-	@Override
-	public int SocialSignUp(MemberDto dto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.delete(namespace+"SocialSignUp", dto);
-		}
-		return res;
-	}
 
 	@Override
 	public MemberDto findId(String member_name, String member_email) {
@@ -76,18 +68,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		return res;
 	}
 
-	@Override
-	public int memberUpdate(MemberDto dto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.update(namespace+"memberUpdate", dto);
-		}
-	
-		
-		return res;
-		
-	}
-	
 	@Override
 	public int memberDelete(int member_no) {
 		int res = 0;
@@ -180,25 +160,7 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		return mdto;
 	}
 	
-	@Override
-	public int CommunityReport(CommunityDto dto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.update(namespace+"CommunityReport", dto);
-		}
-		return res;
-	}
 
-
-	@Override
-	public int CommunityUpdate(CommunityDto cdto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.update(namespace+"CommunityUpdate", cdto);
-		}		
-		return res;
-		
-	}
 	
 	@Override
 	public int totalReport() {
@@ -269,16 +231,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 	}
 	
 	@Override
-	public int CommunityInsert(CommunityDto CDto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.insert(namespace+"CommunityInsert", CDto);
-		}
-		return res;
-	}
-
-
-	@Override
 	public List<MemberDto> memberList(int offset, int noOfRecords) {
 		
 		HashMap<String, Object> params = new HashMap<String, Object>();
@@ -317,15 +269,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
 	}
 	
-	@Override
-	public int hospitalBookInsert(BookDto dto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.insert(namespace+"counselInsert", dto);
-		}
-		return res;
-
-	}
 
 	
 	// 내가 작성
@@ -366,15 +309,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
 
 	@Override
-	public int travelInsert(TravelDto dto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.insert(namespace+"travelInsert", dto);
-		}
-		return res;
-	}
-
-	@Override
 	public List<TravelDto> travelList() {
 		SqlSession session = getSqlSessionFactory().openSession();
 		List<TravelDto> list = session.selectList(namespace + "travelList");
@@ -393,15 +327,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
 	}
 
-	@Override
-	public int travelUpdate(TravelDto dto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.insert(namespace+"travelupdate", dto);
-		}
-		return res;
-
-	}
 
 	@Override
 	public int CalendarInsert(CalendarDto CalDto) {
@@ -827,51 +752,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		}
 
 
-	@Override
-	public int insertRTC(PetRTCDto dto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.insert(namespace+"InsertRTC", dto);
-		}
-		return res;
-	}
-
-	@Override
-	public int updateRTC(PetRTCDto dto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.insert(namespace+"UpdateRTC", dto);
-		}
-		return res;
-	}
-
-
-	@Override
-	public LikesDto SelectLikeOne(LikesDto likedto) {
-		LikesDto dto = null;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			dto = session.selectOne(namespace+"SelectLikeOne",likedto);
-		}
-		return dto;
-	}
-
-	@Override
-	public int InsertLikes(LikesDto dto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.insert(namespace+"InsertLikes",dto);
-		}
-		return res;
-	}
-
-	@Override
-	public int DeleteLikes(LikesDto dto) {
-		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(true)){
-			res = session.delete(namespace+"DeleteLikes",dto);
-		}
-		return res;
-	}
 	@Override
 		public MemberDto Login(String member_id, String member_pw) {
 			MemberDto dto = null;

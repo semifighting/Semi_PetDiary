@@ -19,7 +19,6 @@ public class PetBizImpl implements PetBiz {
 
 	@Override
 	public int totalHospital() {
-		// TODO Auto-generated method stub
 		return dao.totalHospital();
 
 	}
@@ -236,7 +235,6 @@ public class PetBizImpl implements PetBiz {
 	
 	@Override
 	public MemberDto findPw(String member_name, String member_email, String member_id) {
-		// TODO Auto-generated method stub
 		return dao.findPw(member_name, member_email, member_id);
 	}
 	
@@ -272,26 +270,12 @@ public class PetBizImpl implements PetBiz {
 		return dao.CalendarOne(calendar_no);
 	}
 
-	@Override
-	public int SocialSignUp(MemberDto dto) {
-		return dao.SocialSignUp(dto);
-	}
-
-
-	@Override
-	public int memberUpdate(MemberDto dto) {
-		return dao.memberUpdate(dto);
-	}
 
 	@Override
 	public int memberDelete(int member_no) {
 		return dao.memberDelete(member_no);
 	}
 
-	@Override
-	public int InsertFilter(List<String> list) {
-		return dao.InsertFilter(list);
-	}
 
 	@Override
 	public List<BusinessDto> businessList()  {
@@ -346,4 +330,21 @@ public class PetBizImpl implements PetBiz {
 	public OrderDto selectOrderOne(int book_num) {
 		return dao.selectOrderOne(book_num);
 	}
+
+	@Override
+	public List<CalendarDto> CalendarList(int member_no, String yyyyMMdd) {
+		return dao.CalendarList(member_no, yyyyMMdd);
+	}
+
+	@Override
+	public int CalendarInsert(CalendarDto CalDto) {
+		return dao.CalendarInsert(CalDto);
+	}
+
+
+	@Override
+	public MemberDto Login(java.lang.String member_id, java.lang.String member_pw) {
+		return dao.Login(member_id, member_pw);
+	}
+
 }

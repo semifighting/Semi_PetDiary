@@ -115,8 +115,6 @@ public interface PetDao {
 	public int CalendarDelete(int calendar_no);
 	public int CalendarUpdate(CalendarDto dto);
 
-	public int InsertFilter(List<String> list);
-
 	public int insertRTC(PetRTCDto dto);
 
 	public PetRTCDto SelectRTCOne(int business_num);
