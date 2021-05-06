@@ -26,7 +26,7 @@ List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("commentList"
 			var content =$(this).siblings("input[name=comment_content]").val();
 			var community_no =<%=cdto.getCommunity_no()%>;
 			var community_seq =<%=cdto.getCommunity_seq()%>;
-			$(this).parent().replaceWith("<div style='border-bottom:1px solid #bbb; padding-top:10px; padding-bottom:10px;'><div style='margin: 0 auto; width: 750px;'><form action='../pet.do' method='get'> <input type='hidden' name='community_seq' value='"+community_seq+"'>  <input type='hidden' name='command' value='community_comment_update'> <input type='hidden' name='community_no' value='"+community_no+"'> <input type='hidden' name='seq' value='"+seq+"'> <textarea class='comment_content_input' name='content' rows='10' cols='100'>"+content+"</textarea> <input style='margin-left: 0px;'class='comment_update'type='submit' value='수정'> </form></div></div>");
+			$(this).parent().replaceWith("<div style='border-bottom:1px solid #bbb; padding-top:10px; padding-bottom:10px;'><div style='margin: 0 auto; width: 750px;'><form action='/semi_PetDiary/pet.do' method='get'> <input type='hidden' name='community_seq' value='"+community_seq+"'>  <input type='hidden' name='command' value='community_comment_update'> <input type='hidden' name='community_no' value='"+community_no+"'> <input type='hidden' name='seq' value='"+seq+"'> <textarea class='comment_content_input' name='content' rows='10' cols='100'>"+content+"</textarea> <input style='margin-left: 0px;'class='comment_update'type='submit' value='수정'> </form></div></div>");
 		})
 	})
 	
@@ -34,7 +34,7 @@ List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("commentList"
 	function PopUpSubmit(Id) {
 		var frm = document.getElementById(Id);
 			window.open('', 'report', 'width = 500, height = 330, top = 100, left = 200, location = no, resizable=no');
-			frm.action = "../pet.do";
+			frm.action = "/semi_PetDiary/pet.do";
 			frm.target = "report";
 			frm.method = "post";
 			frm.submit();
@@ -48,7 +48,7 @@ List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("commentList"
 	        document.getElementById("like").style.color='salmon';	        		
     	}
 		$.ajax({
-	        url:"../pet.do?command=community_like&seq=<%=cdto.getCommunity_seq()%>",
+	        url:"/semi_PetDiary/pet.do?command=community_like&seq=<%=cdto.getCommunity_seq()%>",
 	        type:'GET',
 	        success:function(data){
 	        },
@@ -61,7 +61,7 @@ List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("commentList"
 	
 </script>
 
-<link href="../resources/css/stylesheet.css" rel="stylesheet">
+<link href="/semi_PetDiary/resources/css/stylesheet.css" rel="stylesheet">
 <style type="text/css">
 
 .date {
@@ -224,11 +224,11 @@ String strDate = simpleDateFormat.format(cdto.getCommunity_regdate());%>
 						<input type="hidden" value="<%=cdto.getCommunity_seq()%>" name="seq">
 					</form>	
 						<%if((int)session.getAttribute("member_no")==cdto.getMember_no()){ %>
-				<input class="detail_button" style="left:50px" type="button" value="수정" onclick="location.href='../pet.do?command=community_updateform&seq=<%=cdto.getCommunity_seq()%>'"> 
-				<input class="detail_button "style="left:100px"  type="button" value="삭제" onclick="location.href='../pet.do?command=community_delete&seq=<%=cdto.getCommunity_seq()%>'"> 
+				<input class="detail_button" style="left:50px" type="button" value="수정" onclick="location.href='/semi_PetDiary/pet.do?command=community_updateform&seq=<%=cdto.getCommunity_seq()%>'"> 
+				<input class="detail_button "style="left:100px"  type="button" value="삭제" onclick="location.href='/semi_PetDiary/pet.do?command=community_delete&seq=<%=cdto.getCommunity_seq()%>'"> 
 				<%} %>
 			<%} %>
-				<button class="filter_button" onclick="location.href='../pet.do?command=community_detail&seq=<%=cdto.getCommunity_seq()%>&community_no=<%=cdto.getCommunity_no()%>'">비속어 필터링 ON </button>
+				<button class="filter_button" onclick="location.href='/semi_PetDiary/pet.do?command=community_detail&seq=<%=cdto.getCommunity_seq()%>&community_no=<%=cdto.getCommunity_no()%>'">비속어 필터링 ON </button>
 			</div>		
 				
 		
@@ -245,7 +245,7 @@ String strDate = simpleDateFormat.format(cdto.getCommunity_regdate());%>
 		<%if(session.getAttribute("member_no")!=null) {%>
 		<div id="community_comment_box">
 			<div id="community_comment_input_box">
-				<form  action="../pet.do" method="post">
+				<form  action="/semi_PetDiary/pet.do" method="post">
 					<input type='hidden' value="community_comment" name="command" >
 					<input type='hidden' value="<%=cdto.getCommunity_no() %>" name="community_no" >
 					<input type='hidden' value="<%=cdto.getCommunity_seq() %>" name="seq" >
@@ -276,7 +276,7 @@ String strDate = simpleDateFormat.format(cdto.getCommunity_regdate());%>
 				</form>
 					<%if((int)session.getAttribute("member_no")==commentdto.getMember_no()){ %>
 				<input style=" float: right; position: relative; bottom: 20px; right: 10px;" class="comment_update" type="button" value="수정""> 
-				<input style=" float: right; position: relative; bottom: 20px; right: 10px;" class="detail_button" type="button" value="삭제" onclick="location.href='../pet.do?command=community_comment_delete&seq=<%=commentdto.getCommunity_seq()%>&community_seq=<%=cdto.getCommunity_seq() %>'"> 			
+				<input style=" float: right; position: relative; bottom: 20px; right: 10px;" class="detail_button" type="button" value="삭제" onclick="location.href='/semi_PetDiary/pet.do?command=community_comment_delete&seq=<%=commentdto.getCommunity_seq()%>&community_seq=<%=cdto.getCommunity_seq() %>'"> 			
 				<input type="hidden" name="seq"class="comment_seq" value="<%=commentdto.getCommunity_seq()%>"> 
 				<input type="hidden" name="comment_content"class="comment_content" value="<%=commentdto.getCommunity_content()%>"/> 
 					<%} %>

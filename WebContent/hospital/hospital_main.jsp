@@ -148,11 +148,21 @@
 					<c:otherwise>
 						<c:forEach items="${list }" var="dto">
 			 			<article class="hospital_container">
+<<<<<<< HEAD
          				 	<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}"><img class="hospital_image" src="./resources/image/tico1.png"/></a>       
          					<div class="hospital_bottom_section">
            						<div class="hospital_details">
               						<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}" class="hospital_title">${dto.business_name}</a>
              						<p class="hospital_addr">${dto.business_addr}</p> 						
+=======
+         				 	<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}"><img class="hospital_image" src="./resources/image/tico1.png"/></a>
+           
+          
+         					<div class="hospital_bottom_section">
+           						<div class="hospital_details">
+              						<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}" class="hospital_title">${dto.business_name}</a>
+             						<p class="hospital_addr">${dto.business_addr}</p>
+>>>>>>> ig
               					</div>
          					</div>
        					</article>
@@ -174,7 +184,10 @@
 			<jsp:param name="endPageNo" value="${paging.endPageNo }"/>
 			<jsp:param name="nextPageNo" value="${paging.nextPageNo }"/>
 			<jsp:param name="finalPageNo" value="${paging.finalPageNo }"/>
+<<<<<<< HEAD
 			
+=======
+>>>>>>> ig
 	</jsp:include>
 	
 	

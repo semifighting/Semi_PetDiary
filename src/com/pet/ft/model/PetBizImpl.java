@@ -6,6 +6,8 @@ import java.util.List;
 import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
 import com.pet.ft.dto.CalendarDto;
+import com.pet.ft.model.PetDao;
+import com.pet.ft.model.PetDaoImpl;
 
 
 import com.pet.ft.dto.CommunityDto;
@@ -190,14 +192,16 @@ public class PetBizImpl implements PetBiz {
 	}
 
 	@Override
-	public int totalBookHos() {
-		return dao.totalBookHos();
+	public int totalBookHos(int member_no) {
+		return dao.totalBookHos(member_no);
 	}
+	
 
 	@Override
-	public int totalBookSt() {
-		return dao.totalBookSt();
+	public int totalBookSt(int member_no) {
+		return dao.totalBookSt(member_no);
 	}
+
 
 	@Override
 	public List<BookDto> totalDateTime(){
@@ -210,13 +214,13 @@ public class PetBizImpl implements PetBiz {
 	}
 	
 	@Override
-	public List<BookDto> bookListHos(int offset, int noOfRecords) {
-		return dao.bookListHos(offset, noOfRecords);
+	public List<BookDto> bookListHos(int offset, int noOfRecords, int member_no) {
+		return dao.bookListHos(offset, noOfRecords, member_no);
 	}
 	
 	@Override
-	public List<BookDto> bookListSt(int offset, int noOfRecords) {
-		return dao.bookListSt(offset, noOfRecords);
+	public List<BookDto> bookListSt(int offset, int noOfRecords, int member_no) {
+		return dao.bookListSt(offset, noOfRecords, member_no);
 	}
 
 
@@ -281,4 +285,8 @@ public class PetBizImpl implements PetBiz {
 	public List<BusinessDto> businessList() {
         return dao.businessList();
     }
+	public int bookdelete(int book_num) {
+		return dao.bookdelete(book_num);
+	}
+
 }

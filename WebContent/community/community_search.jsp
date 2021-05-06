@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="../resources/css/stylesheet.css" rel="stylesheet">
+<link href="/semi_PetDiary/resources/css/stylesheet.css" rel="stylesheet">
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
@@ -180,8 +180,8 @@ outline-color: salmon;
 
 	<div>
 		<div id="community_search">
-			<button class="write" onclick="location.href='../pet.do?command=community_insert_form'">글 작성</button>
-			<form action="../pet.do?" method="post">			
+			<button class="write" onclick="location.href='/semi_PetDiary/pet.do?command=community_insert_form'">글 작성</button>
+			<form action="/semi_PetDiary/pet.do?" method="post">			
 				<input type="hidden" name="command" value="community_search">
 				<select class="filter" name="filter">
 					<option <%if("title".equals(filter)){%>selected <%}%> value="title"> 제목</option>
@@ -202,7 +202,7 @@ outline-color: salmon;
 		
 				if(count<(paging)*8&&count>=(paging-1)*8){
 				%>
-				<div class="commnunity_entity" onclick="location.href='../pet.do?command=community_detail&seq=<%=dto.getCommunity_seq()%>&community_no=<%=dto.getCommunity_no()%>'">
+				<div class="commnunity_entity" onclick="location.href='/semi_PetDiary/pet.do?command=community_detail&seq=<%=dto.getCommunity_seq()%>&community_no=<%=dto.getCommunity_no()%>'">
 					<div class = "title" class="commnuity_title">
 						<%=dto.getCommunity_title() %>
 					</div>
@@ -243,10 +243,10 @@ outline-color: salmon;
 			for(int i =0; i<list.size()/8+1;i++){
 				if(i+1==paging){
 			%>
-				<li class="active"><a style="background-color: salmon;border-color: salmon;"  href='../pet.do?command=community_search&paging=<%=(i+1)%>&filter=<%=request.getParameter("filter")%>&search_content=<%=request.getParameter("search_content")%>'">  <%=i+1 %></a></li>
+				<li class="active"><a style="background-color: salmon;border-color: salmon;"  href='/semi_PetDiary/pet.do?command=community_search&paging=<%=(i+1)%>&filter=<%=request.getParameter("filter")%>&search_content=<%=request.getParameter("search_content")%>'">  <%=i+1 %></a></li>
 			<%}else{%>
 					
-				<li><a href='../pet.do?command=community&paging=<%=(i+1)%>'><%=i+1 %></a></li>
+				<li><a href='/semi_PetDiary/pet.do?command=community&paging=<%=(i+1)%>'><%=i+1 %></a></li>
 				<%}
 			}%>
 			</ul>

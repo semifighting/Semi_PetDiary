@@ -20,6 +20,8 @@ public interface PetDao {
 	int CommunityInsert(CommunityDto CDto);
 
 	List<CommunityDto> CommunityList();
+	
+	List<CommunityDto> CommunityList(int member_no);
 
 	CommunityDto CommunityOne(int seq);
 
@@ -60,17 +62,17 @@ public interface PetDao {
 
 	public int totalMember();
 	public int totalReport();
-	public int totalBookHos();
-	public int totalBookSt();
+	public int totalBookHos(int member_no);
+	public int totalBookSt(int member_no);
 	public List<BookDto> totalDateTime();
-
+	
 	
 	
 	// ����¡ o
 	public List<MemberDto> memberList(int offset, int noOfRecords);
 	public List<CommunityDto> reportList(int offset, int noOfRecords);
-	public List<BookDto> bookListHos(int offset, int noOfRecords);
-	public List<BookDto> bookListSt(int offset, int noOfRecords);
+	public List<BookDto> bookListHos(int offset, int noOfRecords, int member_no);
+	public List<BookDto> bookListSt(int offset, int noOfRecords, int member_no);
 	
 
 	// pet
@@ -133,6 +135,8 @@ public interface PetDao {
 	public LikesDto SelectLikeOne(LikesDto dto);
 	public int InsertLikes(LikesDto dto);
 	public int DeleteLikes(LikesDto dto);
+	public int bookdelete(int book_num);
+	
 
 	
 	

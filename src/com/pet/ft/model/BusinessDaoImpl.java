@@ -3,6 +3,7 @@ package com.pet.ft.model;
 import com.pet.ft.dto.BookDto;
 
 import com.pet.ft.dto.BusinessDto;
+import com.pet.ft.dto.CommunityDto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class BusinessDaoImpl extends SqlMapConfig implements BusinessDao {
 		
 		return list;
 	}
-
+	
 	@Override
 	public BusinessDto businessOne(int business_num) {
 		BusinessDto bdto = null;

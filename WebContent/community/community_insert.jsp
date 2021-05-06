@@ -7,8 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="../resources/css/stylesheet.css" rel="stylesheet">
-<link rel="stylesheet" href="../resources/css/summernote-lite.css">
+<link href="/semi_PetDiary/resources/css/stylesheet.css" rel="stylesheet">
+<link rel="stylesheet" href="/semi_PetDiary/resources/css/summernote-lite.css">
 
 <style type="text/css">
 #community_insert_contentbox{
@@ -88,7 +88,7 @@ $(document).ready(function() {
 
 <body>
 <%@include file="/main/header.jsp"%>
-	<form action="../pet.do" method="post" >
+	<form action="/semi_PetDiary/pet.do" method="post" >
 	<input type="hidden" name="command" value="community_insert">
 		<div id="community_insert_fullbox">
 			<div id ="community_insert_contentbox">

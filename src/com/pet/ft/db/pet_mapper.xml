@@ -56,6 +56,7 @@
       <result property="calendar_content" column="CALENDAR_CONTENT"/>
       <result property="member_no" column="MEMBER_NO"/>
   </resultMap>
+
   	<resultMap type="MemberDto" id="memberListMap">
   		<result property="member_no" column="MEMBER_NO"/>
   		<result property="member_name" column="MEMBER_NAME"/>
@@ -235,9 +236,6 @@
   		WHERE BUSINESS_NUM = #{business_num}
  	</select>
  	
- 	
- 	
- 	
  																																	<!-- 식당 리스트 -->
   	<select id="BusinessList" parameterType="hashmap" resultMap="businessListMap">
 		<![CDATA[
@@ -397,23 +395,9 @@
   	</select>
 	  
   	<select id="totalDateTime" resultMap="bookListMap">
-  		SELECT BOOK_DATE, BOOK_TIME FROM BOOK
+  		SELECT BOOK_DATE, BOOK_TIME, BUSINESS_NUM FROM BOOK
   	</select>
   	
-<!--   	
-	<select id="memberList" resultMap="memberListMap" >
-  		<![CDATA[
-  		SELECT MEMBER_NO, MEMBER_NAME, MEMBER_ID, MEMBER_EMAIL, MEMBER_ROLE, MEMBER_PHONE, MEMBER_ADDRESS
-  		FROM MEMBER
-  		ORDER BY MEMBER_NO DESC
-  		]]>
-  	</select>
-  		
-  	<select	id="reportList" resultMap="reportListMap">
-  		SELECT a.COMMUNITY_SEQ, a.COMMUNITY_TITLE, a .COMMUNITY_REPORTCOUNT, a.COMMUNITY_REPORTCONTENT, a.COMMUNITY_REGDATE, b.MEMBER_ID
-  		FROM COMMUNITY a JOIN MEMBER b on a.member_no = b.member_no WHERE COMMUNITY_REPORT = 'Y'
-  		ORDER BY COMMUNITY_SEQ DESC
-  	</select>	 -->
   		
   	<select id="memberListPaging" parameterType="hashmap" resultMap="memberListMap" >
 		<![CDATA[
@@ -480,6 +464,7 @@
 		WHERE E.RNUM > #{offset}
 		]]>
   	</select>
+
   	
   	
   	
@@ -680,4 +665,11 @@
         SELECT * FROM BUSINESS
     </select>
   	
+	
+	<delete id="bookDelete" parameterType="int">
+		DELETE FROM BOOK WHERE BOOK_NUM = #{book_num}
+	</delete>
+	
+
+
   </mapper>

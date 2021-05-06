@@ -27,17 +27,15 @@ public interface PetBiz {
 
 	public int totalMember();
 	public int totalReport();
-	public int totalBookHos();
-	public int totalBookSt();
+	public int totalBookHos(int member_no);
+	public int totalBookSt(int member_no);
+
 	public List<BookDto> totalDateTime();
-	
-//	public List<MemberDto> memberList();
-//	public List<CommunityDto> reportList();
 	
 	public List<MemberDto> memberList(int offset, int noOfRecords);
 	public List<CommunityDto> reportList(int offset, int noOfRecords);
-	public List<BookDto> bookListHos(int offset, int noOfRecords);
-	public List<BookDto> bookListSt(int offset, int noOfRecords);
+	public List<BookDto> bookListHos(int offset, int noOfRecords, int member_no);
+	public List<BookDto> bookListSt(int offset, int noOfRecords, int member_no);
 	
 	public int changeRole(MemberDto dto);
 	public int deleteCommnutiy(int seq);
@@ -99,5 +97,6 @@ public interface PetBiz {
 	
 
 	
+	public int bookdelete(int book_num);
     
 }

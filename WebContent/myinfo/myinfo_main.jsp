@@ -111,8 +111,8 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 				<div class="content"><b>이름</b>    <sapn class="content_in"><%= dto.getMember_name()%></sapn></div>
 				<div class="content"><b>전화번호</b>    <sapn class="content_in"><%=dto.getMember_phone() %></sapn></div>
 				<div class="content"><b>이메일</b>    <sapn class="content_in"><%=dto.getMember_email() %></sapn> </div>
-				<input class="myinfo_button" type="button" value="수정" onclick="location.href='../pet.do?command=myinfo_update'">
-				<input class="myinfo_button" type="button" value="Business계정 신청" onclick="location.href='../pet.do?command=myinfobusup&member_no=<%=dto.getMember_no()%>'">
+				<input class="myinfo_button" type="button" value="수정" onclick="location.href='/semi_PetDiary/pet.do?command=myinfo_update'">
+				<input class="myinfo_button" type="button" value="Business계정 신청" onclick="location.href='/semi_PetDiary/pet.do?command=myinfobusup&member_no=<%=dto.getMember_no()%>'">
 		</div>
 		<div class="myinfo_content">
 				<div class="title"><b>내 다이어리</b></div>
@@ -120,7 +120,7 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 				<br/>
 				<div class="content"><b> 내가 세운 여행 계획</b>   <span class="content_in"><%=map.get("CountMyinfoCalendar") %></span></div>
 		</div>
-		<div class="myinfo_content" onclick="location.href='../pet.do?command=MyCommunityList'">
+		<div class="myinfo_content" onclick="location.href='/semi_PetDiary/pet.do?command=MyCommunityList'">
 				<div class="title"><b>내 게시글</b></div>
 				<div class="content"><b>내가 쓴 글</b>   <span class="content_in"><%=map.get("CountMyinfoCommunity")%></span></div>
 				<br/>

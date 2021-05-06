@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>사업신청</title>
-<link href="../resources/css/stylesheet.css" rel="stylesheet">
+<link href="/semi_PetDiary/resources/css/stylesheet.css" rel="stylesheet">
 <style type="text/css">
 
 	#wrapform {
@@ -53,7 +53,7 @@
 
 
 	function searchAddr() {
-		  var pop = window.open("../login/login_addrChk.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
+		  var pop = window.open("/semi_PetDiary/login/login_addrChk.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
 	}
 	
 	function jusoCallBack(roadAddrPart1, roadAddrPart2,addrDetail){
@@ -69,7 +69,7 @@
 <body>
 <%@include file="/main/header.jsp"%>
 	
-	<form id="join" name="join" action="../pet.do" method="post">
+	<form id="join" name="join" action="/semi_PetDiary/pet.do" method="post">
 		<input type="hidden" name="command" value="myinfo_business"/>
 		<table>
 			<div id="wrapform">
