@@ -126,7 +126,7 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 				<br/>
 				<div class="content"><b>내가 쓴 댓글</b>   <span class="content_in"><%=map.get("CountMyinfoComment") %></span></div>
 		</div>
-		<div class="myinfo_content">
+		<div class="myinfo_content" onclick="location.href='/semi_PetDiary/paging.do?command=book'">
 				<div class="title"><b>내 예약현황 및 결제내역</b>   </div>
 				<div class="content"><b>내 예약현황</b>   <span class="content_in"><%=map.get("CountMyinfoBook") %></span></div>
 				<br/>				

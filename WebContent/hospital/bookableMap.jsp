@@ -371,7 +371,7 @@
   		
      } 
 		function travelPop(){
-			var popup = window.open('../travel/travel_Insert.jsp', '여행', 'width=1200px,height=8000px,scrollbars=yes');
+			var popup = window.open('../travel/travel_insert.jsp', '여행', 'width=1200px,height=8000px,scrollbars=yes');
 		}
 
    	 
