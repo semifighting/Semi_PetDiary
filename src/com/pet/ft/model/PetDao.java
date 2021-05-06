@@ -7,9 +7,12 @@ import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
 import com.pet.ft.dto.CalendarDto;
 import com.pet.ft.dto.CommunityDto;
+import com.pet.ft.dto.LikesDto;
 import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
+import com.pet.ft.dto.PetRTCDto;
 import com.pet.ft.dto.PictureDto;
+import com.pet.ft.dto.TravelDto;
 
 
 public interface PetDao {
@@ -18,35 +21,39 @@ public interface PetDao {
 	int CommunityInsert(CommunityDto CDto);
 
 	List<CommunityDto> CommunityList();
+	
+	List<CommunityDto> CommunityList(int member_no);
 
 	CommunityDto CommunityOne(int seq);
 
 	//병원상담
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
 	public int totalHospital();
-
-	public BusinessDto hospitalSelect(int business_num);
-		
 	
+	public List<BusinessDto> bookableMap();
+	public List<BusinessDto> foodMap();
 
-	List<CommunityDto> CommentList(int community_no);
-
-
-	List<CommunityDto> CommunitySearchList(String filter, String community_search);
-
-	public int CommunityReport(int community_seq);
-
-	int CommunityUpdate(CommunityDto cdto);
-
-	int CommunityDelete(int seq);
-
-	int CommentInsert(CommunityDto cdto);
-
-	int CommunityViews(int seq);
-
-	int CommunityCommentCount(int seq);
-
+	public BusinessDto hospitalSelect(int business_num);	
 	public int hospitalBookInsert(BookDto dto);
+	
+	public int travelInsert(TravelDto dto);
+	public List<TravelDto> travelList();
+	public TravelDto travelSelect(int travel_no);
+	public int travelUpdate(TravelDto dto);
+
+
+	public List<CommunityDto> CommentList(int community_no);
+	public List<CommunityDto> CommunitySearchList(String filter, String community_search);
+	public int CommunityReport(CommunityDto dto);
+	public int CommunityUpdate(CommunityDto cdto);
+	public int CommunityDelete(int seq);
+	public int CommentInsert(CommunityDto cdto);
+	public int CommunityViews(int seq);
+	public int CommunityCommentCount(int seq);
+	public List<CommunityDto> CommunityPageList(int page);
+	public List<CommunityDto> MyCommunityList(int member_no);
+	public int CommunityPageMax();
+
 	
 	// member
 	public MemberDto MemberOne(int member_no);
@@ -64,15 +71,17 @@ public interface PetDao {
 
 	public int totalMember();
 	public int totalReport();
-	public int totalBookHos();
-	public int totalBookSt();
+	public int totalBookHos(int member_no);
+	public int totalBookSt(int member_no);
 	public List<BookDto> totalDateTime();
 	
-	// 
+	
+	
+	// ����¡ o
 	public List<MemberDto> memberList(int offset, int noOfRecords);
 	public List<CommunityDto> reportList(int offset, int noOfRecords);
-	public List<BookDto> bookListHos(int offset, int noOfRecords);
-	public List<BookDto> bookListSt(int offset, int noOfRecords);
+	public List<BookDto> bookListHos(int offset, int noOfRecords, int member_no);
+	public List<BookDto> bookListSt(int offset, int noOfRecords, int member_no);
 	
 
 	// pet
@@ -112,6 +121,34 @@ public interface PetDao {
 	public CalendarDto CalendarOne(int calendar_no);
 	public int CalendarDelete(int calendar_no);
 	public int CalendarUpdate(CalendarDto dto);
+
+	public int InsertFilter(List<String> list);
+
+	public int insertRTC(PetRTCDto dto);
+
+	public PetRTCDto SelectRTCOne(int business_num);
+
+	public int updateRTC(PetRTCDto dto);
+
+	public int DeleteRTC(int business);
+
+	public BookDto SelectBookRTC(HashMap<String, String> map);
+
+	public int UseRTC(String room_id);
+
+	public int NUseRTC(String room_id);
+
+	public PetRTCDto SelectRTCRoom(String room_id);
+
+	public int SelectLikeCount(int community_seq);
+	public LikesDto SelectLikeOne(LikesDto dto);
+	public int InsertLikes(LikesDto dto);
+	public int DeleteLikes(LikesDto dto);
+	public int bookdelete(int book_num);
+	
+
+	
+	
 	
 	public List<BusinessDto> businessList();
 

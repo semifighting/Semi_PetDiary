@@ -30,11 +30,15 @@ public class pet_util {
 
 
 	public static int CommunityCommentCount(int seq) {
+		
 		int res = dao.CommunityCommentCount(seq)-1;
+		if(res ==-1) {
+			res = 0;
+		}
 		return res;
 	}
-	public static String FromBussinessNoTogetName(int seq) {
-		return null;
+	public static int LikesCount(int seq) {
+		return dao.SelectLikeCount(seq);
 	}
 	
 

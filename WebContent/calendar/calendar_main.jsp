@@ -116,7 +116,6 @@ function calendar_list(year, month, d, member_no) {
 	int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 	int lastDay = cal.getActualMaximum(Calendar.DATE);
 	int member_no = (int) session.getAttribute("member_no");
-	
 	String yyyyMM = year + util.isTwo(String.valueOf(month));
 	List<CalendarDto> list = dao.CalViewList(member_no, yyyyMM);
 %>
@@ -176,7 +175,7 @@ function calendar_list(year, month, d, member_no) {
 			}
 %>				
 			<td id="dates">
-				<a class="date" style="color:<%=color%>; cursor: pointer" onclick="location.href='/semi_PetDiary/pet.do?command=calendar_calInsert&year=<%=year%>&month=<%=month%>&date=<%=d%>&lastday=<%=lastDay %>'"><%=d%></a>
+				<a class="date" style="color:<%=color%>; cursor: pointer" onclick="location.href='/semi_PetDiary/pet.do?command=calendar_calInsert&year=<%=year%>&month=<%=month%>&date=<%=d%>&lastDay=<%=lastDay %>'"><%=d%></a>
 				<div>
 				<a id="calendar_list" style="cursor: pointer; color: black" href="javascript:calendar_list('<%=year%>','<%=month%>','<%=d%>','<%=member_no%>')">			
 					<%=util.getCalView(d, list)%>

@@ -5,14 +5,18 @@
 <configuration>
     <properties resource="com/pet/ft/db/db.properties"/>
   <typeAliases>
-  		<typeAlias type="com.pet.ft.dto.CommunityDto" alias="CommunityDto"/>
-  		<typeAlias type="com.pet.ft.dto.MemberDto" alias="MemberDto"/>  
-  		<typeAlias type="com.pet.ft.dto.BusinessDto" alias="BusinessDto"/>		  		
-  		<typeAlias type="com.pet.ft.dto.BookDto" alias="BookDto"/>		  		
-  		<typeAlias type="com.pet.ft.dto.CalendarDto" alias="CalendarDto"/>  	  		
+ 		<typeAlias type="com.pet.ft.dto.CommunityDto" alias="CommunityDto"/>
+ 		<typeAlias type="com.pet.ft.dto.MemberDto" alias="MemberDto"/>  
+ 		<typeAlias type="com.pet.ft.dto.BusinessDto" alias="BusinessDto"/>		  		
+ 		<typeAlias type="com.pet.ft.dto.BookDto" alias="BookDto"/>		  		
+ 		<typeAlias type="com.pet.ft.dto.CalendarDto" alias="CalendarDto"/>  	  		
       <typeAlias type="com.pet.ft.dto.DiaryDto" alias="diaryDto"/>
       <typeAlias type="com.pet.ft.dto.PetDto" alias="petDto"/>
       <typeAlias type="com.pet.ft.dto.PictureDto" alias="pictureDto"/>
+      <typeAlias type="com.pet.ft.dto.PetRTCDto" alias="PetRTCDto"/>
+      <typeAlias type="com.pet.ft.dto.LikesDto" alias="LikesDto"/>
+      <typeAlias type="com.pet.ft.dto.TravelDto" alias="TravelDto"/>
+      
   </typeAliases>
 
 	<environments default="development">
