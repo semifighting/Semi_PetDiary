@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
@@ -33,13 +34,21 @@ public class PagingServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		
 		String command = request.getParameter("command");
+<<<<<<< HEAD
 		System.out.println(command);
+=======
+>>>>>>> main
 		
 		int currentPageNo = 1;
 		int recordsPerPage = 0;
 		String url = null;
 		PetBiz biz = new PetBizImpl();
 		
+<<<<<<< HEAD
+=======
+		HttpSession session = request.getSession();
+		
+>>>>>>> main
 		if("member".equals(command)) {
 			
 			if(request.getParameter("pages") != null)
@@ -99,7 +108,10 @@ public class PagingServlet extends HttpServlet {
 				url = "business/reportlist_main.jsp";
 			} else {
 				
+<<<<<<< HEAD
 				System.out.println("��");
+=======
+>>>>>>> main
 				request.setAttribute("msg", "Error가 발생했습니다.");
 				
 				url = "business/reportlist_main.jsp";
@@ -119,11 +131,19 @@ public class PagingServlet extends HttpServlet {
 			
 			int offset = (paging.getCurrentPageNo() -1) * paging.getRecordsPerPage();
 			
+<<<<<<< HEAD
 			System.out.println("of" + offset + "pa" + paging.getRecordsPerPage() * currentPageNo );
 			
 			List<BookDto> list = biz.bookListHos(offset, paging.getRecordsPerPage() * currentPageNo);
 			
 			paging.setNumberOfRecords(biz.totalBookHos());
+=======
+			int member_no = (int) session.getAttribute("member_no");
+			
+			List<BookDto> list = biz.bookListHos(offset, paging.getRecordsPerPage() * currentPageNo, member_no);
+			
+			paging.setNumberOfRecords(biz.totalBookHos(member_no));
+>>>>>>> main
 			
 			paging.makePaging();
 			
@@ -152,6 +172,7 @@ public class PagingServlet extends HttpServlet {
 			
 			Paging paging = new Paging(currentPageNo, recordsPerPage);
 			
+<<<<<<< HEAD
 			System.out.println("rcord : " + recordsPerPage);
 			System.out.println("paging : "  + paging.getRecordsPerPage());
 			
@@ -162,11 +183,23 @@ public class PagingServlet extends HttpServlet {
 			List<BookDto> list = biz.bookListSt(offset, paging.getRecordsPerPage() * currentPageNo);
 			
 			paging.setNumberOfRecords(biz.totalBookSt());
+=======
+			int offset = (paging.getCurrentPageNo() -1) * paging.getRecordsPerPage();
+			
+			int member_no = (int) session.getAttribute("member_no");
+			
+			List<BookDto> list = biz.bookListSt(offset, paging.getRecordsPerPage() * currentPageNo, member_no);
+			
+			paging.setNumberOfRecords(biz.totalBookSt(member_no));
+>>>>>>> main
 			
 			paging.makePaging();
 			
 			if(list != null) {
+<<<<<<< HEAD
 				System.out.println("�ִ�");
+=======
+>>>>>>> main
 				request.setAttribute("key", "bookst");
 				request.setAttribute("list", list);
 				request.setAttribute("paging", paging);
@@ -175,7 +208,10 @@ public class PagingServlet extends HttpServlet {
 				url = "business/booklist_st.jsp";
 			} else {
 				
+<<<<<<< HEAD
 				System.out.println("��");
+=======
+>>>>>>> main
 				request.setAttribute("msg", "Error가 발생했습니다.");
 				
 				url = "business/booklist_st.jsp";

@@ -50,4 +50,15 @@ public class Util {
 
         return year + "-" + month + "-" + day;
     }
+<<<<<<< HEAD
+=======
+    
+    public static String isTwo(String booktime) {
+        if(booktime.length() < 2) {
+            booktime = "0" + booktime;
+        }
+
+        return booktime;
+    }
+>>>>>>> main
 }

@@ -20,7 +20,10 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style type="text/css">
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 .community_row{
 	display: flow-root;
 	position: relative;
@@ -28,6 +31,7 @@
 }
 
 .commnunity_entity{
+<<<<<<< HEAD
 float : left;
 margin : 2px;
 border : 2px solid salmon;
@@ -42,6 +46,22 @@ background-color: #ddd;
 
 }
 
+=======
+float: left;
+    margin: 2px;
+    margin-right: 20px;
+    border: 2px solid salmon;
+    width: 350px;
+    height: 400px;
+
+}
+
+.commnunity_entity:hover{
+background-color: #ddd;
+
+}
+
+>>>>>>> main
 .commnunity_entity:active{
 background-color: #fff;
 
@@ -71,6 +91,10 @@ text-align: center
     color: #999;
     margin-bottom: 10px;
     float : right;
+<<<<<<< HEAD
+=======
+    padding-right: 10px;
+>>>>>>> main
 }
 .title {
     color: salmon;
@@ -78,13 +102,25 @@ text-align: center
     overflow: hidden;
     text-overflow: ellipsis;
   	white-space: nowrap;
+<<<<<<< HEAD
+=======
+    padding-top: 10px;
+    padding-left: 10px;
+>>>>>>> main
  }
 .content {
     margin-top: 5px;
      overflow: hidden;
     text-overflow: ellipsis;
+<<<<<<< HEAD
   	width: 232px;
   	height: 200px;
+=======
+  	width: 350px;
+  	height: 280px;
+    padding-left: 10px;
+    padding-right: 10px;
+>>>>>>> main
 }
 .accessory {
     border-top: 1px solid #eee;
@@ -92,6 +128,10 @@ text-align: center
     margin-top:10px;
     color: #999;
     font-size: 14px;
+<<<<<<< HEAD
+=======
+    padding-left: 10px;
+>>>>>>> main
 }
 
 .write{
@@ -104,6 +144,65 @@ text-align: center
     margin-left: 25px;
     border-radius: 4px;
 }
+<<<<<<< HEAD
+=======
+
+.write:hover{
+    position: absolute;
+    border: 2px solid salmon;
+    background-color: salmon;
+    color: white;
+    padding: 5px;
+    margin-top: 2px;
+    margin-left: 25px;
+    border-radius: 4px;
+}
+.filter{
+    position: absolute;
+    width: 110px;
+    padding: .3em .5em;
+    border: 2px solid salmon;
+    font-family: inherit;
+    background: url(resources/image/arrow.jpg) no-repeat 95% 50%;
+    appearance: none;
+    left: 90px;
+    margin-top: 3px;
+    border-radius: 4px;
+    color : salmon;
+}
+.filter:focus{
+
+outline-color: salmon;
+}
+
+.search_content{
+    position: absolute;
+    left: 205px;
+    padding: .3em .5em;
+    border: 2px solid salmon;
+    font-family: inherit;
+    appearance: none;
+    margin-top: 3px;
+    border-radius: 4px;
+    color: salmon;
+}
+.search_button{
+    position: absolute;
+    left: 380px;
+    border: 2px solid salmon;
+    background-color: white;
+    color: salmon;
+    padding: 5px;
+    margin-top: 2px;
+    margin-left: 25px;
+    border-radius: 4px;
+}
+
+.search_button:hover{
+    background-color: salmon;
+    color: white;
+}
+>>>>>>> main
 
 .write:hover{
     position: absolute;
@@ -169,7 +268,11 @@ outline-color: salmon;
   int paging = Integer.parseInt(request.getParameter("paging"));
   String filter = request.getParameter("filter");
   int count = 0;
+<<<<<<< HEAD
   SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일"); //원하는 데이터 포맷 지정
+=======
+  SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd"); //원하는 데이터 포맷 지정
+>>>>>>> main
 %>
 
 	<div>
@@ -194,7 +297,11 @@ outline-color: salmon;
 		String strDate = simpleDateFormat.format(dto.getCommunity_regdate()); //지정한 포맷으로 변환
 	
 		
+<<<<<<< HEAD
 				if(count<(paging)*12&&count>=(paging-1)*12){
+=======
+				if(count<(paging)*8&&count>=(paging-1)*8){
+>>>>>>> main
 				%>
 				<div class="commnunity_entity" onclick="location.href='/semi_PetDiary/pet.do?command=community_detail&seq=<%=dto.getCommunity_seq()%>&community_no=<%=dto.getCommunity_no()%>'">
 					<div class = "title" class="commnuity_title">
@@ -207,6 +314,7 @@ outline-color: salmon;
 					
 				<%if(dto.getCommunity_content().indexOf("<img")>0){ %>
 					
+<<<<<<< HEAD
 						<%="<img style='width : 220px; height : 140px; object-fit : cover; margin :3px;' "+dto.getCommunity_content().split("<img")[1].split(">")[0]+">" %>
 									
 					<%if(dto.getCommunity_content().split("<img")[0].length()>30){%>
@@ -221,6 +329,17 @@ outline-color: salmon;
 					<%=dto.getCommunity_content() %>
 				<%} %>  	
 				
+=======
+						<%="<img style='width : 320px; height : 200px; object-fit : cover; margin :3px;' "+dto.getCommunity_content().split("<img")[1].split(">")[0]+">" %>
+										
+				<%String content = dto.getCommunity_content();				
+					while(content.indexOf("<img")>=0){
+						content = content.replace("<img"+content.split("<img")[1].split(">")[0]+">","");
+					}%>
+					<%=content %>
+				<%}else{%>
+					<%=dto.getCommunity_content() %>			
+>>>>>>> main
 			<% }%>
 					</div>
 					<div class="accessory">
@@ -239,7 +358,11 @@ outline-color: salmon;
 		<div id="pagaing">
 			<ul class="pagination">
 			<%
+<<<<<<< HEAD
 			for(int i =0; i<list.size()/12+1;i++){
+=======
+			for(int i =0; i<list.size()/8+1;i++){
+>>>>>>> main
 				if(i+1==paging){
 			%>
 				<li class="active"><a style="background-color: salmon;border-color: salmon;"  href='/semi_PetDiary/pet.do?command=community_search&paging=<%=(i+1)%>&filter=<%=request.getParameter("filter")%>&search_content=<%=request.getParameter("search_content")%>'">  <%=i+1 %></a></li>

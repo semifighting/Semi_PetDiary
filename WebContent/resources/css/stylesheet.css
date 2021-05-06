@@ -9,15 +9,23 @@ a{
 a:visited{text-decoration: none; color:white;}
 
 body{
+<<<<<<< HEAD
 	margin:0;
+=======
+	padding-top: 65px;
+>>>>>>> main
 }
 .header {
 	display : flex;
 	justify-content:space-between;
 	align-items:center;
-    margin-top: 50px;
     background-color: salmon;
    	padding : 8px 12px;
+	position: fixed;
+	width: 100%;
+	top : 0;
+	z-index: 2147483647;
+   	
 }
 .header_logo{
 	font-size:24px;

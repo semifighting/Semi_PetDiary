@@ -86,7 +86,11 @@
 		</div>
 		
 		<c:forEach items="${list }" var="dto" varStatus="stat">
+<<<<<<< HEAD
 			<div class="row">
+=======
+			<div class="row" onclick="location.href='pet.do?command=bookview&book_num=${dto.book_num }&date=${dto.book_date}&time=${dto.book_time}'">
+>>>>>>> main
 				<span class="cell col1">${dto.book_num }</span>
 				<span class="cell col2">${dto.memberVO.member_name }</span>
 				<span class="cell col3">${dto.businessVO.business_name }</span>
@@ -96,6 +100,7 @@
 		</c:forEach>
 	</div>
 	
+<<<<<<< HEAD
 	<form action="pet.do">
 	<input type="hidden" name="command" value="bookcheck"/>
 		<div>
@@ -105,6 +110,8 @@
 		</div>
 	</form>
 	
+=======
+>>>>>>> main
 	<jsp:include page="/main/paging.jsp" flush="true">
 		<jsp:param name="servletPath" value="${servletPath }"/>
 		<jsp:param name="recordsPerPage" value="${paging.recordsPerPage }"/>

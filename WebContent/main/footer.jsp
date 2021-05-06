@@ -13,6 +13,9 @@
 		background-color: white;
 		border-top: 1px solid #c4c4c4;
 		width: 100%;
+		position: relative;
+		bottom: 0;
+		
 	}
 	
 	.footerlogo img {

@@ -15,24 +15,56 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style type="text/css">
 
+<<<<<<< HEAD
 	.viewMember, .viewBorder, .viewBook{
 		position: fixed	;
+=======
+	.viewMember, .viewBorder{
+		position: fixed;
+>>>>>>> main
 		border-bottom : 2px solid black;	
-		width:180px;
-		height:20px;
-		margin : 50px;
 		background-color: skyblue;
 		text-align: center;
+<<<<<<< HEAD
 		border-radius: 6px;
 		cursor:pointer
 	}
 	
+=======
+		cursor:pointer
+	}
+	
+	.viewMember{
+		width:150px;
+		height:150px;
+		border-radius:75px;
+		text-align:center;
+		font-size:12px;
+		vertical-align:middle;
+		line-height:150px;
+		margin: 150px 8
+		00px;
+	}
+	
+	.viewBorder{
+		background-color:#0009;
+		width:150px;
+		height:150px;
+		border-radius:75px;
+		text-align:center;
+		margin:0 auto;
+		font-size:12px;
+		vertical-align:middle;
+		line-height:150px;
+	}
+	
+>>>>>>> main
 	.viewMember:hover, .viewBorder:hover, .viewBook:hover{
 		background-color:mistyrose;
 	}
 	
 	.viewBorder {
-		margin: 100px 50px;
+		margin: 150px 1000px;
 		background-color: #ff6670;
 	}
 	
@@ -57,6 +89,8 @@
 	int mRes = biz.totalMember();
 	int rRes = biz.totalReport();
 	
+	System.out.println((int)session.getAttribute("member_no"));
+	
 %>
 
 	<!-- <div class="viewMember" onclick="location.href='/semi_PetD	iary/pet.do?command=list'"> -->
@@ -70,10 +104,13 @@
 		<span class="dot"><%=rRes %></span>
 	</div>
 	
+<<<<<<< HEAD
 	<div class="viewBook" onclick="location.href='/semi_PetDiary/paging.do?command=book'">
 		<span>예약 조회</span>&nbsp;
 	</div>
 	
+=======
+>>>>>>> main
 <%@ include file="/main/footer.jsp" %>
 
 </body>

@@ -67,7 +67,6 @@
   		<result property="member_role" column="MEMBER_ROLE"/>
   		<result property="member_address" column="MEMBER_ADDRESS"/>
   	</resultMap>
-
   	<resultMap type="CommunityDto" id="reportListMap">
   		<result property="community_seq" column="COMMUNITY_SEQ"/>
   		<result property="community_title" column="COMMUNITY_TITLE"/>
@@ -106,7 +105,6 @@
   		SELECT MEMBER_ID FROM MEMBER
   		WHERE MEMBER_ID = #{member_id}
   	</select>
-
   	<select id="SignUpEmailChk" resultType="MemberDto" parameterType="String">
   		SELECT MEMBER_EMAIL FROM MEMBER
   		WHERE MEMBER_EMAIL = #{member_email}
@@ -131,7 +129,26 @@
   	<select id="CommunityList" resultType="CommunityDto">
   	SELECT * FROM COMMUNITY WHERE COMMUNITY_COMMENT = 0 AND COMMUNITY_REPORT='N' ORDER BY COMMUNITY_SEQ DESC
   	</select>
-
+  	
+  	<select id="CommunityPageList" resultType="CommunityDto" parameterType="int">
+ 	SELECT * FROM 
+ 	(SELECT COMMUNITY_SEQ, COMMUNITY_TITLE, COMMUNITY_CONTENT, 
+	COMMUNITY_REGDATE, 	COMMUNITY_REPORT, COMMUNITY_REPORTCOUNT, 
+	COMMUNITY_REPORTCONTENT, COMMUNITY_NO, COMMUNITY_COMMENT, 
+	COMMUNITY_LIKE, COMMUNITY_VIEWS, MEMBER_NO, ROWNUM AS RNUM FROM (SELECT * FROM COMMUNITY ORDER BY COMMUNITY_SEQ DESC)
+	WHERE COMMUNITY_COMMENT = 0 AND COMMUNITY_REPORT='N')
+	WHERE RNUM BETWEEN (#{page}-1)*8+1 AND #{page}*8 
+  	</select>
+  	
+  	<select id="CommunityPageMax" resultType="int" >
+ 	SELECT MAX(RNUM) FROM 
+ 	(SELECT COMMUNITY_SEQ, COMMUNITY_TITLE, COMMUNITY_CONTENT, 
+	COMMUNITY_REGDATE, 	COMMUNITY_REPORT, COMMUNITY_REPORTCOUNT, 
+	COMMUNITY_REPORTCONTENT, COMMUNITY_NO, COMMUNITY_COMMENT, 
+	COMMUNITY_LIKE, COMMUNITY_VIEWS, MEMBER_NO, ROWNUM AS RNUM FROM (SELECT * FROM COMMUNITY ORDER BY COMMUNITY_SEQ DESC)
+	WHERE COMMUNITY_COMMENT = 0 AND COMMUNITY_REPORT='N')
+  	</select>
+  	
   	<select id="CommunitySearchCommentContent" parameterType="String" resultType="CommunityDto">
   	SELECT * FROM COMMUNITY WHERE COMMUNITY_COMMENT >0 AND INSTR(COMMUNITY_CONTENT, #{community_search})>0 AND COMMUNITY_REPORT='N' ORDER BY COMMUNITY_SEQ DESC
   	</select>
@@ -182,8 +199,8 @@
   		SELECT COUNT(*) FROM BOOK WHERE BOOK_TYPE = 'S'
   	</select>
 
-  	<update id="CommunityReport" parameterType="int">
-  		UPDATE COMMUNITY SET COMMUNITY_REPORTCOUNT = COMMUNITY_REPORTCOUNT+1 WHERE COMMUNITY_SEQ = #{community_seq}
+  	<update id="CommunityReport" parameterType="CommunityDto">
+  		UPDATE COMMUNITY SET COMMUNITY_REPORTCOUNT = COMMUNITY_REPORTCOUNT+1, COMMUNITY_REPORTCONTENT = CONCAT(COMMUNITY_REPORTCONTENT, #{community_reportcontent}) WHERE COMMUNITY_SEQ = #{community_seq}
   	</update>
 
   	<update id="CommunityUpdate" parameterType="CommunityDto">
@@ -219,9 +236,12 @@
   		WHERE BUSINESS_NUM = #{business_num}
  	</select>
  	
+<<<<<<< HEAD
  	
  	
  	
+=======
+>>>>>>> main
  																																	<!-- 식당 리스트 -->
   	<select id="BusinessList" parameterType="hashmap" resultMap="businessListMap">
 		<![CDATA[
@@ -250,7 +270,11 @@
   	</select>
 
   	 <select id="BusinessOne" parameterType="int" resultType="BusinessDto">
+<<<<<<< HEAD
   		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME, BUSINESS_ROLE
+=======
+  		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME, BUSINESS_ROLE, MEMBER_NO
+>>>>>>> main
    		FROM BUSINESS JOIN MEMBER USING(MEMBER_NO)
   		WHERE BUSINESS_NUM = #{business_num}
   	</select>
@@ -272,7 +296,10 @@
         FROM PET
         WHERE MEMBER_NO = ${member_no}
         AND PET_NO = ${pet_no}
+<<<<<<< HEAD
           AND PET_NO = ${pet_no}
+=======
+>>>>>>> main
     </select>
 
     <select id="selectPictureList" resultMap="pictureMap" parameterType="int">
@@ -286,7 +313,10 @@
         FROM PICTURE
         WHERE MEMBER_NO = #{member_no}
         AND PICTURE_NO = #{picture_no}
+<<<<<<< HEAD
           AND PICTURE_NO = #{picture_no}
+=======
+>>>>>>> main
     </select>
 
     <select id="selectTripList" resultMap="calendarMap" parameterType="int">
@@ -299,7 +329,10 @@
         FROM CALENDAR
         WHERE MEMBER_NO = #{member_no}
         AND CALENDAR_NO = #{calendar_no}
+<<<<<<< HEAD
           AND CALENDAR_NO = #{calendar_no}
+=======
+>>>>>>> main
     </select>
 
     <select id="getCount" resultType="int" parameterType="int">
@@ -384,6 +417,7 @@
   	</select>
 	  
   	<select id="totalDateTime" resultMap="bookListMap">
+<<<<<<< HEAD
   		SELECT BOOK_DATE, BOOK_TIME FROM BOOK
   	</select>
   	
@@ -401,6 +435,11 @@
   		FROM COMMUNITY a JOIN MEMBER b on a.member_no = b.member_no WHERE COMMUNITY_REPORT = 'Y'
   		ORDER BY COMMUNITY_SEQ DESC
   	</select>	 -->
+=======
+  		SELECT BOOK_DATE, BOOK_TIME, BUSINESS_NUM FROM BOOK
+  	</select>
+  	
+>>>>>>> main
   		
   	<select id="memberListPaging" parameterType="hashmap" resultMap="memberListMap" >
 		<![CDATA[
@@ -467,6 +506,10 @@
 		WHERE E.RNUM > #{offset}
 		]]>
   	</select>
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
   	
   	
   	
@@ -485,8 +528,8 @@
   		DELETE FROM COMMUNITY
   		WHERE COMMUNITY_SEQ = #{seq}
   	</delete>
-
-  	  	<!-- 병원상담 -->
+  	
+  	 <!-- 병원상담 -->
   	 <select id="hospitalList" resultType="businessDto" parameterType="hashmap">
   		<![CDATA[
 
@@ -504,16 +547,15 @@
   		SELECT COUNT(*) FROM BUSINESS WHERE BUSINESS_ROLE = 'H'
   	</select>
 
- 
-
- 	 <select id="hospitalOne" parameterType="int" resultType="businessDto">
-  		SELECT BUSINESS_NUM, BUSINESS_NAME, BUSINESS_NO, BUSINESS_ADDR, BUSINESS_TIME
+ 	<select id="hospitalOne" parameterType="int" resultType="businessDto">
+  		SELECT *
    		FROM BUSINESS
   		WHERE BUSINESS_NUM = #{business_num}
   	</select>
 
-  	<insert id="BookCounselInsert" parameterType="BookDto">
+  	<insert id="counselInsert" parameterType="BookDto">
   		INSERT INTO BOOK
+<<<<<<< HEAD
         VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',#{business_num}, #{member_no},
                #{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR},#{book_counsel})         
   	</insert>
@@ -522,7 +564,38 @@
   		INSERT INTO BOOK
         VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',#{business_num}, #{member_no},
                #{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR},#{book_counsel})         
+=======
+        VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',#{business_num},#{member_no},#{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR},#{book_counsel})         
+>>>>>>> main
   	</insert>
+  	
+  	<!-- 여행일정 -->
+  	<insert id="travelInsert" parameterType="TravelDto">
+  		INSERT INTO TRAVEL
+        VALUES(TRAVEL_NO_SEQ.NEXTVAL,#{travel_name},#{travel_date} ,#{travel_spot1},#{travel_spot2},#{travel_spot3},#{travel_time1},#{travel_time2},#{travel_stay1},#{travel_stay2},#{member_no})         
+  	</insert>
+  	<update id="travelupdate" parameterType="TravelDto" >
+  		UPDATE TRAVEL
+  		SET TRAVEL_NAME = #{travel_name}, TRAVEL_DATE = #{travel_date}, TRAVEL_SPOT1 = #{travel_spot1}, TRAVEL_SPOT2 = #{travel_spot2}, TRAVEL_SPOT3 = #{travel_spot3},
+  		TRAVEL_TIME1 = #{travel_time1},TRAVEL_TIME2 = #{travel_time2},TRAVEL_STAY1 = #{travel_stay1},TRAVEL_STAY2 = #{travel_stay2}
+  		WHERE TRAVEL_NO = #{travel_no}
+  	</update>
+  	<select id="travelList" resultType="TravelDto">
+  		SELECT * FROM TRAVEL ORDER BY TRAVEL_NO
+  	</select>
+  	<select id="travelSelect" parameterType="int" resultType="TravelDto">
+  		SELECT *
+   		FROM TRAVEL
+  		WHERE TRAVEL_NO = #{travel_no}
+  	</select>
+  	
+  	<!-- 지도 -->
+  	<select id="bookableMap" resultType="businessDto">
+  	    SELECT BUSINESS_ADDR, BUSINESS_NAME FROM BUSINESS WHERE BUSINESS_ROLE = 'H' ORDER BY BUSINESS_NUM
+  	</select>
+   	<select id="foodMap" resultType="businessDto">
+  	    SELECT BUSINESS_ADDR, BUSINESS_NAME FROM BUSINESS WHERE BUSINESS_ROLE = 'S' ORDER BY BUSINESS_NUM
+  	</select>
 
   	<!-- 캘린더 내 clud -->
   	<select id = "CalViewList" parameterType="Map" resultType="CalendarDto">
@@ -530,22 +603,21 @@
   		FROM ( SELECT (ROW_NUMBER() OVER(PARTITION BY SUBSTR(CALENDAR_STARTDATE, 1, 8) ORDER BY CALENDAR_STARTDATE )) RN, CALENDAR_NO, CALENDAR_STARTDATE, CALENDAR_ENDDATE, CALENDAR_NECESSITY, CALENDAR_ITEM, CALENDAR_TITLE, CALENDAR_CONTENT, MEMBER_NO
   		FROM CALENDAR
   		WHERE MEMBER_NO = #{member_no} AND SUBSTR(CALENDAR_STARTDATE, 1, 6) = #{calendar_startdate})
-  		WHERE RN BETWEEN 1 AND 3
+  		WHERE RN BETWEEN 1 AND 2
   	</select>
-
+  	
   	<select id = "CalendarList" parameterType="Map" resultType="CalendarDto">
   		SELECT * FROM CALENDAR WHERE MEMBER_NO = #{member_no} AND SUBSTR(CALENDAR_STARTDATE, 1, 8) = #{calendar_startdate}
   	</select>
-
+  	
   	<select id = "CalendarOne" parameterType="int" resultType="CalendarDto">
   		SELECT * FROM CALENDAR WHERE CALENDAR_NO = #{calendar_no}
   	</select>
-
+  	
   	<insert id ="CalendarInsert" parameterType="CalendarDto">
   		INSERT INTO CALENDAR
   		VALUES(CALENDAR_NO_SEQ.NEXTVAL, #{calendar_startdate}, #{calendar_enddate}, #{calendar_necessity}, #{calendar_item}, #{calendar_title}, #{calendar_content}, ${member_no})
   	</insert>
-
   	<update id="CalendarUpdate" parameterType="CalendarDto">
   		UPDATE CALENDAR
         SET CALENDAR_NECESSITY = #{calendar_necessity}, CALENDAR_ITEM = #{calendar_item}, CALENDAR_TITLE = #{calendar_title}, CALENDAR_CONTENT = #{calendar_content}
@@ -571,11 +643,114 @@
 	<select id="CountMyinfoBook" parameterType="int" resultType="int">
 	SELECT COUNT(BOOK_NUM) FROM BOOK WHERE MEMBER_NO = #{member_no}
 	</select>
+<<<<<<< HEAD
+=======
+	
+	<select id="CountMyinfoOrder" parameterType="int" resultType="int">
+	SELECT COUNT(*) FROM ORDERINFO WHERE MEMBER_NO = #{member_no}
+	</select>
+	
+>>>>>>> main
 
   	<insert id="BusinessInsert" parameterType="businessDto">
   		INSERT INTO BUSINESS VALUES(BUSINESS_NUM_SEQ.NEXTVAL, #{business_name},#{business_addr},#{business_role},#{business_time},#{business_park},#{business_book},#{business_etc},#{business_no},#{member_no})
   	</insert>
 
+<<<<<<< HEAD
+=======
+
+  	<insert id="InsertRTC" parameterType="PetRTCDto" >
+  		INSERT INTO RTC VALUES(#{rtc_room}, 'N',#{member_no},#{business_num})
+  	</insert>
+  	
+  	<select id="SelectRTCOne" parameterType="int" resultType="PetRTCDto">
+  		SELECT * FROM RTC WHERE BUSINESS_NUM = #{business_num}
+  	</select>
+  	  	
+  	<select id="SelectRTCRoom" parameterType="String" resultType="PetRTCDto">
+  		SELECT * FROM RTC WHERE RTC_ROOM = #{room_id}
+  	</select>
+
+	<update id="UpdateRTC" parameterType="PetRTCDto">
+		UPDATE RTC SET RTC_ROOM = #{rtc_room} WHERE BUSINESS_NUM = #{business_num}
+	</update>
+	
+	<update id="NUseRTC" parameterType="String">
+		UPDATE RTC SET RTC_USE = 'N' WHERE RTC_ROOM = #{room_id}
+	</update>
+		
+	<update id="UseRTC" parameterType="String">
+		UPDATE RTC SET RTC_USE = 'Y' WHERE RTC_ROOM = #{room_id}
+	</update>
+	
+	<delete id="DeleteRTC" parameterType="int">
+		DELETE FROM RTC WHERE BUSINESS_NUM = #{business_num}
+	</delete>
+	<select id="SelectBookRTC" parameterType="hashMap" resultType="BookDto">
+		SELECT * FROM BOOK WHERE MEMBER_NO = TO_NUMBER(#{member_no}) AND BOOK_DATE = #{book_date} AND BOOK_COUNSEL = '화상상담' AND ROWNUM=1
+	</select>
+	<select id="SelectLikeCount" resultType="int">
+		SELECT COUNT(*) FROM LIKES WHERE COMMUNITY_SEQ = #{community_seq}
+	</select>
+	<select id="SelectLikeOne" parameterType="LikesDto" resultType="LikesDto">
+		SELECT * FROM LIKES WHERE COMMUNITY_SEQ = #{community_seq} AND MEMBER_NO = #{member_no}
+	</select>
+	<delete id="DeleteLikes" parameterType="LikesDto" >
+		DELETE FROM LIKES WHERE COMMUNITY_SEQ = #{community_seq} AND MEMBER_NO = #{member_no}
+	</delete>
+	<insert id="InsertLikes">
+		INSERT INTO LIKES VALUES(#{member_no}, #{community_seq}) 
+	</insert>
+	<select id="MyCommunityList" resultType="CommunityDto">
+		SELECT COMMUNITY_SEQ,COMMUNITY_TITLE, COMMUNITY_REGDATE, COMMUNITY_REPORT, COMMUNITY_REPORTCOUNT, COMMUNITY_REPORTCONTENT, COMMUNITY_VIEWS,COMMUNITY_NO, MEMBER_NO FROM COMMUNITY WHERE MEMBER_NO = #{member_no} ORDER BY COMMUNITY_SEQ DESC
+	</select>
+	
+	<select id="SocialLogin" parameterType="String" resultType="MemberDto">
+  		SELECT MEMBER_NO, MEMBER_NAME, MEMBER_ID, MEMBER_PW, MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ROLE, MEMBER_ADDRESS
+  		FROM MEMBER
+  		WHERE MEMBER_ID = #{member_id}
+  	</select>
+  	<insert id="SocialSignUp" parameterType="MemberDto">
+  		INSERT INTO MEMBER
+  		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, 'PASSWORD', #{member_email}, #{member_phone}, 'USER', #{member_address})
+  	</insert>
+  		
+  	 <select id="findId" parameterType="Map" resultType="MemberDto">
+  		SELECT * FROM MEMBER WHERE MEMBER_NAME= #{member_name} AND MEMBER_EMAIL = #{member_email}
+  	</select>
+  	
+  	<select id="findPw" parameterType="Map" resultType="MemberDto">
+  		SELECT * FROM MEMBER WHERE MEMBER_NAME = #{member_name} AND MEMBER_EMAIL = #{member_email} AND MEMBER_ID = #{member_id}
+  	</select>
+  	
+  	<update id="resetPw" parameterType="Map">
+  		UPDATE MEMBER
+  		SET MEMBER_PW = #{member_pw}
+  		WHERE MEMBER_NAME = #{member_name} AND MEMBER_EMAIL = #{member_email} AND MEMBER_ID = #{member_id}
+  	</update>
+  	
+  	<update id="memberUpdate" parameterType="MemberDto">
+  		UPDATE MEMBER
+  		SET MEMBER_PW = #{member_pw}, MEMBER_EMAIL = #{member_email}, MEMBER_PHONE = #{member_phone}, MEMBER_ADDRESS = #{member_address}
+  		WHERE MEMBER_NO = #{member_no}
+  	</update>
+  	
+  	<delete id="memberDelete" parameterType="int">
+  		DELETE FROM MEMBER
+  		WHERE MEMBER_NO = #{member_no}
+  	</delete>
+  	
+  	<!-- 추가 -->
+  	<select id="BusinessListAll" resultMap="businessListMap">
+        SELECT * FROM BUSINESS
+    </select>
+  	
+	
+	<delete id="bookDelete" parameterType="int">
+		DELETE FROM BOOK WHERE BOOK_NUM = #{book_num}
+	</delete>
+	
+>>>>>>> main
 
 
   </mapper>

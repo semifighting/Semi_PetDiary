@@ -8,6 +8,10 @@ import com.pet.ft.dto.BusinessDto;
 public interface BusinessDao {
 	String namespace1 = "com.pet.ft.mapper.";
 
+<<<<<<< HEAD
+=======
+	List<BusinessDto> BusinessList();
+>>>>>>> main
 	public List<BusinessDto> BusinessList(int offset, int noOfRecords);
 	
 	public int businessTotal();
@@ -19,9 +23,12 @@ public interface BusinessDao {
 	int BusinessInsert(BusinessDto bdto);
 	
 	public List<BusinessDto> menu();
+<<<<<<< HEAD
 	
 	
 	
 	
 
+=======
+>>>>>>> main
 }
