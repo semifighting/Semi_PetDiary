@@ -29,7 +29,7 @@
         }
     </style>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../resources/javascript/script.js"></script>
+    <script src="/semi_PetDiary/resources/javascript/script.js"></script>
 </head>
 <body>
 <%
@@ -50,7 +50,7 @@
         <tr>
             <td colspan="3">
                 <!--<input type="button" name="picture" value="사진 선택하기" onclick="location.href='../pet_servlet?command=picture_update_select'">-->
-                <a href="../pet_servlet?command=picture_update_select">
+                <a href="/semi_PetDiary/pet.do?command=picture_update_select">
                 <img id="selectedPic" src="<%=src%>" alt="선택된 사진" width="500" height="500">
                 </a>
                 <input type="hidden" name="path" value="<%=src%>">
