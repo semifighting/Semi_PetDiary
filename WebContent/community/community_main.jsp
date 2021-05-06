@@ -231,6 +231,7 @@ outline-color: salmon;
 			<ul class="pagination">
 			<%
 			for(int i =0; i<=(int)request.getAttribute("maxpage")/8;i++){
+
 				if(i+1==paging){
 			%>
 				<li class="active"><a style="background-color: salmon;border-color: salmon;"  href='/semi_PetDiary/pet.do?command=community&paging=<%=(i+1)%>'><%=i+1 %></a></li>

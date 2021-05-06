@@ -1,3 +1,4 @@
+<%@page import="com.pet.ft.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -41,9 +42,10 @@
 	String book_time = request.getParameter("book_time");
 	int business_num = Integer.parseInt(request.getParameter("business_num"));
 	String book_type = request.getParameter("book_type");
-	String member_name = (String) session.getAttribute("member_name");
-	String member_id = (String) session.getAttribute("member_id");
-	String member_phone = (String) session.getAttribute("member_phone");
+	MemberDto dto = (MemberDto) session.getAttribute("dto");
+	String member_name = dto.getMember_name();
+	String member_id = dto.getMember_id();
+	String member_phone = dto.getMember_phone();
 	String msg = (String) request.getAttribute("msg");
 	int pe = (int) request.getAttribute("pe");
 %>

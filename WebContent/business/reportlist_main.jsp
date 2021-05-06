@@ -78,18 +78,33 @@
 			</c:forEach>
 		</div>
 		
-		<jsp:include page="/main/paging.jsp" flush="true">
-			<jsp:param name="servletPath" value="${servletPath }"/>
-			<jsp:param name="recordsPerPage" value="${paging.recordsPerPage }"/>
-			<jsp:param name="firstPageNo" value="${paging.firstPageNo }"/>
-			<jsp:param name="prevPageNo" value="${paging.prevPageNo }"/>
-			<jsp:param name="startPageNo" value="${paging.startPageNo }"/>
-			<jsp:param name="currentPageNo" value="${paging.currentPageNo }"/>
-			<jsp:param name="endPageNo" value="${paging.endPageNo }"/>
-			<jsp:param name="nextPageNo" value="${paging.nextPageNo }"/>
-			<jsp:param name="finalPageNo" value="${paging.finalPageNo }"/>
-		</jsp:include>
+		<c:forEach items="${list }" var="dto" varStatus="stat">
+			<div class="row">
+				<span class="cell col1">${dto.community_seq }</span>
+				<span class="cell col2">${dto.community_title }</span>
+				<span class="cell col3">${dto.memberVO.member_id }</span>
+				<span class="cell col4">${dto.community_reportcontent }</span>
+				<span class="cell col5">${dto.community_reportcount }</span>
+				<span class="cell col6">${dto.community_regdate }</span>
+				<span class="cell col7">
+					<input type="hidden" value="${dto.community_seq }"/>
+					<input type="button" name="submit" value="삭제"/>
+				</span>
+			</div>
+		</c:forEach>
 	</div>
+	
+	<jsp:include page="/main/paging.jsp" flush="true">
+		<jsp:param name="servletPath" value="${servletPath }"/>
+		<jsp:param name="recordsPerPage" value="${paging.recordsPerPage }"/>
+		<jsp:param name="firstPageNo" value="${paging.firstPageNo }"/>
+		<jsp:param name="prevPageNo" value="${paging.prevPageNo }"/>
+		<jsp:param name="startPageNo" value="${paging.startPageNo }"/>
+		<jsp:param name="currentPageNo" value="${paging.currentPageNo }"/>
+		<jsp:param name="endPageNo" value="${paging.endPageNo }"/>
+		<jsp:param name="nextPageNo" value="${paging.nextPageNo }"/>
+		<jsp:param name="finalPageNo" value="${paging.finalPageNo }"/>
+	</jsp:include>
 
 <%@ include file="/main/footer.jsp" %>
 

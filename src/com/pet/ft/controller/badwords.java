@@ -573,7 +573,7 @@ public class badwords {
 		
 
 	public static List<String> badword1() {
-			java.util.List<String> badword = new ArrayList<String>();
+			List<String> badword = new ArrayList<String>();
 
 				for(String i: strw1.split(",")) {					
 					badword.add(i.trim().replaceAll("\"", ""));
@@ -595,7 +595,7 @@ public class badwords {
 	}
 
 	public static List<String> badword2() {
-			java.util.List<String> badword = new ArrayList<String>();
+			List<String> badword = new ArrayList<String>();
 
 				for(String i: strw2.split(",")) {					
 					badword.add(i.trim().replace("\"", ""));

@@ -14,6 +14,18 @@ MEMBER_ROLE    VARCHAR2(20)   NULL,
 MEMBER_ADDRESS VARCHAR2(500)  NULL
 );
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+select * from business
+select * from book
+
+
+select * from business
+>>>>>>> main
+select * from MEMBER
+>>>>>>> gwanwoo
 INSERT INTO MEMBER
 VALUES(MEMBER_SEQ.NEXTVAL, '일반사원', 'employee', '123456', 'employee@a.com', '010-2222-2222', 'EMPLOYEE', '경기도 고양시 토당동');
 
@@ -155,8 +167,17 @@ SELECT * FROM DIARY;
 
 -------------------------PET
 
+select * from BUSINESS
+
 CREATE SEQUENCE PET_NO_SEQ;
 
+<<<<<<< HEAD
+=======
+select * from BOOK
+
+
+
+>>>>>>> gwanwoo
 CREATE TABLE PET(
 	PET_NO NUMBER PRIMARY KEY,
 	PET_SPECIES VARCHAR2(300) NOT NULL,
@@ -171,12 +192,35 @@ INSERT INTO PET
 VALUES(PET_NO_SEQ.NEXTVAL,'강아지','말티푸','티코',TO_DATE('02-20-2020 11:11:11','MM-DD-YYYY HH24:MI:SS'),'F',1);
 SELECT * FROM PET;
 ------------------------COMMUNITY TABLE
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+DROP TABLE COMMUNITY
+DROP SEQUENCE COMMUNITY_SEQ_SEQ;
+DROP SEQUENCE COMMUNITY_NO_SEQ;
+
+CREATE SEQUENCE COMMUNITY_SEQ_SEQ;
+CREATE SEQUENCE COMMUNITY_NO_SEQ;
+
+>>>>>>> gwanwoo
 
 DROP TABLE COMMUNITY
+<<<<<<< HEAD
 DELETE FROM COMMUNITY
 DROP SEQUENCE COCOMMUNITY_SEQ_SEQ;
 CREATE SEQUENCE COMMUNITY_SEQ_SEQ;
 DELETE FROM COMMUNITY
+=======
+=======
+DROP TABLE COMMUNITY;
+>>>>>>> main
+DROP SEQUENCE COMMUNITY_SEQ_SEQ;
+DROP SEQUENCE COMMUNITY_NO_SEQ;
+
+CREATE SEQUENCE COMMUNITY_SEQ_SEQ;
+CREATE SEQUENCE COMMUNITY_NO_SEQ;
+
+>>>>>>> gwanwoo
 CREATE TABLE COMMUNITY (
 	COMMUNITY_SEQ NUMBER PRIMARY KEY,
 	COMMUNITY_TITLE VARCHAR2(500) NOT NULL,
@@ -192,6 +236,19 @@ CREATE TABLE COMMUNITY (
 	MEMBER_NO NUMBER NOT NULL,
 	CONSTRAINT COMMUNITY_FK FOREIGN KEY(MEMBER_NO) REFERENCES MEMBER(MEMBER_NO)
 )
+<<<<<<< HEAD
+=======
+
+INSERT INTO COMMUNITY VALUES(COMMUNITY_SEQ_SEQ.NEXTVAL, '시작', '시작', SYSDATE, 'N',0,COMMUNITY_NO_SEQ.NEXTVAL,0,1 )
+SELECT * FROM COMMUNITY
+
+INSERT INTO COMMUNITY VALUES(COMMUNITY_SEQ_SEQ.NEXTVAL, '시작', '시작', SYSDATE, 'Y',0,'신고내용',COMMUNITY_NO_SEQ.NEXTVAL,0,0,0,1 )
+
+
+		SELECT COUNT(COMMUNITY_COMMENT) FROM COMMUNITY WHERE COMMUNITY_NO = 1
+
+
+>>>>>>> gwanwoo
 -- BOOK
 
 DROP TABLE BOOK;
@@ -201,23 +258,64 @@ CREATE SEQUENCE BOOK_NUM_SEQ;
 --book table 생성
 CREATE TABLE BOOK(
   BOOK_NUM NUMBER PRIMARY KEY,
+<<<<<<< HEAD
   BOOK_DATE VARCHAR2(20) NOT NULL,
   BOOK_TIME VARCHAR2(20) ,
+=======
+<<<<<<< HEAD
+  BOOK_DATE DATE NOT NULL,
+  BOOK_TIME VARCHAR2(20) NOT NULL,
   BOOK_TYPE VARCHAR2(2) NOT NULL,
+  BOOK_STORE NUMBER NOT NULL, --예약업체 번호(BUSINESS테이블 BUSINESS_NUM? )
+=======
+  BOOK_DATE VARCHAR2(20) NOT NULL,
+  BOOK_TIME VARCHAR2(20) NOT NULL,
+>>>>>>> gwanwoo
+  BOOK_TYPE VARCHAR2(2) NOT NULL,
+<<<<<<< HEAD
+  BOOK_STORE NUMBER NOT NULL, --예약업체 번호(BUSINESS테이블 BUSINESS_NUM? )
+=======
   BUSINESS_NUM NUMBER NOT NULL, --예약업체 번호(BUSINESS테이블 BUSINESS_NUM? )
+>>>>>>> kjk
+>>>>>>> main2
   MEMBER_NO NUMBER NOT NULL,
   BOOK_PRICE NUMBER,
   BOOK_STATE VARCHAR2(2) ,
   BOOK_HOSTIME VARCHAR2(20),
+<<<<<<< HEAD
   BOOK_COUNSEL VARCHAR2(20),
   BOOK_HOSTIME VARCHAR2(20)
   BOOK_COUNSEL VARCHAR2(20),
+=======
+<<<<<<< HEAD
+=======
+  BOOK_COUNSEL VARCHAR2(20),
+>>>>>>> kjk
+>>>>>>> gwanwoo
   CONSTRAINT BOOK_CK_TYPE CHECK (BOOK_TYPE IN ('H', 'S')),
   CONSTRAINT BOOK_CK_STATE CHECK(BOOK_STATE IN ('Y', 'N')),
   CONSTRAINT BOOK_FK_MN FOREIGN KEY (MEMBER_NO) REFERENCES MEMBER (MEMBER_NO),
   CONSTRAINT BOOK_FK_BN FOREIGN KEY (BUSINESS_NUM) REFERENCES BUSINESS(BUSINESS_NUM) --빠져있었음 
 );
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+select * from menu
+
+=======
+>>>>>>> main
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main2
+SELECT * FROM BOOK;
+<<<<<<< HEAD
+
+=======
+>>>>>>> gwanwoo
 CHECK TABLE BOOK;
 ----컬럼 데이터타입 확인용
 SELECT COLUMN_NAME, NULLABLE
@@ -225,6 +323,7 @@ SELECT COLUMN_NAME, NULLABLE
 FROM ALL_TAB_COLUMNS
 
 WHERE TABLE_NAME = 'BOOK';
+<<<<<<< HEAD
 select * from book
 
 -------RTC
@@ -257,6 +356,12 @@ SELECT COUNT(*) FROM ORDERINFO WHERE MEMBER_NO = #{MEMBER_NO}
 --식당 데이터 추가
 
 SELECT * FROM BUSINESS;
+=======
+>>>>>>> kjk
+
+<<<<<<< HEAD
+=======
+>>>>>>> gwanwoo
 
 INSERT INTO BUSINESS
 VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '바잇미', '서울 강남구 논현로175길 101-3 1층', 'S', '12:00 - 21:00', 'N', 'N', 'https://www.google.com/url?sa=i&url=http%3A%2F%2Fm.blog.naver.com%2Fsoong_vely%2F221504138714&psig=AOvVaw2L1JWLmoFuhMN8gG-zxLEH&ust=1620198010706000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOjEuIu6r_ACFQAAAAAdAAAAABAD', 20210504, 58);
@@ -279,6 +384,7 @@ VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '쿠스퀘어', '서울 강남구 언주로130�
 INSERT INTO BUSINESS
 VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '어라운드데이', '서울 성동구 서울숲2길 24-1', 'S', '12:00 - 21:00', 'N', 'N', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDEwMThfMTUy%2FMDAxNjAzMDIzMTI2OTc3.nEum69M1lIYCLWPaio9wDVWVb-0R6UWT1k6_e2VQW0kg.Zgat509V1yxRAKw2NeajHzw3oCoTwyaCxLWnxhXe7vog.JPEG.yjezzang%2F1603023128121.jpg', 20210501, 58);
 
+<<<<<<< HEAD
 INSERT INTO BUSINESS
 VALUES(BUSINESS_NUM_SEQ.NEXTVAL, 'DONO', '서울 용산구 이태원로54길 63', 'S', '12:00 - 22:00', 'N', 'Y', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAzMzFfMzEg%2FMDAxNTg1NjUzMDQ5MTg2.HD2aayUmJ8QRBVIM7yGU263vl07tnktG79tVpuOB7l0g.8W8YutetzszE1TzoVTqs1N2zSGN1S0s4fxILwwCNrAcg.JPEG.best8555%2F1585653048050.jpg', 20210430, 58);
 
@@ -348,3 +454,17 @@ VALUES(TRAVEL_NO_SEQ.NEXTVAL,'제주여행','20210603','제주국제공항','애
 SELECT * FROM TRAVEL;
 
 
+=======
+
+>>>>>>> kjk
+=======
+
+<<<<<<< HEAD
+>>>>>>> ig
+=======
+>>>>>>> gwanwoo
+<<<<<<< HEAD
+=======
+>>>>>>> main2
+>>>>>>> main
+>>>>>>> gwanwoo

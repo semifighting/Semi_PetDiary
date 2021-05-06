@@ -133,8 +133,8 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 				<div class="content"><b>내 결제내역</b>   <span class="content_in"><%=map.get("CountMyinfoOrder") %></span></div>
 		</div>
 		
-		<div class="myinfo_content" onclick="location.href='#'">
-				<div class="title"><b>내 사진첩</b>   </div>
+		<div class="myinfo_content" onclick="location.href='../pet.do?command=picture_m0ain'">
+		<div class="title"><b>내 사진첩</b>   </div>
 				
 		</div>
 		

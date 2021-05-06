@@ -13,12 +13,12 @@ public class BookDto {
 	private String book_state;
 	private String book_hostime;
 	private String book_counsel;
-	
+
 	private MemberDto memberVO;
 	private BusinessDto businessVO;
-	
+
 	public BookDto() {
-		
+
 	}
 
 
@@ -140,6 +140,8 @@ public class BookDto {
 		return book_hostime;
 	}
 	
+
+
 
 
 	public void setBook_hostime(String book_hostime) {

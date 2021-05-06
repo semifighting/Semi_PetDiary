@@ -5,12 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.pet.ft.dto.CalendarDto;
+import com.pet.ft.model.BusinessDao;
+import com.pet.ft.model.BusinessDaoImpl;
 import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
 
 public class pet_util {
 
 	static PetDao dao = new PetDaoImpl();
+
 	
 	public static String FromMemberNoTogetName(int member_no) {
 		return dao.MemberOne(member_no).getMember_name();
