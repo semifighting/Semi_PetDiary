@@ -3,19 +3,20 @@ package com.pet.ft.controller;
 import java.io.File;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Util {
 
-    public static void MakeFolder(int member_no) {
-        String path = "/Users/parkgw/Semi-Project/web/resources/Upload/";
-        File folder = new File(path + member_no);
-
-        if (!folder.exists()) {
+    public static void MakeFolder(String path) {
+        File isDir = new File(path);
+        if (!isDir.isDirectory()) {
             try {
-                folder.mkdir();
-                System.out.println("폴더 생성");
+                if (isDir.mkdir()) {
+                    System.out.println("폴더 생성");
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -38,5 +39,23 @@ public class Util {
         } else {
             System.out.println("접자");
         }
+    }
+
+    public static String today() {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DATE);
+
+
+        return year + "-" + month + "-" + day;
+    }
+    
+    public static String isTwo(String booktime) {
+    	if(booktime.length() < 2) {
+			booktime = "0" + booktime;
+		}
+    	
+    	return booktime;
     }
 }

@@ -1,7 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.pet.ft.dto.PetDto" %>
-<%@ page import="com.pet.ft.biz.PetBizImpl" %>
-<%@ page import="com.pet.ft.biz.PetBiz" %>
+<%@ page import="com.pet.ft.model.PetBizImpl" %>
+<%@ page import="com.pet.ft.model.PetBiz" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%
     request.setCharacterEncoding("UTF-8");
@@ -11,7 +11,7 @@
 <head>
     <title>Title</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../resources/javascript/paging.js"></script>
+    <script src="/semi_PetDiary/resources/javascript/paging.js"></script>
 </head>
 <body>
 <%
