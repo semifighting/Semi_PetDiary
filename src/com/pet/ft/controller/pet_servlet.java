@@ -625,9 +625,9 @@ public class pet_servlet extends HttpServlet {
 
 			int res = dao.MemberInsert(dto);
 			if (res > 0) {
-				jsResponse(response, "회원가입이 완료되었습니다.", "main/main.sjp");
+				jsResponse(response, "회원가입이 완료되었습니다.", "main/main.jsp");
 			} else {
-				jsResponse(response, "회원가입 실패", "history.back();");
+				jsResponse(response, "회원가입 실패", "login/login_signup.jsp");
 			}
 		}
 
