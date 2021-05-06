@@ -191,14 +191,14 @@
   		SELECT COUNT(*) FROM COMMUNITY WHERE COMMUNITY_REPORT = 'Y'
   	</select>
   	
-  	<select id="totalBookHos" resultType="int">
-  		SELECT COUNT(*) FROM BOOK WHERE BOOK_TYPE = 'H'
+  
+  	<select id="totalBookHos" parameterType="int" resultType="int"> 
+  	SELECT COUNT(*) FROM BOOK A JOIN MEMBER B ON A.MEMBER_NO = B.MEMBER_NO WHERE A.BOOK_TYPE = 'H' AND B.MEMBER_NO = #{member_no}
   	</select>
   	
-  	<select id="totalBookSt" resultType="int">
-  		SELECT COUNT(*) FROM BOOK WHERE BOOK_TYPE = 'S'
-  	</select>
-
+	<select id="totalBookSt" parameterType="int" resultType="int">
+	 SELECT COUNT(*) FROM BOOK A JOIN MEMBER B ON A.MEMBER_NO = B.MEMBER_NO WHERE A.BOOK_TYPE = 'S' AND B.MEMBER_NO = #{member_no} 
+	 </select>
   	<update id="CommunityReport" parameterType="CommunityDto">
   		UPDATE COMMUNITY SET COMMUNITY_REPORTCOUNT = COMMUNITY_REPORTCOUNT+1, COMMUNITY_REPORTCONTENT = CONCAT(COMMUNITY_REPORTCONTENT, #{community_reportcontent}) WHERE COMMUNITY_SEQ = #{community_seq}
   	</update>
@@ -427,47 +427,29 @@
 		]]>
   	</select>
   	
-  	<select	id="bookListHosPaging" parameterType="hashmap" resultMap="bookListMap">
-  		<![CDATA[
-  		SELECT E.RNUM, E.BOOK_NUM, E.MEMBER_NAME, E.BUSINESS_NAME, E.BOOK_DATE
-		FROM(
-			SELECT ROWNUM AS RNUM, D.BOOK_NUM, D.MEMBER_NAME, D.BUSINESS_NAME, D.BOOK_DATE
-			FROM(
-				SELECT A.BOOK_NUM, B.MEMBER_NAME, C.BUSINESS_NAME, A.BOOK_DATE
-				FROM BOOK A JOIN MEMBER B 
-				ON A.MEMBER_NO = B.MEMBER_NO 
-				JOIN BUSINESS C
-				ON A.BUSINESS_NUM = C.BUSINESS_NUM
-				WHERE BOOK_TYPE = 'H'
-				ORDER BY A.BOOK_NUM
-			) D
-			WHERE ROWNUM <= #{noOfRecords}) E
-		WHERE E.RNUM > #{offset}
-		]]>
-  	</select>
+  	<select    id="bookListHosPaging" parameterType="hashmap" resultMap="bookListMap">
+          <![CDATA[
+          SELECT E.RNUM, E.BOOK_NUM, E.MEMBER_NAME, E.BUSINESS_NAME, E.BOOK_DATE
+        FROM(
+            SELECT ROWNUM AS RNUM, D.BOOK_NUM, D.MEMBER_NAME, D.BUSINESS_NAME, D.BOOK_DATE
+            FROM(
+                SELECT A.BOOK_NUM, B.MEMBER_NAME, C.BUSINESS_NAME, A.BOOK_DATE
+                FROM BOOK A JOIN MEMBER B 
+                ON A.MEMBER_NO = B.MEMBER_NO 
+                JOIN BUSINESS C
+                ON A.BUSINESS_NUM = C.BUSINESS_NUM
+                WHERE BOOK_TYPE = 'H' AND B.MEMBER_NO = #{member_no}
+                ORDER BY A.BOOK_NUM
+            ) D
+            WHERE ROWNUM <= #{noOfRecords}) E
+        WHERE E.RNUM > #{offset}
+        ]]>
+      </select>
 
   	<select	id="bookListStPaging" parameterType="hashmap" resultMap="bookListMap">
-  		<![CDATA[
-  		SELECT E.RNUM, E.BOOK_NUM, E.MEMBER_NAME, E.BUSINESS_NAME, E.BOOK_DATE, E.BOOK_TIME
-		FROM(
-			SELECT ROWNUM AS RNUM, D.BOOK_NUM, D.MEMBER_NAME, D.BUSINESS_NAME, D.BOOK_DATE, D.BOOK_TIME
-			FROM(
-				SELECT A.BOOK_NUM, B.MEMBER_NAME, C.BUSINESS_NAME, A.BOOK_DATE, A.BOOK_TIME
-				FROM BOOK A JOIN MEMBER B 
-				ON A.MEMBER_NO = B.MEMBER_NO 
-				JOIN BUSINESS C
-				ON A.BUSINESS_NUM = C.BUSINESS_NUM
-				WHERE BOOK_TYPE = 'S'
-				ORDER BY A.BOOK_NUM
-			) D
-			WHERE ROWNUM <= #{noOfRecords}) E
-		WHERE E.RNUM > #{offset}
-		]]>
+  		<![CDATA[ SELECT E.RNUM, E.BOOK_NUM, E.MEMBER_NAME, E.BUSINESS_NAME, E.BOOK_DATE, E.BOOK_TIME FROM( SELECT ROWNUM AS RNUM, D.BOOK_NUM, D.MEMBER_NAME, D.BUSINESS_NAME, D.BOOK_DATE, D.BOOK_TIME FROM( SELECT A.BOOK_NUM, B.MEMBER_NAME, C.BUSINESS_NAME, A.BOOK_DATE, A.BOOK_TIME FROM BOOK A JOIN MEMBER B ON A.MEMBER_NO = B.MEMBER_NO JOIN BUSINESS C ON A.BUSINESS_NUM = C.BUSINESS_NUM WHERE A.BOOK_TYPE = 'S' AND B.MEMBER_NO = #{member_no} ORDER BY A.BOOK_NUM ) D WHERE ROWNUM <= #{noOfRecords}) E WHERE E.RNUM > #{offset} ]]>
   	</select>
 
-  	
-  	
-  	
   	<update id="changeRole" parameterType="MemberDto">
   		UPDATE MEMBER
   		SET MEMBER_ROLE = #{member_role}
@@ -483,8 +465,8 @@
   		DELETE FROM COMMUNITY
   		WHERE COMMUNITY_SEQ = #{seq}
   	</delete>
-
-  	  	<!-- 병원상담 -->
+  	
+  	 <!-- 병원상담 -->
   	 <select id="hospitalList" resultType="businessDto" parameterType="hashmap">
   		<![CDATA[
 
@@ -502,25 +484,44 @@
   		SELECT COUNT(*) FROM BUSINESS WHERE BUSINESS_ROLE = 'H'
   	</select>
 
- 
-
- 	 <select id="hospitalOne" parameterType="int" resultType="businessDto">
+ 	<select id="hospitalOne" parameterType="int" resultType="businessDto">
   		SELECT *
    		FROM BUSINESS
   		WHERE BUSINESS_NUM = #{business_num}
   	</select>
 
-  	<insert id="BookCounselInsert" parameterType="BookDto">
-  		INSERT INTO BOOK
-        VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',#{business_num}, #{member_no},
-               #{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR},#{book_counsel})         
-  	</insert>
-
   	<insert id="counselInsert" parameterType="BookDto">
   		INSERT INTO BOOK
-        VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',#{business_num}, #{member_no},
-               #{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR},#{book_counsel})         
+        VALUES(BOOK_NUM_SEQ.NEXTVAL, #{book_date}, #{book_time,jdbcType = VARCHAR} ,'H',#{business_num},#{member_no},#{book_price,jdbcType = INTEGER},#{book_state,jdbcType = VARCHAR},#{book_hostime,jdbcType = VARCHAR},#{book_counsel})         
   	</insert>
+  	
+  	<!-- 여행일정 -->
+  	<insert id="travelInsert" parameterType="TravelDto">
+  		INSERT INTO TRAVEL
+        VALUES(TRAVEL_NO_SEQ.NEXTVAL,#{travel_name},#{travel_date} ,#{travel_spot1},#{travel_spot2},#{travel_spot3},#{travel_time1},#{travel_time2},#{travel_stay1},#{travel_stay2},#{member_no})         
+  	</insert>
+  	<update id="travelupdate" parameterType="TravelDto" >
+  		UPDATE TRAVEL
+  		SET TRAVEL_NAME = #{travel_name}, TRAVEL_DATE = #{travel_date}, TRAVEL_SPOT1 = #{travel_spot1}, TRAVEL_SPOT2 = #{travel_spot2}, TRAVEL_SPOT3 = #{travel_spot3},
+  		TRAVEL_TIME1 = #{travel_time1},TRAVEL_TIME2 = #{travel_time2},TRAVEL_STAY1 = #{travel_stay1},TRAVEL_STAY2 = #{travel_stay2}
+  		WHERE TRAVEL_NO = #{travel_no}
+  	</update>
+  	<select id="travelList" resultType="TravelDto">
+  		SELECT * FROM TRAVEL ORDER BY TRAVEL_NO
+  	</select>
+  	<select id="travelSelect" parameterType="int" resultType="TravelDto">
+  		SELECT *
+   		FROM TRAVEL
+  		WHERE TRAVEL_NO = #{travel_no}
+  	</select>
+  	
+  	<!-- 지도 -->
+  	<select id="bookableMap" resultType="businessDto">
+  	    SELECT BUSINESS_ADDR, BUSINESS_NAME FROM BUSINESS WHERE BUSINESS_ROLE = 'H' ORDER BY BUSINESS_NUM
+  	</select>
+   	<select id="foodMap" resultType="businessDto">
+  	    SELECT BUSINESS_ADDR, BUSINESS_NAME FROM BUSINESS WHERE BUSINESS_ROLE = 'S' ORDER BY BUSINESS_NUM
+  	</select>
 
   	<!-- 캘린더 내 clud -->
   	<select id = "CalViewList" parameterType="Map" resultType="CalendarDto">

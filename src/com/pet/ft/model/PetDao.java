@@ -12,6 +12,7 @@ import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PetRTCDto;
 import com.pet.ft.dto.PictureDto;
+import com.pet.ft.dto.TravelDto;
 
 
 public interface PetDao {
@@ -28,10 +29,18 @@ public interface PetDao {
 	//병원상담
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
 	public int totalHospital();
-	public int hospitalBookInsert(BookDto dto);
-	public BusinessDto hospitalSelect(int business_num);
-		
 	
+	public List<BusinessDto> bookableMap();
+	public List<BusinessDto> foodMap();
+
+	public BusinessDto hospitalSelect(int business_num);	
+	public int hospitalBookInsert(BookDto dto);
+	
+	public int travelInsert(TravelDto dto);
+	public List<TravelDto> travelList();
+	public TravelDto travelSelect(int travel_no);
+	public int travelUpdate(TravelDto dto);
+
 
 	public List<CommunityDto> CommentList(int community_no);
 	public List<CommunityDto> CommunitySearchList(String filter, String community_search);

@@ -9,20 +9,27 @@ import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
+import com.pet.ft.dto.TravelDto;
 
 
 public interface PetBiz {
 	
 	
-	
+	//병원상담
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
-
-
 	public int totalHospital();
+	
+	public List<BusinessDto> bookableMap();
+	public List<BusinessDto> foodMap();
 
-	public BusinessDto hospitalSelect(int business_num);
-
+	public BusinessDto hospitalSelect(int business_num);	
 	public int hospitalBookInsert(BookDto dto);
+	
+	public int travelInsert(TravelDto dto);
+	public List<TravelDto> travelList();
+	public TravelDto travelSelect(int travel_no);
+	public int travelUpdate(TravelDto dto);
+	
 	public BusinessDto businessOne(int business_num);
 
 	public int totalMember();

@@ -16,7 +16,7 @@
 function PopUpSubmit(RTC) {
 	var frm = document.getElementById(RTC);
 		window.open('', 'viewer', 'width=1400, height=960 location = no');
-		frm.action = "../pet.do";
+		frm.action = "/semi_PetDiary/pet.do";
 		frm.target = "viewer";
 		frm.method = "post";
 		frm.submit();
@@ -42,7 +42,7 @@ function PopUpSubmit(RTC) {
 		float:left; width:53%; position:absolute; margin-left:120px; 
 	}
 	.detail_box_img .himg{
-		max-height:270px;min-height:270px; border-radius:20px;
+		max-height:270px;min-height:270px; border-radius:20px; max-width:400px; min-width:400px;
 	}
 	.detail_box_text{
 		float:right; width:52%; border-top:3px solid #646361; position:relative;
@@ -71,30 +71,28 @@ function PopUpSubmit(RTC) {
 	}
 	
 </style>
+
+
 </head>
 <body>
 <%
 
 	BusinessDto dto = (BusinessDto)request.getAttribute("dto");
-	int member_no = 0;
-	if(session.getAttribute("member_no")!=null){
-		member_no = (int)session.getAttribute("member_no");
-	}
 %>
   <%@include file="../main/header.jsp"%>
 		
+  <form action="pet.do" method="post">
+		<input type="hidden" name="command" value="counselInsert"/>
+		<input type="hidden" name="business_num" value="<%=dto.getBusiness_num() %>"/>
+		
 	<div class="hospital_container">
-		<h3 class="hospital_name">${dto.business_name}</h3>
+		<h3 class="hospital_name"><%=dto.getBusiness_name() %></h3>
 		<div class="detail_box">
 			<div class="detail_box_img">
-				<img class="himg" src="./resources/image/dodam1.png">
+				<img class="himg" src="<%=dto.getBusiness_etc() %>" />
 			</div>
 			<div class="detail_box_text">
-			  <form action="pet.do" method="post">
-					<input type="hidden" name="command" value="counselInsert"/>
-					<input type="hidden" name="business_num" value="<%=dto.getBusiness_num()%>"/>
-					<input type="hidden" name="member_no" value="<%=dto.getMember_no()%>"/>
-				<ul class="text_wrap">	
+				<ul class="text_wrap">
 					<li>
 						<dl>
 							<dt>상담일자</dt>
@@ -116,12 +114,25 @@ function PopUpSubmit(RTC) {
 							<dd>
 								<input type="button"  value="취소" onclick="pet.do?command=hospitalmain"/>
 								<input type="submit"  value="예약신청"/>
-								
 						    </dd>
 						</dl>
-					</li>	
+					</li>
+					
 				</ul>
-				</form>
+			</div>
+		</div>
+	
+	</div>
+	
+ </form>
+				
+<%
+	int member_no = 0;
+	if(session.getAttribute("member_no")!=null){
+		member_no = (int)session.getAttribute("member_no");
+	}
+%>
+				
 				
 	<%if(member_no== dto.getMember_no()&&request.getAttribute("room_id")!=null){ %>
 	<form  id="EndRTC"method="post">
@@ -139,7 +150,7 @@ function PopUpSubmit(RTC) {
   		<input type="hidden" value="<%= dto.getBusiness_num() %>" name="business">
   		<input type="button" onclick="PopUpSubmit('OpenRTC')" value="화상 상담 시작하기">
 	</form>
-	<%}else if(request.getAttribute("room_id")!=null){ %>
+	<%}else if(request.getAttribute("room_id")!=null&&member_no !=0){ %>
 	<form id="ConnectRTC" method="post">
   		<input type="hidden" value="ConnectRTC" name="command">
   		<input type="hidden" value="<%=(int)session.getAttribute("member_no") %>" name="member">

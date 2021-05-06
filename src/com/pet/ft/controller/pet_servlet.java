@@ -42,6 +42,7 @@ import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PetRTCDto;
 import com.pet.ft.dto.PictureDto;
+import com.pet.ft.dto.TravelDto;
 import com.pet.ft.model.PetBiz;
 import com.pet.ft.model.PetBizImpl;
 import javax.servlet.http.HttpSession;
@@ -57,6 +58,7 @@ import com.pet.ft.model.BusinessDaoImpl;
 import com.pet.ft.dto.CalendarDto;
 import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
+import com.pet.ft.paging.HospitalPaging;
 import com.pet.ft.paging.Paging;
 
 import net.sf.json.JSONArray;
@@ -82,11 +84,7 @@ public class pet_servlet extends HttpServlet {
 		String loginDirectory = "login/login_";
 		PetBiz biz = new PetBizImpl();
 		
-		if("business".equals(command)) {
-			response.sendRedirect("business/business_main.jsp");
-		} 
-		
-		else if("change".equals(command)) {
+		if("change".equals(command)) {
 			
 			int no = Integer.parseInt(request.getParameter("no"));
 			String role = request.getParameter("role");
@@ -154,7 +152,7 @@ public class pet_servlet extends HttpServlet {
 				System.out.println("예약완료");
 			}
 		}			
-		
+
 		if("community".equals(command)) {	
 			int MaxPage = dao.CommunityPageMax();
 			request.setAttribute("maxpage", MaxPage);
@@ -168,6 +166,7 @@ public class pet_servlet extends HttpServlet {
 				request.getRequestDispatcher(communityDirectory+"main.jsp?paging="+request.getParameter("paging")).forward(request, response);
 			}
 		}
+
 
 		
 		if("community_like".equals(command)) {
@@ -295,10 +294,7 @@ public class pet_servlet extends HttpServlet {
 			int MaxPage = dao.CommunityPageMax();
 			request.setAttribute("maxpage", MaxPage);
 			if(res>0) {
-				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
-				List<CommunityDto> list = dao.CommunityList();
-				request.setAttribute("list", list);
-				request.getRequestDispatcher(communityDirectory+"main.jsp?paging="+1).forward(request, response);
+				request.getRequestDispatcher("pet.do?command=community").forward(request, response);
 
 			}else{
 				jsResponse(response, "작성 실패", communityDirectory+"insert.jsp");
@@ -387,7 +383,7 @@ public class pet_servlet extends HttpServlet {
 				jsResponse(response, "수정 실패", "pet.do?command=community_detail&seq="+request.getParameter("community_seq")+"&community_no="+community_no);
 			}
 		}
-
+		
 		//병원상담
 		int currentPageNo = 1;
 		int recordsPerPage = 0;
@@ -400,7 +396,7 @@ public class pet_servlet extends HttpServlet {
 
 			if(request.getParameter("lines") != null)
 				recordsPerPage = Integer.parseInt(request.getParameter("lines"));
-				Paging paging = new Paging(currentPageNo, recordsPerPage);
+				HospitalPaging paging = new HospitalPaging(currentPageNo, recordsPerPage);
 				int offset = (paging.getCurrentPageNo()-1)*paging.getRecordsPerPage();
 				
 				System.out.println("offset : " +offset);
@@ -418,9 +414,11 @@ public class pet_servlet extends HttpServlet {
 				request.setAttribute("paging", paging);
 				request.setAttribute("servletPath", "pet.do");
 				request.setAttribute("key", "hospitalmain");
+								
 				url = "/hospital/hospital_main.jsp";
 			}else {
 				request.setAttribute("msg", "에러");
+				
 				url = "/hospital/hospital_main.jsp";
 			}
 			request.getRequestDispatcher(url).forward(request, response);
@@ -431,28 +429,173 @@ public class pet_servlet extends HttpServlet {
 			int business_num = Integer.parseInt(request.getParameter("business_num"));
 			BusinessDto dto = biz.hospitalSelect(business_num);
 			request.setAttribute("dto", dto);
+			String room_id = null;
+			if(dao.SelectRTCOne(business_num)!=null) {
+				room_id = dao.SelectRTCOne(business_num).getRtc_room();
+			}
+			request.setAttribute("dto", dto);
+			request.setAttribute("room_id", room_id);
+			
 			dispatch(request,response,"./hospital/hospital_select.jsp");
+
+
 
 		}else if(command.equals("counselInsert")) {
 			String book_date = request.getParameter("book_date");
 			String book_counsel = request.getParameter("book_counsel");
 			int business_num = Integer.parseInt(request.getParameter("business_num"));
-			int member_no = (int)session.getAttribute("member_no");
-			BookDto dto = new BookDto();
-			dto.setBook_date(book_date);
-			dto.setBook_counsel(book_counsel);
-			dto.setBusiness_num(business_num);
-			dto.setMember_no(member_no);
+			
+			if(session.getAttribute("member_no")!= null) {
+				int member_no = (int)session.getAttribute("member_no");
+				BookDto dto = new BookDto();
+				dto.setBook_date(book_date);
+				dto.setBook_counsel(book_counsel);
+				dto.setBusiness_num(business_num);
+				dto.setMember_no(member_no);
+				int res = biz.hospitalBookInsert(dto);
+				if(res>0) {
+			        pet_sms.SendSMS(book_date, null, business_num, (int)session.getAttribute("member_no"));
+					jsResponse(response, "예약성공", "pet.do?command=hospitalmain");
+				}else {
+					jsResponse(response, "예약실패", "./hospital/hospital_select.jsp");
 
-
-			int res = biz.hospitalBookInsert(dto);
-			if(res>0) {
-				pet_sms.SendSMS(book_date, null, business_num, member_no);
-				jsResponse(response, "예약성공", "pet.do?command=hospitalmain");
+				}
 			}else {
-				jsResponse(response, "예약실패", "./hospital/hospital_select.jsp");
+				jsResponse(response, "로그인 해주세요", loginDirectory+"login.jsp");        		
+
 			}
+			//병원지도
+		}else if(command.equals("bookableMap")) {
+			PrintWriter out = response.getWriter();
+			
+			List<BusinessDto> list = biz.bookableMap();
+			JSONObject obj = new JSONObject();
+			JSONArray jsonArray = new JSONArray();
+			for(int i = 0; i<list.size(); i++) {
+				
+				
+				obj.put("business_addr",list.get(i).getBusiness_addr());
+			    obj.put("business_name", list.get(i).getBusiness_name());
+				
+				jsonArray.add(obj);
+			
+			}
+						
+			out.print(jsonArray);
+			out.flush();
+		
+			//음식점지도
+		}else if(command.equals("foodMap")) {
+			PrintWriter out = response.getWriter();
+			
+			List<BusinessDto> list = biz.foodMap();
+			JSONObject obj = new JSONObject();
+			JSONArray jsonArray = new JSONArray();
+			for(int i = 0; i<list.size(); i++) {
+				
+				
+				obj.put("business_addr",list.get(i).getBusiness_addr());
+			    obj.put("business_name", list.get(i).getBusiness_name());
+				
+				jsonArray.add(obj);
+			
+			}
+						
+			out.print(jsonArray);
+			out.flush();
+		//여행일정	
+		}else if(command.equals("travelmain")) {
+			List<TravelDto> list = biz.travelList();
+			request.setAttribute("list", list);
+			dispatch(request,response,"./travel/travel_main.jsp");
+					
+		}else if(command.equals("travelselect")) {
+			int travel_no = Integer.parseInt(request.getParameter("travel_no"));
+			TravelDto dto = biz.travelSelect(travel_no);
+			request.setAttribute("dto", dto);
+			dispatch(request,response,"./travel/travel_select.jsp");
+
+		}else if(command.equals("insertform")) {
+			dispatch(request,response,"./travel/travel_insert.jsp");
+			
+		}else if(command.equals("travelInsert")) {
+			String travel_name = request.getParameter("travel_name");
+			String travel_date = request.getParameter("travel_date");
+			String travel_spot1 = request.getParameter("travel_spot1");
+			String travel_spot2 = request.getParameter("travel_spot2");
+			String travel_spot3 = request.getParameter("travel_spot3");
+			int travel_time1 = Integer.parseInt(request.getParameter("travel_time1"));
+			int travel_time2 = Integer.parseInt(request.getParameter("travel_time2"));
+			int travel_stay1 = Integer.parseInt(request.getParameter("travel_stay1"));
+			int travel_stay2 = Integer.parseInt(request.getParameter("travel_stay2"));
+			int member_no = 1;
+					       //Integer.parseInt(request.getParameter("member_no"));
+			
+			TravelDto dto = new TravelDto();
+			dto.setTravel_name(travel_name);
+			dto.setTravel_date(travel_date);
+			dto.setTravel_spot1(travel_spot1);
+			dto.setTravel_spot2(travel_spot2);
+			dto.setTravel_spot3(travel_spot3);
+			dto.setTravel_stay1(travel_stay1);
+			dto.setTravel_stay2(travel_stay2);
+			dto.setTravel_time1(travel_time1);
+			dto.setTravel_time2(travel_time2);
+			dto.setMember_no(member_no);
+			
+			int res = biz.travelInsert(dto);
+			if(res>0) {
+				jsResponse(response, "일정저장성공", "pet.do?command=travelmain");
+			}else {
+				jsResponse(response, "저장실패", "pet.do?command=travelmain");
+
+			}
+
+		}else if(command.equals("updateform")) {
+			int travel_no = Integer.parseInt(request.getParameter("travel_no"));
+			TravelDto dto = biz.travelSelect(travel_no);
+			request.setAttribute("dto", dto);
+			dispatch(request,response,"./travel/travel_update.jsp");
+		
+		}else if(command.equals("travelupdate")) {
+			int travel_no = Integer.parseInt(request.getParameter("travel_no"));
+			String travel_name = request.getParameter("travel_name");
+			String travel_date = request.getParameter("travel_date");
+			String travel_spot1 = request.getParameter("travel_spot1");
+			String travel_spot2 = request.getParameter("travel_spot2");
+			String travel_spot3 = request.getParameter("travel_spot3");
+			int travel_time1 = Integer.parseInt(request.getParameter("travel_time1"));
+			int travel_time2 = Integer.parseInt(request.getParameter("travel_time2"));
+			int travel_stay1 = Integer.parseInt(request.getParameter("travel_stay1"));
+			int travel_stay2 = Integer.parseInt(request.getParameter("travel_stay2"));
+			int member_no = 1;
+							//Integer.parseInt(request.getParameter("member_no"));
+
+			TravelDto dto = new TravelDto();
+			dto.setTravel_no(travel_no);
+			dto.setTravel_name(travel_name);
+			dto.setTravel_date(travel_date);
+			dto.setTravel_spot1(travel_spot1);
+			dto.setTravel_spot2(travel_spot2);
+			dto.setTravel_spot3(travel_spot3);
+			dto.setTravel_stay1(travel_stay1);
+			dto.setTravel_stay2(travel_stay2);
+			dto.setTravel_time1(travel_time1);
+			dto.setTravel_time2(travel_time2);
+			dto.setMember_no(member_no);
+			
+			int res = biz.travelUpdate(dto);
+			if(res>0) {
+				jsResponse(response, "수정성공", "pet.do?command=travelmain");
+			}else {
+				jsResponse(response, "수정실패", "pet.do?command=travelselect&travel_no="+travel_no);
+
+			}
+
+
 		}
+		
+
 		// 회원가입 페이지로 이동
 		if("login_signup".equals(command)) {
 			response.sendRedirect(loginDirectory+"signup.jsp");
@@ -665,12 +808,18 @@ public class pet_servlet extends HttpServlet {
 				jsResponse(response, "로그인 해주세요", loginDirectory+"login.jsp");        		
         	}else {
             	int member_no = (int)session.getAttribute("member_no");
-            	HashMap<String, Integer> map = dao.SelectMyinfoCount(member_no);
-            	MemberDto dto = dao.MemberOne(member_no);        	
-            	request.setAttribute("map", map);
-            	request.setAttribute("dto", dto);
-            	
-            	dispatch(request, response, "myinfo/myinfo_main.jsp");        		
+        		if(member_no == 1) {
+        			response.sendRedirect("business/business_main.jsp");
+        		}else {
+                	HashMap<String, Integer> map = dao.SelectMyinfoCount(member_no);
+                	MemberDto dto = dao.MemberOne(member_no);        	
+                	request.setAttribute("map", map);
+                	request.setAttribute("dto", dto);
+                	
+                	dispatch(request, response, "myinfo/myinfo_main.jsp");      
+        			
+        		}
+        		  		
         	}
         }    
 
@@ -811,6 +960,85 @@ public class pet_servlet extends HttpServlet {
 	         }
 
 	      }
+		if(command.equals("booklistview")) {
+			String book_date = request.getParameter("book_date");
+			String book_time = request.getParameter("book_time");
+			int business_num = Integer.parseInt(request.getParameter("business_num"));
+			String book_type = request.getParameter("book_type");
+			 
+			
+			String date = book_date.replaceAll("[^0-9]", "");
+			String time = book_time.replaceAll("[^0-9]", "");
+			
+			List<BookDto> list = biz.totalDateTime();
+			String msg = "없음";
+			int pe = 0;
+			
+			for(BookDto dto : list) {
+				
+				if(business_num == dto.getBusiness_num()) {
+				
+					if(date.equals(dto.getBook_date())) {	
+						
+						int timecheck = Integer.parseInt(dto.getBook_time().replaceAll("[^0-9]", ""));
+						int timeall = Integer.parseInt(time);
+						int x = 0;
+						
+						if((timecheck/100) == (timeall/100)) {
+							x = timeall - timecheck;
+							
+						} else {
+							x = (timeall - timecheck) - 40;
+						}
+						
+						if(x <= 60 && x >= 10) {
+							pe = (60 - x)/10;
+							
+							msg = "예상 대기시간은 " + 5 * pe + " ~ " + (5 * pe + 5) + "분 입니다.";
+							
+							jsResponse(response, msg, "pet.do?command=selectBook&booknum="+dto.getBook_num());
+						}
+					}
+				}
+			}
+			
+			System.out.println("pe : " +pe);
+			
+			 request.setAttribute("msg", msg);
+			 request.setAttribute("pe", pe);
+			 
+			 dispatch(request, response, "business/booklist_view.jsp");
+		}
+		
+		if(command.equals("bookview")) {
+			int book_num = Integer.parseInt(request.getParameter("book_num"));
+			String date = request.getParameter("date");
+			String time = request.getParameter("time");
+			
+			String dateTime = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8) + " " + time;
+			
+			request.setAttribute("date", date);
+			request.setAttribute("time", time);
+			request.setAttribute("dateTime", dateTime);
+			
+			dispatch(request, response, "business/business_bookview.jsp");
+			
+		}
+		
+		if(command.equals("bookdelete")) {
+			int book_num = Integer.parseInt(request.getParameter("book_num"));
+			
+			int res = biz.bookdelete(book_num);
+			
+			if(res > 0) {
+				System.out.println("삭제성공");
+				
+				dispatch(request, response, "pet.do?command=business");
+			}
+			
+		}
+		
+		
 		
 		if(command.equals("myinfo_business")) {
 			int member_no = (int)session.getAttribute("member_no"); //나중에 session에서 받아오기
@@ -1242,6 +1470,117 @@ public class pet_servlet extends HttpServlet {
     		}
     		response.sendRedirect("main/main.jsp");
    		}
+    	
+    	
+    	if("StartRTC".equals(command)) {
+			System.out.println("성공");
+			//String business_num = request.getParameter("business_num")
+			String ROOM_ID=request.getParameter("ROOM_ID");
+			int member=Integer.parseInt(request.getParameter("member"));
+			int business=Integer.parseInt(request.getParameter("business"));
+			System.out.println("R:"+ROOM_ID);
+			System.out.println("M:"+member);
+			System.out.println("B:"+business);
+			PetRTCDto dto = new PetRTCDto(ROOM_ID,"N", member, business);
+			if(dao.SelectRTCOne(business)!=null) {
+				if(dao.updateRTC(dto)>0) {
+					System.out.println("DB수정 성공");		
+					String responseText = "<script type='text/javascript'>"
+						    + "alert('성공');"
+						    + "</script>";
+					response.getWriter().print(responseText);
+				}
+			}else {
+				if(dao.insertRTC(dto)>0) {
+					System.out.println("DB작성 성공");		
+				}
+			}		
+		}
+
+		if("EndRTC".equals(command)) {
+			System.out.println("성공");
+			String ROOM_ID=request.getParameter("ROOM_ID");
+			int member=Integer.parseInt(request.getParameter("member"));
+			int business=Integer.parseInt(request.getParameter("business"));
+			System.out.println("R:"+ROOM_ID);
+			System.out.println("M:"+member);
+			System.out.println("B:"+business);
+			if(dao.SelectRTCOne(business)!=null) {
+				if(dao.DeleteRTC(business)>0) {
+					System.out.println("DB삭제 성공");
+					
+				}
+			}else {
+				System.out.println("DB삭제 실패");		
+
+			}
+			String responseText = "<script type='text/javascript'>"
+				    + "window.close()"
+				    + "</script>";
+			response.getWriter().print(responseText);
+			
+		}
+
+		if("OpenRTC".equals(command)) {
+			int member=Integer.parseInt(request.getParameter("member"));
+			int business=Integer.parseInt(request.getParameter("business"));
+			if(dao.SelectRTCOne(business)==null) {
+				request.setAttribute("member", member);
+				request.setAttribute("business", business);
+				request.getRequestDispatcher("rtc/openrtc.jsp").forward(request, response);
+			}else {
+				jsResponseClose(response, "열려있는 상담실이 있습니다.");
+			}
+			
+		}
+
+		if("ConnectRTC".equals(command)) {
+			int member=Integer.parseInt(request.getParameter("member"));
+			int business=Integer.parseInt(request.getParameter("business"));
+			String room_id = dao.SelectRTCOne(business).getRtc_room();
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("member_no", Integer.toString(member));
+			Calendar cal = Calendar.getInstance();			
+			String book_date = Integer.toString(cal.get(Calendar.YEAR))+pet_util.isTwo(Integer.toString(cal.get(Calendar.MONTH)+1))+pet_util.isTwo(Integer.toString(cal.get(Calendar.DATE)));
+			System.out.println(book_date);
+			map.put("book_date", book_date);
+			if(dao.SelectBookRTC(map)!=null) {
+				System.out.println(dao.SelectRTCOne(business).getRtc_use());
+				if(dao.SelectRTCOne(business).getRtc_use().equals("N")) {
+					response.sendRedirect("https://localhost:3000/"+room_id	);		
+				}else {
+					jsResponseClose(response, "먼저 상담중인 사람이 있습니다. 잠시 기다려 주세요");
+					
+				}
+			}else {
+				jsResponseClose(response, "상담 전 예약을 진행해 주세요");
+			}
+			
+		}
+
+		if("UseRTC".equals(command)) {
+			String room_id = request.getParameter("ROOM_ID");
+			System.out.println(room_id);
+			if(dao.SelectRTCRoom(room_id)!=null) {
+				if(dao.UseRTC(room_id)>0) {
+					System.out.println("성공");
+				}				
+			}
+		}
+		if("NUseRTC".equals(command)) {
+			String room_id = request.getParameter("ROOM_ID");
+			System.out.println(room_id);
+
+			if(dao.SelectRTCRoom(room_id)!=null) {
+				if(dao.NUseRTC(room_id)>0) {
+					System.out.println("성공");
+				}			
+			}
+		}
+		
+    	
+    	
+    	
     	
 	}
 

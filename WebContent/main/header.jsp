@@ -28,13 +28,18 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
     		window.open('/semi_PetDiary/chatbot.do?command=opendialog','', 'height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY + 'resizable=no');
     		}
     	}
+    	//지도검색
+    	function allMapPop(){
+			var popup = window.open('./main/allMap.jsp', '지도', 'width=800px,height=700px,scrollbars=yes');
+		}
+    	
     </script>
   </head>
   <body>
     <nav class="header">
       <div class="header_logo">
         <i class="fas fa-paw"></i>
-        <a href="/semi_PetDiary/pet.do?command=myinfo">Pet Diary</a>
+        <a href="/semi_PetDiary/">Pet Diary</a>
       </div>
       <ul class="header_menu">
         <li>
@@ -47,13 +52,12 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
         <li><a href="/semi_PetDiary/paging.do?command=foodlist">음식/카페</a></li>
         <li><a href="/semi_PetDiary/pet.do?command=community">커뮤니티</a></li>
         <li><a href="/semi_PetDiary/pet.do?command=weather_main">날씨</a></li>
+        <li><a href="/semi_PetDiary/pet.do?command=travelmain">여행일정</a></li>        
         <li>
-          <form action="#" method="post">
-            <input type="text" id="searchBox" />
-            <input type="submit" value="검색" />
-          </form>
+          <input class="all_map" type="button" value="지도검색" onclick="allMapPop();"/>
         </li>
-      </ul>
+
+       </ul>
 
       <ul class="header_login">
         <% if(session.getAttribute("member_no") == null) { %>
@@ -71,7 +75,7 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
       </ul>
 
 		<ul class="header_icons">
-			<li><a href="/semi_PetDiary/pet.do?command=business"><i class="fas fa-user-circle"></i></a></li>
+			<li><a href="/semi_PetDiary/pet.do?command=myinfo"><i class="fas fa-user-circle"></i></a></li>
 
 		</ul>
 			<a href="#" class="header_toggleBtn">

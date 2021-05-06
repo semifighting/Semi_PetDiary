@@ -17,6 +17,7 @@ import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PetRTCDto;
 import com.pet.ft.dto.PictureDto;
+import com.pet.ft.dto.TravelDto;
 public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
 	private String namespace = "com.pet.ft.mapper.";
@@ -134,6 +135,18 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		return res;
 
 	}
+	
+	@Override
+	public int hospitalBookInsert(BookDto dto) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(true)){
+			res = session.insert(namespace+"counselInsert", dto);
+		}
+		return res;
+
+	}
+
+	
 	// 내가 작성
 
 	@Override
@@ -631,15 +644,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			}		
 			return res;
 		}
-		@Override
-		public int hospitalBookInsert(BookDto dto) {
-			int res = 0;
-			try(SqlSession session = getSqlSessionFactory().openSession(true)){
-				res = session.insert(namespace+"BookCounselInsert", dto);
-			}
-			return res;
-			
-		}
 
 		@Override
 		public MemberDto MemberOne(int member_no) {
@@ -912,5 +916,71 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 			return list;
 		}
 
+
+		//등록된 병원만 뜨도록
+		@Override
+		public List<BusinessDto> bookableMap() {
+			SqlSession session = getSqlSessionFactory().openSession();
+		
+			List<BusinessDto> list = session.selectList(namespace+"bookableMap");
+			session.close();
+
+			return list;
+		}
+		//음식점지도
+		@Override
+		public List<BusinessDto> foodMap() {
+			SqlSession session = getSqlSessionFactory().openSession();
+			
+			List<BusinessDto> list = session.selectList(namespace+"foodMap");
+			session.close();
+
+			return list;
+		}
+		
+		//여행일정
+		@Override
+		public int travelInsert(TravelDto dto) {
+			int res = 0;
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				res = session.insert(namespace+"travelInsert", dto);
+			}
+			return res;
+
+		}
+
+		@Override
+		public List<TravelDto> travelList() {
+			SqlSession session = getSqlSessionFactory().openSession();
+			List<TravelDto> list = session.selectList(namespace + "travelList");
+			session.close();
+
+			return list;
+
+		}
+
+		@Override
+		public TravelDto travelSelect(int travel_no) {
+			TravelDto dto = null;
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				dto = session.selectOne(namespace+"travelSelect", travel_no);
+			}
+			return dto;
+
+
+		}
+
+		@Override
+		public int travelUpdate(TravelDto dto) {
+			int res = 0;
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				res = session.insert(namespace+"travelupdate", dto);
+			}
+			return res;
+
+		}	
+
+		
+		
 		
 }

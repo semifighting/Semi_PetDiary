@@ -20,23 +20,6 @@
 		$("select").change(function(){
 			location.href="/semi_PetDiary/paging.do?command=book";
 		});
-		
-	/* 	$("input[name=test-button]").click(function(){
-			var d1 = $("input[name=test-date]").val();
-			var t1 = $("input[name=test-time]").val();
-			
-			var d2 = d1.split("-");
-			var t2 = t1.split(":");
-			
-			var date = d2[0] + d2[1] + d2[2];
-			var time = t2[0] + t2[1];
-			
-			date = Number(date);
-			time = Number(time);
-			
-			alert(date);
-			alert(time);
-		}); */
 	});
 
 </script>
@@ -45,6 +28,7 @@
 <style type="text/css">
 	
 	h2{width:200px; margin: 10px auto;}
+	#main-background{width: 100%;height: 1000px;}
 	#sell{margin: 0px auto; width: 150px;}
 	#table {display: table; width: 40%; margin: 20px auto;}
 	.row {display: table-row;}
@@ -56,10 +40,10 @@
 	.col4 {width: 2%;}
 	.col5 {width: 1%;}
 	.col6 {width: 2%;}
-	.col7 {width: 1%;}
 	
 	.paginate{margin: 0px auto; width: 200px; text-align: center;}
 	.paginate a	{color:black;}
+	.view:hover{background-color: salmon;}
 		
 </style>
 </head>
@@ -76,37 +60,41 @@
 		</select>
 	</div>
 	
-	<div id="table">
-		<div class="row main">
-			<span class="cell col1">예약 번호</span>
-			<span class="cell col2">예약자 성명</span>
-			<span class="cell col3">예약 업체</span>
-			<span class="cell col4">예약 시간</span>
-			<span class="cell col5">예약 시간</span>
-		</div>
-		
-		<c:forEach items="${list }" var="dto" varStatus="stat">
-			<div class="row" onclick="location.href='pet.do?command=bookview&book_num=${dto.book_num }&date=${dto.book_date}&time=${dto.book_time}'">
-				<span class="cell col1">${dto.book_num }</span>
-				<span class="cell col2">${dto.memberVO.member_name }</span>
-				<span class="cell col3">${dto.businessVO.business_name }</span>
-				<span class="cell col4">${dto.book_date}</span>
-				<span class="cell col5">${dto.book_time}</span>
+	<div id="main-background">
+		<div id="table">
+			<div class="row main">
+				<span class="cell col1">예약 번호</span>
+				<span class="cell col2">예약자 성명</span>
+				<span class="cell col3">예약 업체</span>
+				<span class="cell col4">예약 시간</span>
+				<span class="cell col5">예약 시간</span>
+				<span class="cell col6">예약 조회</span>
 			</div>
-		</c:forEach>
-	</div>
+			
+			<c:forEach items="${list }" var="dto" varStatus="stat">
+				<div class="row">
+					<span class="cell col1">${dto.book_num }</span>
+					<span class="cell col2">${dto.memberVO.member_name }</span>
+					<span class="cell col3">${dto.businessVO.business_name }</span>
+					<span class="cell col4">${dto.book_date}</span>
+					<span class="cell col5">${dto.book_time}</span>
+					<span class="cell col6 view"  onclick="location.href='pet.do?command=bookview&book_num=${dto.book_num }&date=${dto.book_date}&time=${dto.book_time}'">예약조회</span>
+				</div>
+			</c:forEach>
+		</div>
 	
-	<jsp:include page="/main/paging.jsp" flush="true">
-		<jsp:param name="servletPath" value="${servletPath }"/>
-		<jsp:param name="recordsPerPage" value="${paging.recordsPerPage }"/>
-		<jsp:param name="firstPageNo" value="${paging.firstPageNo }"/>
-		<jsp:param name="prevPageNo" value="${paging.prevPageNo }"/>
-		<jsp:param name="startPageNo" value="${paging.startPageNo }"/>
-		<jsp:param name="currentPageNo" value="${paging.currentPageNo }"/>
-		<jsp:param name="endPageNo" value="${paging.endPageNo }"/>
-		<jsp:param name="nextPageNo" value="${paging.nextPageNo }"/>
-		<jsp:param name="finalPageNo" value="${paging.finalPageNo }"/>
-	</jsp:include>
+		<jsp:include page="/main/paging.jsp" flush="true">
+			<jsp:param name="servletPath" value="${servletPath }"/>
+			<jsp:param name="recordsPerPage" value="${paging.recordsPerPage }"/>
+			<jsp:param name="firstPageNo" value="${paging.firstPageNo }"/>
+			<jsp:param name="prevPageNo" value="${paging.prevPageNo }"/>
+			<jsp:param name="startPageNo" value="${paging.startPageNo }"/>
+			<jsp:param name="currentPageNo" value="${paging.currentPageNo }"/>
+			<jsp:param name="endPageNo" value="${paging.endPageNo }"/>
+			<jsp:param name="nextPageNo" value="${paging.nextPageNo }"/>
+			<jsp:param name="finalPageNo" value="${paging.finalPageNo }"/>
+		</jsp:include>
+	</div>
 
 <%@ include file="/main/footer.jsp" %>
 

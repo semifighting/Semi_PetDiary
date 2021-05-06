@@ -14,6 +14,7 @@ import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
+import com.pet.ft.dto.TravelDto;
 
 public class PetBizImpl implements PetBiz {
 
@@ -44,6 +45,7 @@ public class PetBizImpl implements PetBiz {
 
 		return dao.hospitalBookInsert(dto);
 	}
+
 
 
 	public BusinessDto businessOne(int business_num) {
@@ -288,5 +290,44 @@ public class PetBizImpl implements PetBiz {
 	public int bookdelete(int book_num) {
 		return dao.bookdelete(book_num);
 	}
+	
+	@Override
+	public List<BusinessDto> bookableMap() {
+		
+		return dao.bookableMap();
+	}
+
+	@Override
+	public List<BusinessDto> foodMap() {
+		
+		return dao.foodMap();
+	}
+
+	@Override
+	public int travelInsert(TravelDto dto) {
+		
+		return dao.travelInsert(dto);
+	}
+
+	@Override
+	public List<TravelDto> travelList() {
+	
+		return dao.travelList();
+	}
+
+	@Override
+	public TravelDto travelSelect(int travel_no) {
+		
+		return dao.travelSelect(travel_no);
+	}
+
+	@Override
+	public int travelUpdate(TravelDto dto) {
+		
+		return dao.travelUpdate(dto);
+	}
+	
+	
+	
 
 }

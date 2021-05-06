@@ -212,8 +212,7 @@ public class chatbot_servlet extends HttpServlet {
 	            				System.out.println("오케!");
 	            				
 	            				BookDto bokdto = new BookDto(0, book_date, book_time, dto.getBusiness_role(), dto.getBusiness_num(), (int)session.getAttribute("member_no"), null, null, null, null);
-	            				
-	            				int ires = bdao.bookInsert(bokdto);
+	            		        pet_sms.SendSMS(book_date, book_time, dto.getBusiness_num(), (int)session.getAttribute("member_no"));	            				int ires = bdao.bookInsert(bokdto);
 	            				System.out.println(ires);
 	            			}
 	            		}
