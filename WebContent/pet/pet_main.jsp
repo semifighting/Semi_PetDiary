@@ -16,7 +16,7 @@
             display: block;
             border: none;
             /*상단 숨김 코드*/
-            width: 500px;
+            width: 900px;
             height: 700px;
             margin-top: -100px;
         }
@@ -41,7 +41,7 @@
             float: left;
             width: 500px;
             height: 500px;
-            margin-left: 100px;
+            margin-left: 50px;
         }
 
         .pet_info_style {

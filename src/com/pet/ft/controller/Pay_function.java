@@ -34,52 +34,6 @@ public class Pay_function {
     public static final String IMPORT_PREPARE_URL = "https://api.iamport.kr/payments/prepare";
 
 
-
-    /*public void getToken() throws IOException {
-        HttpURLConnection conn = null;
-        String access_token = null;
-        URL url = new URL(IMPORT_TOKEN_URL);
-
-        conn = (HttpURLConnection) url.openConnection();
-
-        conn.setRequestMethod("POST");
-
-        conn.setRequestProperty("Content-Type", "application/json");
-        conn.setRequestProperty("Accept", "application/json");
-
-        conn.setDoOutput(true);
-
-        JSONObject obj = new JSONObject();
-        obj.put("imp_key", "imp_apikey");
-        obj.put("imp_secret", "ekKoeW8RyKuT0zgaZsUtXXTLQ4AhPFW3ZGseDA6bkA5lamv9OqDMnxyeB9wqOsuO9W3Mx9YSJ4dTqJ3f");
-
-
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-        bw.write(obj.toString());
-        bw.flush();
-        bw.close();
-
-        int result = 0;
-        int responseCode = conn.getResponseCode();
-        System.out.println("응답 코드는 ??" + responseCode);
-
-        if (responseCode == 200) {
-            System.out.println("환불 성공");
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = br.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-            br.close();
-            System.out.println("" + sb.toString());
-            result = 1;
-        } else {
-            System.out.println(conn.getResponseMessage());
-
-        }
-    }*/
-
     public static final String KEY = "imp_apikey";
     public static final String SECRET = "ekKoeW8RyKuT0zgaZsUtXXTLQ4AhPFW3ZGseDA6bkA5lamv9OqDMnxyeB9wqOsuO9W3Mx9YSJ4dTqJ3f";
 

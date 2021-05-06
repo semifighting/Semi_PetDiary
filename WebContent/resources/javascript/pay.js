@@ -1,10 +1,10 @@
-function requestPay() {
+function requestPay(book_num) {
+
     var IMP = window.IMP; // 생략가능
     IMP.init('iamport');  // 가맹점 식별 코드
-
     var url = "../pet_servlet";
     $.ajax({
-        url : url + "?command=memberInfo",
+        url : url + "?command=memberInfo" ,
         type : "POST",
         dataType : "json",
         success : function (data) {
@@ -28,16 +28,12 @@ function requestPay() {
                         msg += '상점 거래ID : ' + rsp.merchant_uid;
                         msg += '결제 금액 : ' + rsp.paid_amount;
                         msg += '카드 승인번호 : ' + rsp.apply_num;
-                        var order_info = {merchant_uid : rsp.merchant_uid, order_name : value.member_name, order_amount : rsp.paid_amount, order_info : "예약금"};
+                        var order_info = {book_num : String(book_num), merchant_uid : rsp.merchant_uid, order_name : value.member_name, order_amount : rsp.paid_amount, order_info : "예약금"};
                         $.ajax({
                             url : url + "?command=orderSuccess",
                             type: "POST",
                             data : {order_data : JSON.stringify(order_info)},
-                            success: function () {
-                                $("#bookSuccess").attr("disabled", false);
-                                $("#pay").attr("disabled", true);
-                                $("#merchant_uid").attr("value", rsp.merchant_uid);
-                            },
+
                             error: function (request, status, error) {
                                 console.log("code:" + request.status + "<br>" + "message:" + request.responseText + "<br>" + "error:" + error);
                             }

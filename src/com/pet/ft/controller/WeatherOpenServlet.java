@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+//해당 서블릿 미사용시 삭제예정-김정규
 @WebServlet("/weatherOpen")
 public class WeatherOpenServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

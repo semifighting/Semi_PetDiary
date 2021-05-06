@@ -18,15 +18,20 @@ public class PetBizImpl implements PetBiz {
 	}
 
 	@Override
-	public MemberDto MemberOne(int member_no) {
-		return dao.MemberOne(member_no);
-	}
-
-	@Override
 	public int totalHospital() {
 		// TODO Auto-generated method stub
 		return dao.totalHospital();
 
+	}
+
+	@Override
+	public List<BusinessDto> bookableMap() {
+		return dao.bookableMap();
+	}
+
+	@Override
+	public List<BusinessDto> foodMap() {
+		return dao.foodMap();
 	}
 
 	@Override
@@ -41,6 +46,26 @@ public class PetBizImpl implements PetBiz {
 		return dao.hospitalBookInsert(dto);
 	}
 
+	@Override
+	public int travelInsert(TravelDto dto) {
+		return dao.travelInsert(dto);
+	}
+
+	@Override
+	public List<TravelDto> travelList() {
+		return dao.travelList();
+	}
+
+	@Override
+	public TravelDto travelSelect(int travel_no) {
+		return dao.travelSelect(travel_no);
+	}
+
+	@Override
+	public int travelUpdate(TravelDto dto) {
+		return dao.travelUpdate(dto);
+	}
+
 
 	public BusinessDto businessOne(int business_num) {
 		return bdao.businessOne(business_num);
@@ -51,10 +76,6 @@ public class PetBizImpl implements PetBiz {
 		return dao.totalMember();
 	}
 
-	@Override
-	public List<MemberDto> memberList() {
-		return dao.memberList();
-	}
 
 	@Override
 	public int changeRole(MemberDto dto) {
@@ -257,17 +278,17 @@ public class PetBizImpl implements PetBiz {
 
 	@Override
 	public int memberUpdate(MemberDto dto) {
-		return 0;
+		return dao.memberUpdate(dto);
 	}
 
 	@Override
 	public int memberDelete(int member_no) {
-		return 0;
+		return dao.memberDelete(member_no);
 	}
 
 	@Override
-	public int getBookNum(int member_no, String book_time) {
-		return dao.getBookNum(member_no, book_time);
+	public int InsertFilter(List<String> list) {
+		return dao.InsertFilter(list);
 	}
 
 	@Override
@@ -276,8 +297,28 @@ public class PetBizImpl implements PetBiz {
 	}
 
 	@Override
+	public List<BusinessDto> BusinessList(int offset, int noOfRecords) {
+		return bdao.BusinessList(offset, noOfRecords);
+	}
+
+	@Override
+	public int businessTotal() {
+		return bdao.businessTotal();
+	}
+
+	@Override
+	public List<BusinessDto> menu() {
+		return bdao.menu();
+	}
+
+	@Override
+	public MemberDto MemberOne(int member_no) {
+		return dao.MemberOne(member_no);
+	}
+
+	@Override
 	public int bookdelete(int book_num) {
-		return 0;
+		return dao.bookdelete(book_num);
 	}
 
 	@Override
@@ -286,7 +327,21 @@ public class PetBizImpl implements PetBiz {
 	}
 
 	@Override
-	public int orderUpdate(String merchant_uid, int book_num) {
-		return dao.orderUpdate(merchant_uid, book_num);
+	public int bookOrderSuccess(int book_num) {
+		return dao.bookOrderSuccess(book_num);
+	}
+
+	@Override
+	public String getMerchant_uid(int book_num) {
+		return dao.getMerchant_uid(book_num);
+	}
+
+	@Override
+	public int orderInsertCancel(int book_num) {
+		return dao.bookOrderSuccess(book_num);
+	}
+	@Override
+	public OrderDto selectOrderOne(int book_num) {
+		return dao.selectOrderOne(book_num);
 	}
 }

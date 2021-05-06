@@ -78,9 +78,7 @@
 				<span class="cell col1"><%=member_id %></span>
 				<span class="cell col2"></span>
 			</div>
-			<input type="button" value="예약취소" onclick="location.href='pet.do?command=bookdelete&book_num=<%=book_num %>'" />
 		</div>
-
 <%@ include file="/main/footer.jsp" %>
 </body>
 </html>

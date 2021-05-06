@@ -20,7 +20,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style type="text/css">
 
-
 .community_row{
 	display: flow-root;
 	position: relative;
@@ -28,12 +27,12 @@
 }
 
 .commnunity_entity{
-float : left;
-margin : 2px;
-border : 2px solid salmon;
-
-width : 230px;
-height : 300px;
+float: left;
+    margin: 2px;
+    margin-right: 20px;
+    border: 2px solid salmon;
+    width: 350px;
+    height: 400px;
 
 }
 
@@ -71,6 +70,7 @@ text-align: center
     color: #999;
     margin-bottom: 10px;
     float : right;
+    padding-right: 10px;
 }
 .title {
     color: salmon;
@@ -78,13 +78,17 @@ text-align: center
     overflow: hidden;
     text-overflow: ellipsis;
   	white-space: nowrap;
+    padding-top: 10px;
+    padding-left: 10px;
  }
 .content {
     margin-top: 5px;
      overflow: hidden;
     text-overflow: ellipsis;
-  	width: 232px;
-  	height: 200px;
+  	width: 350px;
+  	height: 280px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .accessory {
     border-top: 1px solid #eee;
@@ -92,6 +96,7 @@ text-align: center
     margin-top:10px;
     color: #999;
     font-size: 14px;
+    padding-left: 10px;
 }
 
 .write{
@@ -146,7 +151,7 @@ outline-color: salmon;
 }
 .search_button{
     position: absolute;
-    left: 360px;
+    left: 380px;
     border: 2px solid salmon;
     background-color: white;
     color: salmon;
@@ -160,6 +165,7 @@ outline-color: salmon;
     background-color: salmon;
     color: white;
 }
+
 </style>
 </head>
 <body>
@@ -169,7 +175,7 @@ outline-color: salmon;
   int paging = Integer.parseInt(request.getParameter("paging"));
   String filter = request.getParameter("filter");
   int count = 0;
-  SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일"); //원하는 데이터 포맷 지정
+  SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd"); //원하는 데이터 포맷 지정
 %>
 
 	<div>
@@ -194,7 +200,7 @@ outline-color: salmon;
 		String strDate = simpleDateFormat.format(dto.getCommunity_regdate()); //지정한 포맷으로 변환
 	
 		
-				if(count<(paging)*12&&count>=(paging-1)*12){
+				if(count<(paging)*8&&count>=(paging-1)*8){
 				%>
 				<div class="commnunity_entity" onclick="location.href='/semi_PetDiary/pet.do?command=community_detail&seq=<%=dto.getCommunity_seq()%>&community_no=<%=dto.getCommunity_no()%>'">
 					<div class = "title" class="commnuity_title">
@@ -207,20 +213,15 @@ outline-color: salmon;
 					
 				<%if(dto.getCommunity_content().indexOf("<img")>0){ %>
 					
-						<%="<img style='width : 220px; height : 140px; object-fit : cover; margin :3px;' "+dto.getCommunity_content().split("<img")[1].split(">")[0]+">" %>
-									
-					<%if(dto.getCommunity_content().split("<img")[0].length()>30){%>
-						<%=dto.getCommunity_content().split("<img")[0].substring(0,30)+"..."%>
-					<%}else{%>
-						<%=dto.getCommunity_content().split("<img")[0]%>
-				     <%} %>
+						<%="<img style='width : 320px; height : 200px; object-fit : cover; margin :3px;' "+dto.getCommunity_content().split("<img")[1].split(">")[0]+">" %>
+										
+				<%String content = dto.getCommunity_content();				
+					while(content.indexOf("<img")>=0){
+						content = content.replace("<img"+content.split("<img")[1].split(">")[0]+">","");
+					}%>
+					<%=content %>
 				<%}else{%>
-					<%if(dto.getCommunity_content().length()>140){%>
-					<%=dto.getCommunity_content().substring(0,140)+"..."%>
-				  <%}else{%>
-					<%=dto.getCommunity_content() %>
-				<%} %>  	
-				
+					<%=dto.getCommunity_content() %>			
 			<% }%>
 					</div>
 					<div class="accessory">
@@ -239,7 +240,7 @@ outline-color: salmon;
 		<div id="pagaing">
 			<ul class="pagination">
 			<%
-			for(int i =0; i<list.size()/12+1;i++){
+			for(int i =0; i<list.size()/8+1;i++){
 				if(i+1==paging){
 			%>
 				<li class="active"><a style="background-color: salmon;border-color: salmon;"  href='/semi_PetDiary/pet.do?command=community_search&paging=<%=(i+1)%>&filter=<%=request.getParameter("filter")%>&search_content=<%=request.getParameter("search_content")%>'">  <%=i+1 %></a></li>

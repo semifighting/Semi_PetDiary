@@ -10,9 +10,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="../resources/js/script.js"></script>
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-<script type="text/javascript" src="../resources/javascript/pay.js"></script>
+<script type="text/javascript" src="/semi_PetDiary/resources/js/script.js"></script>
 
 <script type="text/javascript">
 	$(function(){
@@ -87,18 +85,17 @@
 				<span class="cell col3"><%=msg %></span>
 			</div>
 			
-			<form action="../pet.do" method="post">
+			<form action="/semi_PetDiary/pet.do" method="post">
 				<input type="hidden" name="command" value="bookinsert"/>
 				<input type="hidden" name = "business_num" value="<%=business_num %>">
 				<input type="hidden" name = "book_type" value="<%=book_type %>">
 				<input type="hidden" name = "book_date" value="<%=book_date %>">
 				<input type="hidden" name = "book_time" value="<%=book_time %>">
-				<input type="hidden" name="merchant_uid" id="merchant_uid" value="">
-				<input type="submit" value="예약 확인" id="bookSuccess" disabled="disabled">
-				<input type="button" value="취소" onclick="location.href='pet.do?command=foodlist'"/>
+				<input type="submit" value="예약확인">
+				<input type="button" value="취소" onclick="location.href='pet.do?command=foodlist'" />
 			</form>
 		</div>
-<input type="button" value="결제하기" id="pay" onclick="requestPay()">
+
 <%@ include file="/main/footer.jsp" %>
 </body>
 </html>

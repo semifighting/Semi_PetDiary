@@ -6,35 +6,39 @@ import com.pet.ft.dto.*;
 
 
 public interface PetBiz {
-	
 
-	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
-	public int totalHospital();
-    
-	public BusinessDto hospitalSelect(int business_num);
 
-	public int hospitalBookInsert(BookDto dto);
-	public BusinessDto businessOne(int business_num);
+    //병원상담
+    public List<BusinessDto> hospitalList(int offset, int noOfRecords);
+    public int totalHospital();
 
-    public MemberDto MemberOne(int member_no);
+    public List<BusinessDto> bookableMap();
+    public List<BusinessDto> foodMap();
 
-	public int totalMember();
-	public int totalReport();
+    public BusinessDto hospitalSelect(int business_num);
+    public int hospitalBookInsert(BookDto dto);
+
+    public int travelInsert(TravelDto dto);
+    public List<TravelDto> travelList();
+    public TravelDto travelSelect(int travel_no);
+    public int travelUpdate(TravelDto dto);
+
+    public BusinessDto businessOne(int business_num);
+
+    public int totalMember();
+    public int totalReport();
     public int totalBookHos(int member_no);
     public int totalBookSt(int member_no);
 
     public List<BookDto> totalDateTime();
 
-	public List<MemberDto> memberList();
-	public List<MemberDto> memberList(int offset, int noOfRecords);
+    public List<MemberDto> memberList(int offset, int noOfRecords);
     public List<CommunityDto> reportList(int offset, int noOfRecords);
     public List<BookDto> bookListHos(int offset, int noOfRecords, int member_no);
     public List<BookDto> bookListSt(int offset, int noOfRecords, int member_no);
-    public int getBookNum(int member_no, String book_time);
 
-	public int changeRole(MemberDto dto);
-	public int deleteCommnutiy(int seq);
-
+    public int changeRole(MemberDto dto);
+    public int deleteCommnutiy(int seq);
 
 	//pet
     public List<PetDto> selectPetList(int member_no);
@@ -63,13 +67,13 @@ public interface PetBiz {
 
     //calendar - 캘린더 내 clud
     public List<CalendarDto> CalViewList(int member_no, String yyyyMM);
-	public List<CalendarDto> CalendarList(int member_no, String yyyyMMdd);
-	public int CalendarInsert(CalendarDto CalDto);
-	public CalendarDto CalendarOne(int calendar_no);
-	public int CalendarDelete(int calendar_no);
-	public int CalendarUpdate(CalendarDto dto);
+    public List<CalendarDto> CalendarList(int member_no, String yyyyMMdd);
+    public int CalendarInsert(CalendarDto CalDto);
+    public CalendarDto CalendarOne(int calendar_no);
+    public int CalendarDelete(int calendar_no);
+    public int CalendarUpdate(CalendarDto dto);
 
-	public MemberDto Login(String member_id, String member_pw);
+    public MemberDto Login(String member_id, String member_pw);
     public MemberDto SocialLogin(String member_id);
     public int SocialSignUp(MemberDto dto);
     public MemberDto findId(String member_name, String member_email);
@@ -77,11 +81,31 @@ public interface PetBiz {
     public int resetPw(String member_name, String member_email, String member_id, String member_pw);
     public int memberUpdate(MemberDto dto);
     public int memberDelete(int member_no);
+
+
+
+    //비속어 필터링
+    public int InsertFilter(List<String> list);
+
+
     public List<BusinessDto> businessList();
+
+    //식당 카페 리스트
+    public List<BusinessDto> BusinessList(int offset, int noOfRecords);
+    public int businessTotal();
+    public List<BusinessDto> menu();
+
+
+
+
     public int bookdelete(int book_num);
 
     //order
+    public MemberDto MemberOne(int member_no);
     public int orderInsert(OrderDto dto);
-    public int orderUpdate(String merchant_uid, int book_num);
+    public int bookOrderSuccess(int book_num);
+    public String getMerchant_uid(int book_num);
+    public int orderInsertCancel(int book_num);
+    public OrderDto selectOrderOne(int book_num);
 
 }

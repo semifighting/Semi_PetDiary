@@ -28,12 +28,11 @@ height: 50px;
 <%@include file="../main/header.jsp"%>
 <%BusinessDto bdto = (BusinessDto)request.getAttribute("bdto"); %>
 
-	<form action="../pet.do" method="post">
-	<input type="hidden" name="command" value="booklistview"/>
+	<form action="/semi_PetDiary/pet.do" method="post">
+	<input type="hidden" name="command" value="bookinsert"/>
 
 		<div class="book">
-		<h3><%=bdto.getBusiness_name() %></h3>
-		<p><%=bdto.getBusiness_role() %></p>
+		<h3>예약업체 : <%=bdto.getBusiness_name() %></h3>
 		<h3>예약페이지 입니다.</h3>
 			<div>
 				<input type="hidden" name = "business_num" value="<%=bdto.getBusiness_num() %>">

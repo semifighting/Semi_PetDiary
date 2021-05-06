@@ -8,36 +8,74 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
 <html>
   <head>
     <title>Title</title>
-    <script src="https://kit.fontawesome.com/95780683f0.js" crossorigin="anonymous"></script>
+    <style type="text/css">
+    	.chatbot { position: fixed; right: 3%; top: 80%; height: 90px; width: 90px; z-index: 50; background-color: #D9F6B4; border-radius: 50px 50px 50px 50px; box-shadow: 5px 5px 5px rgba(0,0,0,0.26); text-align: center; }
+		
+		.chatbot img{ position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); cursor: pointer; }
+    </style>
+    <script  src="https://kit.fontawesome.com/95780683f0.js" crossorigin="anonymous"></script>
+    <script>
+    	function openchat(){
+    		var popupWidth = 400;
+    		var popupHeight = 530;
+    		var popupX = (window.screen.width / 2) - (popupWidth / 2);
+    		var popupY= (window.screen.height / 2) - (popupHeight / 2);
+    		
+    		var member_no = "<%=session.getAttribute("member_no")%>";
+    		if (member_no == "null") {
+    			alert("로그인 후 챗봇을 이용하실 수 있습니다.");
+    		} else {
+    		window.open('/semi_PetDiary/chatbot.do?command=opendialog','', 'height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY + 'resizable=no');
+    		}
+    	}
+    	//지도검색
+    	function allMapPop(){
+			var popup = window.open('./main/allMap.jsp', '지도', 'width=800px,height=700px,scrollbars=yes');
+		}
+    	
+    </script>
+  </head>
+  <body>
+    <nav class="header">
+      <div class="header_logo">
+        <i class="fas fa-paw"></i>
+        <a href="../pet.do?command=myinfo">Pet Diary</a>
+      </div>
+      <ul class="header_menu">
+        <li>
+          <a href="../pet.do?command=pet_main&member_no=1">다이어리</a>
+        </li>
+        <li><a href="../teachable/teachable_webCam.jsp">나와 닮은 동물 찾기</a></li>
+        <li>
+          <a href="../pet.do?command=hospitalmain">병원상담</a>
+        </li>
+        <li><a href="../paging.do?command=foodlist">음식/카페</a></li>
+        <li><a href="../pet.do?command=community">커뮤니티</a></li>
+        <li><a href="../pet.do?command=weather_main">날씨</a></li>
+        <li><a href="../pet.do?command=travelmain">여행일정</a></li>
+        <li>
+          <input class="all_map" type="button" value="지도검색" onclick="allMapPop();"/>
+        </li>
 
-</head>
-<body>
- 	<nav class="header">
-		<div class="header_logo">
-			<i class="fas fa-paw"></i>
-			<a href="">Pet Diary</a>
-		</div>
-		<ul class="header_menu">
-       	 		<li><a href="../pet.do?command=pet_main">다이어리</a></li>
-        		<li><a href="#">나와 닮은 동물 찾기</a></li>
-       			<li><a href="#">병원상담</a></li>
-      			<li><a href="#">음식/카페</a></li>
-       			<li><a href="#">커뮤니티</a></li>
-       		    <li>
-          			 <form action="#" method="post">
-            	  		 <input type="text" id="searchBox">
-            	  		 <input type="submit" value="검색">
-          			 </form>
-        		</li>
-   		</ul>
+       </ul>
 
-   		<ul class="header_login">
-   			<li><a href="../pet.do?command=login_login">로그인</a></li>
-   			<li><a href="../pet.do?command=">회원가입</a></li>
-   		</ul>
+      <ul class="header_login">
+        <% if(session.getAttribute("member_no") == null) { %>
+
+        <li><a href="../pet.do?command=login_login">로그인</a></li>
+        <li>
+          <a href="../pet.do?command=login_signup">회원가입</a>
+        </li>
+
+        <% } else { %>
+        <li>
+          <a href="../pet.do?command=login_logout">로그아웃</a>
+        </li>
+        <% } %>
+      </ul>
 
 		<ul class="header_icons">
-			<li><a href="#"><i class="fas fa-user-circle"></i></a></li>
+			<li><a href="../pet.do?command=business"><i class="fas fa-user-circle"></i></a></li>
 
 		</ul>
 			<a href="#" class="header_toggleBtn">
@@ -45,5 +83,8 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
 			</a>
 
 	</nav>	
+	
+	<a class="chatbot"><img src="${pageContext.request.contextPath}/resources/image/chatbot.png" onclick="openchat();" alt="Icons made by www.flaticon.com" height="60px"></a>
+	
 </body>
 </html>

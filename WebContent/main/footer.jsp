@@ -13,6 +13,9 @@
 		background-color: white;
 		border-top: 1px solid #c4c4c4;
 		width: 100%;
+		position: relative;
+		bottom: 0;
+		
 	}
 	
 	.footerlogo img {
@@ -90,7 +93,7 @@
 			<h3>QUICK LINKS</h3>
 				<div>
 					<span>HOME</span>
-					<span>캘린더</span>
+					<span>다이어리</span>
 					<span>병원 찾기</span>
 					<span>반려동물 출입가능 시설 찾기</span>
 					<span>예약내역</span>
