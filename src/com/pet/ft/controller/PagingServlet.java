@@ -1,6 +1,7 @@
 package com.pet.ft.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.pet.ft.dto.BookDto;
+import com.pet.ft.dto.BusinessDto;
 import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
+import com.pet.ft.model.BusinessDao;
+import com.pet.ft.model.BusinessDaoImpl;
 import com.pet.ft.model.PetBiz;
 import com.pet.ft.model.PetBizImpl;
 import com.pet.ft.paging.Paging;
@@ -62,11 +66,11 @@ public class PagingServlet extends HttpServlet {
 				request.setAttribute("paging", paging);
 				request.setAttribute("servletPath", "paging.do");
 				
-				url = "business/memberlist_main.jsp";
+				url = "admin/admin_member.jsp";
 			} else {
 				request.setAttribute("msg", "Error가 발생했습니다.");
 				
-				url = "business/business_main.jsp";
+				url = "admin/admin_member.jsp";
 			}
 			
 			request.getRequestDispatcher(url).forward(request, response);
@@ -94,12 +98,12 @@ public class PagingServlet extends HttpServlet {
 				request.setAttribute("paging", paging);
 				request.setAttribute("servletPath", "paging.do");
 				
-				url = "business/reportlist_main.jsp";
+				url = "admin/admin_report.jsp";
 			} else {
 				
 				request.setAttribute("msg", "Error가 발생했습니다.");
 				
-				url = "business/reportlist_main.jsp";
+				url = "admin/admin_report.jsp";
 			}
 			
 			request.getRequestDispatcher(url).forward(request, response);
@@ -175,8 +179,52 @@ public class PagingServlet extends HttpServlet {
 			
 			request.getRequestDispatcher(url).forward(request, response);
 		}
+		if("foodlist".equals(command)) {
+			
+			List<BusinessDto> list1 = biz.menu();
+			request.setAttribute("list1", list1);
+			request.getRequestDispatcher("/food/food_list1.jsp");
+			
+			
+			if(request.getParameter("pages") != null)
+				currentPageNo = Integer.parseInt(request.getParameter("pages"));
+			
+			if(request.getParameter("lines") != null)
+				recordsPerPage = Integer.parseInt(request.getParameter("lines"));
+			
+			Paging paging = new Paging(currentPageNo, recordsPerPage);
+			
+			int offset = (paging.getCurrentPageNo() -1) * paging.getRecordsPerPage();
+			
+			System.out.println("offset : " +offset);
+			System.out.println("리스트 : "+list1);
+			
+			List<BusinessDto> list = biz.BusinessList(offset, paging.getRecordsPerPage() * currentPageNo);
+			
+			paging.setNumberOfRecords(biz.businessTotal());
+			
+			paging.makePaging();
+			System.out.println("recordsPerPage *currentpage : " +paging.getRecordsPerPage()*currentPageNo);
+			System.out.println("currentpage : " +paging.getCurrentPageNo());
+			System.out.println("recordsPerpage : " +paging.getRecordsPerPage());
+			
+			if(list != null) {
+				request.setAttribute("key", "foodlist");
+				request.setAttribute("list", list);
+				request.setAttribute("paging", paging);
+				request.setAttribute("servletPath", "paging.do");
+				
+				url = "/food/food_list1.jsp";
+			} else {
+				request.setAttribute("msg", "Error가 발생했습니다.");
+				
+				url = "/food/food_list1.jsp";
+			}
+			
+			request.getRequestDispatcher(url).forward(request, response);
 		
 		
+	}
 	}
 
 }

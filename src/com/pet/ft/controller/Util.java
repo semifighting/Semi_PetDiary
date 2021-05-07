@@ -52,10 +52,10 @@ public class Util {
     }
     
     public static String isTwo(String booktime) {
-    	if(booktime.length() < 2) {
-			booktime = "0" + booktime;
-		}
-    	
-    	return booktime;
+        if(booktime.length() < 2) {
+            booktime = "0" + booktime;
+        }
+
+        return booktime;
     }
 }

@@ -1,5 +1,7 @@
 package com.pet.ft.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.Console;
 import java.io.File;
 import java.io.IOException;
@@ -7,6 +9,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -14,7 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
+import java.util.UUID;
 
+import javax.imageio.ImageIO;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -23,6 +28,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,13 +37,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.CommunityDto;
+import com.pet.ft.dto.LikesDto;
 import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
+import com.pet.ft.dto.PetRTCDto;
 import com.pet.ft.dto.PictureDto;
+import com.pet.ft.dto.TravelDto;
 import com.pet.ft.model.PetBiz;
 import com.pet.ft.model.PetBizImpl;
 import javax.servlet.http.HttpSession;
 
+import com.oreilly.servlet.Base64Decoder;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.pet.ft.dto.BookDto;
@@ -48,6 +58,7 @@ import com.pet.ft.model.BusinessDaoImpl;
 import com.pet.ft.dto.CalendarDto;
 import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
+import com.pet.ft.paging.HospitalPaging;
 import com.pet.ft.paging.Paging;
 
 import net.sf.json.JSONArray;
@@ -73,8 +84,8 @@ public class pet_servlet extends HttpServlet {
 		String loginDirectory = "login/login_";
 		PetBiz biz = new PetBizImpl();
 		
-		if("business".equals(command)) {
-			response.sendRedirect("business/business_main.jsp");
+		if("adminMain".equals(command)) {
+			response.sendRedirect("admin/admin_main.jsp");
 		} 
 		
 		else if("change".equals(command)) {
@@ -103,23 +114,37 @@ public class pet_servlet extends HttpServlet {
 				jsResponse(response, "삭제 성공", "/semi_PetDiary/paging.do?command=report");
 			} else {
 				jsResponse(response, "삭제 실패", "/semi_PetDiary/paging.do?command=report");
-			}
-		} 			
+			}		
+		
+		} 
+			
 		
 		if("community".equals(command)) {	
-			List<CommunityDto> list = dao.CommunityList();			
-			request.setAttribute("list", list);
-			List<Integer> commentcount = new ArrayList<Integer>();
-			for(CommunityDto cdto : list) {
-				commentcount.add(dao.CommunityCommentCount(cdto.getCommunity_no())-1);
-			}
-			request.setAttribute("commentcount", commentcount);
+			int MaxPage = dao.CommunityPageMax();
+			request.setAttribute("maxpage", MaxPage);
 			if(request.getParameter("paging")==null){
+				List<CommunityDto> list = dao.CommunityPageList(1);	
+				request.setAttribute("list", list);
 				request.getRequestDispatcher(communityDirectory+"main.jsp?paging="+1).forward(request, response);
 			}else {
+				List<CommunityDto> list = dao.CommunityPageList(Integer.parseInt(request.getParameter("paging")));			
+				request.setAttribute("list", list);
 				request.getRequestDispatcher(communityDirectory+"main.jsp?paging="+request.getParameter("paging")).forward(request, response);
 			}
 		}
+
+		
+		if("community_like".equals(command)) {
+			int seq = Integer.parseInt(request.getParameter("seq"));
+			int no = (int)session.getAttribute("member_no");
+			LikesDto dto = new LikesDto(no, seq);
+			if(dao.SelectLikeOne(dto) !=null) {
+				dao.DeleteLikes(dto);
+			}else {
+				dao.InsertLikes(dto);
+			}			
+		}
+
 		
 		if("listmycommnunity".equals(command)) {	
 			List<CommunityDto> mList = dao.CommunityList((int)session.getAttribute("member_no"));			
@@ -136,6 +161,7 @@ public class pet_servlet extends HttpServlet {
 			}
 		}
 
+		
 		if("community_search".equals(command)) {
 			String filter = request.getParameter("filter");
 			String search_content = request.getParameter("search_content");
@@ -150,21 +176,24 @@ public class pet_servlet extends HttpServlet {
 				request.getRequestDispatcher(communityDirectory+"search.jsp?&filter="+filter+"&search_content="+search_content+"&paging="+request.getParameter("paging")).forward(request, response);
 			}
 		}
-			
-		if("community_report".equals(command)) {
+		if("community_reportform".equals(command)) {
 			int seq = Integer.parseInt(request.getParameter("seq"));
-			int no = Integer.parseInt(request.getParameter("no"));
-			CommunityDto olddto = dao.CommunityOne(seq);
-			int res = dao.CommunityReport(seq);
-			List<CommunityDto> CommentList= dao.CommentList(olddto.getCommunity_no());
-			request.setAttribute("cdto", dao.CommunityOne(seq));
-			request.setAttribute("commentList", CommentList);
+			request.setAttribute("seq", seq);
+			request.getRequestDispatcher(communityDirectory+"report.jsp").forward(request, response);;
+			
+		}
+		if("community_reportinsert".equals(command)) {
+			int seq = Integer.parseInt(request.getParameter("seq"));
+			int member_no = (int)session.getAttribute("member_no");
+			String content = request.getParameter("content")+"(신고자 No : "+member_no+")";
+			CommunityDto dto = new CommunityDto(seq, null, null, null, null, 0, content, 0, 0, 0, 0, member_no);
+			int res = dao.CommunityReport(dto);
+			
 			if(res>0) {
-				jsResponse(response, "신고가 정상처리 되었습니다", "pet.do?command=community_detail&seq="+no+"&community_no="+olddto.getCommunity_no());
-
+				jsResponseClose(response, "신고가 정상 접수되었습니다..");
 			}else {
-				request.setAttribute("cdto", dao.CommunityOne(seq));
-				jsResponse(response, "신고가 처리가 실패했습니다", "pet.do?command=community_detail&seq="+no+"&community_no="+olddto.getCommunity_no());
+				jsResponseClose(response, "신고가 실패했습니다.");
+				
 			}
 		}
 
@@ -173,35 +202,67 @@ public class pet_servlet extends HttpServlet {
 			request.setAttribute("cdto", dao.CommunityOne(seq));
 			request.getRequestDispatcher(communityDirectory+"update.jsp").forward(request, response);
 		}
-		if("community_insert_form".equals(command)) {
-			response.sendRedirect(communityDirectory+"insert.jsp");
+		if("community_insert_form".equals(command)) {	
+			if(session.getAttribute("member_no")==null) {
+				jsResponse(response, "로그인 해주세요", loginDirectory+"login.jsp");
+			}else{
+				response.sendRedirect(communityDirectory+"insert.jsp");
+			}
+		
 		}
 		if("community_detail".equals(command)) {
 			int seq = Integer.parseInt(request.getParameter("seq"));
+			if(session.getAttribute("member_no")!=null) {
+				LikesDto dto = new LikesDto((int)session.getAttribute("member_no"), seq);
+				if(dao.SelectLikeOne(dto) !=null) {
+					request.setAttribute("likes", "like");
+				}							
+			}
 			dao.CommunityViews(seq);
 			CommunityDto cdto = dao.CommunityOne(seq);
 			List<CommunityDto> CommentList= dao.CommentList(cdto.getCommunity_no());
 			request.setAttribute("cdto", cdto);
 			request.setAttribute("commentList", CommentList);
-			request.getRequestDispatcher(communityDirectory+"detail.jsp").forward(request, response);
+			if(request.getParameter("filter")!= null) {
+				request.getRequestDispatcher(communityDirectory+"detail_filter.jsp").forward(request, response);				
+
+			}else {
+				request.getRequestDispatcher(communityDirectory+"detail.jsp").forward(request, response);				
+
+			}
 		}
 		if("community_insert".equals(command)){
 			String title = request.getParameter("title");
 			System.out.println(title);
 			String content = request.getParameter("content");
+
+			while(content.indexOf("<img src=\"data")>=0) { 
+				String picture = "<img src=\"data"+content.split("<img src=\"data")[1].split(">")[0]+">";
+				System.out.println(picture);
+				String filenamme= picture.split("data-filename=\"")[1].split("\"")[0];
+				System.out.println(filenamme);
+				UUID id = UUID.randomUUID();
+				String pictureAcc = "style="+picture.split("\" style=")[1].split("data-filename")[0]+">";
+				String data = picture.split(",")[1].split("\" style=")[0];
+				String path = request.getSession().getServletContext().getRealPath("/");
+				byte[] imageBytes = Base64Decoder.decodeToBytes(data);				
+				BufferedImage bufimg = ImageIO.read(new ByteArrayInputStream(imageBytes));
+				ImageIO.write(bufimg, filenamme.split("\\.")[1], new File(path+"resources/community_img/"+id.toString()+"."+filenamme.split("\\.")[1]));
+				content =content.replace("<img src=\"data"+content.split("<img src=\"data")[1].split(">")[0]+">","<img src='/semi_PetDiary/resources/community_img/"+id.toString()+"."+filenamme.split("\\.")[1]+"'"+pictureAcc);
+			}
+			 
 			System.out.println(content);
 			System.out.println("내부");
 			//-----------------------------id 로그인 생기면 마지막파라미터(회원번호)바꾸기
 			CommunityDto CDto = new CommunityDto(0, title, content, null, "N", 0, 0, 0, (int)session.getAttribute("member_no"));
 			int res = dao.CommunityInsert(CDto);
+			int MaxPage = dao.CommunityPageMax();
+			request.setAttribute("maxpage", MaxPage);
 			if(res>0) {
 				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
 				List<CommunityDto> list = dao.CommunityList();
-				List<CommunityDto> mList = dao.CommentList((int)session.getAttribute("member_no"));
 				request.setAttribute("list", list);
-				request.setAttribute("mList", mList);
 				request.getRequestDispatcher(communityDirectory+"main.jsp?paging="+1).forward(request, response);
-				request.getRequestDispatcher("myinfo/myinfo_community.jsp?paging="+1).forward(request, response);
 
 			}else{
 				jsResponse(response, "작성 실패", communityDirectory+"insert.jsp");
@@ -210,7 +271,7 @@ public class pet_servlet extends HttpServlet {
 		if("community_comment".equals(command)) {
 			String content = request.getParameter("comment");
 			int community_no = Integer.parseInt(request.getParameter("community_no"));
-			CommunityDto CDto = new CommunityDto(0, " ", content, null, "N", 0, community_no, 0, 1);
+			CommunityDto CDto = new CommunityDto(0, " ", content, null, "N", 0, community_no, 0, Integer.parseInt(request.getParameter("member_no")));
 			int res = dao.CommentInsert(CDto);
 			if(res>0) {
 				//해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
@@ -224,6 +285,21 @@ public class pet_servlet extends HttpServlet {
 		if("community_update".equals(command)) {
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
+			
+			while(content.indexOf("<img src=\"data")>=0) { 
+				String picture = "<img src=\"data"+content.split("<img src=\"data")[1].split(">")[0]+">";
+				System.out.println(picture);
+				String filenamme= picture.split("data-filename=\"")[1].split("\"")[0];
+				System.out.println(filenamme);
+				UUID id = UUID.randomUUID();
+				String pictureAcc = "style="+picture.split("\" style=")[1].split("data-filename")[0]+">";
+				String data = picture.split(",")[1].split("\" style=")[0];
+				String path = request.getSession().getServletContext().getRealPath("/");
+				byte[] imageBytes = Base64Decoder.decodeToBytes(data);				
+				BufferedImage bufimg = ImageIO.read(new ByteArrayInputStream(imageBytes));
+				ImageIO.write(bufimg, filenamme.split("\\.")[1], new File(path+"resources/community_img/"+id.toString()+"."+filenamme.split("\\.")[1]));
+				content =content.replace("<img src=\"data"+content.split("<img src=\"data")[1].split(">")[0]+">","<img src='/semi_PetDiary/resources/community_img/"+id.toString()+"."+filenamme.split("\\.")[1]+"'"+pictureAcc);
+			}
 			int seq = Integer.parseInt(request.getParameter("seq"));
 			int community_no = Integer.parseInt(request.getParameter("community_no"));
 			CommunityDto CDto = new CommunityDto(seq, title, content, null, "N", 0, community_no, 0, 1);
@@ -275,7 +351,7 @@ public class pet_servlet extends HttpServlet {
 				jsResponse(response, "수정 실패", "pet.do?command=community_detail&seq="+request.getParameter("community_seq")+"&community_no="+community_no);
 			}
 		}
-
+		
 		//병원상담
 		int currentPageNo = 1;
 		int recordsPerPage = 0;
@@ -288,7 +364,7 @@ public class pet_servlet extends HttpServlet {
 
 			if(request.getParameter("lines") != null)
 				recordsPerPage = Integer.parseInt(request.getParameter("lines"));
-				Paging paging = new Paging(currentPageNo, recordsPerPage);
+				HospitalPaging paging = new HospitalPaging(currentPageNo, recordsPerPage);
 				int offset = (paging.getCurrentPageNo()-1)*paging.getRecordsPerPage();
 				
 				System.out.println("offset : " +offset);
@@ -306,9 +382,11 @@ public class pet_servlet extends HttpServlet {
 				request.setAttribute("paging", paging);
 				request.setAttribute("servletPath", "pet.do");
 				request.setAttribute("key", "hospitalmain");
+								
 				url = "/hospital/hospital_main.jsp";
 			}else {
 				request.setAttribute("msg", "에러");
+				
 				url = "/hospital/hospital_main.jsp";
 			}
 			request.getRequestDispatcher(url).forward(request, response);
@@ -321,154 +399,170 @@ public class pet_servlet extends HttpServlet {
 			request.setAttribute("dto", dto);
 			dispatch(request,response,"./hospital/hospital_select.jsp");
 
+
+
 		}else if(command.equals("counselInsert")) {
 			String book_date = request.getParameter("book_date");
 			String book_counsel = request.getParameter("book_counsel");
 			int business_num = Integer.parseInt(request.getParameter("business_num"));
-			int member_no = (int)session.getAttribute("member_no");
+			
+			if(session.getAttribute("member_no")!= null) {
+				int member_no = (int)session.getAttribute("member_no");
+				BookDto dto = new BookDto();
+				dto.setBook_date(book_date);
+				dto.setBook_counsel(book_counsel);
+				dto.setBusiness_num(business_num);
+				dto.setMember_no(member_no);
 
-			BookDto dto = new BookDto();
-			dto.setBook_date(book_date);
-			dto.setBook_counsel(book_counsel);
-			dto.setBusiness_num(business_num);
-			dto.setMember_no(member_no);
 
+				int res = biz.hospitalBookInsert(dto);
+				if(res>0) {
+					jsResponse(response, "예약성공", "pet.do?command=hospitalmain");
+				}else {
+					jsResponse(response, "예약실패", "./hospital/hospital_select.jsp");
 
-			int res = biz.hospitalBookInsert(dto);
-			if(res>0) {
-				pet_sms.SendSMS(book_date, null, business_num, member_no);
-				jsResponse(response, "예약성공", "pet.do?command=hospitalmain");
+				}
 			}else {
-				jsResponse(response, "예약실패", "./hospital/hospital_select.jsp");
+				jsResponse(response, "로그인 해주세요", loginDirectory+"login.jsp");        		
+
 			}
+			//병원지도
+		}else if(command.equals("bookableMap")) {
+			PrintWriter out = response.getWriter();
+			
+			List<BusinessDto> list = biz.bookableMap();
+			JSONObject obj = new JSONObject();
+			JSONArray jsonArray = new JSONArray();
+			for(int i = 0; i<list.size(); i++) {
+				
+				
+				obj.put("business_addr",list.get(i).getBusiness_addr());
+			    obj.put("business_name", list.get(i).getBusiness_name());
+				
+				jsonArray.add(obj);
+			
+			}
+						
+			out.print(jsonArray);
+			out.flush();
+		
+			//음식점지도
+		}else if(command.equals("foodMap")) {
+			PrintWriter out = response.getWriter();
+			
+			List<BusinessDto> list = biz.foodMap();
+			JSONObject obj = new JSONObject();
+			JSONArray jsonArray = new JSONArray();
+			for(int i = 0; i<list.size(); i++) {
+				
+				
+				obj.put("business_addr",list.get(i).getBusiness_addr());
+			    obj.put("business_name", list.get(i).getBusiness_name());
+				
+				jsonArray.add(obj);
+			
+			}
+						
+			out.print(jsonArray);
+			out.flush();
+		//여행일정	
+		}else if(command.equals("travelmain")) {
+			List<TravelDto> list = biz.travelList();
+			request.setAttribute("list", list);
+			dispatch(request,response,"./travel/travel_main.jsp");
+					
+		}else if(command.equals("travelselect")) {
+			int travel_no = Integer.parseInt(request.getParameter("travel_no"));
+			TravelDto dto = biz.travelSelect(travel_no);
+			request.setAttribute("dto", dto);
+			dispatch(request,response,"./travel/travel_select.jsp");
+
+		}else if(command.equals("insertform")) {
+			dispatch(request,response,"./travel/travel_insert.jsp");
+			
+		}else if(command.equals("travelInsert")) {
+			String travel_name = request.getParameter("travel_name");
+			String travel_date = request.getParameter("travel_date");
+			String travel_spot1 = request.getParameter("travel_spot1");
+			String travel_spot2 = request.getParameter("travel_spot2");
+			String travel_spot3 = request.getParameter("travel_spot3");
+			int travel_time1 = Integer.parseInt(request.getParameter("travel_time1"));
+			int travel_time2 = Integer.parseInt(request.getParameter("travel_time2"));
+			int travel_stay1 = Integer.parseInt(request.getParameter("travel_stay1"));
+			int travel_stay2 = Integer.parseInt(request.getParameter("travel_stay2"));
+			int member_no = 1;
+					       //Integer.parseInt(request.getParameter("member_no"));
+			
+			TravelDto dto = new TravelDto();
+			dto.setTravel_name(travel_name);
+			dto.setTravel_date(travel_date);
+			dto.setTravel_spot1(travel_spot1);
+			dto.setTravel_spot2(travel_spot2);
+			dto.setTravel_spot3(travel_spot3);
+			dto.setTravel_stay1(travel_stay1);
+			dto.setTravel_stay2(travel_stay2);
+			dto.setTravel_time1(travel_time1);
+			dto.setTravel_time2(travel_time2);
+			dto.setMember_no(member_no);
+			
+			int res = biz.travelInsert(dto);
+			if(res>0) {
+				jsResponse(response, "일정저장성공", "pet.do?command=travelmain");
+			}else {
+				jsResponse(response, "저장실패", "pet.do?command=travelmain");
+
+			}
+
+		}else if(command.equals("updateform")) {
+			int travel_no = Integer.parseInt(request.getParameter("travel_no"));
+			TravelDto dto = biz.travelSelect(travel_no);
+			request.setAttribute("dto", dto);
+			dispatch(request,response,"./travel/travel_update.jsp");
+		
+		}else if(command.equals("travelupdate")) {
+			int travel_no = Integer.parseInt(request.getParameter("travel_no"));
+			String travel_name = request.getParameter("travel_name");
+			String travel_date = request.getParameter("travel_date");
+			String travel_spot1 = request.getParameter("travel_spot1");
+			String travel_spot2 = request.getParameter("travel_spot2");
+			String travel_spot3 = request.getParameter("travel_spot3");
+			int travel_time1 = Integer.parseInt(request.getParameter("travel_time1"));
+			int travel_time2 = Integer.parseInt(request.getParameter("travel_time2"));
+			int travel_stay1 = Integer.parseInt(request.getParameter("travel_stay1"));
+			int travel_stay2 = Integer.parseInt(request.getParameter("travel_stay2"));
+			int member_no = 1;
+							//Integer.parseInt(request.getParameter("member_no"));
+
+			TravelDto dto = new TravelDto();
+			dto.setTravel_no(travel_no);
+			dto.setTravel_name(travel_name);
+			dto.setTravel_date(travel_date);
+			dto.setTravel_spot1(travel_spot1);
+			dto.setTravel_spot2(travel_spot2);
+			dto.setTravel_spot3(travel_spot3);
+			dto.setTravel_stay1(travel_stay1);
+			dto.setTravel_stay2(travel_stay2);
+			dto.setTravel_time1(travel_time1);
+			dto.setTravel_time2(travel_time2);
+			dto.setMember_no(member_no);
+			
+			int res = biz.travelUpdate(dto);
+			if(res>0) {
+				jsResponse(response, "수정성공", "pet.do?command=travelmain");
+			}else {
+				jsResponse(response, "수정실패", "pet.do?command=travelselect&travel_no="+travel_no);
+
+			}
+
+
 		}
-		// 내가 작성
+		
+
 		// 회원가입 페이지로 이동
 		if("login_signup".equals(command)) {
 			response.sendRedirect(loginDirectory+"signup.jsp");
 		}
-		if("login_idchk".equals(command)) {
-			String member_id = request.getParameter("member_id");
-			MemberDto dto = dao.SignUpIdChk(member_id);
-			boolean idnotused = true;
-			if (dto != null) {
-				idnotused = false;
-			}
-			System.out.println(idnotused);
-			request.setAttribute("member_id", member_id);
-			request.setAttribute("idnotused", idnotused);
-			dispatch(request, response, loginDirectory+"idChk.jsp");
-		}
 
-
-		// 회원가입 메일 발송 smtp
-		if ("login_emailchk".equals(command)) {
-			String member_email = request.getParameter("member_email");
-			MemberDto dto = dao.SighUpEmailChk(member_email);
-			if(dto == null){
-
-			String from = "semiproject.pet@gmail.com";
-			String fromName = "관리자";
-			String to = request.getParameter("member_email");
-
-			Properties props = new Properties();
-			props.put("mail.smtp.user", from);
-			props.put("mail.smtp.host", "smtp.gmail.com");
-			props.put("mail.smtp.port", "465");
-			props.put("mail.smtp.starttls.enable", "true");
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.debug", "true");
-			props.put("mail.smtp.socketFactory.port", "465");
-			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-			props.put("mail.smtp.socketFactory.fallback", "false");
-
-			StringBuffer temp =new StringBuffer();
-			Random ran = new Random();
-			for(int i=0;i<10;i++)
-			{
-				int rIndex = ran.nextInt(3);
-				switch (rIndex) {
-					case 0:
-					// a-z
-					temp.append((char)((int)(ran.nextInt(26)) + 97));
-					break;
-					case 1:
-					// A-Z
-					temp.append((char)((int)(ran.nextInt(26)) + 65));
-					break;
-					case 2:
-					// 0-9
-					temp.append((ran.nextInt(10)));
-					break;
-				}
-			 }
-
-			String AuthenticationKey = temp.toString(); // 인증번호 인증을 위한 키 등록
-
-					
-			Session mailSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(from,"testpet03");
-					}
-			});
-			
-			// 이메일 전송
-			try {
-				InternetAddress addr = new InternetAddress();
-				addr.setPersonal(fromName, "UTF-8");
-				addr.setAddress(from);
-
-
-				Message msg = new MimeMessage(mailSession);
-
-
-				msg.setFrom(addr);
-
-				msg.setSubject(MimeUtility.encodeText("[펫 다이어리] 회원가입 이메일 인증번호", "UTF-8","B"));
-
-				msg.setContent("이메일 인증번호는 [" + temp + "] 입니다.", "text/html; charset=UTF-8");
-				msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-
-				Transport.send(msg);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				PrintWriter script = response.getWriter();
-				script.println("<script>");
-				script.println("alert('오류가 발생했습니다.');");
-				script.println("history.back();");
-				script.println("</script>");
-				script.close();
-				return;
-			}
-
-			HttpSession saveKey = request.getSession();
-			saveKey.setAttribute("AuthenticationKey", AuthenticationKey);
-
-			request.setAttribute("member_email", member_email);
-			dispatch(request, response, loginDirectory+"emailSend.jsp");
-
-			} else {
-					// 중복된 이메일이 있을 때
-					request.setAttribute("member_email", member_email);
-					dispatch(request,response, loginDirectory+"failedEmail.jsp");
-				}
-
-		}
-		// 회원가입 이메일 인증번호 확인
-		if("login_emailAuth".equals(command)) {
-			String AuthenticationKey = (String)request.getSession().getAttribute("AuthenticationKey");
-			String memberemailauth = request.getParameter("member_email_auth");
-
-			if(AuthenticationKey.equals(memberemailauth)){
-				request.setAttribute("AuthenticationKey", AuthenticationKey);
-				request.setAttribute("memberemailauth", memberemailauth);
-				dispatch(request, response, loginDirectory+"emailAuth.jsp");
-			} else {
-				response.sendRedirect(loginDirectory+"failedAuth.jsp");
-			}
-		}
 
 		// 회원가입 insert
 		if("login_signupForm".equals(command)) {
@@ -492,7 +586,6 @@ public class pet_servlet extends HttpServlet {
 			dto.setMember_address(memberaddress);
 
 			int res = dao.MemberInsert(dto);
-			// 수정할지 보기
 			if (res > 0) {
 				jsResponse(response, "회원가입이 완료되었습니다.", "main/main.sjp");
 			} else {
@@ -549,9 +642,6 @@ public class pet_servlet extends HttpServlet {
 			int picture_no = Integer.parseInt(request.getParameter("picture_no"));
 			PictureDto dto = biz.selectPictureOne(member_no, picture_no);
 
-			String path = dto.getPicture_directory() + "/" + dto.getPicture_name();
-
-			Util.deleteFile(path);
 			int res = biz.deletePicture(member_no, picture_no);
 			if (res > 0) {
 				System.out.println("삭제 성공");
@@ -571,9 +661,9 @@ public class pet_servlet extends HttpServlet {
 
         }
         if (command.equals("weather_main")) {
-			response.sendRedirect("weather/weatherView.html");
+			response.sendRedirect("weather/Test2.jsp");
 		} else if (command.equals("calendar_main")) {
-            int member_no = 1;
+            //int member_no = 1;
             List<CalendarDto> list = biz.selectTripList(1);
             request.setAttribute("list", list);
             dispatch(request, response, "calendar/calendar_main.jsp");
@@ -676,172 +766,39 @@ public class pet_servlet extends HttpServlet {
         }
 
         if(command.equals("myinfo")) {
-        	int member_no = (int)session.getAttribute("member_no");
-        	HashMap<String, Integer> map = dao.SelectMyinfoCount(member_no);
-        	MemberDto dto = dao.MemberOne(member_no);        	
-        	
-        	request.setAttribute("map", map);
-        	request.setAttribute("dto", dto);
-        	
-        	dispatch(request, response, "myinfo/myinfo_main.jsp");
-        }        
+        	if(session.getAttribute("member_no")==null) {
+				jsResponse(response, "로그인 해주세요", loginDirectory+"login.jsp");        		
+        	}else {
+            	int member_no = (int)session.getAttribute("member_no");
+            	HashMap<String, Integer> map = dao.SelectMyinfoCount(member_no);
+            	MemberDto dto = dao.MemberOne(member_no);        	
+            	request.setAttribute("map", map);
+            	request.setAttribute("dto", dto);
+            	
+            	dispatch(request, response, "myinfo/myinfo_main.jsp");        		
+        	}
+        }    
+
+        if(command.equals("MyCommunityList")) {
+        	if(session.getAttribute("member_no")==null) {
+				jsResponse(response, "로그인 해주세요", loginDirectory+"login.jsp");        		
+        	}else {
+            	int member_no = (int)session.getAttribute("member_no");
+            	List<CommunityDto> list = dao.MyCommunityList(member_no);
+            	request.setAttribute("list", list); 	       	
+            	request.getRequestDispatcher("myinfo/myinfo_communitylist.jsp").forward(request, response);  		
+        	}
+        }    
+
+
+        
+        
+        
         if(command.equals("myinfobusup")) {
         	int member_no = Integer.parseInt(request.getParameter("member_no"));
         	dispatch(request, response, "myinfo/myinfo_businessup.jsp?member_no="+member_no);
         }
-
-         if (command.equals("weather_main")) {
-			response.sendRedirect("weather/weatherView.html");
-		}
-         // 캘린더 내 clud
-        
-        if (command.equals("calendar_calMain")) {
-
-        	int member_no = (int) session.getAttribute("member_no");
-        	dispatch(request, response, CalendarDirectory + "main.jsp");
-        }
-
-     	if("calendar_calInsert".equals(command)) {
-     		String year = request.getParameter("year");
-     		String month = request.getParameter("month");
-     		String date = request.getParameter("date");
-
-   			request.setAttribute("year", year);
-     		request.setAttribute("month", month);
-     		request.setAttribute("date", date);
-     		dispatch(request, response, CalendarDirectory + "insert.jsp");
-
-     	}
-
-        // 일정 등록
-     	if("calendar_calInsertForm".equals(command)) {
-     		pet_util util = new pet_util();
-     		String calendar_title = request.getParameter("calendar_title");
-     		String s_year = request.getParameter("s_year");
-     		String s_month = request.getParameter("s_month");
-     		String s_date = request.getParameter("s_date");
-     		String s_hour = request.getParameter("s_hour");
-   			String s_min = request.getParameter("s_min");
-   			String e_year = request.getParameter("e_year");
-   			String e_month = request.getParameter("e_month");
-   			String e_date = request.getParameter("e_date");
-     		String e_hour = request.getParameter("e_hour");
-   			String e_min = request.getParameter("e_min");
-     		String calendar_necessity = request.getParameter("calendar_necessity");
-     		String calendar_item = request.getParameter("calendar_item");
-     		String calendar_content = request.getParameter("calendar_content");
-     		int member_no = (int) session.getAttribute("member_no");
-
-     		String calendar_startdate = s_year + util.isTwo(s_month) + util.isTwo(s_date) + util.isTwo(s_hour) + util.isTwo(s_min);
-     		String calendar_enddate = e_year + util.isTwo(e_month) + util.isTwo(e_date) + util.isTwo(e_hour) + util.isTwo(e_min);
-
-     		CalendarDto CalDto = new CalendarDto();
-     		CalDto.setCalendar_title(calendar_title);
-     		CalDto.setCalendar_startdate(calendar_startdate);
-     		CalDto.setCalendar_enddate(calendar_enddate);
-     		CalDto.setCalendar_necessity(calendar_necessity);
-     		CalDto.setCalendar_item(calendar_item);
-     		CalDto.setCalendar_content(calendar_content);
-     		CalDto.setMember_no(member_no);
-     		int res = dao.CalendarInsert(CalDto);
-
-     		if (res > 0) {
-     			jsResponse(response, "일정이 등록되었습니다.", CalendarDirectory + "main.jsp");
-     		} else {
-     			jsResponse(response, "일정이 등록되지 않았습니다.", CalendarDirectory + "main.jsp");
-     			}
-     	}
-
-     	if ("calendar_calList".equals(command)) {
-     		pet_util util = new pet_util();
-     		String year = request.getParameter("year");
-     		String month = request.getParameter("month");
-     		String date = request.getParameter("date");
-   			String yyyyMMdd = year + util.isTwo(month) + util.isTwo(date);
-   			int member_no = (int) session.getAttribute("member_no");
-
-   			List<CalendarDto> list = biz.CalendarList(member_no, yyyyMMdd);
-
-   			request.setAttribute("year", year);
-     		request.setAttribute("month", month);
-     		request.setAttribute("date", date);
-     		request.setAttribute("list", list);
-     		dispatch(request, response, CalendarDirectory + "list.jsp");
-     	}
-
-     	if("calendar_calDetail".equals(command)) {
-     		String year = request.getParameter("year");
-     		String month = request.getParameter("month");
-     		String date = request.getParameter("date");
-     		int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
-
-     		CalendarDto dto = biz.CalendarOne(calendar_no);
-
-     		request.setAttribute("year", year);
-     		request.setAttribute("month", month);
-     		request.setAttribute("date", date);
-     		request.setAttribute("dto", dto);
-     		dispatch(request, response, CalendarDirectory + "detail.jsp");
-     		}
-
-     	if("calendar_calDelete".equals(command)) {
-     		String year = request.getParameter("year");
-     		String month = request.getParameter("month");
-     		String date = request.getParameter("date");
-     		int member_no = (int) session.getAttribute("member_no");
-     		int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
-
-     		int res = biz.CalendarDelete(calendar_no);
-     		if (res > 0) {
-     			jsResponse(response, "삭제가 완료되었습니다.", "../pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
-     		} else {
-     			jsResponse(response, "오류가 발생했습니다.", "../pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
-     		}
-     	}
-
-   		if("calendar_calUpdate".equals(command)) {
-   			String year = request.getParameter("year");
-     		String month = request.getParameter("month");
-     		String date = request.getParameter("date");
-     		int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
-
-
-     		CalendarDto dto = biz.CalendarOne(calendar_no);
-     		request.setAttribute("year", year);
-     		request.setAttribute("month", month);
-     		request.setAttribute("date", date);
-     		request.setAttribute("dto", dto);
-     		dispatch(request, response, CalendarDirectory + "update.jsp");
-     	}
-
-     	if("calendar_calUpdateform".equals(command)) {
-     		String year = request.getParameter("year");
-     		String month = request.getParameter("month");
-     		String date = request.getParameter("date");
-
-     		int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
-     		String calendar_title = request.getParameter("calendar_title");
-     		String calendar_necessity = request.getParameter("calendar_necessity");
-     		String calendar_item = request.getParameter("calendar_item");
-     		String calendar_content = request.getParameter("calendar_content");
-     		int member_no = (int) session.getAttribute("member_no");
-
-     		CalendarDto dto = new CalendarDto();
-     		dto.setCalendar_no(calendar_no);
-     		dto.setCalendar_title(calendar_title);
-     		dto.setCalendar_necessity(calendar_necessity);
-     		dto.setCalendar_item(calendar_item);
-     		dto.setCalendar_content(calendar_content);
-
-     		int res = biz.CalendarUpdate(dto);
-
-     		if (res > 0) {
-     			jsResponse(response, "수정이 완료되었습니다.", "../pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
-     		} else {
-     			jsResponse(response, "오류가 발생했습니다.", "../pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
-     		}
-
-     	}
+      
 
     	if("login_login".equals(command)) {
 			response.sendRedirect(loginDirectory+"login.jsp");
@@ -856,9 +813,6 @@ public class pet_servlet extends HttpServlet {
     		if(dto != null) {
     			session.setAttribute("dto", dto);
     			session.setAttribute("member_no", dto.getMember_no());
-    			session.setAttribute("member_name", dto.getMember_name());
-    			session.setAttribute("member_id", dto.getMember_id());
-    			session.setAttribute("member_phone", dto.getMember_phone());
     			session.setMaxInactiveInterval(3600);
 
     			if (dto.getMember_role().equals("ADMIN")) {
@@ -873,12 +827,6 @@ public class pet_servlet extends HttpServlet {
     		}
     			
     	}  
-    		
-    	// 로그아웃 추가해야 함
-    	if("login_logout".equals(command)) {
-    		session.invalidate();
-    		response.sendRedirect("main/main.jsp");
-   		}
 
 		if("myinfo_update".equals(command)) {
     		response.sendRedirect("myinfo/myinfo_update.jsp");
@@ -943,9 +891,9 @@ public class pet_servlet extends HttpServlet {
 		
 		if(command.equals("bookinsert")) {
 	         String book_date = request.getParameter("book_date").replaceAll("-", "");//예약날짜.
-	         System.out.println("1. book_date : "+ book_date);      //출력구문 1. 예약날짜
+	         System.out.println("1. book_date : "+book_date);      //출력구문 1. 예약날짜
 	         String book_time = request.getParameter("book_time");//.replaceAll(":", "");
-	         System.out.println("2. book_time : "+ book_time);
+	         System.out.println("2. book_time : "+book_time);
 
 	         int business_num = Integer.parseInt(request.getParameter("business_num"));
 	         // business_num: 회사번호
@@ -955,7 +903,6 @@ public class pet_servlet extends HttpServlet {
 	         System.out.println(book_type);
 
 	         BookDto bokdto = new BookDto(0, book_date, book_time, book_type, business_num, (int)session.getAttribute("member_no"), null, null, null, null);
-	         
 	         int res = bdao.bookInsert(bokdto); 
 	         System.out.println(res);
 	         
@@ -970,7 +917,7 @@ public class pet_servlet extends HttpServlet {
 
 	      }
 		
-		if(command.equals("booklistview")) {
+		if(command.equals("booklistview")) { // 예약버튼을 누른 조회하는 view
 			String book_date = request.getParameter("book_date");
 			String book_time = request.getParameter("book_time");
 			int business_num = Integer.parseInt(request.getParameter("business_num"));
@@ -1020,7 +967,7 @@ public class pet_servlet extends HttpServlet {
 			 dispatch(request, response, "business/booklist_view.jsp");
 		}
 		
-		if(command.equals("bookview")) {
+		if(command.equals("bookview")) {// 예약 조회
 			int book_num = Integer.parseInt(request.getParameter("book_num"));
 			String date = request.getParameter("date");
 			String time = request.getParameter("time");
@@ -1035,21 +982,8 @@ public class pet_servlet extends HttpServlet {
 			
 		}
 		
-		if(command.equals("bookdelete")) {
-			int book_num = Integer.parseInt(request.getParameter("book_num"));
-			
-			int res = biz.bookdelete(book_num);
-			
-			if(res > 0) {
-				System.out.println("삭제성공");
-				
-				dispatch(request, response, "pet.do?command=business");
-			}
-			
-		}
-		
 		if(command.equals("myinfo_business")) {
-			int member_no = 1; //나중에 session에서 받아오기
+			int member_no = (int)session.getAttribute("member_no"); //나중에 session에서 받아오기
 			String Business_name = request.getParameter("Business_name");
 			String Business_role = request.getParameter("Business_role");
 			String Business_time = request.getParameter("Business_time1")+":"+request.getParameter("Business_time1")+"~"+request.getParameter("Business_time1")+":"+request.getParameter("Business_time4");
@@ -1072,7 +1006,6 @@ public class pet_servlet extends HttpServlet {
             List<PetDto> petlist = biz.selectPetList(member_no);
             request.setAttribute("petlist", petlist);
             dispatch(request, response, "pet/pet_main.jsp");
-
 
         } else if (command.equals("picture_insert_select")) {
 
@@ -1189,7 +1122,7 @@ public class pet_servlet extends HttpServlet {
                 originalFile = multi.getOriginalFileName(str);
 
                 dto.setPicture_name(file);
-                dto.setPicture_directory("../resources/Upload/" + member_no);
+                dto.setPicture_directory("/semi_PetDiary/resources/Upload/" + member_no);
                 dto.setMember_no(member_no);
                 int res = biz.insertPicture(dto);
                 System.out.println(res);
@@ -1321,19 +1254,12 @@ public class pet_servlet extends HttpServlet {
 				System.out.println("삭제 실패");
 				dispatch(request, response, "index.html");
 			}
-		}
-
-        if (command.equals("weather_main")) {
-			response.sendRedirect("weather/weatherView.html");
-		}
-        
-        
-        
+		}        
         // 캘린더 내 clud
         
         if (command.equals("calendar_calMain")) {
         	int member_no = (int) session.getAttribute("member_no");
-        	dispatch(request, response, CalendarDirectory + "");
+        	dispatch(request, response, CalendarDirectory + "main.jsp");
         }
     
      	if("calendar_calInsert".equals(command)) {
@@ -1461,7 +1387,6 @@ public class pet_servlet extends HttpServlet {
      		String calendar_item = request.getParameter("calendar_item");
      		String calendar_content = request.getParameter("calendar_content");
      		int member_no = (int) session.getAttribute("member_no");
-     			
      		CalendarDto dto = new CalendarDto();
      		dto.setCalendar_no(calendar_no);
      		dto.setCalendar_title(calendar_title);
@@ -1472,22 +1397,22 @@ public class pet_servlet extends HttpServlet {
      		int res = biz.CalendarUpdate(dto);
      			
      		if (res > 0) {
-     			jsResponse(response, "수정이 완료되었습니다.", "/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
+     			jsResponse(response, "수정이 완료되었습니다.", "/semi_PetDiary/pet.do?command="+"calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
      		} else {
      			jsResponse(response, "오류가 발생했습니다.", "/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
      		}
 
      	}
      	
-    	    		
-    	// 로그아웃 추가해야 함
     	if("login_logout".equals(command)) {
-    		session.invalidate();
+    		if (session != null) {
+    			session.invalidate();
+    		} else {
+    			
+    		}
     		response.sendRedirect("main/main.jsp");
    		}
-    	if(command.equals("weather")) {
-    		response.sendRedirect("weather/Test.jsp");
-    	}
+    	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -1506,5 +1431,12 @@ public class pet_servlet extends HttpServlet {
 						    + "</script>";
 		response.getWriter().print(responseText);
 	}
-	
+
+	private void jsResponseClose(HttpServletResponse response, String msg) throws IOException {
+		String responseText = "<script type='text/javascript'>"
+						    + "alert('" + msg + "');"
+						    + "window.close()"
+						    + "</script>";
+		response.getWriter().print(responseText);
+	}
 }

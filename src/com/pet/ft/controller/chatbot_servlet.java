@@ -170,10 +170,9 @@ public class chatbot_servlet extends HttpServlet {
 	                
 	                System.out.print(responBody.substring(a, b));
 	                String result = responBody.substring(a, b);
-	                
-	                
+	                 
 	                JSONObject obj = new JSONObject();
-	                obj.put("sendarName", "챗봇");
+	                obj.put("senderName", "챗봇");
 	                obj.put("message", result);
 	                
 	                response.getWriter().print(obj);

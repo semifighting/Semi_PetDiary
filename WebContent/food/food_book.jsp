@@ -32,8 +32,7 @@ height: 50px;
 	<input type="hidden" name="command" value="booklistview"/>
 
 		<div class="book">
-		<h3><%=bdto.getBusiness_name() %></h3>
-		<p><%=bdto.getBusiness_role() %></p>
+		<h3>예약업체 : <%=bdto.getBusiness_name() %></h3>
 		<h3>예약페이지 입니다.</h3>
 			<div>
 				<input type="hidden" name = "business_num" value="<%=bdto.getBusiness_num() %>">

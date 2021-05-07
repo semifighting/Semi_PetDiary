@@ -2,6 +2,7 @@ package com.pet.ft.model;
 
 import java.util.List;
 
+
 import com.pet.ft.dto.BookDto;
 import com.pet.ft.dto.BusinessDto;
 import com.pet.ft.dto.CalendarDto;
@@ -13,6 +14,7 @@ import com.pet.ft.dto.CommunityDto;
 import com.pet.ft.dto.MemberDto;
 import com.pet.ft.dto.PetDto;
 import com.pet.ft.dto.PictureDto;
+import com.pet.ft.dto.TravelDto;
 
 public class PetBizImpl implements PetBiz {
 
@@ -43,6 +45,7 @@ public class PetBizImpl implements PetBiz {
 
 		return dao.hospitalBookInsert(dto);
 	}
+
 
 
 	public BusinessDto businessOne(int business_num) {
@@ -260,14 +263,71 @@ public class PetBizImpl implements PetBiz {
 
 
 	@Override
-	public List<BusinessDto> businessList() {
-		return dao.businessList();
+	public int InsertFilter(List<String> list) {
+		return dao.InsertFilter(list);
+	}
+	public List<BusinessDto> BusinessList(int offset, int noOfRecords) {
+		return bdao.BusinessList(offset, noOfRecords);
 	}
 
 
 	@Override
+	public int businessTotal() {
+		return bdao.businessTotal();
+	}
+
+
+	@Override
+	public List<BusinessDto> menu() {
+		return bdao.menu();
+	}
+
+
+	@Override
+	public List<BusinessDto> businessList() {
+        return dao.businessList();
+    }
 	public int bookdelete(int book_num) {
 		return dao.bookdelete(book_num);
 	}
+	
+	@Override
+	public List<BusinessDto> bookableMap() {
+		
+		return dao.bookableMap();
+	}
+
+	@Override
+	public List<BusinessDto> foodMap() {
+		
+		return dao.foodMap();
+	}
+
+	@Override
+	public int travelInsert(TravelDto dto) {
+		
+		return dao.travelInsert(dto);
+	}
+
+	@Override
+	public List<TravelDto> travelList() {
+	
+		return dao.travelList();
+	}
+
+	@Override
+	public TravelDto travelSelect(int travel_no) {
+		
+		return dao.travelSelect(travel_no);
+	}
+
+	@Override
+	public int travelUpdate(TravelDto dto) {
+		
+		return dao.travelUpdate(dto);
+	}
+	
+	
+	
 
 }
