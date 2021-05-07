@@ -20,24 +20,17 @@
 		$("select").change(function(){
 			location.href="/semi_PetDiary/paging.do?command=book";
 		});
-	/* 	$("input[name=test-button]").click(function(){
-			var d1 = $("input[name=test-date]").val();
-			var t1 = $("input[name=test-time]").val();
-			var d2 = d1.split("-");
-			var t2 = t1.split(":");
-			var date = d2[0] + d2[1] + d2[2];
-			var time = t2[0] + t2[1];
-			date = Number(date);
-			time = Number(time);
-			alert(date);
-			alert(time);
-		}); */
 	});
 </script>
 
 <style type="text/css">
+
+	body{
+		background-color: #FFF6E3;
+	}
 	
 	h2{width:200px; margin: 10px auto;}
+	#main-background{width: 100%;height: 1120px;}
 	#sell{margin: 0px auto; width: 150px;}
 	#table {display: table; width: 40%; margin: 20px auto;}
 	.row {display: table-row;}
@@ -51,7 +44,10 @@
 	.col6 {width: 2%;}
 	.col7 {width: 2%;}
 	.book_state{width: 2%;}
+	
+	.paginate{margin: 0px auto; width: 200px; text-align: center;}
 	.paginate a	{color:black;}
+	.view:hover{background-color: salmon;}
 		
 </style>
 </head>

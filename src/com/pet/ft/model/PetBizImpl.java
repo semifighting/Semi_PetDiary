@@ -69,6 +69,7 @@ public class PetBizImpl implements PetBiz {
 
 
 
+
 	public BusinessDto businessOne(int business_num) {
 		return bdao.businessOne(business_num);
 	}
@@ -346,5 +347,44 @@ public class PetBizImpl implements PetBiz {
 	public MemberDto Login(java.lang.String member_id, java.lang.String member_pw) {
 		return dao.Login(member_id, member_pw);
 	}
+	
+	@Override
+	public List<BusinessDto> bookableMap() {
+		
+		return dao.bookableMap();
+	}
+
+	@Override
+	public List<BusinessDto> foodMap() {
+		
+		return dao.foodMap();
+	}
+
+	@Override
+	public int travelInsert(TravelDto dto) {
+		
+		return dao.travelInsert(dto);
+	}
+
+	@Override
+	public List<TravelDto> travelList() {
+	
+		return dao.travelList();
+	}
+
+	@Override
+	public TravelDto travelSelect(int travel_no) {
+		
+		return dao.travelSelect(travel_no);
+	}
+
+	@Override
+	public int travelUpdate(TravelDto dto) {
+		
+		return dao.travelUpdate(dto);
+	}
+	
+	
+	
 
 }

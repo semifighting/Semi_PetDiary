@@ -21,7 +21,12 @@
 
 <style type="text/css">
 
+	body{
+		background-color: #FFF6E3;
+	}
+
 	#table {display: table; width: 30%; margin: 100px auto; padding: 80px 20px 50px 20px; background-color: #ffc0b6;}
+	#main-background{width: 100%; height: 1119px;}
 	.row {display: table-row; margin: 20px 0px 0px 0px;}
 	.cell {display: table-cell; padding: 3px;}
 	.td{background-color: white;}
@@ -41,11 +46,10 @@
 	int book_num = Integer.parseInt(request.getParameter("book_num"));
 	MemberDto dto = (MemberDto) session.getAttribute("dto");
 	String dateTime = (String) request.getAttribute("dateTime");
-	String member_name = dto.getMember_name();
-	String member_id = dto.getMember_id();
-	String member_phone = dto.getMember_phone();
+	MemberDto dto = (MemberDto) session.getAttribute("dto");
 %>
 
+	<div id="main-background">
 		<div id="table">
 			<div>
 				<span id="main">예약조회 및 취소</span>
@@ -67,9 +71,9 @@
 				<span class="cell col3">예약자 전화번호</span>
 			</div>
 			<div class="row td">
-				<span class="cell col1"><%=member_name %></span>
+				<span class="cell col1"><%=dto.getMember_name() %></span>
 				<span class="cell col2"></span>
-				<span class="cell col3"><%=member_phone %></span>
+				<span class="cell col3"><%=dto.getMember_phone() %></span>
 			</div>
 			<br/>
 			<div class="row">
@@ -77,11 +81,12 @@
 				<span class="cell col2"></span>
 			</div>
 			<div class="row td">
-				<span class="cell col1"><%=member_id %></span>
+				<span class="cell col1"><%=dto.getMember_id() %></span>
 				<span class="cell col2"></span>
 			</div>
 			<input type="button" value="예약취소" onclick="location.href='pet.do?command=bookdelete&book_num=<%=book_num %>'" />
 		</div>
+	</div>
 
 		</div>
 <%@ include file="/main/footer.jsp" %>

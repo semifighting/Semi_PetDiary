@@ -32,6 +32,7 @@ select * from book
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 INSERT INTO MEMBER
@@ -57,6 +58,8 @@ INSERT INTO MEMBER
 VALUES(MEMBER_SEQ.NEXTVAL, '일반사원', 'employee', '123456', 'employee@a.com', '010-2222-2222', 'EMPLOYEE', '경기도 고양시 토당동');
 
 >>>>>>> janggeun
+=======
+>>>>>>> ig
 ----------------picture
 DROP SEQUENCE PICTURE_NO_SEQ;
 DROP TABLE PICTURE;
@@ -122,9 +125,12 @@ CREATE TABLE BUSINESS(
 
 SELECT count(member_no) FROM MEMBER;
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> ig
 -- MENU
 DROP TABLE MENU;
 
@@ -176,7 +182,11 @@ WHERE BUSINESS_NUM = 110;
 					FROM BUSINESS JOIN MEMBER USING(MEMBER_NO)
 					WHERE BUSINESS_ROLE = 'S';
 	
+<<<<<<< HEAD
 
+=======
+select * from book;
+>>>>>>> ig
 
 ------------------------Diary
 CREATE SEQUENCE DIARY_NO_SEQ;
@@ -193,10 +203,28 @@ VALUES(DIARY_NO_SEQ.NEXTVAL,'티코산책','산책산책',SYSDATE,1);
 SELECT * FROM DIARY;
 
 
+SELECT E.RNUM, E.BOOK_NUM, E.MEMBER_NAME, E.BUSINESS_NAME, E.BOOK_DATE, E.BOOK_TIME
+		FROM(
+			SELECT ROWNUM AS RNUM, D.BOOK_NUM, D.MEMBER_NAME, D.BUSINESS_NAME, D.BOOK_DATE, D.BOOK_TIME
+			FROM(
+				SELECT A.BOOK_NUM, B.MEMBER_NAME, C.BUSINESS_NAME, A.BOOK_DATE, A.BOOK_TIME
+				FROM BOOK A JOIN MEMBER B 
+				ON A.MEMBER_NO = B.MEMBER_NO 
+				JOIN BUSINESS C
+				ON A.BUSINESS_NUM = C.BUSINESS_NUM
+				WHERE BOOK_TYPE = 'S'
+				ORDER BY A.BOOK_NUM
+			) D
+			WHERE ROWNUM <= 5) E
+		WHERE E.RNUM > 0
+
+		select * from business;
+		
 -------------------------PET
 
 CREATE SEQUENCE PET_NO_SEQ;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
@@ -207,6 +235,8 @@ select * from BOOK
 
 >>>>>>> gwanwoo
 >>>>>>> janggeun
+=======
+>>>>>>> ig
 CREATE TABLE PET(
 	PET_NO NUMBER PRIMARY KEY,
 	PET_SPECIES VARCHAR2(300) NOT NULL,
@@ -221,6 +251,7 @@ INSERT INTO PET
 VALUES(PET_NO_SEQ.NEXTVAL,'강아지','말티푸','티코',TO_DATE('02-20-2020 11:11:11','MM-DD-YYYY HH24:MI:SS'),'F',1);
 SELECT * FROM PET;
 ------------------------COMMUNITY TABLE
+<<<<<<< HEAD
 <<<<<<< HEAD
 CREATE SEQUENCE COMMUNITY_SEQ_SEQ;
 DELETE FROM COMMUNITY
@@ -255,6 +286,10 @@ CREATE SEQUENCE COMMUNITY_NO_SEQ;
 
 >>>>>>> gwanwoo
 >>>>>>> janggeun
+=======
+CREATE SEQUENCE COMMUNITY_SEQ_SEQ;
+DELETE FROM COMMUNITY
+>>>>>>> ig
 CREATE TABLE COMMUNITY (
 	COMMUNITY_SEQ NUMBER PRIMARY KEY,
 	COMMUNITY_TITLE VARCHAR2(500) NOT NULL,
@@ -272,6 +307,7 @@ CREATE TABLE COMMUNITY (
 =======
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 INSERT INTO COMMUNITY VALUES(COMMUNITY_SEQ_SEQ.NEXTVAL, '시작', '시작', SYSDATE, 'N',0,COMMUNITY_NO_SEQ.NEXTVAL,0,1 )
 SELECT * FROM COMMUNITY
@@ -284,6 +320,8 @@ INSERT INTO COMMUNITY VALUES(COMMUNITY_SEQ_SEQ.NEXTVAL, '시작', '시작', SYSD
 
 >>>>>>> gwanwoo
 >>>>>>> janggeun
+=======
+>>>>>>> ig
 -- BOOK
 
 DROP TABLE BOOK;
@@ -307,8 +345,12 @@ CREATE TABLE BOOK(
 =======
 >>>>>>> janggeun
   BOOK_DATE VARCHAR2(20) NOT NULL,
+<<<<<<< HEAD
   BOOK_TIME VARCHAR2(20) NOT NULL,
 >>>>>>> gwanwoo
+=======
+  BOOK_TIME VARCHAR2(20) ,
+>>>>>>> ig
   BOOK_TYPE VARCHAR2(2) NOT NULL,
   BUSINESS_NUM NUMBER NOT NULL, --예약업체 번호(BUSINESS테이블 BUSINESS_NUM? )
 <<<<<<< HEAD
@@ -324,6 +366,7 @@ CREATE TABLE BOOK(
   BOOK_COUNSEL VARCHAR2(20),
   BOOK_HOSTIME VARCHAR2(20)
   BOOK_COUNSEL VARCHAR2(20),
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
   BOOK_COUNSEL VARCHAR2(20),
@@ -336,6 +379,8 @@ CREATE TABLE BOOK(
 >>>>>>> kjk
 >>>>>>> gwanwoo
 >>>>>>> janggeun
+=======
+>>>>>>> ig
   CONSTRAINT BOOK_CK_TYPE CHECK (BOOK_TYPE IN ('H', 'S')),
   CONSTRAINT BOOK_CK_STATE CHECK(BOOK_STATE IN ('Y', 'N')),
   CONSTRAINT BOOK_FK_MN FOREIGN KEY (MEMBER_NO) REFERENCES MEMBER (MEMBER_NO),
@@ -343,6 +388,7 @@ CREATE TABLE BOOK(
 );
 <<<<<<< HEAD
 
+<<<<<<< HEAD
 =======
 
 <<<<<<< HEAD
@@ -351,8 +397,44 @@ CREATE TABLE BOOK(
 =======
 <<<<<<< HEAD
 select * from menu
-
 =======
+CHECK TABLE BOOK;
+----컬럼 데이터타입 확인용
+SELECT COLUMN_NAME, NULLABLE
+
+FROM ALL_TAB_COLUMNS
+
+WHERE TABLE_NAME = 'BOOK';
+select * from book
+
+-------RTC
+CREATE SEQUENCE RTC_NO_SEQ;
+DROP TABLE RTC
+CREATE TABLE RTC(
+	RTC_ROOM VARCHAR2(1000) NOT NULL,
+	RTC_USE VARCHAR2(2) NOT NULL,
+	MEMBER_NO NUMBER NOT NULL,
+	BUSINESS_NUM NUMBER NOT NULL,
+	CONSTRAINT RTC_MEBER_FK FOREIGN KEY(MEMBER_NO) REFERENCES MEMBER(MEMBER_NO),
+	CONSTRAINT RTC_BUSINESS_FK FOREIGN KEY(BUSINESS_NUM) REFERENCES BUSINESS(BUSINESS_NUM)
+)
+select * from member
+UPDATE BUSINESS SET BUSINESS_BOOK='Y'  WHERE BUSINESS_NUM = 81
+update book set book_date = '20210503', member_no = 56 where book_num = 68
+
+DROP TABLE LIKES
+CREATE TABLE LIKES(
+	MEMBER_NO NUMBER NOT NULL,
+	COMMUNITY_SEQ NUMBER NOT NULL,
+	CONSTRAINT LIKE_MEBER_FK FOREIGN KEY(MEMBER_NO) REFERENCES MEMBER(MEMBER_NO),
+	CONSTRAINT LIKE_COMMUNITY_SEQ FOREIGN KEY(COMMUNITY_SEQ) REFERENCES COMMUNITY(COMMUNITY_SEQ)
+	
+	)
+>>>>>>> ig
+
+SELECT COUNT(*) FROM ORDERINFO WHERE MEMBER_NO = #{MEMBER_NO}
+=======
+<<<<<<< HEAD
 >>>>>>> main
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -367,9 +449,29 @@ SELECT * FROM BOOK;
 CHECK TABLE BOOK;
 ----컬럼 데이터타입 확인용
 SELECT COLUMN_NAME, NULLABLE
+=======
+------
+--식당 데이터 추가
 
-FROM ALL_TAB_COLUMNS
+SELECT business_etc FROM BUSINESS;
 
+INSERT INTO BUSINESS
+VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '바잇미', '서울 강남구 논현로175길 101-3 1층', 'S', '12:00 - 21:00', 'N', 'N', 'https://www.google.com/url?sa=i&url=http%3A%2F%2Fm.blog.naver.com%2Fsoong_vely%2F221504138714&psig=AOvVaw2L1JWLmoFuhMN8gG-zxLEH&ust=1620198010706000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOjEuIu6r_ACFQAAAAAdAAAAABAD', 20210504, 58);
+
+UPDATE BUSINESS
+SET BUSINESS_ETC = 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDA2MjNfMTg5%2FMDAxNTkyODM5NTMyMjkz.G3XSDM9I7ZFu1hVMey0sKOuZI3oz8TihnQlbzX7wZGMg.OlblgNilPwz1Okr_INqFtdVmjR2ZXT4kmpUe2iQlBPQg.JPEG.molly4595%2FIMG_5598.jpg'
+WHERE BUSINESS_NAME = '바잇미';
+INSERT INTO BUSINESS
+VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '러스티', '서울 강남구 선릉로158길 14-1', 'S', '12:00 - 21:00', 'Y', 'Y', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20180324_294%2F1521882008300mgqJ0_JPEG%2FfrhaG0Q2ScDrqnW9MRrERVqt.JPG.jpg', 20210505, 58);
+
+INSERT INTO BUSINESS
+VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '카페아망', '서울 서초구 강남대로89길 8', 'S', '10:00 - 23:00', 'N', 'Y', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDA5MTlfMjkg%2FMDAxNjAwNDc0ODU4MDMy.Fjy5XUG5ixkemy-GpwJiY5qsjLvEjFGEXMMaYgGu9uIg.7WYs_ozmpc5-V52ZYmINAf8K2zUMolz5Y76z3ImnRoUg.JPEG.thsqkfcjdruf%2F1600474855095.jpg', 20210506, 58);
+>>>>>>> ig
+
+INSERT INTO BUSINESS
+VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '까사밀', '서울 강남구 도산대로1길 83 라까사호텔', 'S', '11:30 - 15:00', 'Y', 'Y', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAzMTdfOTEg%2FMDAxNjE1OTYzNTE5MTkz.-bUl2UCxAvWN83i9pdywDqur_CewbutGKrAM5iOMxA0g.eGy_oGUl2Sqm33G1Pf32fctxl8HWEmj5QN7RfBxkrGog.JPEG.lovedudk12%2Foutput_1217472620.jpg', 20210503, 58); 
+
+<<<<<<< HEAD
 WHERE TABLE_NAME = 'BOOK';
 <<<<<<< HEAD
 =======
@@ -458,10 +560,33 @@ VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '까사밀', '서울 강남구 도산대로1길
 
 INSERT INTO BUSINESS
 VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '쿠스퀘어', '서울 강남구 언주로130길 13', 'S', '09:00 - 00:00', 'Y', 'N', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDEwMjRfODUg%2FMDAxNjAzNDY3MTc4OTMz.GxDQ22IYVY9qGeU941ihkito05wZbh10Dwpk7fLEqx4g.yWQ15lwpSlYqs5Qiqienu_S5L9EXlHP8C2Bc_-1yc68g.JPEG.bbongho357%2F20201022_125755.jpg', 20210502, 58);  
+=======
+INSERT INTO BUSINESS
+VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '쿠스퀘어', '서울 강남구 언주로130길 13', 'S', '09:00 - 00:00', 'Y', 'N', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDEwMjRfODUg%2FMDAxNjAzNDY3MTc4OTMz.GxDQ22IYVY9qGeU941ihkito05wZbh10Dwpk7fLEqx4g.yWQ15lwpSlYqs5Qiqienu_S5L9EXlHP8C2Bc_-1yc68g.JPEG.bbongho357%2F20201022_125755.jpg', 20210502, 58);  
 
 INSERT INTO BUSINESS
 VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '어라운드데이', '서울 성동구 서울숲2길 24-1', 'S', '12:00 - 21:00', 'N', 'N', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDEwMThfMTUy%2FMDAxNjAzMDIzMTI2OTc3.nEum69M1lIYCLWPaio9wDVWVb-0R6UWT1k6_e2VQW0kg.Zgat509V1yxRAKw2NeajHzw3oCoTwyaCxLWnxhXe7vog.JPEG.yjezzang%2F1603023128121.jpg', 20210501, 58);
 
+INSERT INTO BUSINESS
+VALUES(BUSINESS_NUM_SEQ.NEXTVAL, 'DONO', '서울 용산구 이태원로54길 63', 'S', '12:00 - 22:00', 'N', 'Y', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAzMzFfMzEg%2FMDAxNTg1NjUzMDQ5MTg2.HD2aayUmJ8QRBVIM7yGU263vl07tnktG79tVpuOB7l0g.8W8YutetzszE1TzoVTqs1N2zSGN1S0s4fxILwwCNrAcg.JPEG.best8555%2F1585653048050.jpg', 20210430, 58);
+
+INSERT INTO BUSINESS
+VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '쟈크풀러', '서울 용산구 이태원로 228-1', 'S', '11:30 - 17:00', 'N', 'Y', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDA4MTBfMTcw%2FMDAxNTk3MDM2NjMzNTY3.94zAlvyXRW6BGzJ72xnH9ZrHSmUoryOb8bj1TyWl52Mg.2iVJq-j0tLY2meFtiqusvtq0ugmLrKM_aUOk3pLL0hEg.JPEG.wjstjddk1112%2FIMG_7632.jpg', 20210429, 58);
+
+INSERT INTO BUSINESS
+VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '카페드블루 블루스퀘어점', '서울 용산구 한남동 727-35 카페드블루', 'S', '11:30 - 17:00', 'N', 'N', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20201205_188%2F1607147823578QJExC_JPEG%2FK4wR3wuGHPPIGaluIsrBHEz4.jpg', 20210428, 58);
+
+INSERT INTO BUSINESS
+VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '안티 스트레스', '서울 용산구 이태원로20가길 9-7 2층', 'S', '12:30 - 22:00', 'N', 'N', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAyMTlfMjc1%2FMDAxNjEzNzM2OTIzNzEx.K9Y1Ih60I-Sy_SUmxkokJBlUYrmOBudnqmNJ6X-Lm2sg.9Dd4rfHD1s9iFhu0iGP-XuxVA4jZeZo_3P6OsWKcowgg.JPEG.jungah0127%2FKakaoTalk_20210219_192644037.jpg', 20210427, 58);
+
+INSERT INTO BUSINESS
+VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '쁘띠베네', '서울 용산구 이태원로20길 2-12', 'S', '10:00 - 21:00', 'N', 'N', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTEyMTRfOSAg%2FMDAxNTc2Mjk5MjQwNTE2.vUq44z9kqErJkjBAi0BU1Q5X432l--vHaAs9HAQ57nQg.voDpvbKyRo5XIt-e4QJVagLNk4eaIkF6hRZoRW9d2dIg.JPEG.gardening_sg%2F1576299238926.jpg', 20210426, 58);
+>>>>>>> ig
+
+INSERT INTO BUSINESS
+VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '어라운드데이', '서울 성동구 서울숲2길 24-1', 'S', '12:00 - 21:00', 'N', 'N', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDEwMThfMTUy%2FMDAxNjAzMDIzMTI2OTc3.nEum69M1lIYCLWPaio9wDVWVb-0R6UWT1k6_e2VQW0kg.Zgat509V1yxRAKw2NeajHzw3oCoTwyaCxLWnxhXe7vog.JPEG.yjezzang%2F1603023128121.jpg', 20210501, 58);
+
+<<<<<<< HEAD
 <<<<<<< HEAD
 INSERT INTO BUSINESS
 VALUES(BUSINESS_NUM_SEQ.NEXTVAL, 'DONO', '서울 용산구 이태원로54길 63', 'S', '12:00 - 22:00', 'N', 'Y', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAzMzFfMzEg%2FMDAxNTg1NjUzMDQ5MTg2.HD2aayUmJ8QRBVIM7yGU263vl07tnktG79tVpuOB7l0g.8W8YutetzszE1TzoVTqs1N2zSGN1S0s4fxILwwCNrAcg.JPEG.best8555%2F1585653048050.jpg', 20210430, 58);
@@ -550,6 +675,12 @@ INSERT INTO BUSINESS
 VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '1989 비스트로', '서울 용산구 회나무로13가길 37 1층 1989 비스트로', 'S', '12:00 - 21:00', 'Y', 'Y', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAxMDFfMjgy%2FMDAxNjA5NDM0NjM0Nzgy.Z4mH3FYo33-PY-D3oC5F349CN-OZl8gaY8k4EMLxhz8g.nmd8VRDDCtRz_IavhiVGOwgoGCW-CLpIfLKlGSy_hCcg.JPEG.nagazaapp%2F%25B4%25D9%25BF%25EE%25B7%25CE%25B5%25E5_%25282%2529.jpg', 20210425, 58);
 
 INSERT INTO BUSINESS
+=======
+INSERT INTO BUSINESS
+VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '1989 비스트로', '서울 용산구 회나무로13가길 37 1층 1989 비스트로', 'S', '12:00 - 21:00', 'Y', 'Y', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAxMDFfMjgy%2FMDAxNjA5NDM0NjM0Nzgy.Z4mH3FYo33-PY-D3oC5F349CN-OZl8gaY8k4EMLxhz8g.nmd8VRDDCtRz_IavhiVGOwgoGCW-CLpIfLKlGSy_hCcg.JPEG.nagazaapp%2F%25B4%25D9%25BF%25EE%25B7%25CE%25B5%25E5_%25282%2529.jpg', 20210425, 58);
+
+INSERT INTO BUSINESS
+>>>>>>> ig
 VALUES(BUSINESS_NUM_SEQ.NEXTVAL, '머치커피', '서울 동작구 동작대로9길 43 1층', 'S', '12:00 - 21:00', 'N', 'N', 'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAzMDVfMjk2%2FMDAxNjE0ODczMTUyNDM1.6i02PsN-L4P5HXv_VquIsvPwyMqCC-lg2hTdMRKQfBEg.fZPcV3WheexeH7g_kwmehPkp1AsnXLHXXR6nlFmwymQg.JPEG.vmeeo%2FIMG_9047.jpg', 20210424, 58);
 
 INSERT INTO BUSINESS
@@ -597,6 +728,7 @@ INSERT INTO TRAVEL
 VALUES(TRAVEL_NO_SEQ.NEXTVAL,'제주여행','20210603','제주국제공항','애월','한담해안산책로',30,10,10,30,1);
 
 SELECT * FROM TRAVEL;
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> janggeun
@@ -614,3 +746,7 @@ SELECT * FROM TRAVEL;
 >>>>>>> main
 >>>>>>> gwanwoo
 >>>>>>> janggeun
+=======
+
+
+>>>>>>> ig

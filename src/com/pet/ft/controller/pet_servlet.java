@@ -113,46 +113,9 @@ public class pet_servlet extends HttpServlet {
 				jsResponse(response, "삭제 실패", "/semi_PetDiary/paging.do?command=report");
 			}		
 		
-		} else if("bookcheck".equals(command)) {
-			String date = (String) request.getParameter("test-date"); 
-			String time = String.valueOf(request.getParameter("test-time")); 
+		} 
 			
-			date = date.replaceAll("[^0-9]", "");
-			time = time.replaceAll("[^0-9]", "");
-			
-			List<BookDto> list = biz.totalDateTime();
-			String checkout = null;
-			for(BookDto dto : list) {
-				if(date.equals(dto.getBook_date())) {
-					checkout = dto.getBook_date();
-					
-					int timecheck = Integer.parseInt(dto.getBook_time().replaceAll("[^0-9]", ""));
-					int timeall = Integer.parseInt(time);
-					int x = 0;
-					
-					if((timecheck/100) == (timeall/100)) {
-						x = timeall - timecheck;
-						
-					} else {
-						x = (timeall - timecheck) - 40;
-					}
-					
-					if(x <= 60 && x >= 10) {
-						int y = (60 - x)/10;
-						
-						String msg = "현재 대기 손님은 " + y + "명이고, " + "예상 대기시간은 " + 5 * y + " ~ " + (5 * y + 5) + "분 입니다.";
-						
-						jsResponse(response, msg, "pet.do?command=selectBook&booknum="+dto.getBook_num());
-					}
-					
-					
-				}
-			}
-			
-			if(!date.equals(checkout)){
-				System.out.println("예약완료");
-			}
-		}			
+		
 		if("community".equals(command)) {	
 			int MaxPage = dao.CommunityPageMax();
 			request.setAttribute("maxpage", MaxPage);
@@ -969,7 +932,8 @@ public class pet_servlet extends HttpServlet {
 	         }
 
 	      }
-		if(command.equals("booklistview")) {
+		
+		if(command.equals("booklistview")) { // 예약버튼을 누른 조회하는 view
 			String book_date = request.getParameter("book_date");
 			String book_time = request.getParameter("book_time");
 			int business_num = Integer.parseInt(request.getParameter("business_num"));
@@ -1019,7 +983,7 @@ public class pet_servlet extends HttpServlet {
 			 dispatch(request, response, "business/booklist_view.jsp");
 		}
 		
-		if(command.equals("bookview")) {
+		if(command.equals("bookview")) {// 예약 조회
 			int book_num = Integer.parseInt(request.getParameter("book_num"));
 			String date = request.getParameter("date");
 			String time = request.getParameter("time");
@@ -1033,21 +997,6 @@ public class pet_servlet extends HttpServlet {
 			dispatch(request, response, "business/business_bookview.jsp");
 			
 		}
-		
-		if(command.equals("bookdelete")) {
-			int book_num = Integer.parseInt(request.getParameter("book_num"));
-			
-			int res = biz.bookdelete(book_num);
-			
-			if(res > 0) {
-				System.out.println("삭제성공");
-				
-				dispatch(request, response, "pet.do?command=business");
-			}
-			
-		}
-		
-		
 		
 		if(command.equals("myinfo_business")) {
 			int member_no = (int)session.getAttribute("member_no"); //나중에 session에서 받아오기

@@ -213,6 +213,14 @@
 		}
 	}
 	
+<<<<<<< HEAD
+=======
+	function back(){
+		history.back();
+	}
+	
+		
+>>>>>>> ig
 </script>
 </head>
 <body>
@@ -278,7 +286,11 @@
 					<div>
 						<div id="signup">
 							<input type="submit" value="가입 하기"/>
+<<<<<<< HEAD
 							<input type="button" value="취소" onclick="history.back();"/>
+=======
+							<input type="button" value="취소" onclick="back();"/>
+>>>>>>> ig
 						</div>
 					</div>
 				</div>

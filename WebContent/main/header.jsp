@@ -75,7 +75,7 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
       </ul>
 
 		<ul class="header_icons">
-			<li><a href="/semi_PetDiary/pet.do?command=myinfo"><i class="fas fa-user-circle"></i></a></li>
+			<li><a href="/semi_PetDiary/pet.do?command=adminMain"><i class="fas fa-user-circle"></i></a></li>
 
 		</ul>
 			<a href="#" class="header_toggleBtn">

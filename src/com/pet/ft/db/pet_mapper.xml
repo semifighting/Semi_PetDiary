@@ -500,8 +500,6 @@
   	</select>
 
   	
-  	
-  	
   	<update id="changeRole" parameterType="MemberDto">
   		UPDATE MEMBER
   		SET MEMBER_ROLE = #{member_role}
@@ -638,6 +636,11 @@
 	<select id="SelectRTCOne" parameterType="int" resultType="PetRTCDto">
 		SELECT * FROM RTC WHERE BUSINESS_NUM = #{business_num}
 	</select>
+	
+	<select id="CountMyinfoOrder" parameterType="int" resultType="int">
+	SELECT COUNT(*) FROM ORDERINFO WHERE MEMBER_NO = #{member_no}
+	</select>
+	
 
 	<select id="SelectRTCRoom" parameterType="String" resultType="PetRTCDto">
 		SELECT * FROM RTC WHERE RTC_ROOM = #{room_id}

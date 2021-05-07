@@ -4,8 +4,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+<<<<<<< HEAD
 import com.pet.ft.dto.*;
 import org.apache.ibatis.annotations.Param;
+=======
+import com.pet.ft.dto.BookDto;
+import com.pet.ft.dto.BusinessDto;
+import com.pet.ft.dto.CalendarDto;
+import com.pet.ft.dto.CommunityDto;
+import com.pet.ft.dto.LikesDto;
+import com.pet.ft.dto.MemberDto;
+import com.pet.ft.dto.PetDto;
+import com.pet.ft.dto.PetRTCDto;
+import com.pet.ft.dto.PictureDto;
+import com.pet.ft.dto.TravelDto;
+
+>>>>>>> ig
 
 public interface PetDao {
 	String namespace = "com.pet.ft.mapper.";
@@ -21,6 +35,7 @@ public interface PetDao {
 	//병원상담
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
 	public int totalHospital();
+<<<<<<< HEAD
 
 	public List<BusinessDto> bookableMap();
 	public List<BusinessDto> foodMap();
@@ -30,6 +45,17 @@ public interface PetDao {
 
 	public int travelInsert(TravelDto dto);
 	public List<TravelDto> travelList(int member_no);
+=======
+	
+	public List<BusinessDto> bookableMap();
+	public List<BusinessDto> foodMap();
+
+	public BusinessDto hospitalSelect(int business_num);	
+	public int hospitalBookInsert(BookDto dto);
+	
+	public int travelInsert(TravelDto dto);
+	public List<TravelDto> travelList();
+>>>>>>> ig
 	public TravelDto travelSelect(int travel_no);
 	public int travelUpdate(TravelDto dto);
 
@@ -46,7 +72,11 @@ public interface PetDao {
 	public List<CommunityDto> MyCommunityList(int member_no);
 	public int CommunityPageMax();
 
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> ig
 	// member
 	public MemberDto MemberOne(int member_no);
 	public int MemberInsert(MemberDto dto);
@@ -115,6 +145,11 @@ public interface PetDao {
 	public int CalendarDelete(int calendar_no);
 	public int CalendarUpdate(CalendarDto dto);
 
+<<<<<<< HEAD
+=======
+	public int InsertFilter(List<String> list);
+
+>>>>>>> ig
 	public int insertRTC(PetRTCDto dto);
 
 	public PetRTCDto SelectRTCOne(int business_num);
@@ -136,6 +171,7 @@ public interface PetDao {
 	public int InsertLikes(LikesDto dto);
 	public int DeleteLikes(LikesDto dto);
 	public int bookdelete(int book_num);
+<<<<<<< HEAD
 	public List<BusinessDto> businessList();
 
 	//Order
@@ -145,5 +181,13 @@ public interface PetDao {
 	public int orderInsertCancel(int book_num);
 
 	public OrderDto selectOrderOne(int book_num);
+=======
+	
+
+	
+	
+	
+	public List<BusinessDto> businessList();
+>>>>>>> ig
 
 }

@@ -101,7 +101,6 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		SqlSession session = getSqlSessionFactory().openSession();
 		List<BookDto> list = session.selectList(namespace + "totalDateTime");
 		session.close();
-
 		return list;
 	}
 
@@ -887,6 +886,16 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 		    return list;
 		}
 
+		
+		
+		@Override
+		public int CommunityDelete(int seq) {
+			int res = 0;
+			try(SqlSession session = getSqlSessionFactory().openSession(true)){
+				res = session.delete(namespace+"CommunityDelete", seq);
+			}		
+			return res;
+		}
 		
 		
 		@Override
