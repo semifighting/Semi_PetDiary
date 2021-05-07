@@ -690,8 +690,16 @@ public class pet_servlet extends HttpServlet {
 
 		}
 		if (command.equals("weather_main")) {
-			response.sendRedirect("weather/Test2.jsp");
-		} else if (command.equals("calendar_main")) {
+			response.sendRedirect("weather/weather_view.jsp");
+		}
+		if(command.equals("weather_view")) {
+        	String where = request.getParameter("where");
+        	System.out.println("where: "+where);
+        	request.setAttribute("where", where);
+        	dispatch(request, response, "weather/weather_view.jsp");
+        	response.sendRedirect("weather/weather_view.jsp");
+        
+        }else if (command.equals("calendar_main")) {
             int member_no = (int)session.getAttribute("member_no");
             List<CalendarDto> list = biz.selectTripList(1);
             request.setAttribute("list", list);
@@ -910,11 +918,16 @@ public class pet_servlet extends HttpServlet {
 		}
 		if(command.equals("bookform")) {//-------------------------------------------------------
 			int business_num = Integer.parseInt(request.getParameter("business_num"));
-			System.out.println(business_num);
-			BusinessDto bdto = bdao.businessOne(business_num);
-			request.setAttribute("bdto", bdto);
-			System.out.println(bdto.getBusiness_name());
-			dispatch(request, response,"./food/food_book.jsp");
+			if(session.getAttribute("member_no")!=null) {
+				System.out.println(business_num);
+				BusinessDto bdto = bdao.businessOne(business_num);
+				request.setAttribute("bdto", bdto);
+				System.out.println(bdto.getBusiness_name());
+				dispatch(request, response,"./food/food_book.jsp");
+			}else {
+				jsResponse(response, "로그인 해주세요", loginDirectory+"login.jsp");
+			}
+				
 
 		}
 		

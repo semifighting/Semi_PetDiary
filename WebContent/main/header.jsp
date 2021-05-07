@@ -45,7 +45,7 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
         <li>
           <a href="/semi_PetDiary/pet.do?command=pet_main&member_no=1">다이어리</a>
         </li>
-        <li><a href="/semi_PetDiary/teachable/teachable_webCam.jsp">나와 닮은 동물 찾기</a></li>
+        <li><a href="#" onclick="window.open('/semi_PetDiary/teachable/teachable_man.jsp', '_blank', 'width=600px, height=700px left=300px, top=100px')">나와 닮은 동물 찾기</a></li>
         <li>
           <a href="/semi_PetDiary/pet.do?command=hospitalmain">병원상담</a>
         </li>

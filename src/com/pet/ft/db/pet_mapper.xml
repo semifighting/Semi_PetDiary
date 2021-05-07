@@ -110,7 +110,7 @@
 
 	<insert id="MemberInsert" parameterType="MemberDto">
 		INSERT INTO MEMBER
-		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, #{member_pw}, #{member_email}, #{member_phone}, '회원', #{member_address})
+		VALUES(MEMBER_SEQ.NEXTVAL, #{member_name}, #{member_id}, #{member_pw}, #{member_email}, #{member_phone}, 'USER', #{member_address})
 	</insert>
 
 	<select id="SignUpIdChk" resultType="MemberDto" parameterType="String">

@@ -6,6 +6,8 @@
 <%@page import="com.pet.ft.model.BusinessDao"%>
 <%@page import="com.pet.ft.model.BusinessDaoImpl"%>
 <%@page import="com.pet.ft.dto.BusinessDto"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="com.pet.ft.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
@@ -88,8 +90,8 @@
   }
 
 #bookbutton:hover {
-  background-color: #2EE59D;
-  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  background-color: salmon;
+  box-shadow: 0px 15px 20px rgba(251, 194, 173, 0.4);
   color: #fff;
   transform: translateX(+5px);
 }
@@ -107,7 +109,10 @@
 </head>
 <body>
  <%@include file="../main/header.jsp"%>
-	
+	<%
+HashMap<String, Integer> map= (HashMap<String, Integer>)request.getAttribute("map");
+MemberDto dto = (MemberDto)request.getAttribute("dto");
+%>
 		<div class="foodlist">
 			<section>
 				<c:choose>
