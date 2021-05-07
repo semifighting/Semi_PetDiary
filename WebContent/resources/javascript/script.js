@@ -1,11 +1,21 @@
 $(function () {
     $(".smallPic").click(function () {
-        $("#bigPic").html("<img style='height: 300px'  src=" + $(this).attr("src") + ">");
-        $("img").css("border", "none");
-        $(this).css("border", "2px solid black");
+        var path =  $(this).attr("src");
+        $("#selectedPic").attr("src" , path).attr("hidden", false);
     });
 });
 
+$(function () {
+    $("#uVaccin").on("input", function () {
+        $("#uPet").attr("disabled", false);
+    });
+});
+
+$(function () {
+    $("#uVaccin").on("input", function () {
+        $("#uPet").attr("disabled", false);
+    });
+});
 
 $(function () {
     $("#start_date").on("input", function () {
@@ -14,29 +24,43 @@ $(function () {
 });
 
 $(function () {
-    $("#end_date").on("input", function () {
-       var end = new Date(this.value);
-       var start = new Date($("#start_date").val());
-        if (end.getTime() < start.getTime()) {
-            alert("날짜 설정이 잘못되었습니다!");
-            this.value = null;
-        } else {
-            $("#necessity").focus();
-        }
-    })
+    if ($("#name").value !== "" && $("#breed").value !== "" && $("#birthday") !== "" && $("#vaccination").value !== "") {
+        $("#iPet").attr("disabled", false);
+    }
 });
 
 $(function () {
     $(".iselectPic").on("click", function () {
         var src = this.getAttribute("src");
-        alert(src);
-        location.href = "pet/pet_insert.jsp?src=../" + src;
+        location.href = "pet/pet_insert.jsp?src=" + src;
     });
 });
 
 $(function () {
     $(".uselectPic").on("click", function () {
         var src = this.getAttribute("src")
-        location.href = "pet/pet_update.jsp?src=../" + src;
+        location.href = "pet/pet_update.jsp?src=" + src;
     });
 });
+
+function petCheck() {
+    if (frm.name.value === "") {
+        alert("이름을 입력해주세요");
+        return false;
+    }
+
+    if (frm.breed.value === "") {
+        alert("품종을 입력해주세요");
+        return false;
+    }
+
+    if (frm.birthday.value === "") {
+        alert("생일을 입력해주세요");
+        return false;
+    }
+    if (frm.vaccination.value === "") {
+        alert("예방접종 예정일을 입력해주세요");
+        return false;
+    }
+}
+

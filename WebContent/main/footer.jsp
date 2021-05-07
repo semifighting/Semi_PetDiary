@@ -13,6 +13,9 @@
 		background-color: white;
 		border-top: 1px solid #c4c4c4;
 		width: 100%;
+		position: relative;
+		bottom: 0;
+		
 	}
 	
 	.footerlogo img {
@@ -68,7 +71,7 @@
 <body>
 	<footer>
 		<div class="footerlogo">
-			<img src="/semi_PetDiary/resources/image/footerlogo.png">
+			<img src="../resources/image/footerlogo.png">
 		</div>
 		<div class="aboutus">
 			<h1>ABOUT US</h1>
@@ -81,9 +84,9 @@
 		<div class="social">
 			<h1>SOCIAL</h1>
 			<div>
-				<span><a href="#"><img src="/semi_PetDiary/resources/image/instagram.png"></a></span>
-				<span><a href="#"><img src="/semi_PetDiary/resources/image/facebook.png"></a></span>
-				<span><a href="#"><img src="/semi_PetDiary/resources/image/google.png"></a></span>
+				<span><a href="#"><img src="../resources/image/instagram.png"></a></span>
+				<span><a href="#"><img src="../resources/image/facebook.png"></a></span>
+				<span><a href="#"><img src="../resources/image/google.png"></a></span>
 			</div>
 		</div>
 		<div class="quick">

@@ -1,5 +1,4 @@
 package com.pet.ft.dto;
-
 public class CalendarDto {
 
 	private int calendar_no;
@@ -91,11 +90,5 @@ public class CalendarDto {
 	public void setMember_no(int member_no) {
 		this.member_no = member_no;
 	}
-	
-	
-	
-	
-	
-	
 
 }

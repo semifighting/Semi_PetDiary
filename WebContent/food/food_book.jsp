@@ -4,7 +4,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="UTF-8">
@@ -23,9 +22,6 @@ margin-left:70px;
 height: 50px;
 
 }
-
-
-
 </style>
 </head>
 <body>
@@ -33,12 +29,15 @@ height: 50px;
 <%BusinessDto bdto = (BusinessDto)request.getAttribute("bdto"); %>
 
 	<form action="/semi_PetDiary/pet.do" method="post">
-	<input type="hidden" name="command" value="bookinsert"/>
+	<input type="hidden" name="command" value="booklistview"/>
 
 		<div class="book">
-		<h3><%=bdto.getBusiness_name() %></h3>
-		<p><%=bdto.getBusiness_role() %></p>
+		<h3>예약업체 : <%=bdto.getBusiness_name() %></h3>
 		<h3>예약페이지 입니다.</h3>
+			<div>
+				<input type="hidden" name = "business_num" value="<%=bdto.getBusiness_num() %>">
+				<input type="hidden" name = "book_type" value="<%=bdto.getBusiness_role() %>">
+			</div>
 			<div>
 				<div class="book_content"><span>예약일자</span><input type="date" name="book_date"></div>
 			</div>		
@@ -50,9 +49,6 @@ height: 50px;
 				<input type="button" value="취소" onclick="">
 			</div>		
 		</div>
-	
 	</form>
-
-
 </body>
 </html>
