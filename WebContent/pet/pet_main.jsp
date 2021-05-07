@@ -16,9 +16,9 @@
             display: block;
             border: none;
             /*상단 숨김 코드*/
-            width: 500px;
-            height: 650px;
-            margin-top: -50px;
+            width: 900px;
+            height: 700px;
+            margin-top: -100px;
         }
 
         .pet_update > a:visited, .pet_update > a:link {
@@ -26,16 +26,22 @@
             color: black;
          }
 
+        .pet_update {
+            position: absolute;
+            bottom: 20%;
+            left: 45%;
+        }
+
         div > p {
             padding-top: 50px;
             border: 1px solid salmon;
         }
         .pet_info{
-            margin-top: 50px;
+            margin-top: 5%;
             float: left;
             width: 500px;
             height: 500px;
-            margin-left: 100px;
+            margin-left: 50px;
         }
 
         .pet_info_style {
@@ -94,11 +100,11 @@
         }
     </style>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../resources/javascript/paging.js"></script>
+    <script src="/semi_PetDiary/resources/javascript/paging.js"></script>
 </head>
 <body>
 
-<%@include file="../main/header.jsp"%>
+<%@include file="/main/header.jsp"%>
 <%
     int member_no = (int) session.getAttribute("member_no");
     PetBiz biz = new PetBizImpl();
@@ -156,14 +162,14 @@ else {
             </table>
         </div>
         <div class="pet_info">
-            <iframe src="../pet.do?command=calendar_calMain" class="iframe" >
+            <iframe src="/semi_PetDiary/pet.do?command=calendar_calMain" class="iframe" >
             </iframe>
         </div>
     </div>
 <div class="pet_update">
     <input type="button" value="추가" onclick="window.open('pet/pet_insert.jsp', 'insert', 'left=50, top=50, width=520, height=750')">
-    <input type="button" id="petDel" value="삭제" onclick="location.href='../pet_servlet?command=pet_delete&pet_no=<%=petNo%>'">
-    <input type="button" id="petUp" value="수정" onclick="window.open('../pet_servlet?command=pet_update_form&pet_no=<%=petNo%>', 'update', 'left=50, top=50, width=520, height=750')">
+    <input type="button" id="petDel" value="삭제" onclick="location.href='/semi_PetDiary/pet_servlet?command=pet_delete&pet_no=<%=petNo%>'">
+    <input type="button" id="petUp" value="수정" onclick="window.open('/semi_PetDiary/pet_servlet?command=pet_update_form&pet_no=<%=petNo%>', 'update', 'left=50, top=50, width=520, height=750')">
     <%
         for (int i = 1; i <= totalCount; i++) {
     %>
@@ -173,6 +179,6 @@ else {
         }
     %>
 </div>
-<%@include file="../main/footer.jsp"%>
+<%@include file="/main/footer.jsp"%>
 </body>
 </html>

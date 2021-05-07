@@ -6,8 +6,6 @@
 <%@page import="com.pet.ft.model.BusinessDao"%>
 <%@page import="com.pet.ft.model.BusinessDaoImpl"%>
 <%@page import="com.pet.ft.dto.BusinessDto"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="com.pet.ft.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
@@ -109,10 +107,7 @@
 </head>
 <body>
  <%@include file="../main/header.jsp"%>
-	<%
-HashMap<String, Integer> map= (HashMap<String, Integer>)request.getAttribute("map");
-MemberDto dto = (MemberDto)request.getAttribute("dto");
-%>
+	
 		<div class="foodlist">
 			<section>
 				<c:choose>

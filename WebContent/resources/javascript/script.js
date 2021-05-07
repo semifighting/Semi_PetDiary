@@ -1,8 +1,13 @@
 $(function () {
     $(".smallPic").click(function () {
         var path =  $(this).attr("src");
-        $("#bigPic").html("<img style='height: 400px' src=\"" + path + "\">");
-        $(this).css("border", "2px solid black");
+        $("#selectedPic").attr("src" , path).attr("hidden", false);
+    });
+});
+
+$(function () {
+    $("#uVaccin").on("input", function () {
+        $("#uPet").attr("disabled", false);
     });
 });
 
@@ -58,3 +63,4 @@ function petCheck() {
         return false;
     }
 }
+

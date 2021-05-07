@@ -39,13 +39,13 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
     <nav class="header">
       <div class="header_logo">
         <i class="fas fa-paw"></i>
-        <a href="/semi_PetDiary/pet.do?command=myinfo">Pet Diary</a>
+        <a href="/semi_PetDiary/">Pet Diary</a>
       </div>
       <ul class="header_menu">
         <li>
           <a href="/semi_PetDiary/pet.do?command=pet_main&member_no=1">다이어리</a>
         </li>
-        <li><a href="#">나와 닮은 동물 찾기</a></li>
+        <li><a href="/semi_PetDiary/teachable/teachable_webCam.jsp">나와 닮은 동물 찾기</a></li>
         <li>
           <a href="/semi_PetDiary/pet.do?command=hospitalmain">병원상담</a>
         </li>
@@ -75,7 +75,7 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
       </ul>
 
 		<ul class="header_icons">
-			<li><a href="/semi_PetDiary/pet.do?command=business"><i class="fas fa-user-circle"></i></a></li>
+			<li><a href="/semi_PetDiary/pet.do?command=myinfo"><i class="fas fa-user-circle"></i></a></li>
 
 		</ul>
 			<a href="#" class="header_toggleBtn">
