@@ -1,4 +1,3 @@
-<%@page import="com.pet.ft.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -42,10 +41,9 @@
 	String book_time = request.getParameter("book_time");
 	int business_num = Integer.parseInt(request.getParameter("business_num"));
 	String book_type = request.getParameter("book_type");
-	MemberDto dto = (MemberDto) session.getAttribute("dto");
-	String member_name = dto.getMember_name();
-	String member_id = dto.getMember_id();
-	String member_phone = dto.getMember_phone();
+	String member_name = (String) session.getAttribute("member_name");
+	String member_id = (String) session.getAttribute("member_id");
+	String member_phone = (String) session.getAttribute("member_phone");
 	String msg = (String) request.getAttribute("msg");
 	int pe = (int) request.getAttribute("pe");
 %>
@@ -94,7 +92,7 @@
 				<input type="hidden" name = "book_date" value="<%=book_date %>">
 				<input type="hidden" name = "book_time" value="<%=book_time %>">
 				<input type="submit" value="예약확인">
-				<input type="button" value="취소" onclick="location.href='paging.do?command=foodlist'" />
+				<input type="button" value="취소" onclick="location.href='pet.do?command=foodlist'" />
 			</form>
 		</div>
 

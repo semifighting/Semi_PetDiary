@@ -13,10 +13,10 @@
       <typeAlias type="com.pet.ft.dto.DiaryDto" alias="diaryDto"/>
       <typeAlias type="com.pet.ft.dto.PetDto" alias="petDto"/>
       <typeAlias type="com.pet.ft.dto.PictureDto" alias="pictureDto"/>
-      <typeAlias type="com.pet.ft.dto.OrderDto" alias="orderDto"/>
       <typeAlias type="com.pet.ft.dto.PetRTCDto" alias="PetRTCDto"/>
       <typeAlias type="com.pet.ft.dto.LikesDto" alias="LikesDto"/>
       <typeAlias type="com.pet.ft.dto.TravelDto" alias="TravelDto"/>
+      
   </typeAliases>
 
 	<environments default="development">

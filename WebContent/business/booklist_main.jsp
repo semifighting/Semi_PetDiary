@@ -15,11 +15,13 @@
 <script type="text/javascript" src="/semi_PetDiary/resources/js/script.js"></script>
 
 <script type="text/javascript">
+
 	$(function(){
 		$("select").change(function(){
 			location.href="/semi_PetDiary/paging.do?command=bookst";
 		});
 	});
+
 </script>
 
 
@@ -63,7 +65,6 @@
 			<span class="cell col2">예약자 성명</span>
 			<span class="cell col3">예약 업체</span>
 			<span class="cell col4">예약 날짜</span>
-			<span class="cell col5">결제 상태</span>
 		</div>
 		
 		<c:forEach items="${list }" var="dto" varStatus="stat">
@@ -72,11 +73,18 @@
 				<span class="cell col2">${dto.memberVO.member_name }</span>
 				<span class="cell col3">${dto.businessVO.business_name }</span>
 				<span class="cell col4">${dto.book_date}</span>
-				<span class="cell col5">${dto.book_state}</span>
 			</div>
 		</c:forEach>
 	</div>
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<jsp:include page="/main/paging.jsp" flush="true">
 		<jsp:param name="servletPath" value="${servletPath }"/>
 		<jsp:param name="recordsPerPage" value="${paging.recordsPerPage }"/>

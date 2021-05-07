@@ -30,7 +30,6 @@
 .inner_box{
 	float: left;
 	width: 300px;
-	outline: 1px dotted red;
 	margin: 0 auto;
 	text-align: center;
 }
@@ -41,7 +40,6 @@
 
 	width: 300px;
 	height: 90px;
-	outline: 1px dotted red;
 	text-align: center;
 
 }
@@ -104,11 +102,9 @@
 				<option value="4480025600" label="홍성"></option>
 			</select>
 			<div><input id="wehater_button" type="submit" value="날씨보기" ></div>
-			<div><input value="날씨보기" ></div>
 		</div>
 	</form>
-	<div>${selected}</div>
-<%=request.getAttribute("where") %>
+
 	<%
 	
 	request.getAttribute("where");//온도도 표시해야 한다.온도표시하는것도 추가하자

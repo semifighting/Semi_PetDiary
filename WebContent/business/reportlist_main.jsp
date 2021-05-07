@@ -27,7 +27,6 @@
 <style type="text/css">
 	
 	h2{width:200px; margin: 10px auto;}
-	#main-background{width: 100%;height: 1000px;}
 	#table {display: table; width: 60%; margin: 20px auto;}
 	.row {display: table-row;}
 	.main{background-color: salmon; color:white; text-align: center;}
@@ -50,32 +49,16 @@
 <%@ include file="/main/header.jsp" %>
 
 	<h2>신고글 조회</h2>
-	<div id="main-background">
-		<div id="table">
-			<div class="row main">
-				<span class="cell col1">게시글 번호</span>
-				<span class="cell col2">제목</span>
-				<span class="cell col3">작성자</span>
-				<span class="cell col4">신고내용</span>
-				<span class="cell col5">신고횟수</span>
-				<span class="cell col6">작성일자</span>
-				<span class="cell col7">권한</span>
-			</div>
-			
-			<c:forEach items="${list }" var="dto" varStatus="stat">
-				<div class="row">
-					<span class="cell col1">${dto.community_seq }</span>
-					<span class="cell col2">${dto.community_title }</span>
-					<span class="cell col3">${dto.memberVO.member_id }</span>
-					<span class="cell col4">${dto.community_reportcontent }</span>
-					<span class="cell col5">${dto.community_reportcount }</span>
-					<span class="cell col6">${dto.community_regdate }</span>
-					<span class="cell col7">
-						<input type="hidden" value="${dto.community_seq }"/>
-						<input type="button" name="submit" value="삭제"/>
-					</span>
-				</div>
-			</c:forEach>
+
+	<div id="table">
+		<div class="row main">
+			<span class="cell col1">게시글 번호</span>
+			<span class="cell col2">제목</span>
+			<span class="cell col3">작성자</span>
+			<span class="cell col4">신고내용</span>
+			<span class="cell col5">신고횟수</span>
+			<span class="cell col6">작성일자</span>
+			<span class="cell col7">권한</span>
 		</div>
 		
 		<c:forEach items="${list }" var="dto" varStatus="stat">

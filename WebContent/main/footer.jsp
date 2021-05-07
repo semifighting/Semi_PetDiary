@@ -14,7 +14,6 @@
 		border-top: 1px solid #c4c4c4;
 		width: 100%;
 		position: relative;
-		left:0;
 		bottom: 0;
 		
 	}
@@ -35,14 +34,13 @@
 	}
 
 	.social {
-	    bottom: 10px;
-	    position: absolute;
-	    text-align: center;
-	    padding-right: 30px;
-	    z-index: 1;
-	    color: white;
-	    width: 200px;
-	    right: 0;
+		bottom: 10px;
+		position: absolute;
+		text-align: center;
+		padding-right: 30px;
+		z-index: 1;
+		margin-left: 1700px;
+		color: white;
 	}
 	
 	.quick {
@@ -73,7 +71,7 @@
 <body>
 	<footer>
 		<div class="footerlogo">
-			<img src="/semi_PetDiary/resources/image/footerlogo.png">
+			<img src="../resources/image/footerlogo.png">
 		</div>
 		<div class="aboutus">
 			<h1>ABOUT US</h1>
@@ -86,9 +84,9 @@
 		<div class="social">
 			<h1>SOCIAL</h1>
 			<div>
-				<span><a href="#"><img src="/semi_PetDiary/resources/image/instagram.png"></a></span>
-				<span><a href="#"><img src="/semi_PetDiary/resources/image/facebook.png"></a></span>
-				<span><a href="#"><img src="/semi_PetDiary/resources/image/google.png"></a></span>
+				<span><a href="#"><img src="../resources/image/instagram.png"></a></span>
+				<span><a href="#"><img src="../resources/image/facebook.png"></a></span>
+				<span><a href="#"><img src="../resources/image/google.png"></a></span>
 			</div>
 		</div>
 		<div class="quick">

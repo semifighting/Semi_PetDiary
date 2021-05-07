@@ -1,5 +1,7 @@
 <%@page import="com.pet.ft.dto.CalendarDto"%>
+<%@page import="java.sql.Array"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="com.pet.ft.model.PetDao"%>
 <%@page import="com.pet.ft.model.PetDaoImpl"%>
 <%@page import="com.pet.ft.controller.pet_util"%>
@@ -17,11 +19,13 @@ response.setContentType("text/html; charset=UTF-8");
 <title>캘린더</title>
 <style type="text/css">
 
-	* {margin: 0; padding: 0;}
-	
-	#wrap { margin-top: 60px; }
+	#wrap { position : absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 	
 	select { border : 1px solid white; }
+	
+	#calendar { margin: 0 auto; padding-top: 60px; }
+	
+	#sform { top: 140px; left: 65%; }
 	
 	caption { font-weight: 700; }
 	
@@ -117,7 +121,7 @@ function calendar_list(year, month, d, member_no) {
 %>
 	<div id = "wrap">
 		<div id= "sform">
-			<form method="post" action="/semi_PetDiary/calendar/calendar_main.jsp">
+			<form method="post" action="calendar_main.jsp">
 			<i class="far fa-calendar-alt"></i>
 			<select name="year">
 <%			
@@ -143,11 +147,11 @@ function calendar_list(year, month, d, member_no) {
 		<br/>
 		<table id = "calendar">
 			<caption>
-				<a href="/semi_PetDiary/calendar/calendar_main.jsp?year=<%=year-1%>&month=<%=month%>" style="color:#FFB2A9"><i class="fas fa-angle-double-left"></i></a>
-				<a href="/semi_PetDiary/calendar/calendar_main.jsp?year=<%=year%>&month=<%=month-1%>" style="color:salmon"><i class="fas fa-angle-left"></i></a>
+				<a href="../calendar/calendar_main.jsp?year=<%=year-1%>&month=<%=month%>" style="color:#FFB2A9"><i class="fas fa-angle-double-left"></i></a>
+				<a href="../calendar/calendar_main.jsp?year=<%=year%>&month=<%=month-1%>" style="color:salmon"><i class="fas fa-angle-left"></i></a>
 				<span class="y"><%=year %>년</span> <span class="m"><%=month%>월</span>
-				<a href="/semi_PetDiary/calendar/calendar_main.jsp?year=<%=year%>&month=<%=month+1%>" style="color:salmon"><i class="fas fa-angle-right"></i></a>
-				<a href="/semi_PetDiary/calendar/calendar_main.jsp?year=<%=year+1%>&month=<%=month%>" style="color:#FFB2A9"><i class="fas fa-angle-double-right"></i></a>
+				<a href="../calendar/calendar_main.jsp?year=<%=year%>&month=<%=month+1%>" style="color:salmon"><i class="fas fa-angle-right"></i></a>
+				<a href="../calendar/calendar_main.jsp?year=<%=year+1%>&month=<%=month%>" style="color:#FFB2A9"><i class="fas fa-angle-double-right"></i></a>
 			</caption>
 			<tr id="day">
 				<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>

@@ -2,10 +2,18 @@ package com.pet.ft.model;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.pet.ft.dto.*;
-import org.apache.ibatis.annotations.Param;
+import com.pet.ft.dto.BookDto;
+import com.pet.ft.dto.BusinessDto;
+import com.pet.ft.dto.CalendarDto;
+import com.pet.ft.dto.CommunityDto;
+import com.pet.ft.dto.LikesDto;
+import com.pet.ft.dto.MemberDto;
+import com.pet.ft.dto.PetDto;
+import com.pet.ft.dto.PetRTCDto;
+import com.pet.ft.dto.PictureDto;
+import com.pet.ft.dto.TravelDto;
+
 
 public interface PetDao {
 	String namespace = "com.pet.ft.mapper.";
@@ -21,13 +29,13 @@ public interface PetDao {
 	//병원상담
 	public List<BusinessDto> hospitalList(int offset, int noOfRecords);
 	public int totalHospital();
-
+	
 	public List<BusinessDto> bookableMap();
 	public List<BusinessDto> foodMap();
 
-	public BusinessDto hospitalSelect(int business_num);
+	public BusinessDto hospitalSelect(int business_num);	
 	public int hospitalBookInsert(BookDto dto);
-
+	
 	public int travelInsert(TravelDto dto);
 	public List<TravelDto> travelList();
 	public TravelDto travelSelect(int travel_no);
@@ -46,7 +54,7 @@ public interface PetDao {
 	public List<CommunityDto> MyCommunityList(int member_no);
 	public int CommunityPageMax();
 
-
+	
 	// member
 	public MemberDto MemberOne(int member_no);
 	public int MemberInsert(MemberDto dto);
@@ -66,14 +74,15 @@ public interface PetDao {
 	public int totalBookHos(int member_no);
 	public int totalBookSt(int member_no);
 	public List<BookDto> totalDateTime();
-
-
-
+	
+	
+	
 	// ����¡ o
 	public List<MemberDto> memberList(int offset, int noOfRecords);
 	public List<CommunityDto> reportList(int offset, int noOfRecords);
 	public List<BookDto> bookListHos(int offset, int noOfRecords, int member_no);
 	public List<BookDto> bookListSt(int offset, int noOfRecords, int member_no);
+	
 
 	// pet
     public List<PetDto> selectPetList(int member_no);
@@ -89,31 +98,31 @@ public interface PetDao {
     public PictureDto selectPictureOne(int member_no, int picture_no);
     public int insertPicture(PictureDto dto);
     public int deletePicture(int member_no, int picture_no);
-	public List<PictureDto> selectPicturePaging(int member_no, int min, int max);
-	public int getPictureCount(int member_no);
 
     //calendar
-	public List<CalendarDto> selectTripList(int member_no);
-	public CalendarDto selectTripOne(int member_no, int calendar_no);
+    public List<CalendarDto> selectTripList(int member_no);
+    public CalendarDto selectTripOne(int member_no, int calendar_no);
 
-	public int updateTrip(CalendarDto dto);
-	public int insertTrip(CalendarDto dto);
-	public int deleteTrip(int member_no, int calendar_no);
+    public int updateTrip(CalendarDto dto);
+    public int insertTrip(CalendarDto dto);
+    public int deleteTrip(int member_no, int calendar_no);
 
 	// member
+
 	public int changeRole(MemberDto dto);
 	public int deleteCommnutiy(int seq);
 	public boolean nextPage(String pageNumber);
-	HashMap<String, Integer> SelectMyinfoCount(int member_no);
+    HashMap<String, Integer> SelectMyinfoCount(int member_no);
 
     //calendar - 캘린더 내 clud
-	//calendar - 캘린더 내 clud
-	public List<CalendarDto> CalViewList(int member_no, String yyyyMM);
+    public List<CalendarDto> CalViewList(int member_no, String yyyyMM);
 	public List<CalendarDto> CalendarList(int member_no, String yyyyMMdd);
 	public int CalendarInsert(CalendarDto CalDto);
 	public CalendarDto CalendarOne(int calendar_no);
 	public int CalendarDelete(int calendar_no);
 	public int CalendarUpdate(CalendarDto dto);
+
+	public int InsertFilter(List<String> list);
 
 	public int insertRTC(PetRTCDto dto);
 
@@ -136,14 +145,11 @@ public interface PetDao {
 	public int InsertLikes(LikesDto dto);
 	public int DeleteLikes(LikesDto dto);
 	public int bookdelete(int book_num);
+	
+
+	
+	
+	
 	public List<BusinessDto> businessList();
-
-	//Order
-	public int orderInsert(OrderDto dto);
-	public int bookOrderSuccess(int book_num);
-	public String getMerchant_uid(int book_num);
-	public int orderInsertCancel(int book_num);
-
-	public OrderDto selectOrderOne(int book_num);
 
 }

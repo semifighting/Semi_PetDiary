@@ -1,4 +1,3 @@
-<%@page import="com.pet.ft.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -39,11 +38,10 @@
 
 <%
 	int book_num = Integer.parseInt(request.getParameter("book_num"));
-	MemberDto dto = (MemberDto) session.getAttribute("dto");
 	String dateTime = (String) request.getAttribute("dateTime");
-	String member_name = dto.getMember_name();
-	String member_id = dto.getMember_id();
-	String member_phone = dto.getMember_phone();
+	String member_name = (String) session.getAttribute("member_name");
+	String member_id = (String) session.getAttribute("member_id");
+	String member_phone = (String) session.getAttribute("member_phone");
 %>
 
 		<div id="table">
@@ -83,7 +81,6 @@
 			<input type="button" value="예약취소" onclick="location.href='pet.do?command=bookdelete&book_num=<%=book_num %>'" />
 		</div>
 
-		</div>
 <%@ include file="/main/footer.jsp" %>
 </body>
 </html>
