@@ -855,7 +855,6 @@ public class pet_servlet extends HttpServlet {
     			} else if (dto.getMember_role().equals("USER")) {
     				response.sendRedirect("main/main.jsp");
     			} else if (dto.getMember_role().equals("EMPLOYEE")) {
-    				// 사업자 페이지로 이동
     				response.sendRedirect("main/main.jsp");
 
     			}

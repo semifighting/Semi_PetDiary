@@ -13,7 +13,7 @@ MEMBER_PHONE   VARCHAR2(20)   NULL,
 MEMBER_ROLE    VARCHAR2(20)   NULL,
 MEMBER_ADDRESS VARCHAR2(500)  NULL
 );
-
+select * from memeber
 select * from travel
 
 <<<<<<< HEAD
