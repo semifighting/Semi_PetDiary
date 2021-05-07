@@ -83,7 +83,6 @@
             await predict();
             window.requestAnimationFrame(loop);
         }
-
         // run the webcam image through the image model
         async function predict() {
             // predict can take in an image, video or canvas html element
@@ -94,11 +93,12 @@
             $(".cat").text(prediction[1].className);
             $(".graph2").css({width : prediction[1].probability.toFixed(2) * 100 + '%', height : "30px"});
            // $(".graph2").text(prediction[1].probability.toFixed(2) * 100 + '%');
-            $(".dinosaur").text(prediction[2    ].className);
+            $(".dinosaur").text(prediction[2].className);
             $(".graph3").css({width : prediction[2].probability.toFixed(2) * 100 + '%', height : "30px"});
            // $(".graph3").text(prediction[2].probability.toFixed(2) * 100 + '%');
         }
 
+        async
         async function initUpload() {
             const modelURL = URL + "model.json";
             const metadataURL = URL + "metadata.json";
@@ -118,10 +118,14 @@
             // predict can take in an image, video or canvas html element
             var image = document.getElementById("face-image");
             const prediction = await model.predict(image, false);
-            for (let i = 0; i < maxPredictions; i++) {
-                const classPrediction = prediction[i].className + " : " + prediction[i].probability.toFixed(2)*100 + "%";
-                labelContainer.childNodes[i].innerHTML = classPrediction;
-            }
+            $(".dog").text(prediction[0].className);
+            $(".graph1").css({width : prediction[0].probability.toFixed(2) * 100 + '%', height : "30px"});
+            //$(".graph1").text(prediction[0].probability.toFixed(2) * 100 + '%');
+            $(".cat").text(prediction[1].className);
+            $(".graph2").css({width : prediction[1].probability.toFixed(2) * 100 + '%', height : "30px"});
+            // $(".graph2").text(prediction[1].probability.toFixed(2) * 100 + '%');
+            $(".dinosaur").text(prediction[2].className);
+            $(".graph3").css({width : prediction[2].probability.toFixed(2) * 100 + '%', height : "30px"});
         }
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -231,7 +235,26 @@
                 </button>
             </div>
         </div>
-        <div id="label-container"></div>
+        <div id="label-container">
+            <div class="species_info">
+                <div class="dog div_common"></div>
+                <div class="graphWrap">
+                    <div class="graph1 div_common" style=""></div>
+                </div>
+            </div>
+            <div class="species_info">
+                <div class="cat div_common"></div>
+                <div class="graphWrap">
+                    <div class="graph2 div_common" style=""></div>
+                </div>
+            </div>
+            <div class="species_info">
+                <div class="dinosaur div_common"></div>
+                <div class="graphWrap">
+                    <div class="graph3 div_common" style=""></div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

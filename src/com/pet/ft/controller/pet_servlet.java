@@ -1213,7 +1213,11 @@ public class pet_servlet extends HttpServlet {
 
         } else if (command.equals("picture_update_select")) {
             int member_no = (int) session.getAttribute("member_no");
-            List<PictureDto> list = biz.selectPictureList(member_no);
+			int pet_no = Integer.parseInt(request.getParameter("pet_no"));
+			System.out.println(pet_no);
+			List<PictureDto> list = biz.selectPictureList(member_no);
+
+			request.setAttribute("pet_no", pet_no);
             request.setAttribute("list", list);
             dispatch(request, response, "pet/pet_update_select.jsp");
 
@@ -1222,7 +1226,7 @@ public class pet_servlet extends HttpServlet {
 			int member_no = (int) session.getAttribute("member_no");
             int pet_no = Integer.parseInt(request.getParameter("pet_no"));
             PetDto dto = biz.selectPetOne(member_no, pet_no);
-            System.out.println(dto.getPet_path());
+			request.setAttribute("pet_no", pet_no);
             request.setAttribute("dto", dto);
             dispatch(request, response, "pet/pet_update.jsp");
 
@@ -1293,6 +1297,7 @@ public class pet_servlet extends HttpServlet {
                 dispatch(request, response, "pet/pet_main.jsp?member_no=1");
             }
         } else if (command.equals("picture_main")) {
+
 			int member_no = (int) session.getAttribute("member_no");
 			int min = 0;
 			int max = 0;
@@ -1329,7 +1334,6 @@ public class pet_servlet extends HttpServlet {
 					DiskFileItemFactory factory = new DiskFileItemFactory();
 
 					ServletFileUpload upload = new ServletFileUpload(factory);
-
 					upload.setHeaderEncoding("UTF-8");
 
 					List<FileItem> items = upload.parseRequest(request);
@@ -1343,6 +1347,7 @@ public class pet_servlet extends HttpServlet {
 						if (item.isFormField()) {
 
 							String name = item.getFieldName();
+							System.out.println(name);
 							String value = new String((item.getString()).getBytes("8859_1"), "UTF-8");
 							user.put(name, value);
 
@@ -1365,7 +1370,7 @@ public class pet_servlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			dispatch(request, response, "picture/picture_main.jsp");
+			dispatch(request, response, "pet.do?command=picture_main");
 
 		} else if (command.equals("picture_insert_upload")) {
 
@@ -1381,6 +1386,7 @@ public class pet_servlet extends HttpServlet {
 			String fileName = "";
 			String originalFile = "";
 
+			request.setCharacterEncoding("UTF-8");
 			boolean isMultipart = FileUpload.isMultipartContent(request);
 
 			try {
@@ -1407,9 +1413,8 @@ public class pet_servlet extends HttpServlet {
 
 						} else {
 							fileName = new File(item.getName()).getName();
-
 							PictureDto dto = new PictureDto();
-							dto.setPicture_directory(".." + fileSeperator + "resources" + fileSeperator + "Upload" + fileSeperator + fileName);
+							dto.setPicture_directory(".." + fileSeperator + "resources" + fileSeperator + "Upload" + fileSeperator + member_no);
 							dto.setPicture_name(fileName);
 							dto.setMember_no(member_no);
 							int res = biz.insertPicture(dto);
@@ -1426,6 +1431,20 @@ public class pet_servlet extends HttpServlet {
 			}
 			dispatch(request, response, "pet.do?command=picture_insert_select");
 
+		} else if (command.equals("iSelPic")) {
+			String src = request.getParameter("src");
+			request.setAttribute("src", src);
+			dispatch(request, response, "pet/pet_insert.jsp");
+		} else if (command.equals("uSelPic")) {
+			int member_no = (int) session.getAttribute("member_no");
+			int pet_no = Integer.parseInt(request.getParameter("pet_no"));
+			String src = request.getParameter("src");
+			System.out.println(src);
+			System.out.println(pet_no);
+			PetDto dto = biz.selectPetOne(member_no, pet_no);
+			request.setAttribute("dto",dto);
+			request.setAttribute("src", src);
+			dispatch(request, response, "pet/pet_update.jsp");
 		} else if (command.equals("trip_main")) {
 			int member_no = (int) session.getAttribute("member_no");
 			List<CalendarDto> list = biz.selectTripList(1);
@@ -1545,8 +1564,8 @@ public class pet_servlet extends HttpServlet {
 			if (insert_order > 0) {
 				System.out.println("예약 취소 insert 성공");
 			}
-			
-			if(book_res > 0 ) {
+
+			if (book_res > 0) {
 				System.out.println("예약 내용 삭제 성공!");
 			}
 			if (order_res > 0) {
@@ -1579,7 +1598,7 @@ public class pet_servlet extends HttpServlet {
 					dispatch(request, response, "pet.do?command=business");
 				} else {
 					System.out.println("수정 실패");
-				} 
+				}
 			}
 
 
