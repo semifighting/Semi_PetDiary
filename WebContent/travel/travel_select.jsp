@@ -9,6 +9,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<<<<<<< HEAD
+=======
+ 
+
+>>>>>>> heeju2
 <style type="text/css">
 .travel_container {
 	width: 100%;
@@ -315,10 +320,56 @@
 
 }
 .travel_whole{
+<<<<<<< HEAD
 
 }
 </style>
 
+=======
+	margin-left:40px;
+	margin-top:20px;
+}
+
+
+
+.travelTime{
+	margin-left:20px;
+	color:black;
+}
+.spotbtn{
+	padding:4px 13px;
+	margin-left:40px;
+	background-color:wheat;
+	border-radius:5px;
+	border-color:white;
+	cursor:pointer;
+	margin-bottom:7px;
+}
+.exitBtn{
+	margin-left:40px;
+	background-color:#ffffff;
+	padding:3px 5px;
+	border-radius:4px;
+	border-line:none;
+	cursor:pointer;
+	margin-top:20px;
+}
+.mainBtn{
+	background-color:#ffffff;
+	padding:3px 5px;
+	border-radius:4px;
+	border-line:none;
+	cursor:pointer;
+	margin-top:20px;
+}
+
+div i{
+	color:salmon;
+	margin-left:50px;
+}
+</style>
+<script src="https://kit.fontawesome.com/7841646bb8.js" crossorigin="anonymous"></script>
+>>>>>>> heeju2
 
 </head>
 <body>
@@ -355,6 +406,7 @@
 			</div>
 			
 				<div class="travel_box_text">
+<<<<<<< HEAD
 					<div class="travel_spot1"><%=dto.getTravel_spot1() %></div>
 					<div class="travel_spot2"><%=dto.getTravel_spot2() %></div>
 					<div class="travel_spot3"><%=dto.getTravel_spot3() %></div>
@@ -362,6 +414,27 @@
 					<div>									
 						<input class="exitBtn" type="button" value="취소" onclick="location.href='pet.do?command=travelmain'" /> 
 				    	<input type="button" value="일정수정" onclick="location.href='pet.do?command=updateform&travel_no=<%=dto.getTravel_no() %>'" />									
+=======
+					<div class="travel_spot1"><input type="button" class="spotbtn" value="<%=dto.getTravel_spot1() %>" /> <br>
+						<i class="fas fa-dog"></i><br>					
+						<i class="fas fa-dog"></i><a class="travelTime">----- <%=dto.getTravel_time1() %>분 소요</a><br>
+						<i class="fas fa-dog"></i><br>
+					</div>
+					<div class="travel_spot2"><input type="button" class="spotbtn" value="<%=dto.getTravel_spot2() %>"/>
+					(<%=dto.getTravel_stay1() %>분)<br>
+						 <i class="fas fa-dog"></i><br>
+						<i class="fas fa-dog"></i><a class="travelTime">----- <%=dto.getTravel_time2() %>분 소요</a><br>
+					<i class="fas fa-dog"></i></i><br>
+						
+					
+					</div>
+					<div class="travel_spot3"><input type="button" class="spotbtn" value="<%=dto.getTravel_spot3() %>" />
+					(<%=dto.getTravel_stay2() %>분)</div>
+					<div class="travel_whole">총 예상 소요시간  :	 <%=dto.getTravel_stay1()+dto.getTravel_stay2()+dto.getTravel_time1()+dto.getTravel_time2() %>분 </div>
+					<div class="lastBtn">									
+						<input class="exitBtn" type="button" value="뒤로가기" onclick="location.href='pet.do?command=travelmain'" /> 
+				    	<input class="mainBtn" type="button" value="일정수정" onclick="location.href='pet.do?command=updateform&travel_no=<%=dto.getTravel_no() %>'" />									
+>>>>>>> heeju2
 					</div>
 				</div>
 			

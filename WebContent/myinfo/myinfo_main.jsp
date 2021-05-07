@@ -37,10 +37,6 @@
 
 }
 
-.myinfo_content:active{
-background-color: #bbb;
-}
-
 
 .container{
 	width: 1047px;
@@ -119,6 +115,9 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 				<div class="content"><b>내 반려 동물 수</b>   <span class="content_in"><%=map.get("CountMyinfoPet") %></span></div>
 				<br/>
 				<div class="content"><b> 내가 세운 여행 계획</b>   <span class="content_in"><%=map.get("CountMyinfoCalendar") %></span></div>
+				<input class="myinfo_button" type="button" value="여행계획 보기" onclick="location.href='/semi_PetDiary/pet.do?command=travelmain'">
+		
+		
 		</div>
 		<div class="myinfo_content" onclick="location.href='/semi_PetDiary/pet.do?command=MyCommunityList'">
 				<div class="title"><b>내 게시글</b></div>

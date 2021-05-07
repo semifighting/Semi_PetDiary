@@ -19,7 +19,7 @@ public interface PetBiz {
     public int hospitalBookInsert(BookDto dto);
 
     public int travelInsert(TravelDto dto);
-    public List<TravelDto> travelList();
+    public List<TravelDto> travelList(int member_no);
     public TravelDto travelSelect(int travel_no);
     public int travelUpdate(TravelDto dto);
 

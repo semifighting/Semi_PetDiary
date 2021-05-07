@@ -309,9 +309,9 @@ public class PetDaoImpl extends SqlMapConfig implements PetDao {
 
 
 	@Override
-	public List<TravelDto> travelList() {
+	public List<TravelDto> travelList(int member_no) {
 		SqlSession session = getSqlSessionFactory().openSession();
-		List<TravelDto> list = session.selectList(namespace + "travelList");
+		List<TravelDto> list = session.selectList(namespace + "travelList",member_no);
 		session.close();
 
 		return list;

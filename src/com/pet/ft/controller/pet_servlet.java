@@ -504,10 +504,16 @@ public class pet_servlet extends HttpServlet {
 			out.flush();
 		//여행일정	
 		}else if(command.equals("travelmain")) {
-			List<TravelDto> list = biz.travelList();
-			request.setAttribute("list", list);
-			dispatch(request,response,"./travel/travel_main.jsp");
-					
+			if(session.getAttribute("member_no")!= null) {
+				int member_no = (int)session.getAttribute("member_no");
+				
+				List<TravelDto> list = biz.travelList(member_no);
+				request.setAttribute("list", list);
+				dispatch(request,response,"./travel/travel_main.jsp");
+			}else {
+				jsResponse(response, "로그인 해주세요", loginDirectory+"login.jsp");        		
+
+			}
 		}else if(command.equals("travelselect")) {
 			int travel_no = Integer.parseInt(request.getParameter("travel_no"));
 			TravelDto dto = biz.travelSelect(travel_no);
@@ -527,27 +533,31 @@ public class pet_servlet extends HttpServlet {
 			int travel_time2 = Integer.parseInt(request.getParameter("travel_time2"));
 			int travel_stay1 = Integer.parseInt(request.getParameter("travel_stay1"));
 			int travel_stay2 = Integer.parseInt(request.getParameter("travel_stay2"));
-			int member_no = 1;
-					       //Integer.parseInt(request.getParameter("member_no"));
 			
-			TravelDto dto = new TravelDto();
-			dto.setTravel_name(travel_name);
-			dto.setTravel_date(travel_date);
-			dto.setTravel_spot1(travel_spot1);
-			dto.setTravel_spot2(travel_spot2);
-			dto.setTravel_spot3(travel_spot3);
-			dto.setTravel_stay1(travel_stay1);
-			dto.setTravel_stay2(travel_stay2);
-			dto.setTravel_time1(travel_time1);
-			dto.setTravel_time2(travel_time2);
-			dto.setMember_no(member_no);
+			if(session.getAttribute("member_no")!= null) {
+				int member_no = (int)session.getAttribute("member_no");
 			
-			int res = biz.travelInsert(dto);
-			if(res>0) {
-				jsResponse(response, "일정저장성공", "pet.do?command=travelmain");
-			}else {
-				jsResponse(response, "저장실패", "pet.do?command=travelmain");
+				TravelDto dto = new TravelDto();
+				dto.setTravel_name(travel_name);
+				dto.setTravel_date(travel_date);
+				dto.setTravel_spot1(travel_spot1);
+				dto.setTravel_spot2(travel_spot2);
+				dto.setTravel_spot3(travel_spot3);
+				dto.setTravel_stay1(travel_stay1);
+				dto.setTravel_stay2(travel_stay2);
+				dto.setTravel_time1(travel_time1);
+				dto.setTravel_time2(travel_time2);
+				dto.setMember_no(member_no);
+			
+				int res = biz.travelInsert(dto);
+				if(res>0) {
+					jsResponse(response, "일정저장성공", "pet.do?command=travelmain");
+				}else {
+					jsResponse(response, "저장실패", "pet.do?command=travelmain");
 
+				}
+			}else {
+				jsResponse(response, "로그인 해주세요", loginDirectory+"login.jsp");   
 			}
 
 		}else if(command.equals("updateform")) {

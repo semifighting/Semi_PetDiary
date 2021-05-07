@@ -31,6 +31,24 @@ select * from business
 select * from book
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+INSERT INTO MEMBER
+VALUES(MEMBER_SEQ.NEXTVAL, '일반사원', 'employee', '123456', 'employee@a.com', '010-2222-2222', 'EMPLOYEE', '경기도 고양시 토당동');
+
+
+
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+select * from business
+select * from book
+
+
+>>>>>>> heeju2
 select * from business
 >>>>>>> main
 select * from MEMBER

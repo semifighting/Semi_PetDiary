@@ -558,8 +558,8 @@
 			TRAVEL_TIME1 = #{travel_time1},TRAVEL_TIME2 = #{travel_time2},TRAVEL_STAY1 = #{travel_stay1},TRAVEL_STAY2 = #{travel_stay2}
 		WHERE TRAVEL_NO = #{travel_no}
 	</update>
-	<select id="travelList" resultType="TravelDto">
-		SELECT * FROM TRAVEL ORDER BY TRAVEL_NO
+	<select id="travelList" parameterType="int" resultType="TravelDto">
+		SELECT * FROM TRAVEL WHERE MEMBER_NO = #{member_no} ORDER BY TRAVEL_NO 
 	</select>
 	<select id="travelSelect" parameterType="int" resultType="TravelDto">
 		SELECT *

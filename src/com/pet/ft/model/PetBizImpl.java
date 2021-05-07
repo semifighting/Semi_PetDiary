@@ -52,8 +52,8 @@ public class PetBizImpl implements PetBiz {
 	}
 
 	@Override
-	public List<TravelDto> travelList() {
-		return dao.travelList();
+	public List<TravelDto> travelList(int member_no) {
+		return dao.travelList(member_no);
 	}
 
 	@Override

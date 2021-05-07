@@ -104,13 +104,17 @@
 		background-color:#7b797a;
 	}
 	.travel_create{
-		color:black;
+		color:#e35140;
+		background-color:#ffeedc;
 		font-style:bold;
-		font-size:20px;
+		font-size:14px;
 		cursor:pointer;
+		margin:9px;
+		padding:6px 30px; 
+		border-radius:4px;
+		border-color:#cccccc;
+		
 	}
-
-
 	
 </style>
 
@@ -123,10 +127,10 @@
 		<div class="travel_header">
 			<p>여행일정 안내</p><br>
 			<p>반려동물과 함께 하는 여행을 계획해보세요.</p><br>
-			<input type="button" value="여행만들기" onclick="location.href='pet.do?command=insertform'">
+			<input class="travel_create" type="button" value=" Create " onclick="location.href='pet.do?command=insertform'">
 		</div>	
 
-		<%--병원리스트 --%>	
+		<%--여행리스트 --%>	
 		<div class="travel_list">
 			<section class="travel_section">
 				

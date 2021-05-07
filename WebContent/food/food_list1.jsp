@@ -103,7 +103,21 @@
 	top:-90px;
 	right: -335px;
 }
-
+.foodMap{
+	text-align:center;
+}
+.food_map{
+			margin: 8px; 
+		padding: 2px;
+		border:none;
+		font-size:16px;
+		width:200px;
+		background-color:salmon;
+		color:wheat;
+		cursor:pointer;
+		border-radius:10px;	
+	
+}
 
 </style>
 </head>
@@ -113,6 +127,10 @@
 HashMap<String, Integer> map= (HashMap<String, Integer>)request.getAttribute("map");
 MemberDto dto = (MemberDto)request.getAttribute("dto");
 %>
+ 
+	<div class="foodMap">
+		<input class="food_map" type="button" value="등록된 가게 보기" onclick="foodMapPop();"/>
+	</div>
 		<div class="foodlist">
 			<section>
 				<c:choose>
@@ -168,6 +186,16 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 			<jsp:param name="nextPageNo" value="${paging.nextPageNo }"/>
 			<jsp:param name="finalPageNo" value="${paging.finalPageNo }"/>
 		</jsp:include>
+
+	<script type="text/javascript">
+
+		function foodMapPop(){
+			var popup = window.open('./food/food_map.jsp', '등록된 가게 지도', 'width=700px,height=560px,scrollbars=yes');
+		}
+		
+		
+	
+	</script>
 
 
 </body>

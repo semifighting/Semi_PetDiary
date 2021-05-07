@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <% request.setCharacterEncoding("UTF-8");%>
-<% response.setContentType("text/html; charset=UTF-8"); %>
+<% response.setContentType("text/html; charset=UTF-8"); %>    
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style type="text/css">
@@ -91,7 +90,7 @@
           </div>
       </div>
       <p class="bookableMap">
-      	<input class="bookableBtn" type="button" value="등록된 병원 표시" onclick="bookableMap();"/>
+      	<input class="bookableBtn" type="button" value="등록된 가게 표시" onclick="bookableMap();"/>
       </p>
       
    
@@ -313,7 +312,7 @@
       //db에서 주소,이름 가져오기 
       function bookableMap(){
   		$.ajax({
-  			url : "../pet.do?command=bookableMap",
+  			url : "../pet.do?command=foodMap",
   			type: "POST",
   			dataType : "json",
   			success:function(data){
@@ -370,18 +369,13 @@
   		});
   		
      } 
-<<<<<<< HEAD
-		function travelPop(){
-			var popup = window.open('../travel/travel_insert.jsp', '여행', 'width=1200px,height=8000px,scrollbars=yes');
-		}
-=======
 	
->>>>>>> heeju2
 
    	 
   	       
       </script>
 	
+
 
 
 
