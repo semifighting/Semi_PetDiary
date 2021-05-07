@@ -14,6 +14,8 @@ MEMBER_ROLE    VARCHAR2(20)   NULL,
 MEMBER_ADDRESS VARCHAR2(500)  NULL
 );
 
+select * from travel
+
 <<<<<<< HEAD
 INSERT INTO MEMBER
 VALUES(MEMBER_SEQ.NEXTVAL, '일반사원', 'employee', '123456', 'employee@a.com', '010-2222-2222', 'EMPLOYEE', '경기도 고양시 토당동');

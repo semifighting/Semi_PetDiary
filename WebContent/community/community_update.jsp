@@ -32,7 +32,7 @@
 }
 
 
-.insert_button{
+.update_button{
 	float:right;
     border: 2px solid salmon;
     background-color: white;
@@ -43,7 +43,7 @@
     margin-left: 10px;
 }
 
-.insert_button:hover{
+.update_button:hover{
     background-color: salmon;
     color: white;
 }
@@ -94,7 +94,7 @@ $(document).ready(function() {
 					<textarea style="resize: none;" id="summernote"rows="30" cols="108" name="content" ><%=cdto.getCommunity_content()%></textarea>
 				</div>
 				<div id="community_update_button">
-					<input class="update_button" type="button" value="돌아가기">
+					<input class="update_button" type="button" onclick="location.href='/semi_PetDiary/pet.do?command=community'"value="돌아가기">
 					<input class="update_button" type="submit" value="작성">
 				</div>
 			</div>

@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 <%@page import="com.pet.ft.dto.MemberDto"%>
->>>>>>> janggeun
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -97,7 +94,7 @@
 				<input type="hidden" name = "book_date" value="<%=book_date %>">
 				<input type="hidden" name = "book_time" value="<%=book_time %>">
 				<input type="submit" value="예약확인">
-				<input type="button" value="취소" onclick="location.href='pet.do?command=foodlist'" />
+				<input type="button" value="취소" onclick="location.href='paging.do?command=foodlist'" />
 			</form>
 		</div>
 

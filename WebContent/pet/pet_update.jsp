@@ -39,7 +39,7 @@
         src = dto.getPet_path();
     }
 %>
-<form method="post" action="../pet_servlet">
+<form method="post" action="/semi_PetDiary/pet_servlet">
     <input type="hidden" name="command" value="pet_update_res">
     <input type="hidden" name="pet_no" value="<%=dto.getPet_no()%>">
     <table border="1">

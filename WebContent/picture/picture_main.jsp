@@ -2,6 +2,8 @@
 <%@ page import="com.pet.ft.model.PetBizImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <%
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
@@ -93,7 +95,7 @@
                     <input type="hidden" name="command" value="picture_delete">
         <c:forEach items="${list }" var="dto">
             <input type="hidden" name="picture_no" value="${dto.picture_no }">
-            <img alt="사진" class="smallPic" src="${dto.picture_directory }/${dto.picture_name }">
+            <img alt="사진" class="smallPic" src="${fn:replace(dto.picture_directory,'..','/semi_PetDiary')}/${dto.picture_name }">
             <input type="submit" value="삭제">
         </c:forEach>
                 </form>

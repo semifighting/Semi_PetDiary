@@ -843,11 +843,13 @@ public class pet_servlet extends HttpServlet {
     			session.setMaxInactiveInterval(3600);
 
     			if (dto.getMember_role().equals("ADMIN")) {
-    				// 관리자 페이지 이동
+    				response.sendRedirect("main/main.jsp");
     			} else if (dto.getMember_role().equals("USER")) {
     				response.sendRedirect("main/main.jsp");
     			} else if (dto.getMember_role().equals("EMPLOYEE")) {
     				// 사업자 페이지로 이동
+    				response.sendRedirect("main/main.jsp");
+
     			}
     		} else {
     			jsResponse(response, "가입하지 않은 아이디거나, 잘못된 비밀번호입니다.", loginDirectory+"login.jsp");
@@ -938,10 +940,10 @@ public class pet_servlet extends HttpServlet {
 	         if(res>0) {
 	            //해당 유저가 가장 최근에 작성한 번호 가져와서 해당 게시글로 이동
 		        pet_sms.SendSMS(book_date, book_time, business_num, (int)session.getAttribute("member_no"));
-	            jsResponse(response, "작성 성공", "pet.do?command=foodlist");
+	            jsResponse(response, "작성 성공", "paging.do?command=foodlist");
 	         
 	         }else{
-	            jsResponse(response, "작성 실패", "pet.do?command=foodlist");
+	            jsResponse(response, "작성 실패", "paging.do?command=foodlist");
 	         }
 
 	      }

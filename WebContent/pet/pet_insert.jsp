@@ -33,7 +33,7 @@
 <%
     String src = request.getParameter("src");
 %>
-<form method="post" name="frm" action="../pet_servlet" onsubmit="return petCheck()">
+<form method="post" name="frm" action="/semi_PetDiary/pet_servlet" onsubmit="return petCheck()">
     <input type="hidden" name="command" value="pet_insert">
     <table border="1">
         <col width="100"/>
