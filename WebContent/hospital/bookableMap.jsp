@@ -50,29 +50,40 @@
       #pagination a {display:inline-block;margin-right:10px;}
       #pagination .on {font-weight: bold; cursor: default;color:#777;}
       .detailView{
-        background-color: burlywood;
+        background-color: wheat;
+        color:salmon;
+        padding: 3px 10px;
+        border-radius:3px;
+        border: 2px solid salmon;
       }
       .bookableMap{
       	text-align:center;
-      	background-color:#19ce60;
+      	background-color:salmon;
       	color:white;
       	border-radius:3px;
       }
      .bookableBtn{
-     	background-color:#e8f2de;
-     	border-color:grey;
+     	background-color:#fae8ac;
+     	color:salmon;
+     	border:2px solid white;
      	padding: 3px 20px;
      	border-radius:4px;
      	cursor:pointer;
      	font-style:strong;
      }
-      .bookableBtn:hover{
-      	background-color:#fae8ac;
+ 
+      .mapHeader{
+      	text-align:center;
+      	color:white;
+      	background-color:salmon;
+      	border-radius:4px;
+      	margin: 7px;
+      	padding:5px;
       }
-      </style>
-
+</style>
+<script src="https://kit.fontawesome.com/7841646bb8.js" crossorigin="anonymous"></script>
 <body>
-
+	<div class="mapHeader"><i class="fas fa-paw"></i>  등록된 병원 지도  <i class="fas fa-paw"></i></div>
 	<div class="map_wrap">
           <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
       
@@ -91,7 +102,7 @@
           </div>
       </div>
       <p class="bookableMap">
-      	<input class="bookableBtn" type="button" value="등록된 병원 표시" onclick="bookableMap();"/>
+      	<input class="bookableBtn" type="button" value="Click" onclick="bookableMap();"/>
       </p>
       
    
@@ -351,7 +362,7 @@
   		  				  
   		  				  marker.setMap(map); 
   		  				 
-  		  				  var infowindow = new kakao.maps.InfoWindow({ content: '<div style="width:150px;text-align:center;padding:6px 0; background-color:wheat; color:black;">' + addr[1] + '</div>', removable : true });
+  		  				  var infowindow = new kakao.maps.InfoWindow({ content: '<div style="width:150px;text-align:center;padding:6px 0; background-color:wheat; color:salmon;">' + addr[1] + '</div>', removable : true });
   		  				 
   		  				  kakao.maps.event.addListener(marker, 'click', function() { 
   		  						  infowindow.open(map, marker); 

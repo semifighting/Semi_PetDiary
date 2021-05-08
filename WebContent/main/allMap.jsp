@@ -46,8 +46,12 @@
       #pagination {margin:10px auto;text-align: center;}
       #pagination a {display:inline-block;margin-right:10px;}
       #pagination .on {font-weight: bold; cursor: default;color:#777;}
-      .detailView{
-        background-color: burlywood;
+    .detailView{
+        background-color: wheat;
+        color:salmon;
+        padding: 3px 10px;
+        border-radius:3px;
+        border: 2px solid salmon;
       }
       .dot {overflow:hidden;float:left;width:12px;height:12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');}    
 	  .dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;}
@@ -57,19 +61,28 @@
       .distanceInfo {position:relative;top:5px;left:5px;list-style:none;margin:0;}
       .distanceInfo .label {display:inline-block;width:50px;}
       .distanceInfo:after {content:none;}
-      .distanceBetween{
-      	font-style:bold;
-      	border-radius:4px;
+      .distance{
+        text-align:center;
+        font-weight:bold;
+      	color:salmon;
       	background-color:wheat;
-      	color:black;
-      	width:320px;
-      	padding : 5px 20px;      	
+      	border-radius:4px;
+      	margin: 8px;
+      	padding:5px;
       }
-   
+   	    .mapHeader {
+        text-align:center;
+      	color:white;
+      	background-color:salmon;
+      	border-radius:4px;
+      	margin: 7px;
+      	padding:5px;
+	  }
      
       </style>
-
+	  <script src="https://kit.fontawesome.com/7841646bb8.js" crossorigin="anonymous"></script>
 <body>
+		<div class="mapHeader"><i class="fas fa-paw"></i>  지도검색  <i class="fas fa-paw"></i></div>
 	 <div class="map_wrap">
           <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
       
@@ -88,9 +101,9 @@
           </div>
       </div>
       <div class="distance">
-      	<p class="distanceBetween">
-    		<em>경로구하기<br>1.출발, 도착지점 지정 : 마우스 왼쪽 클릭 <br>2.시간계산 : 마우스 오른쪽 클릭</em>
-	 	 </p>
+      
+    		<i class="fas fa-dog"></i> 출발/도착지점 지정 : 마우스 왼쪽 <br><i class="fas fa-dog"></i> 시간계산 : 마우스 오른쪽
+	 
 	  </div>
       
     

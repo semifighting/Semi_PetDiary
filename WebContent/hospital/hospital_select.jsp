@@ -60,16 +60,25 @@ function PopUpSubmit(RTC) {
 		width:100%;
 	}
 	.text_wrap li dt{
-		float:left; width:21%; font-size:16px; font-style:strong; color:#626262; padding-left:30px; 
+		float:left; width:21%; font-size:16px; font-style:strong; color:#626262; padding-left:30px; font-weight:bold;
 	}
 	.text_wrap li dd{
 		font-size:14px; color: #a1a1a1; line-height:18px; text-align:left; overflow:hidden;
 		text-overflow:ellipsis; -webkit-line-clamp:1; -webkit-box-orient:vertical;
-		word-break:break-all; display:-webkit-box;
-	
-	
+		word-break:break-all; display:-webkit-box;		
 	}
-	
+	.bookBtn{
+		padding:5px 15px;
+		background-color:wheat;
+		cursor:pointer;
+		border: 3px outset white;
+		border-radius:5px;
+		color: salmon;
+		font-weight:bold;
+	}
+	.book{
+		margin-top:7px;
+	}	
 </style>
 
 
@@ -110,10 +119,10 @@ function PopUpSubmit(RTC) {
 					</li>
 					<li>
 						<dl>
-							<dt>예약신청</dt>
+							<dt class="book">예약신청</dt>
 							<dd>
-								<input type="button"  value="취소" onclick="pet.do?command=hospitalmain"/>
-								<input type="submit"  value="예약신청"/>
+							
+								<input class="bookBtn" type="submit"  value="예약신청 Click"/>
 						    </dd>
 						</dl>
 					</li>

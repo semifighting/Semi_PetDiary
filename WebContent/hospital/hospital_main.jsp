@@ -204,11 +204,11 @@
 	
 	<script type="text/javascript">
 		function mapPop(){
-			var popup = window.open('./hospital/map.jsp', '지도', 'width=700px,height=800px,scrollbars=yes');
+			var popup = window.open('./hospital/map.jsp', '지도', 'width=700px,height=650px,scrollbars=yes');
 		}
 		
 		function bookableMapPop(){
-			var popup = window.open('./hospital/bookableMap.jsp', '등록된 병원 지도', 'width=700px,height=730px,scrollbars=yes');
+			var popup = window.open('./hospital/bookableMap.jsp', '등록된 병원 지도', 'width=700px,height=700px,scrollbars=yes');
 		}
 
 		

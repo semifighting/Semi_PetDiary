@@ -46,13 +46,33 @@
       #pagination a {display:inline-block;margin-right:10px;}
       #pagination .on {font-weight: bold; cursor: default;color:#777;}
       .detailView{
-        background-color: burlywood;
+        background-color: wheat;
+        color:salmon;
+        padding: 3px 10px;
+        border-radius:3px;
+        border: 2px solid salmon;
       }
-      
-
-      </style>
+      .mapHeader {
+        text-align:center;
+      	color:white;
+      	background-color:salmon;
+      	border-radius:4px;
+      	margin: 7px;
+      	padding:5px;
+	  }
+	  .mapFooter{     
+	    text-align:center;
+      	color:wheat;
+      	background-color:salmon;
+      	border-radius:4px;
+      	margin: 7px;
+      	padding:5px;
+	}
+  </style>
+  <script src="https://kit.fontawesome.com/7841646bb8.js" crossorigin="anonymous"></script>
 </head>
 <body>
+	<div class="mapHeader"><i class="fas fa-paw"></i>  지도상 모든 병원  <i class="fas fa-paw"></i></div>
 	 <div class="map_wrap">
           <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
       
@@ -70,7 +90,7 @@
               <div id="pagination"></div>
           </div>
       </div>
-     
+     <div class="mapFooter">키워드(장소,병원명)검색을 통해 원하는 병원을 찾을 수 있어요</div>
       
       <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dc7ccb141837d7f5a52ed786b3831578&libraries=services"></script>
       <script>

@@ -12,7 +12,18 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
     	.chatbot { position: fixed; right: 3%; top: 80%; height: 90px; width: 90px; z-index: 50; background-color: #D9F6B4; border-radius: 50px 50px 50px 50px; box-shadow: 5px 5px 5px rgba(0,0,0,0.26); text-align: center; }
 		
 		.chatbot img{ position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); cursor: pointer; }
+		.mapBtn{
+			border: 2px solid white;
+			background-color:wheat;
+			border-radius:30px;
+			padding:3px 7px;
+			color:salmon;
+			font-weight:bolder;
+			cursor:pointer;
+		}
+	
     </style>
+
     <script  src="https://kit.fontawesome.com/95780683f0.js" crossorigin="anonymous"></script>
     <script>
     	function openchat(){
@@ -53,12 +64,11 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
         <li><a href="/semi_PetDiary/pet.do?command=community">커뮤니티</a></li>
         <li><a href="/semi_PetDiary/pet.do?command=weather_main">날씨</a></li>
         <li><a href="/semi_PetDiary/pet.do?command=travelmain">여행일정</a></li>        
-        <li>
-          <input class="all_map" type="button" value="지도검색" onclick="allMapPop();"/>
-        </li>
+       
+        
 
        </ul>
-
+		 <input type="button" class="mapBtn" value="지도검색" onclick="allMapPop();"> 
       <ul class="header_login">
         <% if(session.getAttribute("member_no") == null) { %>
 

@@ -12,11 +12,13 @@
  
 
 <style type="text/css">
+
 .travel_container {
 	width: 100%;
 	background-color: #f8f7f2;
 	min-height: 500px;
 	padding: 50px 0;
+	font-weight:bold;
 }
 
 .travel_box {
@@ -229,9 +231,13 @@
 	color: #777;
 }
 
-.detailView {
-	background-color: burlywood;
-}
+     .detailView{
+        background-color: wheat;
+        color:salmon;
+        padding: 3px 10px;
+        border-radius:3px;
+        border: 2px solid salmon;
+      }
 
 .dot {
 	overflow: hidden;
@@ -307,51 +313,44 @@
 .travel_box_text div{
 	margin-top:10px;
 }
-.travel_spot1{
-	
-}
-.travel_spot2{
 
-}
-.travel_spot3{
-
-}
 .travel_whole{
 	margin-left:40px;
 	margin-top:20px;
 }
-
+.travel_spot2{
+	color:grey;
+}
+.travel_spot3{
+	color:grey;
+}
 
 
 .travelTime{
 	margin-left:20px;
-	color:black;
+	color:grey;
 }
 .spotbtn{
 	padding:4px 13px;
 	margin-left:40px;
 	background-color:wheat;
 	border-radius:5px;
-	border-color:white;
+	border: 3px solid salmon;
 	cursor:pointer;
 	margin-bottom:7px;
+	font-weight:bold;
 }
-.exitBtn{
-	margin-left:40px;
-	background-color:#ffffff;
-	padding:3px 5px;
-	border-radius:4px;
-	border-line:none;
-	cursor:pointer;
-	margin-top:20px;
-}
+
 .mainBtn{
-	background-color:#ffffff;
-	padding:3px 5px;
-	border-radius:4px;
-	border-line:none;
+	padding:3px 10px;
+	background-color:wheat;
 	cursor:pointer;
-	margin-top:20px;
+	border: 3px outset white;
+	border-radius:5px;
+	color: salmon;
+	margin: 10px 40px;
+	font-weight:bold;
+	
 }
 
 div i{
@@ -405,16 +404,16 @@ div i{
 					(<%=dto.getTravel_stay1() %>분)<br>
 						 <i class="fas fa-dog"></i><br>
 						<i class="fas fa-dog"></i><a class="travelTime">----- <%=dto.getTravel_time2() %>분 소요</a><br>
-					<i class="fas fa-dog"></i></i><br>
+					<i class="fas fa-dog"></i><br>
 						
 					
 					</div>
 					<div class="travel_spot3"><input type="button" class="spotbtn" value="<%=dto.getTravel_spot3() %>" />
 					(<%=dto.getTravel_stay2() %>분)</div>
-					<div class="travel_whole">총 예상 소요시간  :	 <%=dto.getTravel_stay1()+dto.getTravel_stay2()+dto.getTravel_time1()+dto.getTravel_time2() %>분 </div>
+					<div class="travel_whole"> 총 예상 소요시간  :	 <%=dto.getTravel_stay1()+dto.getTravel_stay2()+dto.getTravel_time1()+dto.getTravel_time2() %>분 </div>
 					<div class="lastBtn">									
-						<input class="exitBtn" type="button" value="뒤로가기" onclick="location.href='pet.do?command=travelmain'" /> 
-				    	<input class="mainBtn" type="button" value="일정수정" onclick="location.href='pet.do?command=updateform&travel_no=<%=dto.getTravel_no() %>'" />									
+						
+				    	<input class="mainBtn" type="button" value="일정수정 Click" onclick="location.href='pet.do?command=updateform&travel_no=<%=dto.getTravel_no() %>'" />									
 					</div>
 				</div>
 			

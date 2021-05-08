@@ -70,6 +70,7 @@
 	font-style: strong;
 	color: #626262;
 	padding-left: 30px;
+	font-weight:bold;
 }
 
 .text_wrap li dd {
@@ -273,9 +274,13 @@
 	color: #777;
 }
 
-.detailView {
-	background-color: burlywood;
-}
+    .detailView{
+        background-color: wheat;
+        color:salmon;
+        padding: 3px 10px;
+        border-radius:3px;
+        border: 2px solid salmon;
+      }
 
 .dot {
 	overflow: hidden;
@@ -348,6 +353,15 @@
 	margin-left:30px;
 	font-size:30px;
 }
+.saveBtn{
+		padding:3px 10px;
+		background-color:salmon;
+		cursor:pointer;
+		border: 2px outset white;
+		border-radius:5px;
+		color: wheat;
+		font-weight:bold;
+}
 
 </style>
 
@@ -359,7 +373,7 @@
 
 
 
-	<jsp:useBean id="dto" class="com.pet.ft.dto.TravelDto" scope="session"></jsp:useBean>
+	<jsp:useBean id="dto" class="com.pet.ft.dto.MemberDto" scope="session"></jsp:useBean>
 	<div class="travel_container">
 		<h3 class="travel_main">여행일정</h3>
 		<div class="travel_box">
@@ -447,8 +461,7 @@
 								<dt>- 머무는 시간</dt>
 								<dd>
 									<input type="text" name="travel_stay2" />
-									<input class="exitBtn" type="button" value="취소" onclick="pet.do?command=hospitalmain" /> 
-									<input type="submit" value="일정저장" />
+									<input class="saveBtn" type="submit" value="일정저장 Click" />
 									
 								</dd>
 							</dl>

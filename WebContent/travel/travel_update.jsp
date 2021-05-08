@@ -65,6 +65,7 @@
 	font-style: strong;
 	color: #626262;
 	padding-left: 30px;
+	font-weight:bold;
 }
 
 .text_wrap li dd {
@@ -78,6 +79,7 @@
 	-webkit-box-orient: vertical;
 	word-break: break-all;
 	display: -webkit-box;
+	font-weight:bold;
 }
 
 .map_wrap, .map_wrap * {
@@ -268,9 +270,13 @@
 	color: #777;
 }
 
-.detailView {
-	background-color: burlywood;
-}
+    .detailView{
+        background-color: wheat;
+        color:salmon;
+        padding: 3px 10px;
+        border-radius:3px;
+        border: 2px solid salmon;
+      }
 
 .dot {
 	overflow: hidden;
@@ -344,6 +350,16 @@
 	font-size:30px;
 }
 
+.updateBtn{
+	padding:3px 6px;
+	background-color:wheat;
+	cursor:pointer;
+	border: 2px outset white;
+	border-radius:5px;
+	color: salmon;
+	
+	font-weight:bold;
+}
 </style>
 
 
@@ -446,8 +462,8 @@
 								<dt>- 머무는 시간</dt>
 								<dd>
 									<input type="text" name="travel_stay2" value="<%=dto.getTravel_stay2() %>" />
-									<input class="exitBtn" type="button" value="취소" onclick="pet.do?command=travelmain" /> 
-									<input type="submit" value="일정수정" />
+							
+									<input class="updateBtn" type="submit" value="일정수정 Click" />
 									
 								</dd>
 							</dl>
