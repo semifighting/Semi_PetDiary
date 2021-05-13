@@ -10,7 +10,6 @@ a:visited{text-decoration: none; color:white;}
 
 body{
 	padding-top: 65px;
-	height: 100%
 }
 .header {
 	display : flex;

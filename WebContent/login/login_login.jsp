@@ -91,7 +91,7 @@
 	    apiURL += "&state=" + state;
 	    session.setAttribute("state", state);
 %>
-	  		<a href="<%=apiURL%>"><img width="270px" src="${pageContext.request.contextPath}/resources/image/naverlogo.png"/></a>			
+	  		<a href="<%=apiURL%>"><img width="250px" height="40px" src="${pageContext.request.contextPath}/resources/image/naverlogo.png"/></a>			
 		</div>
 		
 		<div id="kakaoLogin">
@@ -102,7 +102,7 @@
 		String kakao_apiURL = "https://kauth.kakao.com/oauth/authorize?client_id=" + client_id + "&redirect_uri=" + redirect_uri + "&response_type=code&" + "&state=" + state + "&prompt=" + prompt;
 %>
 			<a href="<%=kakao_apiURL %>" id="kakao-login-btn">
-	    <img src="${pageContext.request.contextPath}/resources/image/kakaologo.png" width="270px;"/>
+	    <img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="250px;"/>
 	    </a>
 		</div>
 	</div>

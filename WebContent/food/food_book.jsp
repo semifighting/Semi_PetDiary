@@ -29,7 +29,7 @@ height: 50px;
 <%BusinessDto bdto = (BusinessDto)request.getAttribute("bdto"); %>
 
 	<form action="/semi_PetDiary/pet.do" method="post">
-	<input type="hidden" name="command" value="booklistview"/>
+	<input type="hidden" name="command" value="bookinsert"/>
 
 		<div class="book">
 		<h3>예약업체 : <%=bdto.getBusiness_name() %></h3>

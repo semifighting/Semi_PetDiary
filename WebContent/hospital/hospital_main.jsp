@@ -44,23 +44,17 @@
 		font-size:21px;
 		font-style:strong;
 	}
-	.hospital_search {
-		height:40px;
-		text-align:center;
-		
-	}
 	.hospital_search .hospital_map{
-		margin: 8px; 
+		margin: 10px 500px; 
 		padding: 2px;
-		border:none;
 		font-size:16px;
-		width:200px;
+		width:300px;
+		height:40px;
 		background-color:salmon;
 		color:wheat;
 		cursor:pointer;
-		border-radius:10px;	
-	
-	
+		border-radius:12px;
+		
 	}
 	
 	.hospital_list{
@@ -86,22 +80,18 @@
   		width: 100%;
   		height: 100%;
   		max-height:180px;
-  		min-height:180px;
   		background-color:wheat;
 	}
 	.hospital_bottom_section {
   		display: flex;
- 		align-items: flex-end;
- 		margin-top:5px;
- 		 
+ 		 align-items: flex-end;
+ 		 margin-top: 1rem;
  		 
 	}
 	
 	.hospital_details {
 		  display: flex;
   	      flex-direction: column;
-  	     
-  	    
   	     
 	}
 	.hospital_details .hospital_title {
@@ -120,25 +110,16 @@
  	    text-decoration: none;
  	    color:black;
 	}
-	.paginate{
-		text-align:center;
-		margin:5px auto 5px auto;
-	}
 	.paginate a{
-		
-		color:#3a3828;
-		padding:1px 4px;
-		font-style:bold;
-		border:outset;
-		border-color:#a3a1a4 ;
+		color:black;
+		border:2px outset ;
+		border-color:salmon;
 		border-radius:4px;
-				
+		float:center;
+		
+		
 	}
-	.paginate a:hover{
-		color:white;
-		background-color:#7b797a;
-	}
-
+	
 
 
 	
@@ -154,13 +135,10 @@
 			<p>동물병원 안내</p><br>
 			<p>화상상담/챗봇 연결을 통해 반려견의 상태를 진단받을 수 있습니다.</p>
 		</div>	
-		
-		<div class="hospital_search">
-			<input class="hospital_map" type="button" value="지도상 모든 병원 검색" onclick="mapPop();"/>
-			<input class="hospital_map" type="button" value="등록된 병원만 보기" onclick="bookableMapPop();"/>
-			
-		</div>
 		<%--병원리스트 --%>	
+		<div class="hospital_search">
+			<input class="hospital_map" type="button" value="지도에서 병원찾기" onclick="mapPop();"/>
+		</div>
 		<div class="hospital_list">
 			<section class="hospital_section">
 				<c:choose>
@@ -170,13 +148,21 @@
 					<c:otherwise>
 						<c:forEach items="${list }" var="dto">
 			 			<article class="hospital_container">
-         				 	<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}"><img class="hospital_image" src="${dto.business_etc}"/></a>
+<<<<<<< HEAD
+         				 	<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}"><img class="hospital_image" src="./resources/image/tico1.png"/></a>       
+         					<div class="hospital_bottom_section">
+           						<div class="hospital_details">
+              						<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}" class="hospital_title">${dto.business_name}</a>
+             						<p class="hospital_addr">${dto.business_addr}</p> 						
+=======
+         				 	<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}"><img class="hospital_image" src="./resources/image/tico1.png"/></a>
            
           
          					<div class="hospital_bottom_section">
            						<div class="hospital_details">
               						<a href="pet.do?command=hospitalselect&business_num=${dto.business_num}" class="hospital_title">${dto.business_name}</a>
              						<p class="hospital_addr">${dto.business_addr}</p>
+>>>>>>> ig
               					</div>
          					</div>
        					</article>
@@ -198,7 +184,10 @@
 			<jsp:param name="endPageNo" value="${paging.endPageNo }"/>
 			<jsp:param name="nextPageNo" value="${paging.nextPageNo }"/>
 			<jsp:param name="finalPageNo" value="${paging.finalPageNo }"/>
+<<<<<<< HEAD
 			
+=======
+>>>>>>> ig
 	</jsp:include>
 	
 	
@@ -206,11 +195,6 @@
 		function mapPop(){
 			var popup = window.open('./hospital/map.jsp', '지도', 'width=700px,height=800px,scrollbars=yes');
 		}
-		
-		function bookableMapPop(){
-			var popup = window.open('./hospital/bookableMap.jsp', '등록된 병원 지도', 'width=700px,height=730px,scrollbars=yes');
-		}
-		
 		
 	
 	</script>
